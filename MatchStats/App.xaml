@@ -1,0 +1,22 @@
+﻿<mobile:AutoSuspendApplication
+    x:Class="MatchStats.App"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MatchStats"
+    xmlns:mobile="using:ReactiveUI.Mobile"
+    xmlns:viewModels="using:MatchStats.ViewModels" RequestedTheme="Light">
+    
+    <mobile:AutoSuspendApplication.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+ 
+                <ResourceDictionary Source="Common/StandardStyles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <viewModels:ViewModelLocator x:Key="ViewModelLocator" />
+            <!-- Application-specific resources -->
+
+            <x:String x:Key="AppName">TennisMatchScorer</x:String>
+
+        </ResourceDictionary>
+    </mobile:AutoSuspendApplication.Resources>
+</mobile:AutoSuspendApplication>
