@@ -1,4 +1,5 @@
-﻿using ReactiveUI;
+﻿using System;
+using ReactiveUI;
 using Windows.UI.Xaml;
 using MatchStats.ViewModels;
 
@@ -12,6 +13,11 @@ namespace MatchStats.Views
         public MyMatchStatsView()
         {
             this.InitializeComponent();
+            ViewModel = new ViewModelLocator().MyMatchStatsViewModel;
+            DataContext = ViewModel;
+            this.BindCommand(ViewModel, x => x.AddMatch);
+            this.Bind(ViewModel, x => x.ShowNewMatchPopup, x => x.AddMatchPoupup.IsOpen);
+
         }
 
         object IViewFor.ViewModel

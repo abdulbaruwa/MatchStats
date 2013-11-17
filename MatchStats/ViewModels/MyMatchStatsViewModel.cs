@@ -1,10 +1,10 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using MatchStats.Model;
 using ReactiveUI;
 
 namespace MatchStats.ViewModels
 {
- 
 
     [DataContract]
     public class MyMatchStatsViewModel : ReactiveObject, IRoutableViewModel
@@ -13,6 +13,15 @@ namespace MatchStats.ViewModels
         {
             HostScreen = screen ?? RxApp.DependencyResolver.GetService<IScreen>();
             UrlPathSegment = "MyMatchStats";
+
+            //AddMatch Command is only fired when Popup is not being displayed
+            //AddMatch = new ReactiveCommand(this.WhenAny(vm => vm.ShowNewMatchPopup, s => ! s.Value));
+            //AddMatch.Subscribe(_ => ShowOrAddMatchPopUp());
+
+            //Register for Save message from NewMatchControlViewModel
+            //MessageBus.Current.Listen<object>().Subscribe(_ => HideAddMatchPopUp());
+
+            AddMatch = this.Router.NavigateCommandFor<MatchScoreViewModel>();
         }
 
         [DataMember]
@@ -55,7 +64,7 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _showNewMatchPopup, value); }
         }
 
-        public ReactiveCommand AddMatch { get; protected set; }
+        public IReactiveCommand AddMatch { get; protected set; }
         public IReactiveCommand StartMatch { get; protected set; }
         public string UrlPathSegment { get; private set; }
         public IScreen HostScreen { get; private set; }

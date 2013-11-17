@@ -110,6 +110,18 @@
     <Compile Include="Common\BooleanToWinLoseImageConverter.cs" />
     <Compile Include="Common\EnumHelper.cs" />
     <Compile Include="Common\RichTextColumns.cs" />
+    <Compile Include="Common\EnumDescriptionConverter.cs" />
+    <Compile Include="Model\Game.cs" />
+    <Compile Include="Model\MatchFormat.cs" />
+    <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\PointReason.cs" />
+    <Compile Include="Model\Score.cs" />
+    <Compile Include="Model\Tournament.cs" />
+    <Compile Include="ViewModels\MatchScoreViewModel.cs" />
+    <Compile Include="ViewModels\NewMatchControlViewModel.cs" />
+    <Compile Include="Controls\NewMatchUserControl.xaml.cs">
+      <DependentUpon>NewMatchUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="DesignTimeStuff\DummyDataBuilder.cs" />
     <Compile Include="Enums\EnumTypes.cs" />
     <Compile Include="Model\MyMatchStats.cs" />
@@ -121,6 +133,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\MyMatchStatsViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="Views\MatchScoreView.xaml.cs">
+      <DependentUpon>MatchScoreView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\MyMatchStatsView.xaml.cs">
       <DependentUpon>MyMatchStatsView.xaml</DependentUpon>
     </Compile>
@@ -147,7 +162,15 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Controls\NewMatchUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainPage.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\MatchScoreView.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -186,6 +209,9 @@
     </Reference>
     <Reference Include="System.Reactive.WindowsRuntime">
       <HintPath>..\packages\Rx-WinRT.2.1.30214.0\lib\NetCore45\System.Reactive.WindowsRuntime.dll</HintPath>
+    </Reference>
+    <Reference Include="WinRTXamlToolkit">
+      <HintPath>..\packages\WinRTXamlToolkit.1.5.4.0\lib\netcore451\WinRTXamlToolkit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0' ">

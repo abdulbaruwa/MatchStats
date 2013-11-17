@@ -7,6 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:common="using:MatchStats.Common"
     xmlns:viewModels="using:MatchStats.ViewModels"
+    xmlns:controls="using:MatchStats.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -63,9 +64,8 @@
         <Grid x:Name="DisableBackgroundBorder" Visibility="{Binding ShowNewMatchPopup, Converter={StaticResource BoolToVisibilityConverter}}" Background="LightGray" Grid.Row="0" Grid.RowSpan="2"></Grid>
 
         <Popup 
-            
             HorizontalOffset="110" VerticalOffset="10"  x:Name="AddMatchPoupup" Grid.Row="1" Width="1200" Margin="0,0,0,0">
-            <!--<Controls:NewMatchControl x:Name="AddNewMatchControl"/>-->
+            <controls:NewMatchUserControl x:Name="AddNewMatchControl"/>
         </Popup>
 
         <!-- Horizontal scrolling grid used in most view states -->

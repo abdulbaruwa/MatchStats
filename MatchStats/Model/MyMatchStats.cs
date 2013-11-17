@@ -1,5 +1,4 @@
 ﻿using System;
-using MatchStats.Enums;
 
 namespace MatchStats.Model
 {
@@ -57,55 +56,5 @@ namespace MatchStats.Model
             }
             return matchScore;
         }
-    }
-
-    public class PointReason
-    {
-        public string Name { get; set; }
-        public string Player { get; set; }
-    }
-
-
-    public class Score
-    {
-        public Game GameOne { get; set; }
-        public Game GameTwo { get; set; }
-        public Game GameThree { get; set; }
-    }
-
-    public class Game
-    {
-        public Player Winner { get; set; }
-        public int ForScore { get; set; }
-        public int AgainstScore { get; set; }
-    }
-
-    public class Player
-    {
-        public string FirstName { get; set; }
-        public string SurName { get; set; }
-
-        public string FullName
-        {
-            get { return FirstName + " " + SurName; }
-        }
-
-        public string Rating { get; set; }
-    }
-
-    public class MatchFormat
-    {
-        public int Sets { get; set; }
-        public SetsFormat SetsFormat { get; set; }
-        public FinalSetFormats FinalSetType { get; set; }
-        public DueceFormat DueceFormat { get; set; }
-    }
-
-    public class Tournament
-    {
-        public string TournamentName { get; set; }
-        public string TournamentGrade { get; set; }
-        public DateTime StartDate { get; set; }
-        public DateTime Endate { get; set; }
     }
 }
