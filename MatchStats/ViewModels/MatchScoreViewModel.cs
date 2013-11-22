@@ -1,4 +1,5 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.Runtime.Serialization;
 using MatchStats.Model;
 using ReactiveUI;
 
@@ -15,8 +16,13 @@ namespace MatchStats.ViewModels
             PointReasons = new ReactiveList<PointReason>();
             HostScreen = screen ?? RxApp.DependencyResolver.GetService<IScreen>();
             UrlPathSegment = "MatchScore";
-            
+            NavToHomePageCommand = new ReactiveCommand();
+            NavToHomePageCommand.Subscribe(_ => NavigateBackToHomePage());
+        }
 
+        private void NavigateBackToHomePage()
+        {
+            HostScreen.Router.NavigateBack.Execute(null);
         }
 
         private string _playerOneCurrentGame = "";
@@ -74,7 +80,6 @@ namespace MatchStats.ViewModels
             get { return _playerTwoSecondSet; }
             set { this.RaiseAndSetIfChanged(ref _playerTwoSecondSet, value); }
         }
-
 
         private string _playerOneFirstSet = "";
         public string PlayerOneFirstSet

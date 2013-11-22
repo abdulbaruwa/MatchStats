@@ -23,6 +23,7 @@ namespace MatchStats.Views
             this.Bind(ViewModel, x => x.PlayerTwoThirdSet, x => x.PlayerTwoThirdSet.Text);
             this.Bind(ViewModel, x => x.PlayerOnesName, x => x.PlayerOnesName.Text);
             this.Bind(ViewModel, x => x.PlayerTwosName, x => x.PlayerTwosName.Text);
+            this.BindCommand(ViewModel, x => x.NavToHomePageCommand, x => x.backButton);
         }
 
         public static readonly DependencyProperty ViewModelProperty =

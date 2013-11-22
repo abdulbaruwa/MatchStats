@@ -1,4 +1,5 @@
 ﻿using System.Runtime.Serialization;
+using System.Text.RegularExpressions;
 using MatchStats.Views;
 using ReactiveUI;
 using ReactiveUI.Mobile;
@@ -22,8 +23,10 @@ namespace MatchStats.ViewModels
             var resolver = RxApp.MutableResolver;
 
             resolver.Register(() => new MyMatchStatsView(), typeof(IViewFor<MyMatchStatsViewModel>), "FullScreenLandscape");
-
             resolver.Register(() => new MyMatchStatsViewModel(), typeof(MyMatchStatsViewModel));
+
+            resolver.Register(() => new MatchScoreView(), typeof(IViewFor<MatchScoreViewModel>), "FullScreenLandscape");
+            resolver.Register(() => new MatchScoreViewModel(), typeof(MatchScoreViewModel));
 
             resolver.RegisterConstant(this, typeof(IApplicationRootState));
             resolver.RegisterConstant(this,typeof(IScreen));
