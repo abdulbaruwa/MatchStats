@@ -1,6 +1,6 @@
 ﻿<Page
-    x:Class="MatchStats.Views.MyMatchStatsView"
-    d:DataContext="{Binding MyMatchStatsViewModel, Source={d:DesignInstance Type=viewModels:ViewModelLocator, IsDesignTimeCreatable=True}}"
+    x:Class="MatchStats.Views.MatchesPlayedView"
+    d:DataContext="{Binding MatchesPlayedViewModel, Source={d:DesignInstance Type=viewModels:ViewModelLocator, IsDesignTimeCreatable=True}}"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -63,8 +63,7 @@
 
         <Grid x:Name="DisableBackgroundBorder" Visibility="{Binding ShowNewMatchPopup, Converter={StaticResource BoolToVisibilityConverter}}" Background="LightGray" Grid.Row="0" Grid.RowSpan="2"></Grid>
 
-        <Popup 
-            HorizontalOffset="110" VerticalOffset="10"  x:Name="AddMatchPoupup" Grid.Row="1" Width="1200" Margin="0,0,0,0">
+        <Popup HorizontalOffset="110" VerticalOffset="10"  IsOpen="{Binding ShowNewMatchPopup}" x:Name="AddMatchPoupup" Grid.Row="1" Width="1200" Margin="0,0,0,0">
             <controls:NewMatchUserControl x:Name="AddNewMatchControl"/>
         </Popup>
 

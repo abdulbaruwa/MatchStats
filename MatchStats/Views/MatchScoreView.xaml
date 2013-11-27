@@ -19,6 +19,11 @@
             of the complete item list because items in groups cannot be virtualized
         -->
 
+
+        <Style x:Key="ServeTextBoxStyle" TargetType="Button">
+        <Setter Property="Height" Value="55"/> 
+        </Style>
+
     </Page.Resources>
 
     <!--
@@ -123,7 +128,7 @@
 
                     <Rectangle  Stroke="Yellow" StrokeThickness="2" Margin="-4,2,2,2" Grid.Column="3" Grid.RowSpan="3" />
                     <TextBlock Name="PlayerTwoFirstSet" Style="{StaticResource SubtitleTextStyle}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding PlayerTwoFirstSet}"/>
-                    
+
                     <TextBlock Style="{StaticResource SubtitleTextStyle}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center">2</TextBlock>
                     <TextBlock Name="PlayerOneSecondSet" Style="{StaticResource SubtitleTextStyle}" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Text="{Binding PlayerOneSecondSet}"/>
                     <TextBlock Name="PlayerTwoSecondSet" Style="{StaticResource SubtitleTextStyle}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Text="{Binding PlayerTwoSecondSet}"/>
@@ -191,7 +196,7 @@
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition MaxHeight="60"/>
-                            <RowDefinition MaxHeight="40"/>
+                            <RowDefinition MaxHeight="60"/>
                             <RowDefinition />
                             <RowDefinition MaxHeight="40"/>
                         </Grid.RowDefinitions>
@@ -202,18 +207,24 @@
                                 <ColumnDefinition />
                                 <ColumnDefinition />
                             </Grid.ColumnDefinitions>
-                            <Button Name="PlayerOneFirstServe" Grid.Column="0" HorizontalAlignment="Stretch">P1 First Serve</Button>
-                            <Button Name="PlayerOneSecondndServe" Grid.Column="1" HorizontalAlignment="Stretch">P1 Second Serve</Button>
-                            <Button Name="PlayerTwoFirstServe"  Grid.Column="2" HorizontalAlignment="Stretch">P2 First Serve</Button>
-                            <Button Name="PlayerTwoSecondServe"  Grid.Column="3" HorizontalAlignment="Stretch">P2 First Serve</Button>
+                            <Button Name="PlayerOneFirstServe" Grid.Column="0" Height="60" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">First Serve In</Button>
+                            <Button Name="PlayerOneSecondndServe" Grid.Column="1" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">Second Serve In</Button>
+                            <Button Name="PlayerTwoFirstServe"  Grid.Column="2" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">First Serve In</Button>
+                            <Button Name="PlayerTwoSecondServe"  Grid.Column="3" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">Second Serve In</Button>
                         </Grid>
-                        <StackPanel Grid.Row="1" Orientation="Horizontal">
-                            <TextBlock Style="{StaticResource GroupHeaderTextStyle}" FontSize="25" >Game Notes</TextBlock>
-                            <!--<TextBlock Text="{StaticResource ChevronGlyph}" FontFamily="Segoe UI Symbol" Margin="0,-7,0,10" Style="{StaticResource GroupHeaderTextStyle}"/>-->
-                        </StackPanel>
-                        <TextBox Grid.Row="2" Name="GameNotes" VerticalAlignment="Stretch" TextWrapping="Wrap" AcceptsReturn="True" ></TextBox>
 
-                        <Button Grid.Row="3" Name="SaveNote">Save Notes</Button>
+                        <Grid Name="ServeStatsOut" Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150*" />
+                                <ColumnDefinition Width="149*" />
+                                <ColumnDefinition Width="150*" />
+                                <ColumnDefinition Width="149" />
+                            </Grid.ColumnDefinitions>
+                            <Button Name="PlayerOneFirstServeOut" Grid.Column="0" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">First Serve Out</Button>
+                            <Button Name="PlayerOneSecondndServeOut" Grid.Column="1" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">Second Serve Out</Button>
+                            <Button Name="PlayerTwoFirstServeOut"  Grid.Column="2" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">First Serve Out</Button>
+                            <Button Name="PlayerTwoSecondServeOut"  Grid.Column="3" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">Second Serve Out</Button>
+                        </Grid>
                     </Grid>
                 </Border>
             </Grid>
@@ -245,7 +256,7 @@
 
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
-            
+
         </Grid>
 
 

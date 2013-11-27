@@ -131,13 +131,13 @@
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ViewModels\MyMatchStatsViewModel.cs" />
+    <Compile Include="ViewModels\MatchesPlayedViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\MatchScoreView.xaml.cs">
       <DependentUpon>MatchScoreView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MyMatchStatsView.xaml.cs">
-      <DependentUpon>MyMatchStatsView.xaml</DependentUpon>
+    <Compile Include="Views\MatchesPlayedView.xaml.cs">
+      <DependentUpon>MatchesPlayedView.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -174,7 +174,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\MyMatchStatsView.xaml">
+    <Page Include="Views\MatchesPlayedView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

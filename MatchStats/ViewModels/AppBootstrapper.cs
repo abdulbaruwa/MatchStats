@@ -22,8 +22,8 @@ namespace MatchStats.ViewModels
             Router = new RoutingState();
             var resolver = RxApp.MutableResolver;
 
-            resolver.Register(() => new MyMatchStatsView(), typeof(IViewFor<MyMatchStatsViewModel>), "FullScreenLandscape");
-            resolver.Register(() => new MyMatchStatsViewModel(), typeof(MyMatchStatsViewModel));
+            resolver.Register(() => new MatchesPlayedView(), typeof(IViewFor<MatchesPlayedViewModel>), "FullScreenLandscape");
+            resolver.Register(() => new MatchesPlayedViewModel(), typeof(MatchesPlayedViewModel));
 
             resolver.Register(() => new MatchScoreView(), typeof(IViewFor<MatchScoreViewModel>), "FullScreenLandscape");
             resolver.Register(() => new MatchScoreViewModel(), typeof(MatchScoreViewModel));
@@ -32,7 +32,7 @@ namespace MatchStats.ViewModels
             resolver.RegisterConstant(this,typeof(IScreen));
             resolver.RegisterConstant(new MainPage(), typeof(IViewFor), "InitialPage");
 
-            Router.Navigate.Execute(new MyMatchStatsViewModel(this));
+            Router.Navigate.Execute(new MatchesPlayedViewModel(this));
         }
     }
 }

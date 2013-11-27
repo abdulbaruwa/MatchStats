@@ -13,7 +13,6 @@ namespace MatchStats.ViewModels
         {
 
             if (Windows.ApplicationModel.DesignMode.DesignModeEnabled) return;
-
         }
 
         public MatchScoreViewModel MatchScoreViewModel
@@ -45,12 +44,12 @@ namespace MatchStats.ViewModels
         //    }
         //}
 
-        public MyMatchStatsViewModel MyMatchStatsViewModel
+        public MatchesPlayedViewModel MatchesPlayedViewModel
         {
             get
             {
                 var defaultPlayer = new Player() { FirstName = "Ademola", Rating = "7.2", SurName = "Baruwa" };
-                var homepageVm = new MyMatchStatsViewModel();
+                var homepageVm = new MatchesPlayedViewModel();
                 homepageVm.MyMatchStats = new ReactiveList<MyMatchStats>();
                 homepageVm.MyMatchStats.AddRange(new DummyDataBuilder().BuildMatchStatsForDesignTimeView()); 
                 homepageVm.DefaultPlayer = defaultPlayer;

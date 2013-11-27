@@ -6,14 +6,14 @@ using ReactiveUI;
 namespace MatchStats.ViewModels
 {
     [DataContract]
-    public class MyMatchStatsViewModel : ReactiveObject, IRoutableViewModel
+    public class MatchesPlayedViewModel : ReactiveObject, IRoutableViewModel
     {
         private Player _defaultPlayer;
         private ReactiveList<MyMatchStats> _myMatchStats;
         private NewMatchControlViewModel _newMatchControlViewModel;
         private bool _showNewMatchPopup;
 
-        public MyMatchStatsViewModel(IScreen screen = null)
+        public MatchesPlayedViewModel(IScreen screen = null)
         {
             HostScreen = screen ?? RxApp.DependencyResolver.GetService<IScreen>();
             UrlPathSegment = "MyMatchStats";
