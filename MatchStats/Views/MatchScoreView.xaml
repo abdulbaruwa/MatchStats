@@ -33,9 +33,9 @@
         * Row 1 contains the rest of the page layout
     -->
     <Grid>
-        <Popup HorizontalOffset="110" VerticalOffset="10"  IsOpen="{Binding ShowHideMatchPopup}" x:Name="AddMatchPoupup" Margin="0,0,0,0">
-            <Border BorderBrush="Black" BorderThickness="2">
-                <controls1:NewMatchUserControl x:Name="AddNewMatchControl"/>
+        <Popup Height="580" Width="600"  HorizontalOffset="1" VerticalOffset="10"  IsOpen="{Binding ShowHideMatchPopup}" x:Name="AddMatchPoupup" Margin="0,0,0,0">
+            <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <controls1:NewMatchUserControl x:Name="AddNewMatchControl" Height="580" Width="600"/>
            </Border>
         </Popup>
 
