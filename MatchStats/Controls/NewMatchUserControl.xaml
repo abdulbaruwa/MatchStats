@@ -37,6 +37,11 @@
             <Setter Property="Margin" Value="20,0,20,0" />
             <Setter Property="Orientation" Value="Vertical"/>
         </Style>
+
+        <Style x:Key="StartButtonStyle" TargetType="Button" BasedOn="{StaticResource TextButtonStyle}">
+            <Setter Property="FontSize" Value="20"/>
+        </Style>
+        
         <Style x:Key="DatePickerStyle1" TargetType="DatePicker">
             <Setter Property="Orientation" Value="Horizontal"/>
             <Setter Property="IsTabStop" Value="False"/>
@@ -86,7 +91,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="auto" />
             <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="40"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
@@ -105,18 +110,14 @@
         <StackPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource StackpanelAddMatchControl}">
             <TextBlock Text="Player One" Margin="0,-10,5,10" Style="{StaticResource SubHeaderTextStyleAddMatchControl}"/>
             <CheckBox IsChecked ="{Binding UseDefaultPlayer}"  Name="UseDefaultPlayer">Use Default Player</CheckBox>
-            <!--<controls:WatermarkTextBox Name="PlayerOneFirstName" WatermarkText="First Name" Margin="0,0,5,5"/>-->
-            <TextBox Name="PlayerOneFirstName" Margin="0,0,5,5"/>
-            <!--<controls:WatermarkTextBox Name="PlayerOneLastName" WatermarkText="Last Name" Margin="0,0,5,5"/>-->
-            <TextBox Name="PlayerOneLastName"  Margin="0,0,5,5"/>
-            <!--<controls:WatermarkTextBox Name="PlayerOneRating" WatermarkText="Rating" Margin="0,0,5,5"/>-->
-            <TextBox Name="PlayerOneRating" Margin="0,0,5,5"/>
+            <controls:WatermarkTextBox Name="PlayerOneFirstName" WatermarkText="First Name" Margin="0,0,5,5"/>
+            <controls:WatermarkTextBox Name="PlayerOneLastName" WatermarkText="Last Name" Margin="0,0,5,5"/>
+            <controls:WatermarkTextBox Name="PlayerOneRating" WatermarkText="Rating" Margin="0,0,5,5"/>
         </StackPanel>
 
         <StackPanel Grid.Column="1" Grid.Row="1" Style="{StaticResource StackpanelAddMatchControl}" Margin="0,0,20,0">
             <TextBlock Text="Player Two" Margin="0,-10,5,10" Style="{StaticResource SubHeaderTextStyleAddMatchControl}"/>
-            <!--<controls:WatermarkTextBox Name="PlayerTwoFirstName" WatermarkText="First Name" Margin="0,27,5,5"/>-->
-            <TextBox Name="PlayerTwoFirstName" Margin="0,27,5,5"/>
+            <controls:WatermarkTextBox Name="PlayerTwoFirstName" WatermarkText="First Name" Margin="0,27,5,5"/>
             <controls:WatermarkTextBox Name="PlayerTwoSurname" WatermarkText="Last Name" Margin="0,0,5,5"/>
             <controls:WatermarkTextBox Name="PlayerTwoRating" WatermarkText="Rating" Margin="0,0,5,5"/>
 
@@ -179,7 +180,7 @@
                 </ComboBox>
             </StackPanel>
         </StackPanel>
-        <Button x:Name="SaveCommand" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"  Margin="0,18,20,0" Style="{StaticResource TextButtonStyle}">Done</Button>
+        <Button x:Name="SaveCommand" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"  Margin="0,18,20,0" Style="{StaticResource StartButtonStyle}">Done</Button>
         
     </Grid>
 </UserControl>
