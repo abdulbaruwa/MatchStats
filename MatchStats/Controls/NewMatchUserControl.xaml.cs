@@ -8,10 +8,11 @@ namespace MatchStats.Controls
     {
         public NewMatchUserControl()
         {
-            ViewModel = new NewMatchControlViewModel();
+            ViewModel = new ViewModelLocator().NewMatchControlViewModel;
             this.InitializeComponent();
             this.BindCommand(ViewModel, x => x.SaveCommand);
             this.DataContext = ViewModel;
+        //    this.Bind(ViewModel, x => x.FinalSet, x => x.FinalSetFormat.DataContext);
         }
 
         public static readonly DependencyProperty ControlViewModelProperty = DependencyProperty.Register("ControlControlViewModel",

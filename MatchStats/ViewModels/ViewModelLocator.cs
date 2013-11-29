@@ -1,4 +1,5 @@
-﻿using MatchStats.DesignTimeStuff;
+﻿using MatchStats.Controls;
+using MatchStats.DesignTimeStuff;
 using MatchStats.Model;
 using ReactiveUI;
 
@@ -25,7 +26,7 @@ namespace MatchStats.ViewModels
                 {
                     pageVm.PointReasons.Add(new PointReason() { Name = "Action " + i, Player = "Ademola" });
                 }
-
+                pageVm.ShowHideMatchPopup = true;
                 pageVm.PlayerOnesName = "Ademola";
                 pageVm.PlayerTwosName = "Kieran";
                 pageVm.PlayerOneCurrentGame = "0";
@@ -36,13 +37,15 @@ namespace MatchStats.ViewModels
             }
         }
 
-        //public NewMatchControlViewModel NewMatchControlViewModel
-        //{
-        //    get
-        //    {
-        //        return new NewMatchControlViewModel();
-        //    }
-        //}
+        public NewMatchControlViewModel NewMatchControlViewModel
+        {
+            get
+            {
+                var newMatchControlVM = new NewMatchControlViewModel();
+                newMatchControlVM.UseDefaultPlayer = true;
+                return newMatchControlVM;
+            }
+        }
 
         public MatchesPlayedViewModel MatchesPlayedViewModel
         {

@@ -8,6 +8,7 @@
     xmlns:common="using:MatchStats.Common"
     xmlns:viewModels="using:MatchStats.ViewModels"
     xmlns:controls="using:MatchStats.Controls"
+    xmlns:controls1="using:Callisto.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -63,10 +64,26 @@
 
         <Grid x:Name="DisableBackgroundBorder" Visibility="{Binding ShowNewMatchPopup, Converter={StaticResource BoolToVisibilityConverter}}" Background="LightGray" Grid.Row="0" Grid.RowSpan="2"></Grid>
 
-        <Popup HorizontalOffset="110" VerticalOffset="10"  IsOpen="{Binding ShowNewMatchPopup}" x:Name="AddMatchPoupup" Grid.Row="1" Width="1200" Margin="0,0,0,0">
+        <!--<Popup HorizontalOffset="110" VerticalOffset="10"  IsOpen="{Binding ShowNewMatchPopup}" x:Name="AddMatchPoupup" Grid.Row="1" Width="1200" Margin="0,0,0,0">
             <controls:NewMatchUserControl x:Name="AddNewMatchControl"/>
-        </Popup>
+        </Popup>-->
+        <controls1:CustomDialog x:FieldModifier="public" x:Name="AddMatchDialog" BackButtonVisibility="Visible" Title="Add Match">
+            <!--<controls:NewMatchUserControl x:Name="AddNewMatchControl"/>-->
+            <StackPanel>
+                <TextBlock Margin="0,0,0,8" FontSize="14.6667" FontWeight="SemiLight" TextWrapping="Wrap">
+            Bacon ipsum dolor sit amet bacon ham drumstick strip steak, sausage frankfurter tenderloin turkey salami andouille bresaola. Venison salami prosciutto, pork belly turducken tri-tip spare ribs chicken strip steak fatback shankle tongue boudin andouille. Meatloaf salami pork ground round turkey jerky meatball ball tip, filet mignon fatback flank prosciutto shank. Turkey boudin ham hock, filet mignon tri-tip bresaola tongue venison spare ribs meatloaf flank beef pancetta. Leberkas turducken flank ground round biltong chuck bacon kielbasa. Beef pastrami meatball, short loin venison swine pork loin shank meatloaf spare ribs.
+                </TextBlock>
+                <CheckBox Margin="0,0,0,8" Foreground="White" Content="I agree to the Terms and Conditions of Bacon" />
+                <TextBlock Margin="0,0,0,8" FontSize="14.6667" FontWeight="SemiLight" Text="Enter your name for acceptance" />
+                <controls1:WatermarkTextBox HorizontalAlignment="Left" Watermark="Type your name" Width="1600" Height="35" />
+                <StackPanel Margin="0,20,0,0" HorizontalAlignment="Right" Orientation="Horizontal">
+                    <Button Content="OK" Width="90" Margin="0,0,20,0" />
+                    <Button Content="CANCEL" Width="90" />
+                </StackPanel>
+            </StackPanel>
 
+        </controls1:CustomDialog>
+        
         <!-- Horizontal scrolling grid used in most view states -->
         <GridView
             x:Name="itemGridView"

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Serialization;
 using MatchStats.Enums;
 using ReactiveUI;
@@ -16,7 +17,6 @@ namespace MatchStats.ViewModels
         private static List<Grade> _matchGrades;
         private static List<AgeGroup> _matchAgeGroups;
         private FinalSetFormats _finalSetFormats;
-
         public NewMatchControlViewModel()
         {
             SaveCommand = new ReactiveCommand();
@@ -32,7 +32,11 @@ namespace MatchStats.ViewModels
 
         public List<FinalSetFormats> FinalSet
         {
-            get { return _finalSet ?? (_finalSet = GetEnumAsList<FinalSetFormats>()); }
+            get
+            {
+               var result = _finalSet ?? (_finalSet = GetEnumAsList<FinalSetFormats>());
+                return result;
+            }
         }
 
         public List<DueceFormat> DueceFormats
@@ -63,6 +67,13 @@ namespace MatchStats.ViewModels
 
         public string UrlPathSegment { get; private set; }
         public IScreen HostScreen { get; private set; }
+
+        private bool _useDefaultPlayer;
+        public bool UseDefaultPlayer
+        {
+            get { return _useDefaultPlayer; }
+            set { this.RaiseAndSetIfChanged(ref _useDefaultPlayer, value);}
+        }
 
         private List<T> GetEnumAsList<T>()
         {

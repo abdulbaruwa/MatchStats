@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using MatchStats.Model;
 using ReactiveUI;
+using ReactiveUI.Mobile;
 
 namespace MatchStats.ViewModels
 {
@@ -10,6 +12,8 @@ namespace MatchStats.ViewModels
     {
         public ReactiveList<PointReason> PointReasons { get; protected set; }
         public IReactiveCommand NavToHomePageCommand { get; protected set; }
+        public IReactiveCommand PlayerTwoSecondServe { get; protected set; }
+        public IReactiveCommand StartMatchCommand { get; protected set; }
 
         public MatchScoreViewModel(IScreen screen = null)
         {
@@ -18,6 +22,22 @@ namespace MatchStats.ViewModels
             UrlPathSegment = "MatchScore";
             NavToHomePageCommand = new ReactiveCommand();
             NavToHomePageCommand.Subscribe(_ => NavigateBackToHomePage());
+            PlayerTwoSecondServe = new ReactiveCommand();
+            PlayerTwoSecondServe.Subscribe(_ => ShowAddMatchPopup());
+            StartMatchCommand = new ReactiveCommand();
+            StartMatchCommand.Subscribe(_ => StartMatch());
+            MessageBus.Current.Listen<NewMatchControlViewModel>().InvokeCommand(StartMatchCommand);
+        }
+
+        private void StartMatch()
+        {
+            ShowAddMatchPopup();
+        }
+
+
+        private void ShowAddMatchPopup()
+        {
+            ShowHideMatchPopup = false;
         }
 
         private void NavigateBackToHomePage()
@@ -93,6 +113,20 @@ namespace MatchStats.ViewModels
         {
             get { return _playerTwoFirstSet; }
             set { this.RaiseAndSetIfChanged(ref _playerTwoFirstSet, value); }
+        }
+
+        private bool _showHideMatchPopup;
+        public bool ShowHideMatchPopup
+        {
+            get { return _showHideMatchPopup; }
+            set { this.RaiseAndSetIfChanged(ref _showHideMatchPopup, value); }
+        }
+
+        private NewMatchControlViewModel _newMatchControlViewModel;
+        public NewMatchControlViewModel NewMatchControlViewModel
+        {
+            get { return _newMatchControlViewModel; }
+            set { this.RaiseAndSetIfChanged(ref _newMatchControlViewModel, value); }
         }
 
         public string UrlPathSegment { get; private set; }

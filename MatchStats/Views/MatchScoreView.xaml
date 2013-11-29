@@ -11,6 +11,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:MatchStats.ViewModels"
     xmlns:controls="using:WinRTXamlToolkit.Controls"
+    xmlns:controls1="using:MatchStats.Controls"
     mc:Ignorable="d">
     <Page.Resources>
 
@@ -31,6 +32,13 @@
         * Row 0 contains the back button and page title
         * Row 1 contains the rest of the page layout
     -->
+    <Grid>
+        <Popup HorizontalOffset="110" VerticalOffset="10"  IsOpen="{Binding ShowHideMatchPopup}" x:Name="AddMatchPoupup" Margin="0,0,0,0">
+            <Border BorderBrush="Black" BorderThickness="2">
+                <controls1:NewMatchUserControl x:Name="AddNewMatchControl"/>
+           </Border>
+        </Popup>
+
     <Grid Style="{StaticResource LayoutRootStyle}">
         <Grid.RowDefinitions>
             <RowDefinition Height="60" />
@@ -339,4 +347,5 @@
             </VisualStateGroup>
         </VisualStateManager.VisualStateGroups>
     </Grid>
+ </Grid>
 </Page>

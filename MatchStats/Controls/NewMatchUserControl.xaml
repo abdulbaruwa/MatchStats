@@ -1,5 +1,6 @@
 ﻿<UserControl
     x:Class="MatchStats.Controls.NewMatchUserControl"
+    d:DataContext="{Binding NewMatchControlViewModel, Source={d:DesignInstance Type=viewModels:ViewModelLocator, IsDesignTimeCreatable=True}}"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:MatchStats.Controls"
@@ -8,11 +9,11 @@
     xmlns:controls="using:WinRTXamlToolkit.Controls"
     xmlns:matchStats="using:MatchStats"
     xmlns:common="using:MatchStats.Common"
+    xmlns:viewModels="using:MatchStats.ViewModels"
     Width="1110" Height="530"
     mc:Ignorable="d">
 
     <UserControl.Resources>
-
         <common:EnumDescriptionConverter x:Key="EnumDescConverter" />
 
         <Style x:Key="HeaderTextStyleAddMatchControl" TargetType="TextBlock" BasedOn="{StaticResource HeaderTextStyle}">
@@ -80,7 +81,7 @@
         </Style>-->
     </UserControl.Resources>
 
-    <Grid Background="White" Width="1073" MinHeight="460" HorizontalAlignment="Left">
+        <Grid Background="White" Width="1073" MinHeight="460" HorizontalAlignment="Left">
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition Height="190"/>
@@ -103,7 +104,7 @@
 
         <StackPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource StackpanelAddMatchControl}">
             <TextBlock Text="Player One" Margin="0,0,5,10" Style="{StaticResource SubHeaderTextStyleAddMatchControl}"/>
-            <CheckBox Name="UseDefaultPlayer">Use Default Player</CheckBox>
+            <CheckBox IsChecked ="{Binding UseDefaultPlayer}"  Name="UseDefaultPlayer">Use Default Player</CheckBox>
             <controls:WatermarkTextBox Name="PlayerOneFirstName" WatermarkText="First Name" Margin="0,0,5,5"/>
             <controls:WatermarkTextBox Name="PlayerOneLastName" WatermarkText="Last Name" Margin="0,0,5,5"/>
             <controls:WatermarkTextBox Name="PlayerOneRating" WatermarkText="Rating" Margin="0,0,5,5"/>

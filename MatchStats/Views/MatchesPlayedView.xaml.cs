@@ -14,17 +14,14 @@ namespace MatchStats.Views
         {
             base.OnNavigatedTo(e);
         }
-
         
         public MatchesPlayedView()
         {
-            this.o
             this.InitializeComponent();
-            this.AddMatchPoupup.DataContext = null;
             ViewModel = new ViewModelLocator().MatchesPlayedViewModel;
             DataContext = ViewModel;
             this.BindCommand(ViewModel, x => x.AddMatch);
-            this.Bind(ViewModel, x => x.ShowNewMatchPopup, x => x.AddMatchPoupup.IsOpen);
+            this.Bind(ViewModel, x => x.ShowNewMatchPopup, x => x.AddMatchDialog.IsOpen);
         }
 
         object IViewFor.ViewModel

@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using System.Xml.Linq;
+using Windows.UI.Xaml;
 using MatchStats.ViewModels;
 using ReactiveUI;
 
@@ -25,14 +26,12 @@ namespace MatchStats.Views
             this.Bind(ViewModel, x => x.PlayerTwosName, x => x.PlayerTwosName.Text);
             //this.BindCommand(ViewModel, x => x.NavToHomePageCommand, x => x.backButton);
             this.OneWayBind(ViewModel, x => x.HostScreen.Router.NavigateBack, x => x.backButton.Command);
-
+            this.Bind(ViewModel, x => x.ShowHideMatchPopup, x => x.AddMatchPoupup.IsOpen);
+            this.BindCommand(ViewModel, x => x.PlayerTwoSecondServe);
         }
 
         public static readonly DependencyProperty ViewModelProperty =
             DependencyProperty.Register("ControlViewModel", typeof (MatchScoreViewModel), typeof (MatchScoreView), new PropertyMetadata(null));
-
-
-        
 
         public MatchScoreViewModel ViewModel
         {

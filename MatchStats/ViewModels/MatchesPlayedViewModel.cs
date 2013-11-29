@@ -26,7 +26,7 @@ namespace MatchStats.ViewModels
             StartMatch.Subscribe(_ => NavigagteToMatchScoreViewModel());
 
             //Register for Save message from NewMatchControlViewModel
-            MessageBus.Current.Listen<NewMatchControlViewModel>().InvokeCommand(StartMatch);
+            //MessageBus.Current.Listen<NewMatchControlViewModel>().InvokeCommand(StartMatch);
         }
 
         public ReactiveList<MyMatchStats> MyMatchStats
@@ -67,7 +67,8 @@ namespace MatchStats.ViewModels
 
         private void ShowOrAddMatchPopUp()
         {
-            ShowNewMatchPopup = true;
+            //ShowNewMatchPopup = true;
+            HostScreen.Router.Navigate.Execute(new MatchScoreViewModel(HostScreen));
         }
 
         private void HideAddMatchPopUp(object o)
