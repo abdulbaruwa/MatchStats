@@ -10,14 +10,14 @@ namespace MatchStats.ViewModels
     [DataContract]
     public class MatchScoreViewModel : ReactiveObject, IRoutableViewModel
     {
-        public ReactiveList<PointReason> PointReasons { get; protected set; }
+        public ReactiveList<ScorePoint> ScorePoints { get; protected set; }
         public IReactiveCommand NavToHomePageCommand { get; protected set; }
         public IReactiveCommand PlayerTwoSecondServe { get; protected set; }
         public IReactiveCommand StartMatchCommand { get; protected set; }
 
         public MatchScoreViewModel(IScreen screen = null)
         {
-            PointReasons = new ReactiveList<PointReason>();
+            ScorePoints = new ReactiveList<ScorePoint>();
             HostScreen = screen ?? RxApp.DependencyResolver.GetService<IScreen>();
             UrlPathSegment = "MatchScore";
             NavToHomePageCommand = new ReactiveCommand();

@@ -24,7 +24,7 @@ namespace MatchStats.ViewModels
 
                 for (int i = 0; i < 10; i++)
                 {
-                    pageVm.PointReasons.Add(new PointReason() { Name = "Action " + i, Player = "Ademola" });
+                    pageVm.ScorePoints.Add(new ScorePoint() { Name = "Action " + i, Player = new Player(){FirstName =  "Ademola" }});
                 }
                 pageVm.ShowHideMatchPopup = true;
                 pageVm.PlayerOnesName = "Ademola";

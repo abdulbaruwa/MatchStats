@@ -12,8 +12,8 @@ namespace MatchStats.Views
             //ControlViewModel = new MatchScoreViewModel();
             ViewModel =  new ViewModelLocator().MatchScoreViewModel;
             this.InitializeComponent();
-            this.OneWayBind(ViewModel, x => x.PointReasons, x => x.PlayerOneCommands.ItemsSource);
-            this.OneWayBind(ViewModel, x => x.PointReasons, x => x.PlayerTwoCommands.ItemsSource);
+            this.OneWayBind(ViewModel, x => x.ScorePoints, x => x.PlayerOneCommands.ItemsSource);
+            this.OneWayBind(ViewModel, x => x.ScorePoints, x => x.PlayerTwoCommands.ItemsSource);
             this.Bind(ViewModel, x => x.PlayerOneCurrentGame, x => x.PlayerOneCurrentGame.Text);
             this.Bind(ViewModel, x => x.PlayerTwoCurrentGame, x => x.PlayerTwoCurrentGame.Text);
             this.Bind(ViewModel, x => x.PlayerOneFirstSet, x => x.PlayerOneFirstSet.Text);

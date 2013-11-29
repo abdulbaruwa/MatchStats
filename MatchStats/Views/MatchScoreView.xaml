@@ -60,7 +60,7 @@
             <Grid Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" >
                 <TextBlock Style="{StaticResource GroupHeaderTextStyle}">Player One</TextBlock>
             </Grid>
-            <ItemsControl Name="PlayerOneCommands" ItemsSource="{Binding PointReasons}" Grid.Column="0" Grid.Row="1">
+            <ItemsControl Name="PlayerOneCommands" ItemsSource="{Binding ScorePoints}" Grid.Column="0" Grid.Row="1">
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <controls:UniformGrid/>
@@ -241,7 +241,7 @@
                 <TextBlock Style="{StaticResource GroupHeaderTextStyle}">Player Two</TextBlock>
             </Grid>
 
-            <ItemsControl Name="PlayerTwoCommands" ItemsSource="{Binding PointReasons}" Grid.Column="2" Grid.Row="1" >
+            <ItemsControl Name="PlayerTwoCommands" ItemsSource="{Binding ScorePoints}" Grid.Column="2" Grid.Row="1" >
                 <ItemsControl.ItemsPanel>
                     <ItemsPanelTemplate>
                         <controls:UniformGrid/>

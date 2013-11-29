@@ -114,7 +114,7 @@
     <Compile Include="Model\Game.cs" />
     <Compile Include="Model\MatchFormat.cs" />
     <Compile Include="Model\Player.cs" />
-    <Compile Include="Model\PointReason.cs" />
+    <Compile Include="Model\ScorePoint.cs" />
     <Compile Include="Model\Score.cs" />
     <Compile Include="Model\Tournament.cs" />
     <Compile Include="ViewModels\MatchScoreViewModel.cs" />
