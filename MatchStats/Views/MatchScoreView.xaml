@@ -293,7 +293,7 @@
             </Grid.ColumnDefinitions>
             <Button x:Name="backButton" 
                     Style="{StaticResource BackButtonStyle}" Margin="36,0,0,8" />
-            <TextBlock x:Name="pageTitle" Grid.Column="1" IsHitTestVisible="false"
+            <TextBlock x:Name="pageTitle" Text="Play Match" Grid.Column="1" IsHitTestVisible="false"
                        Style="{StaticResource PageHeaderTextStyle}" Margin="0,0,30,18"/>
         </Grid>
 
