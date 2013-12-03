@@ -5,13 +5,19 @@ using ReactiveUI;
 
 namespace MatchStats.ViewModels
 {
-    [DataContract]
-    public class MatchesPlayedViewModel : ReactiveObject, IRoutableViewModel
+    public interface IMatchesPlayedViewModel : IRoutableViewModel
     {
-        private Player _defaultPlayer;
-        private ReactiveList<MyMatchStats> _myMatchStats;
-        private NewMatchControlViewModel _newMatchControlViewModel;
-        private bool _showNewMatchPopup;
+        IReactiveCommand AddMatch { get; set; }
+
+        ReactiveList<MyMatchStats> MyMatchStats { get; set; }
+        NewMatchControlViewModel NewMatchControlViewModel { get; set; }
+        Player DefaultPlayer { get; set; }
+        bool ShowNewMatchPopup { get; set; }
+    }
+
+    [DataContract]
+    public class MatchesPlayedViewModel : ReactiveObject, IMatchesPlayedViewModel
+    {
 
         public MatchesPlayedViewModel(IScreen screen = null)
         {
@@ -21,59 +27,43 @@ namespace MatchStats.ViewModels
             // AddMatch Command is only fired when Popup is not being displayed
             AddMatch = new ReactiveCommand(this.WhenAny(vm => vm.ShowNewMatchPopup, s => ! s.Value));
             AddMatch.Subscribe(_ => ShowOrAddMatchPopUp());
-
-            StartMatch = new ReactiveCommand(this.WhenAny(vm => vm.ShowNewMatchPopup, s => s.Value));
-            StartMatch.Subscribe(_ => NavigagteToMatchScoreViewModel());
-
-            //Register for Save message from NewMatchControlViewModel
-            //MessageBus.Current.Listen<NewMatchControlViewModel>().InvokeCommand(StartMatch);
         }
 
+        private ReactiveList<MyMatchStats> _myMatchStats;
         public ReactiveList<MyMatchStats> MyMatchStats
         {
             get { return _myMatchStats; }
             set { this.RaiseAndSetIfChanged(ref _myMatchStats, value); }
         }
 
+        private Player _defaultPlayer;
         public Player DefaultPlayer
         {
             get { return _defaultPlayer; }
             set { this.RaiseAndSetIfChanged(ref _defaultPlayer, value); }
         }
 
+        private bool _showNewMatchPopup;
         public bool ShowNewMatchPopup
         {
             get { return _showNewMatchPopup; }
             set { this.RaiseAndSetIfChanged(ref _showNewMatchPopup, value); }
         }
 
+        private NewMatchControlViewModel _newMatchControlViewModel;
         public NewMatchControlViewModel NewMatchControlViewModel
         {
             get { return _newMatchControlViewModel; }
             set { this.RaiseAndSetIfChanged(ref _newMatchControlViewModel, value); }
         }
 
-        public IReactiveCommand AddMatch { get; protected set; }
-        public IReactiveCommand StartMatch { get; protected set; }
+        public IReactiveCommand AddMatch { get; set; }
         public string UrlPathSegment { get; private set; }
         public IScreen HostScreen { get; private set; }
-
-        private void NavigagteToMatchScoreViewModel()
-        {
-            // Use the viewmodel from the popup
-            HideAddMatchPopUp(null);
-            HostScreen.Router.Navigate.Execute(new MatchScoreViewModel(HostScreen));
-        }
-
+        
         private void ShowOrAddMatchPopUp()
         {
-            //ShowNewMatchPopup = true;
             HostScreen.Router.Navigate.Execute(new MatchScoreViewModel(HostScreen));
-        }
-
-        private void HideAddMatchPopUp(object o)
-        {
-            ShowNewMatchPopup = false;
         }
     }
 }

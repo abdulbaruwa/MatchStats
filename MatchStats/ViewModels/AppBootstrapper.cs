@@ -23,7 +23,7 @@ namespace MatchStats.ViewModels
             var resolver = RxApp.MutableResolver;
 
             resolver.Register(() => new MatchesPlayedView(), typeof(IViewFor<MatchesPlayedViewModel>), "FullScreenLandscape");
-            resolver.Register(() => new MatchesPlayedViewModel(), typeof(MatchesPlayedViewModel));
+            resolver.Register(() => new MatchesPlayedViewModel(), typeof(IMatchesPlayedViewModel));
 
             resolver.Register(() => new MatchScoreView(), typeof(IViewFor<MatchScoreViewModel>), "FullScreenLandscape");
             resolver.Register(() => new MatchScoreViewModel(), typeof(MatchScoreViewModel));
