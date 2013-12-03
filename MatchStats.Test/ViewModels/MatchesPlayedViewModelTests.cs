@@ -15,10 +15,15 @@ namespace MatchStats.Test.ViewModels
     public class MatchesPlayedViewModelTests
     {
         [TestMethod]
+        public void ShouldGetUserCredential()
+        {
+            IMatchesPlayedViewModel fixture = new MatchesPlayedViewModel();
+        }
+
+        [TestMethod]
         public void ShouldSaveUserCredentialToDisk()
         {
             IMatchesPlayedViewModel fixture = new MatchesPlayedViewModel();
-            fixture.
         }
     }
 }
