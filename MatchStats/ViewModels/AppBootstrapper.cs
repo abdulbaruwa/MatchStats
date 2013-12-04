@@ -12,11 +12,9 @@ namespace MatchStats.ViewModels
         void SaveCredentials(string userName);
     }
 
-
     [DataContract]
     public class AppBootstrapper : ReactiveObject, ILoginMethods
     {
-
         [DataMember]private RoutingState _router;
         public IRoutingState Router
         {
@@ -24,39 +22,49 @@ namespace MatchStats.ViewModels
             set { _router = (RoutingState) value; }
         }
 
+        public IMutableDependencyResolver Resolver { get; protected set; }
+
         public void SaveCredentials(string userName)
         {
             
         }
 
-        public AppBootstrapper()
+        public AppBootstrapper(IMutableDependencyResolver testResolver = null, IRoutingState router = null)
         {
-            Router = new RoutingState();
-            var resolver = RxApp.MutableResolver;
+            BlobCache.ApplicationName = "MatchStats";
+            if (testResolver == null)
+            {
+                Router = router ?? new RoutingState();
+                Resolver = testResolver ?? RxApp.MutableResolver;
+                Resolver.Register(() => new MatchesPlayedView(), typeof (IViewFor<MatchesPlayedViewModel>),"FullScreenLandscape");
+                Resolver.Register(() => new MatchesPlayedViewModel(), typeof (IMatchesPlayedViewModel));
 
-            resolver.Register(() => new MatchesPlayedView(), typeof(IViewFor<MatchesPlayedViewModel>), "FullScreenLandscape");
-            resolver.Register(() => new MatchesPlayedViewModel(), typeof(IMatchesPlayedViewModel));
+                Resolver.Register(() => new MatchScoreView(), typeof (IViewFor<MatchScoreViewModel>),"FullScreenLandscape");
+                Resolver.Register(() => new MatchScoreViewModel(), typeof (MatchScoreViewModel));
 
-            resolver.Register(() => new MatchScoreView(), typeof(IViewFor<MatchScoreViewModel>), "FullScreenLandscape");
-            resolver.Register(() => new MatchScoreViewModel(), typeof(MatchScoreViewModel));
-
-            resolver.RegisterConstant(this, typeof(IApplicationRootState));
-            resolver.RegisterConstant(this,typeof(IScreen));
-            resolver.RegisterConstant(this, typeof(ILoginMethods));
-
+                Resolver.RegisterConstant(this, typeof (IApplicationRootState));
+                Resolver.RegisterConstant(this, typeof (IScreen));
+                Resolver.RegisterConstant(this, typeof (ILoginMethods));
 #if DEBUG
-            var testBlobCache = new TestBlobCache();
-            resolver.RegisterConstant(testBlobCache,typeof(IBlobCache),"LOCALMACHINE");
-            resolver.RegisterConstant(testBlobCache,typeof(IBlobCache),"UserAccount");
-            resolver.RegisterConstant(testBlobCache,typeof(IBlobCache),"UserAccount");
-            resolver.RegisterConstant(testBlobCache,typeof(ISecureBlobCache));
+                var testBlobCache = new TestBlobCache();
+                Resolver.RegisterConstant(testBlobCache, typeof (IBlobCache), "LOCALMACHINE");
+                Resolver.RegisterConstant(testBlobCache, typeof (IBlobCache), "UserAccount");
+                Resolver.RegisterConstant(testBlobCache, typeof (IBlobCache), "UserAccount");
+                Resolver.RegisterConstant(testBlobCache, typeof (ISecureBlobCache));
 #else
-            resolver.RegisterConstant(BlobCache.Secure, typeof(ISecureBlobCache));
-            resolver.RegisterConstant(BlobCache.LocalMachine, typeof(IBlobCache));
-            resolver.RegisterConstant(BlobCache.UserAccount, typeof(IBlobCache));
+                resolver.RegisterConstant(BlobCache.Secure, typeof(ISecureBlobCache));
+                resolver.RegisterConstant(BlobCache.LocalMachine, typeof(IBlobCache));
+                resolver.RegisterConstant(BlobCache.UserAccount, typeof(IBlobCache));
 #endif
-            resolver.RegisterConstant(new MainPage(), typeof(IViewFor), "InitialPage");
+                Resolver.RegisterConstant(new MainPage(), typeof (IViewFor), "InitialPage");
+            }
+            else
+            {
+               Resolver = testResolver;
+            }
+            
             Router.Navigate.Execute(new MatchesPlayedViewModel(this));
+            //Router.Navigate.Execute(Resolver.get <IMatchesPlayedViewModel>());
         }
     }
 }

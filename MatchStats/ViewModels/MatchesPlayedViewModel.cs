@@ -11,6 +11,7 @@ namespace MatchStats.ViewModels
 
         ReactiveList<MyMatchStats> MyMatchStats { get; set; }
         NewMatchControlViewModel NewMatchControlViewModel { get; set; }
+        bool CredentialAuthenticated { get; set; }
         Player DefaultPlayer { get; set; }
         bool ShowNewMatchPopup { get; set; }
     }
@@ -27,6 +28,7 @@ namespace MatchStats.ViewModels
             // AddMatch Command is only fired when Popup is not being displayed
             AddMatch = new ReactiveCommand(this.WhenAny(vm => vm.ShowNewMatchPopup, s => ! s.Value));
             AddMatch.Subscribe(_ => ShowOrAddMatchPopUp());
+
         }
 
         private ReactiveList<MyMatchStats> _myMatchStats;
@@ -34,6 +36,14 @@ namespace MatchStats.ViewModels
         {
             get { return _myMatchStats; }
             set { this.RaiseAndSetIfChanged(ref _myMatchStats, value); }
+        }
+
+        private bool _credentialsAuthenticated;
+
+        public bool CredentialAuthenticated
+        {
+            get { return _credentialsAuthenticated; }
+            set { this.RaiseAndSetIfChanged(ref _credentialsAuthenticated, value); }
         }
 
         private Player _defaultPlayer;
