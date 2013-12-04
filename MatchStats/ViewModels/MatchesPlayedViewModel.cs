@@ -20,7 +20,7 @@ namespace MatchStats.ViewModels
     public class MatchesPlayedViewModel : ReactiveObject, IMatchesPlayedViewModel
     {
 
-        public MatchesPlayedViewModel(IScreen screen = null)
+        public MatchesPlayedViewModel(ILoginMethods loginMethods, IScreen screen = null)
         {
             HostScreen = screen ?? RxApp.DependencyResolver.GetService<IScreen>();
             UrlPathSegment = "MyMatchStats";
@@ -28,6 +28,7 @@ namespace MatchStats.ViewModels
             // AddMatch Command is only fired when Popup is not being displayed
             AddMatch = new ReactiveCommand(this.WhenAny(vm => vm.ShowNewMatchPopup, s => ! s.Value));
             AddMatch.Subscribe(_ => ShowOrAddMatchPopUp());
+            loginMethods.SaveCredentials(Token);
 
         }
 
@@ -44,6 +45,13 @@ namespace MatchStats.ViewModels
         {
             get { return _credentialsAuthenticated; }
             set { this.RaiseAndSetIfChanged(ref _credentialsAuthenticated, value); }
+        }
+
+        private string _token;
+        public string Token
+        {
+            get { return _token; }
+            set { this.RaiseAndSetIfChanged(ref _token, value); }
         }
 
         private Player _defaultPlayer;

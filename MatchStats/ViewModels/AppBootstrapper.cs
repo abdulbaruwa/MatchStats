@@ -9,7 +9,7 @@ namespace MatchStats.ViewModels
 {
     public interface ILoginMethods : IApplicationRootState
     {
-        void SaveCredentials(string userName);
+        void SaveCredentials(string userName = null);
     }
 
     [DataContract]
@@ -37,7 +37,7 @@ namespace MatchStats.ViewModels
                 Router = router ?? new RoutingState();
                 Resolver = testResolver ?? RxApp.MutableResolver;
                 Resolver.Register(() => new MatchesPlayedView(), typeof (IViewFor<MatchesPlayedViewModel>),"FullScreenLandscape");
-                Resolver.Register(() => new MatchesPlayedViewModel(), typeof (IMatchesPlayedViewModel));
+                Resolver.Register(() => new MatchesPlayedViewModel(this), typeof (IMatchesPlayedViewModel));
 
                 Resolver.Register(() => new MatchScoreView(), typeof (IViewFor<MatchScoreViewModel>),"FullScreenLandscape");
                 Resolver.Register(() => new MatchScoreViewModel(), typeof (MatchScoreViewModel));
@@ -60,11 +60,11 @@ namespace MatchStats.ViewModels
             }
             else
             {
-               Resolver = testResolver;
+                Resolver = testResolver;
+                Router = router ?? testResolver.GetService<IRoutingState>();
             }
-            
-            Router.Navigate.Execute(new MatchesPlayedViewModel(this));
-            //Router.Navigate.Execute(Resolver.get <IMatchesPlayedViewModel>());
+
+            Router.Navigate.Execute(Resolver.GetService<IMatchesPlayedViewModel>());
         }
     }
 }

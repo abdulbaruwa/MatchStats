@@ -32,7 +32,7 @@ namespace MatchStats.Test.ViewModels
         public IMutableDependencyResolver RegisterTestResolver()
         {
             var resolver = RxApp.MutableResolver;
-            resolver.Register(() => new MatchesPlayedViewModel(), typeof(IMatchesPlayedViewModel));
+            //resolver.Register(() => new MatchesPlayedViewModel(new AppBootstrapper()), typeof(IMatchesPlayedViewModel));
             resolver.Register(() => new RoutingState(), typeof(IRoutingState));
             resolver.Register(() => new TestScreen(), typeof(IScreen));
 
