@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reactive.Linq;
+using System.Reactive.Threading.Tasks;
+using Akavache;
+using MatchStats.Model;
 using MatchStats.ViewModels;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework.AppContainer;
@@ -24,9 +25,11 @@ namespace MatchStats.Test.ViewModels
 
             var testResolver = RxApp.DependencyResolver;
             var fixture = new MatchesPlayedViewModel(new AppBootstrapper(RegisterTestResolver()));
-            
-            //Assert that the user has been saved successfully into the cache.
-            Assert.IsTrue(fixture.CredentialAuthenticated, "Credentials not authenticated");
+
+            var testblobCache = testResolver.GetService<ISecureBlobCache>();
+            var tokenName = testblobCache.GetAllKeys().ToList().First();
+
+            Assert.AreEqual(tokenName,"Token", "Credentials token not found");
         }
 
         public IMutableDependencyResolver RegisterTestResolver()
@@ -35,6 +38,12 @@ namespace MatchStats.Test.ViewModels
             //resolver.Register(() => new MatchesPlayedViewModel(new AppBootstrapper()), typeof(IMatchesPlayedViewModel));
             resolver.Register(() => new RoutingState(), typeof(IRoutingState));
             resolver.Register(() => new TestScreen(), typeof(IScreen));
+            resolver.Register(() => new FakeUserSevice(), typeof(IUserService));
+            var testBlobCache = new TestBlobCache();
+            resolver.RegisterConstant(testBlobCache, typeof(IBlobCache), "LOCALMACHINE");
+            resolver.RegisterConstant(testBlobCache, typeof(IBlobCache), "UserAccount");
+            resolver.RegisterConstant(testBlobCache, typeof(IBlobCache), "UserAccount");
+            resolver.RegisterConstant(testBlobCache, typeof(ISecureBlobCache));
 
             return resolver;
 //            Resolver = testResolver ?? RxApp.MutableResolver;

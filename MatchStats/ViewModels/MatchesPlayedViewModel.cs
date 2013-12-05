@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Reactive.Threading.Tasks;
 using System.Runtime.Serialization;
+using Akavache;
 using MatchStats.Model;
 using ReactiveUI;
 
@@ -28,10 +30,19 @@ namespace MatchStats.ViewModels
             // AddMatch Command is only fired when Popup is not being displayed
             AddMatch = new ReactiveCommand(this.WhenAny(vm => vm.ShowNewMatchPopup, s => ! s.Value));
             AddMatch.Subscribe(_ => ShowOrAddMatchPopUp());
-            loginMethods.SaveCredentials(Token);
 
+            loginMethods.SaveCredentials(Token);
+            RxApp.MutableResolver.GetService<ISecureBlobCache>().GetObjectAsync<string>("Token")
+                .Subscribe(x => CredentialAuthenticated = true);
         }
 
+        private string _userName;
+        public string UserName
+        {
+            get { return _userName; }
+            set { this.RaiseAndSetIfChanged(ref _userName, value); }
+        }
+        
         private ReactiveList<MyMatchStats> _myMatchStats;
         public ReactiveList<MyMatchStats> MyMatchStats
         {
@@ -40,7 +51,6 @@ namespace MatchStats.ViewModels
         }
 
         private bool _credentialsAuthenticated;
-
         public bool CredentialAuthenticated
         {
             get { return _credentialsAuthenticated; }

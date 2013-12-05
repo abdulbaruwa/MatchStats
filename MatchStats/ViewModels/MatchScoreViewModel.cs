@@ -26,6 +26,7 @@ namespace MatchStats.ViewModels
             PlayerTwoSecondServe.Subscribe(_ => ShowAddMatchPopup());
             StartMatchCommand = new ReactiveCommand();
             StartMatchCommand.Subscribe(_ => StartMatch());
+
             MessageBus.Current.Listen<NewMatchControlViewModel>().InvokeCommand(StartMatchCommand);
         }
 

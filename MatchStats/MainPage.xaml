@@ -15,7 +15,7 @@
         </Grid.RowDefinitions>
 
         <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-            <TextBlock Text="My Cool App" />
+            <TextBlock Name="TestBanner"/>
         </StackPanel>
 
         <xaml:RoutedViewHost Grid.Row="1" x:Name="Router" />

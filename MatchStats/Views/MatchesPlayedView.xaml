@@ -57,21 +57,24 @@
     </Page.BottomAppBar>
 
     <Grid x:Name="MainPanel" Style="{StaticResource LayoutRootStyle}" Background="{StaticResource ApplicationPageBackgroundThemeBrush}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="641*"/>
+            <ColumnDefinition Width="726*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="140"/>
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid x:Name="DisableBackgroundBorder" Visibility="{Binding ShowNewMatchPopup, Converter={StaticResource BoolToVisibilityConverter}}" Background="LightGray" Grid.Row="0" Grid.RowSpan="2"></Grid>
+        <Grid x:Name="DisableBackgroundBorder" Visibility="{Binding ShowNewMatchPopup, Converter={StaticResource BoolToVisibilityConverter}}" Background="LightGray" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="2"></Grid>
 
         <!--<Popup HorizontalOffset="110" VerticalOffset="10"  IsOpen="{Binding ShowNewMatchPopup}" x:Name="AddMatchPoupup" Grid.Row="1" Width="1200" Margin="0,0,0,0">
             <controls:NewMatchUserControl x:Name="AddNewMatchControl"/>
         </Popup>-->
-        <controls1:CustomDialog x:FieldModifier="public" x:Name="AddMatchDialog" BackButtonVisibility="Visible" Title="Add Match">
+        <controls1:CustomDialog x:FieldModifier="public" x:Name="AddMatchDialog" BackButtonVisibility="Visible" Title="Add Match" Grid.ColumnSpan="2">
             <!--<controls:NewMatchUserControl x:Name="AddNewMatchControl"/>-->
             <StackPanel>
                 <TextBlock Margin="0,0,0,8" FontSize="14.6667" FontWeight="SemiLight" TextWrapping="Wrap">
-            Bacon ipsum dolor sit amet bacon ham drumstick strip steak, sausage frankfurter tenderloin turkey salami andouille bresaola. Venison salami prosciutto, pork belly turducken tri-tip spare ribs chicken strip steak fatback shankle tongue boudin andouille. Meatloaf salami pork ground round turkey jerky meatball ball tip, filet mignon fatback flank prosciutto shank. Turkey boudin ham hock, filet mignon tri-tip bresaola tongue venison spare ribs meatloaf flank beef pancetta. Leberkas turducken flank ground round biltong chuck bacon kielbasa. Beef pastrami meatball, short loin venison swine pork loin shank meatloaf spare ribs.
                 </TextBlock>
                 <CheckBox Margin="0,0,0,8" Foreground="White" Content="I agree to the Terms and Conditions of Bacon" />
                 <TextBlock Margin="0,0,0,8" FontSize="14.6667" FontWeight="SemiLight" Text="Enter your name for acceptance" />
@@ -83,7 +86,7 @@
             </StackPanel>
 
         </controls1:CustomDialog>
-        
+
         <!-- Horizontal scrolling grid used in most view states -->
         <GridView
             x:Name="itemGridView"
@@ -94,7 +97,7 @@
             SelectionMode="None"
             IsSwipeEnabled="false"
             IsItemClickEnabled="True"
-            ItemsSource="{Binding MyMatchStats}">
+            ItemsSource="{Binding MyMatchStats}" Grid.ColumnSpan="2">
             <GridView.ItemTemplate>
                 <DataTemplate>
                     <Grid HorizontalAlignment="Left" Width="350" Height="200">
@@ -198,7 +201,7 @@
         </GridView>
 
         <!-- Back button and page title -->
-        <Grid>
+        <Grid Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
@@ -215,8 +218,7 @@
             <TextBlock Text="Matches Played" Grid.Row="2"  Grid.Column="1" Style="{StaticResource PageSubHeaderTextStyleMainPage}"/>
 
             <StackPanel Grid.Column="1" Grid.Row="0" Margin="0,0,0,0" Orientation="Horizontal" HorizontalAlignment="Right">
-                <TextBlock x:Name="DefaultPlayerFullName" Text="{Binding Path=DefaultPlayer.FullName}" FontSize="18"
-                           HorizontalAlignment="Stretch" VerticalAlignment="Top" />
+                <TextBlock x:Name="DefaultPlayerFullName" Text="{Binding Path=DefaultPlayer.FullName}" FontSize="18" HorizontalAlignment="Stretch" VerticalAlignment="Top" />
                 <Image x:Name="smallImage1" Grid.Column="1" Margin="10,0,0,0" Visibility="Visible"
                        AutomationProperties.Name="SmallImage placeholder1" Width="46" Height="46"
                        Source="{Binding SmallImage, Mode=TwoWay}" HorizontalAlignment="Right" />

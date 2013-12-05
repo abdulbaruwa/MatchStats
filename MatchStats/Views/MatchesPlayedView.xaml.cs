@@ -10,11 +10,7 @@ namespace MatchStats.Views
     /// </summary>
     public sealed partial class MatchesPlayedView : IViewFor<MatchesPlayedViewModel>
     {
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-        }
-        
+
         public MatchesPlayedView()
         {
             this.InitializeComponent();

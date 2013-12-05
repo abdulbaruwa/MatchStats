@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Serialization;
+using Akavache;
 using MatchStats.Enums;
 using ReactiveUI;
 
@@ -20,6 +21,7 @@ namespace MatchStats.ViewModels
         public NewMatchControlViewModel()
         {
             SaveCommand = new ReactiveCommand();
+          
             SaveCommand.Subscribe(_ => SaveCommandImplementation());
         }
 
