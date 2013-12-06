@@ -85,6 +85,7 @@ namespace MatchStats.ViewModels
                 Resolver.Register(() => new MatchScoreView(), typeof (IViewFor<MatchScoreViewModel>), "FullScreenLandscape");
                 Resolver.Register(() => new MatchScoreViewModel(), typeof (MatchScoreViewModel));
                 Resolver.Register(() => new UserService(), typeof (IUserService));
+                Resolver.Register(() => new MatchStatsApi(), typeof (IMatchStatsApi));
 
                 Resolver.RegisterConstant(this, typeof (IApplicationRootState));
                 Resolver.RegisterConstant(this, typeof (IScreen));

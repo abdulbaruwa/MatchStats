@@ -34,6 +34,10 @@ namespace MatchStats.ViewModels
             loginMethods.SaveCredentials(Token);
             RxApp.MutableResolver.GetService<ISecureBlobCache>().GetObjectAsync<string>("Token")
                 .Subscribe(x => CredentialAuthenticated = true);
+
+            MyMatchStats = new ReactiveList<MyMatchStats>();
+            var matchStatsApi = RxApp.MutableResolver.GetService<IMatchStatsApi>();
+            matchStatsApi.FetchMatchStats().Subscribe(x => MyMatchStats.Add(x));
         }
 
         private string _userName;

@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
+using System.Threading.Tasks;
 using Akavache;
+using MatchStats.DesignTimeStuff;
 using MatchStats.Model;
 using MatchStats.ViewModels;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
@@ -32,13 +35,21 @@ namespace MatchStats.Test.ViewModels
             Assert.AreEqual(tokenName,"Token", "Credentials token not found");
         }
 
-        public IMutableDependencyResolver RegisterTestResolver()
+        [UITestMethod]
+        public void ShouldRetrieveSavedMatchStatsOnViewModelLoad()
+        {
+            var fixture = new MatchesPlayedViewModel(new AppBootstrapper(RegisterTestResolver()));
+            Assert.IsNotNull(fixture.MyMatchStats, "Match Stats not initialised");
+        }
+
+        private IMutableDependencyResolver RegisterTestResolver()
         {
             var resolver = RxApp.MutableResolver;
             //resolver.Register(() => new MatchesPlayedViewModel(new AppBootstrapper()), typeof(IMatchesPlayedViewModel));
             resolver.Register(() => new RoutingState(), typeof(IRoutingState));
             resolver.Register(() => new TestScreen(), typeof(IScreen));
             resolver.Register(() => new FakeUserSevice(), typeof(IUserService));
+            resolver.Register(() => new FakeMatchStatsApi(), typeof(IMatchStatsApi));
             var testBlobCache = new TestBlobCache();
             resolver.RegisterConstant(testBlobCache, typeof(IBlobCache), "LOCALMACHINE");
             resolver.RegisterConstant(testBlobCache, typeof(IBlobCache), "UserAccount");
@@ -65,6 +76,21 @@ namespace MatchStats.Test.ViewModels
 //            Resolver.RegisterConstant(testBlobCache,typeof(IBlobCache),"UserAccount");
 //            Resolver.RegisterConstant(testBlobCache,typeof(ISecureBlobCache));
 //#else
+        }
+    }
+
+    public class FakeMatchStatsApi : IMatchStatsApi
+    {
+        public void SaveMatchStats(IEnumerable<MyMatchStats> matchStats)
+        {
+            
+        }
+
+        public IObservable<MyMatchStats> FetchMatchStats()
+        {
+            var outputList = new ReactiveList<MyMatchStats>();
+            outputList.AddRange(new DummyDataBuilder().BuildMatchStatsForDesignTimeView());
+            return outputList.ToObservable();
         }
     }
 

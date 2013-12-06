@@ -18,6 +18,8 @@ namespace MatchStats.Model
         public bool DefaultPlayerWon { get; set; }
         public Tournament Tournament { get; set; }
         public MatchFormat MatchFormat { get; set; }
+        public Score Score { get; set; }
+        public int IndexWithinParentCollection { get; set; }
 
         public string DefaultPlayerWinLose
         {
@@ -29,8 +31,6 @@ namespace MatchStats.Model
             get { return DefaultPlayerWon ? "Won" : "Lost"; }
         }
 
-        public Score Score { get; set; }
-
         public string MatchScore
         {
             get
@@ -39,9 +39,6 @@ namespace MatchStats.Model
                        GetGameScoreText(Score.GameThree);
             }
         }
-
-
-        public int IndexWithinParentCollection { get; set; }
 
         private string GetGameScoreText(Game game)
         {

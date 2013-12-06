@@ -1,12 +1,41 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.System.UserProfile;
 using Windows.UI.Xaml.Media.Imaging;
+using Akavache;
+using ReactiveUI;
 
 namespace MatchStats.Model
 {
+    public interface IMatchStatsApi
+    {
+        void SaveMatchStats(IEnumerable<MyMatchStats> matchStats);
+        IObservable<MyMatchStats> FetchMatchStats();
+    }
+
+    public class MatchStatsApi : IMatchStatsApi
+    {
+        private IBlobCache _blobCache;
+        public MatchStatsApi(IBlobCache blocCache = null)
+        {
+            _blobCache = blocCache;
+        }
+
+        public void SaveMatchStats(IEnumerable<MyMatchStats> matchStats)
+        {
+            _blobCache.InsertObject("MyMatchStats", matchStats);
+        }
+
+        public IObservable<MyMatchStats> FetchMatchStats()
+        {
+            return _blobCache.GetObjectAsync<MyMatchStats>("MyMatchStats");
+        }
+    }
+
     public class UserService : IUserService
     {
         public async Task<string> GetCurrentUserAsync()

@@ -35,7 +35,6 @@ namespace MatchStats.ViewModels
             ShowAddMatchPopup();
         }
 
-
         private void ShowAddMatchPopup()
         {
             ShowHideMatchPopup = false;
