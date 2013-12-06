@@ -5,6 +5,7 @@ using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
 using System.Text.RegularExpressions;
 using Akavache;
+using MatchStats.DesignTimeStuff;
 using MatchStats.Model;
 using MatchStats.Views;
 using ReactiveUI;
@@ -47,8 +48,14 @@ namespace MatchStats.ViewModels
         public AppBootstrapper(IMutableDependencyResolver testResolver = null, IRoutingState router = null)
         {
             BlobCache.ApplicationName = "MatchStats";
+#if DEBUG
+            var matchStatsApi = new MatchStatsApi(new TestBlobCache());
+            matchStatsApi.SaveMatchStats(new DummyDataBuilder().BuildMatchStatsForDesignTimeView());
+#endif
+
             RegiserResolver(testResolver, router);
 
+           
             GetCredentials().Subscribe(
                 x =>
                 {
@@ -85,7 +92,6 @@ namespace MatchStats.ViewModels
                 Resolver.Register(() => new MatchScoreView(), typeof (IViewFor<MatchScoreViewModel>), "FullScreenLandscape");
                 Resolver.Register(() => new MatchScoreViewModel(), typeof (MatchScoreViewModel));
                 Resolver.Register(() => new UserService(), typeof (IUserService));
-                Resolver.Register(() => new MatchStatsApi(), typeof (IMatchStatsApi));
 
                 Resolver.RegisterConstant(this, typeof (IApplicationRootState));
                 Resolver.RegisterConstant(this, typeof (IScreen));
@@ -94,13 +100,13 @@ namespace MatchStats.ViewModels
                 var testBlobCache = new TestBlobCache();
                 Resolver.RegisterConstant(testBlobCache, typeof (IBlobCache), "LOCALMACHINE");
                 Resolver.RegisterConstant(testBlobCache, typeof (IBlobCache), "UserAccount");
-                Resolver.RegisterConstant(testBlobCache, typeof (IBlobCache), "UserAccount");
                 Resolver.RegisterConstant(testBlobCache, typeof (ISecureBlobCache));
 #else
                 resolver.RegisterConstant(BlobCache.Secure, typeof(ISecureBlobCache));
                 resolver.RegisterConstant(BlobCache.LocalMachine, typeof(IBlobCache));
                 resolver.RegisterConstant(BlobCache.UserAccount, typeof(IBlobCache));
 #endif
+                Resolver.Register(() => new MatchStatsApi(), typeof(IMatchStatsApi));
                 Resolver.RegisterConstant(this, typeof(AppBootstrapper));
                 Resolver.RegisterConstant(new MainPage(), typeof (IViewFor), "InitialPage");
             }

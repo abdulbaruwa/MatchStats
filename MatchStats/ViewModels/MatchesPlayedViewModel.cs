@@ -2,6 +2,7 @@
 using System.Reactive.Threading.Tasks;
 using System.Runtime.Serialization;
 using Akavache;
+using MatchStats.DesignTimeStuff;
 using MatchStats.Model;
 using ReactiveUI;
 
@@ -37,7 +38,19 @@ namespace MatchStats.ViewModels
 
             MyMatchStats = new ReactiveList<MyMatchStats>();
             var matchStatsApi = RxApp.MutableResolver.GetService<IMatchStatsApi>();
-            matchStatsApi.FetchMatchStats().Subscribe(x => MyMatchStats.Add(x));
+
+            matchStatsApi.FetchMatchStats().Subscribe(x =>
+            {
+                if (x != null)
+                {
+                    MyMatchStats.Add(x);
+                }
+            },
+                ex =>
+                {
+                    //It may be the first time we are running the App so Log and move on.
+                    this.Log().Info("No Match Stats available for user");
+                });
         }
 
         private string _userName;

@@ -22,7 +22,7 @@ namespace MatchStats.Model
         private IBlobCache _blobCache;
         public MatchStatsApi(IBlobCache blocCache = null)
         {
-            _blobCache = blocCache;
+            _blobCache = blocCache ?? RxApp.DependencyResolver.GetService<IBlobCache>("UserAccount");
         }
 
         public void SaveMatchStats(IEnumerable<MyMatchStats> matchStats)
