@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Reactive.Threading.Tasks;
 using System.Runtime.Serialization;
 using Akavache;
-using MatchStats.DesignTimeStuff;
 using MatchStats.Model;
 using ReactiveUI;
 

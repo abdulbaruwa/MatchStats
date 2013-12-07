@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace MatchStats.Test.ViewModels
             //if not already in the cache.
 
             var testResolver = RxApp.DependencyResolver;
-                var fixture = new MatchesPlayedViewModel(new AppBootstrapper(RegisterTestResolver()));
+            var fixture = new MatchesPlayedViewModel(new AppBootstrapper(RegisterTestResolver()));
 
             var testblobCache = testResolver.GetService<ISecureBlobCache>();
             var tokenName = testblobCache.GetAllKeys().ToList().First();
@@ -73,7 +74,17 @@ namespace MatchStats.Test.ViewModels
 
         IObservable<List<MyMatchStats>> IMatchStatsApi.FetchMatchStats()
         {
-            throw new NotImplementedException();
+            var outputList = new List<MyMatchStats>();
+            outputList.AddRange(new DummyDataBuilder().BuildMatchStatsForDesignTimeView());
+            //create Cold stream observable from output list. We need the whole list as an observable out put not the items in the list
+            IObservable<List<MyMatchStats>> observable = Observable.Create<List<MyMatchStats>>(o =>
+            {
+                o.OnNext(outputList);
+                o.OnCompleted();
+                return () => { };
+            });
+
+            return observable;
         }
 
         public IObservable<MyMatchStats> FetchMatchStats()
