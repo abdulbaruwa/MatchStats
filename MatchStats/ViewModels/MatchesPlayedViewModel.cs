@@ -22,7 +22,6 @@ namespace MatchStats.ViewModels
     [DataContract]
     public class MatchesPlayedViewModel : ReactiveObject, IMatchesPlayedViewModel
     {
-
         public MatchesPlayedViewModel(ILoginMethods loginMethods, IScreen screen = null)
         {
             HostScreen = screen ?? RxApp.DependencyResolver.GetService<IScreen>();
@@ -39,11 +38,12 @@ namespace MatchStats.ViewModels
             MyMatchStats = new ReactiveList<MyMatchStats>();
             var matchStatsApi = RxApp.MutableResolver.GetService<IMatchStatsApi>();
 
-            matchStatsApi.FetchMatchStats().Subscribe(x =>
+            var obser = matchStatsApi.FetchMatchStats();
+            obser.Subscribe(x =>
             {
                 if (x != null)
                 {
-                    MyMatchStats.Add(x);
+                    MyMatchStats.AddRange(x);
                 }
             },
                 ex =>
@@ -53,6 +53,7 @@ namespace MatchStats.ViewModels
                 });
         }
 
+        [DataMember]
         private string _userName;
         public string UserName
         {
@@ -60,6 +61,7 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _userName, value); }
         }
         
+        [DataMember]
         private ReactiveList<MyMatchStats> _myMatchStats;
         public ReactiveList<MyMatchStats> MyMatchStats
         {
@@ -67,6 +69,7 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _myMatchStats, value); }
         }
 
+        [DataMember]
         private bool _credentialsAuthenticated;
         public bool CredentialAuthenticated
         {
@@ -74,6 +77,7 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _credentialsAuthenticated, value); }
         }
 
+        [DataMember]
         private string _token;
         public string Token
         {
@@ -81,6 +85,7 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _token, value); }
         }
 
+        [DataMember]
         private Player _defaultPlayer;
         public Player DefaultPlayer
         {
@@ -88,6 +93,7 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _defaultPlayer, value); }
         }
 
+        [DataMember]
         private bool _showNewMatchPopup;
         public bool ShowNewMatchPopup
         {

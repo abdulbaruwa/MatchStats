@@ -20,14 +20,14 @@ namespace MatchStats.Test.ViewModels
     [TestClass]
     public class MatchesPlayedViewModelTests
     {
-        [UITestMethod]
+        [TestMethod]
         public void ShouldGetAndSaveUserCredentialToDisk()
         {
             //On instantiation the viewmodel should get the User and save to Cache
             //if not already in the cache.
 
             var testResolver = RxApp.DependencyResolver;
-            var fixture = new MatchesPlayedViewModel(new AppBootstrapper(RegisterTestResolver()));
+                var fixture = new MatchesPlayedViewModel(new AppBootstrapper(RegisterTestResolver()));
 
             var testblobCache = testResolver.GetService<ISecureBlobCache>();
             var tokenName = testblobCache.GetAllKeys().ToList().First();
@@ -35,7 +35,7 @@ namespace MatchStats.Test.ViewModels
             Assert.AreEqual(tokenName,"Token", "Credentials token not found");
         }
 
-        [UITestMethod]
+        [TestMethod]
         public void ShouldRetrieveSavedMatchStatsOnViewModelLoad()
         {
             var fixture = new MatchesPlayedViewModel(new AppBootstrapper(RegisterTestResolver()));
@@ -53,29 +53,9 @@ namespace MatchStats.Test.ViewModels
             var testBlobCache = new TestBlobCache();
             resolver.RegisterConstant(testBlobCache, typeof(IBlobCache), "LOCALMACHINE");
             resolver.RegisterConstant(testBlobCache, typeof(IBlobCache), "UserAccount");
-            resolver.RegisterConstant(testBlobCache, typeof(IBlobCache), "UserAccount");
             resolver.RegisterConstant(testBlobCache, typeof(ISecureBlobCache));
 
             return resolver;
-//            Resolver = testResolver ?? RxApp.MutableResolver;
-
-//            Resolver.Register(() => new MatchesPlayedView(), typeof(IViewFor<MatchesPlayedViewModel>), "FullScreenLandscape");
-//            Resolver.Register(() => new MatchesPlayedViewModel(), typeof(IMatchesPlayedViewModel));
-
-//            Resolver.Register(() => new MatchScoreView(), typeof(IViewFor<MatchScoreViewModel>), "FullScreenLandscape");
-//            Resolver.Register(() => new MatchScoreViewModel(), typeof(MatchScoreViewModel));
-
-//            Resolver.RegisterConstant(this, typeof(IApplicationRootState));
-//            Resolver.RegisterConstant(this,typeof(IScreen));
-//            Resolver.RegisterConstant(this, typeof(ILoginMethods));
-
-//#if DEBUG
-//            var testBlobCache = new TestBlobCache();
-//            Resolver.RegisterConstant(testBlobCache,typeof(IBlobCache),"LOCALMACHINE");
-//            Resolver.RegisterConstant(testBlobCache,typeof(IBlobCache),"UserAccount");
-//            Resolver.RegisterConstant(testBlobCache,typeof(IBlobCache),"UserAccount");
-//            Resolver.RegisterConstant(testBlobCache,typeof(ISecureBlobCache));
-//#else
         }
     }
 
@@ -84,6 +64,16 @@ namespace MatchStats.Test.ViewModels
         public void SaveMatchStats(IEnumerable<MyMatchStats> matchStats)
         {
             
+        }
+
+        public void SaveMatchStats(List<MyMatchStats> matchStats)
+        {
+            throw new NotImplementedException();
+        }
+
+        IObservable<List<MyMatchStats>> IMatchStatsApi.FetchMatchStats()
+        {
+            throw new NotImplementedException();
         }
 
         public IObservable<MyMatchStats> FetchMatchStats()

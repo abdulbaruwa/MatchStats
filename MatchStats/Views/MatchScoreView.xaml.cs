@@ -10,7 +10,7 @@ namespace MatchStats.Views
         public MatchScoreView()
         {
             //ControlViewModel = new MatchScoreViewModel();
-            ViewModel =  new ViewModelLocator().MatchScoreViewModel;
+            //ViewModel =  new ViewModelLocator().MatchScoreViewModel;
             this.InitializeComponent();
             this.OneWayBind(ViewModel, x => x.ScorePoints, x => x.PlayerOneCommands.ItemsSource);
             this.OneWayBind(ViewModel, x => x.ScorePoints, x => x.PlayerTwoCommands.ItemsSource);
@@ -24,7 +24,6 @@ namespace MatchStats.Views
             this.Bind(ViewModel, x => x.PlayerTwoThirdSet, x => x.PlayerTwoThirdSet.Text);
             this.Bind(ViewModel, x => x.PlayerOnesName, x => x.PlayerOnesName.Text);
             this.Bind(ViewModel, x => x.PlayerTwosName, x => x.PlayerTwosName.Text);
-            //this.BindCommand(ViewModel, x => x.NavToHomePageCommand, x => x.backButton);
             this.OneWayBind(ViewModel, x => x.HostScreen.Router.NavigateBack, x => x.backButton.Command);
             this.Bind(ViewModel, x => x.ShowHideMatchPopup, x => x.AddMatchPoupup.IsOpen);
             this.BindCommand(ViewModel, x => x.PlayerTwoSecondServe);

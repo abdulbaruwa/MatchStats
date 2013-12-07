@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Runtime.InteropServices;
@@ -33,7 +34,7 @@ namespace MatchStats.ViewModels
         public void SaveCredentials(string userName = null)
         {
             var username = userName ?? Token;
-            var blobCache = RxApp.DependencyResolver.GetService<ISecureBlobCache>();
+            var blobCache = RxApp.MutableResolver.GetService<ISecureBlobCache>();
             blobCache.InsertObject("Token", username);
         }
 
@@ -44,23 +45,16 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _userloginSaved, value); }
         }
 
-
         public AppBootstrapper(IMutableDependencyResolver testResolver = null, IRoutingState router = null)
         {
             BlobCache.ApplicationName = "MatchStats";
-#if DEBUG
-            var matchStatsApi = new MatchStatsApi(new TestBlobCache());
-            matchStatsApi.SaveMatchStats(new DummyDataBuilder().BuildMatchStatsForDesignTimeView());
-#endif
-
             RegiserResolver(testResolver, router);
-
-           
+ 
             GetCredentials().Subscribe(
                 x =>
                 {
                     Token = x;
-                    Router.Navigate.Execute(Resolver.GetService<IMatchesPlayedViewModel>());
+                    Router.Navigate.Execute(new MatchesPlayedViewModel(this));
                 }, ex =>
                 {
                     this.Log().WarnException("Failed to get the logged in user", ex);
@@ -86,27 +80,32 @@ namespace MatchStats.ViewModels
             {
                 Router = router ?? new RoutingState();
                 Resolver = testResolver ?? RxApp.MutableResolver;
-                Resolver.Register(() => new MatchesPlayedView(), typeof (IViewFor<MatchesPlayedViewModel>),"FullScreenLandscape");
-                Resolver.Register(() => new MatchesPlayedViewModel(this), typeof (IMatchesPlayedViewModel));
+                Resolver.RegisterConstant(this, typeof(IApplicationRootState));
+                Resolver.RegisterConstant(this, typeof(IScreen));
+                Resolver.RegisterConstant(this, typeof(ILoginMethods));
 
-                Resolver.Register(() => new MatchScoreView(), typeof (IViewFor<MatchScoreViewModel>), "FullScreenLandscape");
+                Resolver.Register(() => new MatchStatsApi(), typeof(IMatchStatsApi));
+
+                Resolver.Register(() => new MatchesPlayedViewModel(this), typeof(MatchesPlayedViewModel));
+                Resolver.Register(() => new MatchesPlayedView(), typeof (IViewFor<MatchesPlayedViewModel>));
+
                 Resolver.Register(() => new MatchScoreViewModel(), typeof (MatchScoreViewModel));
+                Resolver.Register(() => new MatchScoreView(), typeof (IViewFor<MatchScoreViewModel>));
                 Resolver.Register(() => new UserService(), typeof (IUserService));
 
-                Resolver.RegisterConstant(this, typeof (IApplicationRootState));
-                Resolver.RegisterConstant(this, typeof (IScreen));
-                Resolver.RegisterConstant(this, typeof (ILoginMethods));
+
 #if DEBUG
                 var testBlobCache = new TestBlobCache();
                 Resolver.RegisterConstant(testBlobCache, typeof (IBlobCache), "LOCALMACHINE");
                 Resolver.RegisterConstant(testBlobCache, typeof (IBlobCache), "UserAccount");
                 Resolver.RegisterConstant(testBlobCache, typeof (ISecureBlobCache));
+                var matchStatsApi = Resolver.GetService<IMatchStatsApi>();
+                matchStatsApi.SaveMatchStats(new DummyDataBuilder().BuildMatchStatsForDesignTimeView().ToList());
 #else
                 resolver.RegisterConstant(BlobCache.Secure, typeof(ISecureBlobCache));
                 resolver.RegisterConstant(BlobCache.LocalMachine, typeof(IBlobCache));
                 resolver.RegisterConstant(BlobCache.UserAccount, typeof(IBlobCache));
 #endif
-                Resolver.Register(() => new MatchStatsApi(), typeof(IMatchStatsApi));
                 Resolver.RegisterConstant(this, typeof(AppBootstrapper));
                 Resolver.RegisterConstant(new MainPage(), typeof (IViewFor), "InitialPage");
             }
@@ -114,6 +113,7 @@ namespace MatchStats.ViewModels
             {
                 Resolver = testResolver;
                 Router = router ?? testResolver.GetService<IRoutingState>();
+                var asd = testResolver.GetService<ISecureBlobCache>();
             }
         }
     }

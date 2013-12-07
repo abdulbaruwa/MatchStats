@@ -14,9 +14,8 @@ namespace MatchStats.Views
         public MatchesPlayedView()
         {
             this.InitializeComponent();
-           // ViewModel = new ViewModelLocator().MatchesPlayedViewModel;
-           // DataContext = ViewModel;
             this.BindCommand(ViewModel, x => x.AddMatch);
+            this.Bind(ViewModel, x => x.MyMatchStats, x => x.itemGridView.ItemsSource);
             this.Bind(ViewModel, x => x.ShowNewMatchPopup, x => x.AddMatchDialog.IsOpen);
         }
 

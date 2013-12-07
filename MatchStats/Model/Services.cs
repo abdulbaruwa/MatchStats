@@ -13,8 +13,8 @@ namespace MatchStats.Model
 {
     public interface IMatchStatsApi
     {
-        void SaveMatchStats(IEnumerable<MyMatchStats> matchStats);
-        IObservable<MyMatchStats> FetchMatchStats();
+        void SaveMatchStats(List<MyMatchStats> matchStats);
+        IObservable<List<MyMatchStats>> FetchMatchStats();
     }
 
     public class MatchStatsApi : IMatchStatsApi
@@ -25,14 +25,17 @@ namespace MatchStats.Model
             _blobCache = blocCache ?? RxApp.DependencyResolver.GetService<IBlobCache>("UserAccount");
         }
 
-        public void SaveMatchStats(IEnumerable<MyMatchStats> matchStats)
+        public void SaveMatchStats(List<MyMatchStats> matchStats)
         {
             _blobCache.InsertObject("MyMatchStats", matchStats);
+            _blobCache.InsertObject("Stuff","MyData");
+            var test = _blobCache.GetAllKeys();
         }
 
-        public IObservable<MyMatchStats> FetchMatchStats()
+        public IObservable<List<MyMatchStats>> FetchMatchStats()
         {
-            return _blobCache.GetObjectAsync<MyMatchStats>("MyMatchStats");
+            var observableRes = _blobCache.GetObjectAsync<List<MyMatchStats>>("MyMatchStats");
+            return observableRes;
         }
     }
 
