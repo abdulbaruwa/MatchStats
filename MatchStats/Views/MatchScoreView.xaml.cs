@@ -1,5 +1,4 @@
-﻿using System.Xml.Linq;
-using Windows.UI.Xaml;
+﻿using Windows.UI.Xaml;
 using MatchStats.ViewModels;
 using ReactiveUI;
 
@@ -9,8 +8,6 @@ namespace MatchStats.Views
     {
         public MatchScoreView()
         {
-            //ControlViewModel = new MatchScoreViewModel();
-            //ViewModel =  new ViewModelLocator().MatchScoreViewModel;
             this.InitializeComponent();
             this.OneWayBind(ViewModel, x => x.ScorePoints, x => x.PlayerOneCommands.ItemsSource);
             this.OneWayBind(ViewModel, x => x.ScorePoints, x => x.PlayerTwoCommands.ItemsSource);
@@ -29,20 +26,19 @@ namespace MatchStats.Views
             this.BindCommand(ViewModel, x => x.PlayerTwoSecondServe);
         }
 
+        object IViewFor.ViewModel
+        {
+            get { return ViewModel; }
+            set { ViewModel = (MatchScoreViewModel) value; }
+        }
+
         public static readonly DependencyProperty ViewModelProperty =
-            DependencyProperty.Register("ControlViewModel", typeof (MatchScoreViewModel), typeof (MatchScoreView), new PropertyMetadata(null));
+            DependencyProperty.Register("ViewModel", typeof (MatchScoreViewModel), typeof (MatchScoreView), new PropertyMetadata(null));
 
         public MatchScoreViewModel ViewModel
         {
             get { return (MatchScoreViewModel) GetValue(ViewModelProperty); }
             set { SetValue(ViewModelProperty, value); }
-        } 
-
-        object IViewFor.ViewModel
-        {
-            get { return ViewModel; }
-            set { ViewModel =(MatchScoreViewModel) value; }
         }
-
     }
 }

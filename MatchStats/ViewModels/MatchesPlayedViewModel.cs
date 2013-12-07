@@ -112,7 +112,10 @@ namespace MatchStats.ViewModels
         
         private void ShowOrAddMatchPopUp()
         {
-            HostScreen.Router.Navigate.Execute(RxApp.DependencyResolver.GetService<MatchScoreViewModel>());// new MatchScoreViewModel(HostScreen));
+            var matchScoreVm =RxApp.DependencyResolver.GetService<MatchScoreViewModel>();
+            matchScoreVm.ShowHideMatchPopup = true;
+            matchScoreVm.PlayerTwosName = "Chris Joseph";
+            HostScreen.Router.Navigate.Execute(matchScoreVm);// new MatchScoreViewModel(HostScreen));
         }
     }
 }

@@ -20,7 +20,6 @@ namespace MatchStats.ViewModels
         {
             ScorePoints = new ReactiveList<ScorePoint>();
             HostScreen = screen ?? RxApp.DependencyResolver.GetService<IScreen>();
-            ShowHideMatchPopup = true;
             UrlPathSegment = "MatchScore";
             NavToHomePageCommand = new ReactiveCommand();
             NavToHomePageCommand.Subscribe(_ => NavigateBackToHomePage());
@@ -47,6 +46,7 @@ namespace MatchStats.ViewModels
             HostScreen.Router.NavigateBack.Execute(null);
         }
 
+        [DataMember]
         private string _playerOneCurrentGame = "";
         public string PlayerOneCurrentGame
         {
@@ -54,6 +54,7 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _playerOneCurrentGame, value); }
         }
 
+        [DataMember]
         private string _playerTwoCurrentGame = "";
         public string PlayerTwoCurrentGame
         {
@@ -61,6 +62,7 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _playerTwoCurrentGame, value); }
         }
 
+        [DataMember]
         private string _playerOnesName = "";
         public string PlayerOnesName
         {
@@ -68,6 +70,7 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _playerOnesName, value); }
         }
 
+        [DataMember]
         private string _playerTwosName = "";
         public string PlayerTwosName
         {
@@ -75,6 +78,7 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _playerTwosName, value); }
         }
 
+        [DataMember]
         private string _playerTwoThirdSet = "";
         public string PlayerTwoThirdSet
         {
@@ -82,6 +86,7 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _playerTwoThirdSet, value); }
         }
 
+        [DataMember]
         private string _playerOneThirdSet = "";
         public string PlayerOneThirdSet
         {
@@ -89,6 +94,7 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _playerOneThirdSet, value); }
         }
 
+        [DataMember]
         private string _playerOneSecondSet = "";
         public string PlayerOneSecondSet
         {
@@ -96,6 +102,7 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _playerOneSecondSet, value); }
         }
 
+        [DataMember]
         private string _playerTwoSecondSet = "";
         public string PlayerTwoSecondSet
         {
@@ -103,6 +110,7 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _playerTwoSecondSet, value); }
         }
 
+        [DataMember]
         private string _playerOneFirstSet = "";
         public string PlayerOneFirstSet
         {
@@ -110,6 +118,7 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _playerOneFirstSet, value); }
         }
 
+        [DataMember]
         private string _playerTwoFirstSet = "";
         public string PlayerTwoFirstSet
         {
@@ -117,6 +126,7 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _playerTwoFirstSet, value); }
         }
 
+        [DataMember]
         private bool _showHideMatchPopup;
         public bool ShowHideMatchPopup
         {
@@ -124,6 +134,7 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _showHideMatchPopup, value); }
         }
 
+        [DataMember]
         private NewMatchControlViewModel _newMatchControlViewModel;
         public NewMatchControlViewModel NewMatchControlViewModel
         {
