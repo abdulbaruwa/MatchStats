@@ -112,7 +112,7 @@ namespace MatchStats.ViewModels
         
         private void ShowOrAddMatchPopUp()
         {
-            HostScreen.Router.Navigate.Execute(new MatchScoreViewModel(HostScreen));
+            HostScreen.Router.Navigate.Execute(RxApp.DependencyResolver.GetService<MatchScoreViewModel>());// new MatchScoreViewModel(HostScreen));
         }
     }
 }

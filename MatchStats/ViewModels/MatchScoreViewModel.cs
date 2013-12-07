@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using MatchStats.Model;
 using ReactiveUI;
 using ReactiveUI.Mobile;
+using WinRTXamlToolkit.Controls;
 
 namespace MatchStats.ViewModels
 {
@@ -19,6 +20,7 @@ namespace MatchStats.ViewModels
         {
             ScorePoints = new ReactiveList<ScorePoint>();
             HostScreen = screen ?? RxApp.DependencyResolver.GetService<IScreen>();
+            ShowHideMatchPopup = true;
             UrlPathSegment = "MatchScore";
             NavToHomePageCommand = new ReactiveCommand();
             NavToHomePageCommand.Subscribe(_ => NavigateBackToHomePage());
