@@ -2,8 +2,9 @@
 
 namespace MatchStats.Model
 {
-    public class NewMatch
+    public class Match
     {
+        public Guid MatchGuid { get; protected set; }
         public DateTime MatchTime { get; set; }
         public Player PlayerOne { get; set; }
         public Player PlayerTwo { get; set; }

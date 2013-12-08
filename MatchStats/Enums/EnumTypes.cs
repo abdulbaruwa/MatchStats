@@ -5,7 +5,6 @@ namespace MatchStats.Enums
     public enum FinalSetFormats
     {
         [Display(Name = "Normal")] Normal,
-
         [Display(Name = "10 Point Championship Tie Break")] TenPointChampionShipTieBreak
     }
 

@@ -1,10 +1,7 @@
 ﻿using System;
-using System.Linq.Expressions;
 using System.Runtime.Serialization;
 using MatchStats.Model;
 using ReactiveUI;
-using ReactiveUI.Mobile;
-using WinRTXamlToolkit.Controls;
 
 namespace MatchStats.ViewModels
 {
@@ -13,7 +10,6 @@ namespace MatchStats.ViewModels
     {
         public ReactiveList<ScorePoint> ScorePoints { get; protected set; }
         public IReactiveCommand NavToHomePageCommand { get; protected set; }
-        public IReactiveCommand PlayerTwoSecondServe { get; protected set; }
         public IReactiveCommand StartMatchCommand { get; protected set; }
 
         public MatchScoreViewModel(IScreen screen = null)
@@ -23,20 +19,13 @@ namespace MatchStats.ViewModels
             UrlPathSegment = "MatchScore";
             NavToHomePageCommand = new ReactiveCommand();
             NavToHomePageCommand.Subscribe(_ => NavigateBackToHomePage());
-            PlayerTwoSecondServe = new ReactiveCommand();
-            PlayerTwoSecondServe.Subscribe(_ => ShowAddMatchPopup());
             StartMatchCommand = new ReactiveCommand();
-            StartMatchCommand.Subscribe(_ => StartMatch());
+            StartMatchCommand.Subscribe(StartMatch);
 
             MessageBus.Current.Listen<NewMatchControlViewModel>().InvokeCommand(StartMatchCommand);
         }
 
-        private void StartMatch()
-        {
-            ShowAddMatchPopup();
-        }
-
-        private void ShowAddMatchPopup()
+        private void StartMatch(object param)
         {
             ShowHideMatchPopup = false;
         }

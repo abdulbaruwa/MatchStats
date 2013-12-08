@@ -126,7 +126,7 @@
     <Compile Include="DesignTimeStuff\DummyDataBuilder.cs" />
     <Compile Include="Enums\EnumTypes.cs" />
     <Compile Include="Model\MyMatchStats.cs" />
-    <Compile Include="Model\NewMatch.cs" />
+    <Compile Include="Model\Match.cs" />
     <Compile Include="ViewModels\AppBootstrapper.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
