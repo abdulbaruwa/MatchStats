@@ -22,6 +22,7 @@ namespace MatchStats.Views
             this.Bind(ViewModel, x => x.PlayerOnesName, x => x.PlayerOnesName.Text);
             this.Bind(ViewModel, x => x.PlayerTwosName, x => x.PlayerTwosName.Text);
             this.OneWayBind(ViewModel, x => x.HostScreen.Router.NavigateBack, x => x.backButton.Command);
+            this.Bind(ViewModel, x => x.NewMatchControlViewModel, x => x.AddNewMatchControl.ViewModel);
             this.Bind(ViewModel, x => x.ShowHideMatchPopup, x => x.AddMatchPoupup.IsOpen);
         }
 

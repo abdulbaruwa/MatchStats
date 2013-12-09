@@ -8,14 +8,12 @@ namespace MatchStats.Controls
     {
         public NewMatchUserControl()
         {
-            ViewModel = new ViewModelLocator().NewMatchControlViewModel;
             this.InitializeComponent();
             this.BindCommand(ViewModel, x => x.SaveCommand);
-            this.DataContext = ViewModel;
-        //    this.Bind(ViewModel, x => x.FinalSet, x => x.FinalSetFormat.DataContext);
+            this.Bind(ViewModel, x => x.PlayerTwoFirstName, x => x.PlayerTwoFirstName.Text);
         }
 
-        public static readonly DependencyProperty ControlViewModelProperty = DependencyProperty.Register("ControlControlViewModel",
+        public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register("ViewModel",
                                                                                                 typeof(NewMatchControlViewModel),
                                                                                                 typeof(NewMatchUserControl),
                                                                                                 new PropertyMetadata(null));
@@ -28,8 +26,8 @@ namespace MatchStats.Controls
 
         public NewMatchControlViewModel ViewModel
         {
-            get { return (NewMatchControlViewModel) GetValue(ControlViewModelProperty); }
-            set { SetValue(ControlViewModelProperty, value); }
+            get { return (NewMatchControlViewModel)GetValue(ViewModelProperty); }
+            set { SetValue(ViewModelProperty, value); }
         }
     }
 }

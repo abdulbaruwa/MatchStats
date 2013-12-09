@@ -21,7 +21,7 @@ namespace MatchStats.ViewModels
             NavToHomePageCommand.Subscribe(_ => NavigateBackToHomePage());
             StartMatchCommand = new ReactiveCommand();
             StartMatchCommand.Subscribe(StartMatch);
-
+            NewMatchControlViewModel = RxApp.DependencyResolver.GetService<NewMatchControlViewModel>();
             MessageBus.Current.Listen<NewMatchControlViewModel>().InvokeCommand(StartMatchCommand);
         }
 

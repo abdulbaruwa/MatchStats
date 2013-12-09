@@ -90,8 +90,9 @@ namespace MatchStats.ViewModels
                 Resolver.Register(() => new MatchesPlayedViewModel(this), typeof(MatchesPlayedViewModel));
                 Resolver.Register(() => new MatchesPlayedView(), typeof (IViewFor<MatchesPlayedViewModel>));
 
-                //Resolver.Register(() => new NewMatchControlViewModel(), typeof(NewMatchControlViewModel));
-                //Resolver.Register(() => new NewMatchUserControl(), typeof(IViewFor<NewMatchControlViewModel>));
+                Resolver.Register(() => new NewMatchControlViewModel(), typeof(NewMatchControlViewModel));
+                Resolver.Register(() => new NewMatchUserControl(), typeof(IViewFor<NewMatchControlViewModel>));
+
                 Resolver.Register(() => new MatchScoreViewModel(), typeof(MatchScoreViewModel));
                 Resolver.Register(() => new MatchScoreView(), typeof (IViewFor<MatchScoreViewModel>));
                 Resolver.Register(() => new UserService(), typeof (IUserService));
