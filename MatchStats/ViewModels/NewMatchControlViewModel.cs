@@ -22,7 +22,6 @@ namespace MatchStats.ViewModels
         private FinalSetFormats _finalSetFormats;
         public NewMatchControlViewModel()
         {
-            //SaveCommand = new ReactiveCommand(IsValidForSave());
             SaveCommand = new ReactiveCommand();
             SaveCommand.Subscribe(_ => SaveCommandImplementation());
         }
@@ -99,63 +98,63 @@ namespace MatchStats.ViewModels
         }
 
         [DataMember]
-        private string _playerOneFirstName;
+        private string _playerOneFirstName = ""; 
         public string PlayerOneFirstName
         {
             get { return _playerOneFirstName; }
             set { this.RaiseAndSetIfChanged(ref _playerOneFirstName, value); }
         }
 
-        [DataMember] private string _playerOneLastName;
+        [DataMember] private string _playerOneLastName = "";
         public string PlayerOneLastName
         {
             get { return _playerOneLastName; }
             set { this.RaiseAndSetIfChanged(ref _playerOneLastName, value); }
         }
 
-        [DataMember] private string _playerTwoFirstName;
+        [DataMember] private string _playerTwoFirstName ="";
         public string PlayerTwoFirstName
         {
             get { return _playerTwoFirstName; }
             set { this.RaiseAndSetIfChanged(ref _playerTwoFirstName, value); }
         }
 
-        [DataMember] private string _playerTwoLastName;
+        [DataMember] private string _playerTwoLastName = "";
         public string PlayerTwoLastName
         {
             get { return _playerTwoLastName; }
             set { this.RaiseAndSetIfChanged(ref _playerTwoLastName, value); }
         }
 
-        [DataMember] private string _selectedAgeGroup;
+        [DataMember] private string _selectedAgeGroup = "";
         public string SelectedAgeGroup
         {
             get { return _selectedAgeGroup; }
             set { this.RaiseAndSetIfChanged(ref _selectedAgeGroup, value); }
         }
 
-        [DataMember] private string _selectedFinalSetFormat;
+        [DataMember] private string _selectedFinalSetFormat = "";
         public string SelectedFinalSetFormat
         {
             get { return _selectedFinalSetFormat; }
             set { this.RaiseAndSetIfChanged(ref _selectedFinalSetFormat, value); }
         }
 
-        [DataMember] private string _selectedSetsFormat;
+        [DataMember] private string _selectedSetsFormat =  "";
         public string SelectedSetsFormat
         {
             get { return _selectedSetsFormat; }
             set { this.RaiseAndSetIfChanged(ref _selectedSetsFormat, value); }
         }
 
-        [DataMember] private string _selectedDueceFormat;
+        [DataMember] private string _selectedDueceFormat = "";
         public string SelectedDueceFormat
         {
             get { return _selectedDueceFormat; }
             set { this.RaiseAndSetIfChanged(ref _selectedDueceFormat, value); }
         }
 
-        [DataMember] private string _selecedGrade;
+        [DataMember] private string _selecedGrade  = "";
         public string SelectedGrade
         {
             get { return _selecedGrade; }
