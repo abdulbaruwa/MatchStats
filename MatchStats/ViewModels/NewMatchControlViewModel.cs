@@ -22,7 +22,7 @@ namespace MatchStats.ViewModels
         private FinalSetFormats _finalSetFormats;
         public NewMatchControlViewModel()
         {
-            SaveCommand = new ReactiveCommand();
+            SaveCommand = new ReactiveCommand(IsValidForSave());
             SaveCommand.Subscribe(_ => SaveCommandImplementation());
         }
 
@@ -35,15 +35,13 @@ namespace MatchStats.ViewModels
         {
             //Combine change notification for required fields and push to SaveCommand when valid.
             return this.WhenAny(
-                x => x.SelectedDueceFormat,
                 x => x.SelectedFinalSetFormat,
                 x => x.UseDefaultPlayer,
                 x => x.PlayerOneFirstName,
                 x => x.PlayerTwoFirstName,
-                (duece, finalset, defaultplayer, playerOneFname, playertwoFname) =>
+                (finalset, defaultplayer, playerOneFname, playertwoFname) =>
                 (
                     ! string.IsNullOrEmpty(finalset.Value) &&
-                    ! string.IsNullOrEmpty(duece.Value) &&
                     (defaultplayer.Value == true || (! string.IsNullOrEmpty(playerOneFname.Value))) &&
                     ! string.IsNullOrEmpty(playertwoFname.Value)
 

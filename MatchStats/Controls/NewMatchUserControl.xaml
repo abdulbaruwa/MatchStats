@@ -118,7 +118,7 @@
         <StackPanel Grid.Column="1" Grid.Row="1" Style="{StaticResource StackpanelAddMatchControl}" Margin="0,0,20,0">
             <TextBlock Text="Player Two" Margin="0,-10,5,10" Style="{StaticResource SubHeaderTextStyleAddMatchControl}"/>
             <controls:WatermarkTextBox Name="PlayerTwoFirstName" WatermarkText="First Name" Margin="0,27,5,5"/>
-            <controls:WatermarkTextBox Name="PlayerTwoSurname" WatermarkText="Last Name" Margin="0,0,5,5"/>
+            <controls:WatermarkTextBox Name="PlayerTwoLastName" WatermarkText="Last Name" Margin="0,0,5,5"/>
             <controls:WatermarkTextBox Name="PlayerTwoRating" WatermarkText="Rating" Margin="0,0,5,5"/>
 
         </StackPanel>

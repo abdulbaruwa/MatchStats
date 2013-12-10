@@ -22,7 +22,7 @@ namespace MatchStats.ViewModels
             StartMatchCommand = new ReactiveCommand();
             StartMatchCommand.Subscribe(StartMatch);
             NewMatchControlViewModel = RxApp.DependencyResolver.GetService<NewMatchControlViewModel>();
-            MessageBus.Current.Listen<NewMatchControlViewModel>().InvokeCommand(StartMatchCommand);
+            MessageBus.Current.Listen<Match>().InvokeCommand(StartMatchCommand);
         }
 
         private void StartMatch(object param)
