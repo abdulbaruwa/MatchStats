@@ -21,9 +21,9 @@
     </Page.Resources>
 
     <Grid>
-        <Popup Height="580" Width="600"  HorizontalOffset="1" VerticalOffset="10"  IsOpen="{Binding ShowHideMatchPopup}" x:Name="AddMatchPoupup" Margin="0,0,0,0">
+        <Popup Height="500" Width="700"  HorizontalOffset="1" VerticalOffset="10"  IsOpen="{Binding ShowHideMatchPopup}" x:Name="AddMatchPoupup" Margin="0,0,0,0">
             <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <controls1:NewMatchUserControl x:Name="AddNewMatchControl" Height="580" Width="600"/>
+                <controls1:NewMatchUserControl x:Name="AddNewMatchControl" Height="500" Width="700"/>
            </Border>
         </Popup>
 

@@ -10,7 +10,7 @@
     xmlns:matchStats="using:MatchStats"
     xmlns:common="using:MatchStats.Common"
     xmlns:viewModels="using:MatchStats.ViewModels"
-    Width="610" Height="530"
+    Width="700" Height="480"
     mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -21,7 +21,7 @@
             <Setter Property="FontSize" Value="30" />
             <Setter Property="FontWeight" Value="Normal" />
             <Setter Property="Foreground" Value="DarkGray" />
-            <Setter Property="Margin" Value="20,0,0,0"/>
+            <Setter Property="Margin" Value="20,0,0,10"/>
             <Setter Property="VerticalAlignment" Value="Center"/>
         </Style>
 
@@ -36,6 +36,7 @@
         <Style x:Key="StackpanelAddMatchControl" TargetType="StackPanel">
             <Setter Property="Margin" Value="20,0,20,0" />
             <Setter Property="Orientation" Value="Vertical"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
         </Style>
 
         <Style x:Key="StartButtonStyle" TargetType="Button" BasedOn="{StaticResource TextButtonStyle}">
@@ -90,13 +91,13 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="auto" />
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="40"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="80"/>
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="300"/>
-            <ColumnDefinition Width="300"/>
+            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="350"/>
         </Grid.ColumnDefinitions>
 
         <Border Grid.Row="0" Grid.ColumnSpan="2">
@@ -107,7 +108,7 @@
 
         </Border>
 
-        <StackPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource StackpanelAddMatchControl}">
+        <StackPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource StackpanelAddMatchControl}" Margin="10,0,10,0">
             <TextBlock Text="Player One" Margin="0,-10,5,10" Style="{StaticResource SubHeaderTextStyleAddMatchControl}"/>
             <CheckBox IsChecked ="{Binding UseDefaultPlayer}"  Name="UseDefaultPlayer">Use Default Player</CheckBox>
             <controls:WatermarkTextBox Name="PlayerOneFirstName" WatermarkText="First Name" Margin="0,0,5,5"/>
@@ -115,7 +116,7 @@
             <controls:WatermarkTextBox Name="PlayerOneRating" WatermarkText="Rating" Margin="0,0,5,5"/>
         </StackPanel>
 
-        <StackPanel Grid.Column="1" Grid.Row="1" Style="{StaticResource StackpanelAddMatchControl}" Margin="0,0,20,0">
+        <StackPanel Grid.Column="1" Grid.Row="1" Style="{StaticResource StackpanelAddMatchControl}" Margin="10,0,10,0">
             <TextBlock Text="Player Two" Margin="0,-10,5,10" Style="{StaticResource SubHeaderTextStyleAddMatchControl}"/>
             <controls:WatermarkTextBox Name="PlayerTwoFirstName" WatermarkText="First Name" Margin="0,27,5,5"/>
             <controls:WatermarkTextBox Name="PlayerTwoLastName" WatermarkText="Last Name" Margin="0,0,5,5"/>
@@ -123,62 +124,60 @@
 
         </StackPanel>
 
-        <StackPanel Grid.Column="0" Grid.Row="2" Style="{StaticResource StackpanelAddMatchControl}">
-            <TextBlock Text="Tournament Details" Margin="0,0,5,5" Style="{StaticResource SubHeaderTextStyleAddMatchControl}"/>
-            <controls:WatermarkTextBox Name="Tournament" WatermarkText="Tournament" Margin="0,0,5,5"/>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Grade" Margin="0,0,5,5" Style="{StaticResource SubtitleTextStyle}"/>
-                <ComboBox Name="Grade" Margin="47,5,5,5" ItemsSource="{Binding Grades}">
+            
+        <Grid  Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,20" >
+            <Grid.RowDefinitions >
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="80" />
+                <ColumnDefinition />
+                <ColumnDefinition Width="80"/>
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>    
+                
+            <TextBlock Text="Tournament Details" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,0,5,5" Style="{StaticResource SubHeaderTextStyleAddMatchControl}"/>
+            <controls:WatermarkTextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Name="Tournament" WatermarkText="Tournament" Margin="10,0,5,5"/>
+                <TextBlock Text="Grade" Grid.Row="2" Grid.Column="0" Margin="10,0,5,5" Style="{StaticResource SubtitleTextStyle}"/>
+                <ComboBox Name="Grade"  Grid.Row="2" Grid.Column="1"  Margin="5,5,5,5" ItemsSource="{Binding Grades}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate >
                             <TextBlock Text="{Binding Converter={StaticResource EnumDescConverter}}"></TextBlock>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Text="Age Group" Margin="0,0,5,5" Style="{StaticResource SubtitleTextStyle}"/>
-                <ComboBox Name="AgeGroup"  Margin="15,5,5,5" ItemsSource="{Binding AgeGroups}">
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Age Group" Margin="10,0,5,5" Style="{StaticResource SubtitleTextStyle}"/>
+                <ComboBox Name="AgeGroup"   Grid.Row="3" Grid.Column="1"  Margin="5,5,5,5" ItemsSource="{Binding AgeGroups}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate >
                             <TextBlock Text="{Binding Converter={StaticResource EnumDescConverter}}"></TextBlock>
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-            </StackPanel>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition />
-                    <RowDefinition />
-                </Grid.RowDefinitions>
-            </Grid>
-        </StackPanel>
 
-        <StackPanel Grid.Column="1" Grid.Row="2" Style="{StaticResource StackpanelAddMatchControl}" Margin="0,0,20,0">
-            <TextBlock Text="Match Format" Margin="0,0,5,10" Style="{StaticResource SubHeaderTextStyleAddMatchControl}"/>
-            <StackPanel  Margin="0" Style="{StaticResource StackpanelAddMatchControl}" Orientation="Horizontal">
-                <TextBlock Text="Sets" Margin="0,0,5,5" Style="{StaticResource SubtitleTextStyle}"/>
-                <ComboBox Name="Sets" Margin="30,0,5,5" ItemsSource="{Binding SetsFormats}" >
+            <!--<TextBlock Grid.Column="2" Text="Match Format" Margin="0,0,5,10" Style="{StaticResource SubHeaderTextStyleAddMatchControl}"/>-->
+                <TextBlock Text="Sets" Grid.Column="2" Grid.Row="3" Margin="10,0,5,5" Style="{StaticResource SubtitleTextStyle}"/>
+                <ComboBox Name="Sets" Grid.Column="3" Grid.Row="3"  Margin="5,0,5,5" ItemsSource="{Binding SetsFormats}" >
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Converter={StaticResource EnumDescConverter}}" />
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-            </StackPanel>
-            <StackPanel Margin="0" Style="{StaticResource StackpanelAddMatchControl}" Orientation="Horizontal">
-                <TextBlock Text="Final Set" Grid.Row="2" Margin="0,0,5,5" Style="{StaticResource SubtitleTextStyle}"/>
-                <ComboBox Name="FinalSetFormat" Margin="1,5,5,5" ItemsSource="{Binding FinalSet}">
+                <TextBlock Text="Final Set" Grid.Row="2" Grid.Column="2" Margin="10,0,5,5" Style="{StaticResource SubtitleTextStyle}"/>
+                <ComboBox Name="FinalSetFormat" Grid.Row="2" Grid.Column="3" Margin="5,5,5,5" ItemsSource="{Binding FinalSet}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
-                            <!--<TextBlock Text="{Binding}" />-->
                             <TextBlock Text="{Binding Converter={StaticResource EnumDescConverter}}" />
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-            </StackPanel>
-        </StackPanel>
-        <Button x:Name="SaveCommand" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"  Margin="0,18,20,0" Style="{StaticResource StartButtonStyle}">Done</Button>
+        </Grid>
+
+        <Button x:Name="SaveCommand" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"  Margin="0,0,20,20" Style="{StaticResource StartButtonStyle}">Done</Button>
         
     </Grid>
 </UserControl>
