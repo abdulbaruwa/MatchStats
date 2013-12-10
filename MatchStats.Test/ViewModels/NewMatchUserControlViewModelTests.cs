@@ -23,13 +23,13 @@ namespace MatchStats.Test.ViewModels
             fixture.PlayerTwoFirstName = "Winston";
             fixture.PlayerTwoLastName = "Babolat";
 
-            fixture.SelectedAgeGroup = AgeGroup.U14.ToString();
-            fixture.SelectedFinalSetFormat = FinalSetFormats.TenPointChampionShipTieBreak.ToString();
+            fixture.SelectedAgeGroup = AgeGroup.U14;
+            fixture.SelectedFinalSetFormat = FinalSetFormats.TenPointChampionShipTieBreak;
 
-            fixture.SelectedSetsFormat = SetsFormat.ShortSetToFour.ToString();
-            fixture.SelectedDueceFormat = DueceFormat.SuddenDeath.ToString();
+            fixture.SelectedSetsFormat = SetsFormat.ShortSetToFour;
+            fixture.SelectedDueceFormat = DueceFormat.SuddenDeath;
 
-            fixture.SelectedGrade = Grade.Grade5.ToString();
+            fixture.SelectedGrade = Grade.Grade5;
 
             Match matchMessage = null;
             MessageBus.Current.Listen<Match>().Subscribe(x =>
