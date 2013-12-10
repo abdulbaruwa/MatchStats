@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reactive.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using System.Runtime.Serialization;
-using Akavache;
 using MatchStats.Enums;
 using MatchStats.Model;
 using ReactiveUI;
@@ -14,14 +10,21 @@ namespace MatchStats.ViewModels
     [DataContract]
     public class NewMatchControlViewModel : ReactiveObject
     {
+        
         private static List<FinalSetFormats> _finalSet;
         private static List<DueceFormat> _dueceFormat;
         private static List<SetsFormat> _setsFormat;
         private static List<Grade> _matchGrades;
         private static List<AgeGroup> _matchAgeGroups;
+        private static List<string> _finalSetStrings;
         private FinalSetFormats _finalSetFormats;
         public NewMatchControlViewModel()
         {
+
+            _finalSetStrings = new List<string>();
+            _finalSetStrings.Add("10 Points Champs Tie Break");
+            _finalSetStrings.Add("Normal Set");
+
             SaveCommand = new ReactiveCommand(IsValidForSave());
             SaveCommand.Subscribe(_ => SaveCommandImplementation());
         }
@@ -35,13 +38,11 @@ namespace MatchStats.ViewModels
         {
             //Combine change notification for required fields and push to SaveCommand when valid.
             return this.WhenAny(
-                x => x.SelectedFinalSetFormat,
                 x => x.UseDefaultPlayer,
                 x => x.PlayerOneFirstName,
                 x => x.PlayerTwoFirstName,
-                (finalset, defaultplayer, playerOneFname, playertwoFname) =>
+                (defaultplayer, playerOneFname, playertwoFname) =>
                 (
-                    ! string.IsNullOrEmpty(finalset.Value) &&
                     (defaultplayer.Value == true || (! string.IsNullOrEmpty(playerOneFname.Value))) &&
                     ! string.IsNullOrEmpty(playertwoFname.Value)
 
@@ -50,6 +51,13 @@ namespace MatchStats.ViewModels
 
         public IReactiveCommand SaveCommand { get; protected set; }
 
+        public IEnumerable<string> FinalSetStrings
+        {
+            get
+            {
+                return _finalSetStrings;
+            }
+        }
         public List<FinalSetFormats> FinalSet
         {
             get
@@ -130,36 +138,51 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _playerTwoLastName, value); }
         }
 
-        [DataMember] private string _selectedAgeGroup = "";
-        public string SelectedAgeGroup
+        [DataMember] private string _tounamentName = string.Empty;
+        public string TournamentName
+        {
+            get { return _tounamentName; }
+            set { this.RaiseAndSetIfChanged(ref _tounamentName, value); }
+        }
+
+        [DataMember] private AgeGroup _selectedAgeGroup;
+        public AgeGroup SelectedAgeGroup
         {
             get { return _selectedAgeGroup; }
             set { this.RaiseAndSetIfChanged(ref _selectedAgeGroup, value); }
         }
 
-        [DataMember] private string _selectedFinalSetFormat = "";
-        public string SelectedFinalSetFormat
+        [DataMember] private FinalSetFormats _selectedFinalSetFormat;
+        public FinalSetFormats SelectedFinalSetFormat
         {
             get { return _selectedFinalSetFormat; }
             set { this.RaiseAndSetIfChanged(ref _selectedFinalSetFormat, value); }
         }
 
-        [DataMember] private string _selectedSetsFormat =  "";
-        public string SelectedSetsFormat
+        [DataMember]
+        private FinalSetFormats _selectedFinalSet;
+        public FinalSetFormats SelectedFinalSet
+        {
+            get { return _selectedFinalSet; }
+            set { this.RaiseAndSetIfChanged(ref _selectedFinalSet, value); }
+        }
+
+        [DataMember] private SetsFormat _selectedSetsFormat;
+        public SetsFormat SelectedSetsFormat
         {
             get { return _selectedSetsFormat; }
             set { this.RaiseAndSetIfChanged(ref _selectedSetsFormat, value); }
         }
 
-        [DataMember] private string _selectedDueceFormat = "";
-        public string SelectedDueceFormat
+        [DataMember] private DueceFormat _selectedDueceFormat;
+        public DueceFormat SelectedDueceFormat
         {
             get { return _selectedDueceFormat; }
             set { this.RaiseAndSetIfChanged(ref _selectedDueceFormat, value); }
         }
 
-        [DataMember] private string _selecedGrade  = "";
-        public string SelectedGrade
+        [DataMember] private Grade _selecedGrade;
+        public Grade SelectedGrade
         {
             get { return _selecedGrade; }
             set { this.RaiseAndSetIfChanged(ref _selecedGrade, value); }
