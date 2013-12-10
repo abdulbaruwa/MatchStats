@@ -79,6 +79,12 @@ namespace MatchStats.ViewModels
             get { return _matchAgeGroups ?? (_matchAgeGroups = GetEnumAsList<AgeGroup>()); }
         }
 
+        //ObservableAsPropertyHelper<Song> _CurrentSong;
+        //public Song CurrentSong
+        //{
+        //    get { return _CurrentSong.Value; }
+        //}
+
         public FinalSetFormats FinalSetFormat
         {
             get { return _finalSetFormats; }

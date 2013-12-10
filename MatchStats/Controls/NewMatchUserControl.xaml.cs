@@ -15,7 +15,7 @@ namespace MatchStats.Controls
             this.Bind(ViewModel, x => x.SelectedGrade, x => x.Grade.SelectedValue);
 
             this.Bind(ViewModel, x => x.FinalSet, x => x.FinalSetFormat.ItemsSource);
-            this.Bind(ViewModel, x => x.SelectedFinalSetFormat, x => x.FinalSetFormat.SelectedValuePath);
+            //this.Bind(ViewModel, x => x.SelectedFinalSetFormat, x => x.FinalSetFormat.SelectedValuePath);
 
             this.Bind(ViewModel, x => x.SetsFormats, x => x.Sets.ItemsSource);
             this.Bind(ViewModel, x => x.SelectedSetsFormat, x => x.Sets.SelectedValue);
@@ -28,6 +28,8 @@ namespace MatchStats.Controls
 
             this.Bind(ViewModel, x => x.PlayerOneFirstName, x => x.PlayerOneFirstName.Text);
             this.Bind(ViewModel, x => x.PlayerOneLastName, x => x.PlayerOneLastName.Text);
+            this.WhenAny(x => x.FinalSetFormat.SelectedItem, x => x.Value)
+                .BindTo(ViewModel, x => x.SelectedFinalSetFormat);
         }
 
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register("ViewModel",
