@@ -24,7 +24,7 @@ namespace MatchStats.Test.ViewModels
             fixture.PlayerTwoLastName = "Babolat";
 
             fixture.SelectedAgeGroup = AgeGroup.U14;
-            fixture.SelectedFinalSetFormat = FinalSetFormats.TenPointChampionShipTieBreak;
+            fixture.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
 
             fixture.SelectedSetsFormat = SetsFormat.ShortSetToFour;
             fixture.SelectedDueceFormat = DueceFormat.SuddenDeath;

@@ -42,8 +42,13 @@ namespace MatchStats.ViewModels
                 x => x.UseDefaultPlayer,
                 x => x.PlayerOneFirstName,
                 x => x.PlayerTwoFirstName,
-                (defaultplayer, playerOneFname, playertwoFname) =>
+                x => x.SelectedDueceFormat,
+                x => x.SelectedFinalSet,
+                x => x.SelectedSetsFormat,
+                x => x.TournamentName,
+                (defaultplayer, playerOneFname, playertwoFname, duece, finalset, sets, tournament) =>
                 (
+                    duece.Value != null && finalset.Value != null && sets.Value != null && ! string.IsNullOrWhiteSpace(tournament.Value) &&
                     (defaultplayer.Value == true || (! string.IsNullOrEmpty(playerOneFname.Value))) &&
                     ! string.IsNullOrEmpty(playertwoFname.Value)
 
@@ -174,30 +179,23 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _selectedAgeGroup, value); }
         }
 
-        [DataMember] private FinalSetFormats _selectedFinalSetFormat;
-        public FinalSetFormats SelectedFinalSetFormat
-        {
-            get { return _selectedFinalSetFormat; }
-            set { this.RaiseAndSetIfChanged(ref _selectedFinalSetFormat, value); }
-        }
-
         [DataMember]
-        private FinalSetFormats _selectedFinalSet;
-        public FinalSetFormats SelectedFinalSet
+        private object _selectedFinalSet;
+        public object SelectedFinalSet
         {
             get { return _selectedFinalSet; }
             set { this.RaiseAndSetIfChanged(ref _selectedFinalSet, value); }
         }
 
-        [DataMember] private SetsFormat _selectedSetsFormat;
-        public SetsFormat SelectedSetsFormat
+        [DataMember] private object _selectedSetsFormat;
+        public object SelectedSetsFormat
         {
             get { return _selectedSetsFormat; }
             set { this.RaiseAndSetIfChanged(ref _selectedSetsFormat, value); }
         }
 
-        [DataMember] private DueceFormat _selectedDueceFormat;
-        public DueceFormat SelectedDueceFormat
+        [DataMember] private object _selectedDueceFormat;
+        public object SelectedDueceFormat
         {
             get { return _selectedDueceFormat; }
             set { this.RaiseAndSetIfChanged(ref _selectedDueceFormat, value); }
