@@ -21,18 +21,25 @@ namespace MatchStats.ViewModels
         private FinalSetFormats _finalSetFormats;
         public NewMatchControlViewModel()
         {
-
-            _finalSetStrings = new List<string>();
-            _finalSetStrings.Add("10 Points Champs Tie Break");
-            _finalSetStrings.Add("Normal Set");
-
             SaveCommand = new ReactiveCommand(IsValidForSave());
             SaveCommand.Subscribe(_ => SaveCommandImplementation());
         }
 
         private void SaveCommandImplementation()
         {
-            MessageBus.Current.SendMessage(new Match());
+            var match = new Match();
+            match.MatchFormat = new MatchFormat()
+            {
+                DueceFormat = (DueceFormat) this.SelectedDueceFormat,
+                FinalSetType = (FinalSetFormats) this.SelectedFinalSet,
+                SetsFormat = (SetsFormat) this.SelectedSetsFormat
+            };
+
+            match.PlayerTwo = new Player()
+            {
+                FirstName = PlayerOneFirstName
+            };
+            MessageBus.Current.SendMessage(match);
         }
 
         public IObservable<bool> IsValidForSave()
