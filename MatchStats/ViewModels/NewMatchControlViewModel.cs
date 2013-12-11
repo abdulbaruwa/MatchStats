@@ -16,6 +16,7 @@ namespace MatchStats.ViewModels
         private static List<SetsFormat> _setsFormat;
         private static List<Grade> _matchGrades;
         private static List<AgeGroup> _matchAgeGroups;
+        private static List<Rating> _ratings;
         private static List<string> _finalSetStrings;
         private FinalSetFormats _finalSetFormats;
         public NewMatchControlViewModel()
@@ -87,6 +88,11 @@ namespace MatchStats.ViewModels
             get { return _matchAgeGroups ?? (_matchAgeGroups = GetEnumAsList<AgeGroup>()); }
         }
 
+        public List<Rating> Ratings
+        {
+            get { return _ratings ?? (_ratings = GetEnumAsList<Rating>()); }
+        }
+
         //ObservableAsPropertyHelper<Song> _CurrentSong;
         //public Song CurrentSong
         //{
@@ -136,6 +142,22 @@ namespace MatchStats.ViewModels
         {
             get { return _playerTwoLastName; }
             set { this.RaiseAndSetIfChanged(ref _playerTwoLastName, value); }
+        }
+
+        [DataMember]
+        private Rating _selectedPlayerOneRating;
+        public Rating SelectedPlayerOneRating
+        {
+            get { return _selectedPlayerOneRating; }
+            set { this.RaiseAndSetIfChanged(ref _selectedPlayerOneRating, value); }
+        }
+
+        [DataMember]
+        private Rating _selectedPlayerTwoRating;
+        public Rating SelectedPlayerTwoRating
+        {
+            get { return _selectedPlayerTwoRating; }
+            set { this.RaiseAndSetIfChanged(ref _selectedPlayerTwoRating, value); }
         }
 
         [DataMember] private string _tounamentName = string.Empty;

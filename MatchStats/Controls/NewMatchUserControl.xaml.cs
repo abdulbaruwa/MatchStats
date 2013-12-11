@@ -32,6 +32,12 @@ namespace MatchStats.Controls
             this.Bind(ViewModel, x => x.PlayerOneFirstName, x => x.PlayerOneFirstName.Text);
             this.Bind(ViewModel, x => x.PlayerOneLastName, x => x.PlayerOneLastName.Text);
 
+            this.Bind(ViewModel, x => x.Ratings, x => x.PlayerOneRating.ItemsSource);
+            this.Bind(ViewModel, x => x.SelectedPlayerOneRating, x => x.PlayerOneRating.SelectedValue);
+
+            this.Bind(ViewModel, x => x.Ratings, x => x.PlayerTwoRating.ItemsSource);
+            this.Bind(ViewModel, x => x.SelectedPlayerTwoRating, x => x.PlayerTwoRating.SelectedValue);
+
             this.Bind(ViewModel, x => x.TournamentName, x => x.Tournament.Text);
 
         }
