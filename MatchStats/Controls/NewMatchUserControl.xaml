@@ -10,7 +10,7 @@
     xmlns:matchStats="using:MatchStats"
     xmlns:common="using:MatchStats.Common"
     xmlns:viewModels="using:MatchStats.ViewModels"
-    Width="700" Height="480"
+    Width="700" Height="520"
     mc:Ignorable="d">
 
     <UserControl.Resources>
@@ -153,7 +153,7 @@
             </Grid.ColumnDefinitions>    
                 
             <TextBlock Text="Tournament Details" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,0,5,5" Style="{StaticResource SubHeaderTextStyleAddMatchControl}"/>
-            <controls:WatermarkTextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Name="Tournament" WatermarkText="Tournament" Margin="10,0,5,5"/>
+            <controls:WatermarkTextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="Tournament" WatermarkText="Tournament" Margin="10,0,5,5"/>
                 <TextBlock Text="Grade" Grid.Row="2" Grid.Column="0" Margin="10,0,5,5" Style="{StaticResource SubtitleTextStyle}"/>
                 <ComboBox Name="Grade"  Grid.Row="2" Grid.Column="1"  Margin="5,5,5,5" ItemsSource="{Binding Grades}">
                     <ComboBox.ItemTemplate>
@@ -162,7 +162,7 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <TextBlock Grid.Row="3" Grid.Column="0" Text="Age Group" Margin="10,0,5,5" Style="{StaticResource SubtitleTextStyle}"/>
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="Age" Margin="10,0,5,5" Style="{StaticResource SubtitleTextStyle}"/>
                 <ComboBox Name="AgeGroup"   Grid.Row="3" Grid.Column="1"  Margin="5,5,5,5" ItemsSource="{Binding AgeGroups}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate >
@@ -180,7 +180,16 @@
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
-                <TextBlock Text="Final Set" Grid.Row="2" Grid.Column="2" Margin="10,0,5,5" Style="{StaticResource SubtitleTextStyle}"/>
+            <TextBlock Text="Duece" Grid.Row="1" Grid.Column="2" Margin="10,0,5,5" Style="{StaticResource SubtitleTextStyle}"/>
+            <ComboBox Name="DueceFormat" Grid.Row="1" Grid.Column="3" Margin="5,5,5,5" ItemsSource="{Binding FinalSet}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource EnumDescConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            
+            <TextBlock Text="Final Set" Grid.Row="2" Grid.Column="2" Margin="10,0,5,5" Style="{StaticResource SubtitleTextStyle}"/>
                 <ComboBox Name="FinalSetFormat" Grid.Row="2" Grid.Column="3" Margin="5,5,5,5" ItemsSource="{Binding FinalSet}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>

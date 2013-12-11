@@ -26,6 +26,11 @@ namespace MatchStats.Controls
             this.Bind(ViewModel, x => x.AgeGroups, x => x.AgeGroup.ItemsSource);
             this.Bind(ViewModel, x => x.SelectedAgeGroup, x => x.AgeGroup.SelectedValue);
 
+            this.Bind(ViewModel, x => x.DueceFormats, x => x.DueceFormat.ItemsSource);
+            this.Bind(ViewModel, x => x.SelectedDueceFormat, x => x.DueceFormat.SelectedValue);
+
+            this.Bind(ViewModel, x => x.TournamentName, x => x.Tournament.Text);
+
             this.Bind(ViewModel, x => x.PlayerTwoFirstName, x => x.PlayerTwoFirstName.Text);
             this.Bind(ViewModel, x => x.PlayerTwoLastName, x => x.PlayerTwoLastName.Text);
 
@@ -37,9 +42,6 @@ namespace MatchStats.Controls
 
             this.Bind(ViewModel, x => x.Ratings, x => x.PlayerTwoRating.ItemsSource);
             this.Bind(ViewModel, x => x.SelectedPlayerTwoRating, x => x.PlayerTwoRating.SelectedValue);
-
-            this.Bind(ViewModel, x => x.TournamentName, x => x.Tournament.Text);
-
         }
 
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register("ViewModel",
