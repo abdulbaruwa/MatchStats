@@ -68,7 +68,7 @@ namespace MatchStats.Test.ViewModels
             throw new NotImplementedException();
         }
 
-        public void SaveMatch(Match matches)
+        public void SaveMatch(Match match)
         {
             throw new NotImplementedException();
         }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -14,7 +15,7 @@ namespace MatchStats.Model
     public interface IMatchStatsApi
     {
         void SaveMatchStats(List<MyMatchStats> matchStats);
-        void SaveMatch(Match matches);
+        void SaveMatch(Match match);
         IObservable<List<MyMatchStats>> FetchMatchStats();
     }
 
@@ -32,9 +33,21 @@ namespace MatchStats.Model
             var test = _blobCache.GetAllKeys();
         }
 
-        public void SaveMatch(Match matches)
+        public void SaveMatch(Match match)
         {
-            throw new NotImplementedException();
+            //Get match and add to it.
+            var existingMatches = new List<Match>();
+            var observable = _blobCache.GetObjectAsync<List<Match>>("MyMatches");
+            observable.Subscribe(existingMatches.AddRange,
+                ex => {/**log exceptions, the exception could be due to missing key**/ });
+            var existingMatch = existingMatches.FirstOrDefault(x => x.MatchGuid == match.MatchGuid);
+            if (existingMatch != null)
+            {
+                existingMatches.Remove(existingMatch);
+            }
+            existingMatches.Add(match);
+
+            _blobCache.InsertObject<List<Match>>("MyMatches", existingMatches);
         }
 
         public IObservable<List<MyMatchStats>> FetchMatchStats()

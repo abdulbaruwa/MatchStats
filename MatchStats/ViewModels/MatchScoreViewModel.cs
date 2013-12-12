@@ -31,7 +31,8 @@ namespace MatchStats.ViewModels
             var match = param as Match;
             if (match != null)
             {
-                RxApp.DependencyResolver.GetService<IMatchStatsApi>().SaveMatch(match);
+                var resolver = RxApp.DependencyResolver.GetService<IMatchStatsApi>();
+                resolver.SaveMatch(match);
             }
         }
 
