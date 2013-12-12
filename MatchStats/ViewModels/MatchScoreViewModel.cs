@@ -31,8 +31,9 @@ namespace MatchStats.ViewModels
             var match = param as Match;
             if (match != null)
             {
-                var resolver = RxApp.DependencyResolver.GetService<IMatchStatsApi>();
-                resolver.SaveMatch(match);
+                var matchStatsApi = RxApp.DependencyResolver.GetService<IMatchStatsApi>();
+                matchStatsApi.SaveMatch(match);
+                CurrentMatch = match;
             }
         }
 
@@ -41,6 +42,13 @@ namespace MatchStats.ViewModels
             HostScreen.Router.NavigateBack.Execute(null);
         }
 
+        [DataMember] private Match _currentMatch;
+        public Match CurrentMatch
+        {
+            get { return _currentMatch; }
+            set { this.RaiseAndSetIfChanged(ref _currentMatch, value); }
+        }
+        
         [DataMember]
         private string _playerOneCurrentGame = "";
         public string PlayerOneCurrentGame

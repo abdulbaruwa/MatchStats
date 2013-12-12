@@ -28,7 +28,7 @@ namespace MatchStats.ViewModels
 
         private void SaveCommandImplementation()
         {
-            var match = new Match();
+            var match = new Match(){MatchGuid = Guid.NewGuid(), MatchTime = DateTime.Now};
             match.MatchFormat = new MatchFormat()
             {
                 DueceFormat = (DueceFormat) this.SelectedDueceFormat,
@@ -50,7 +50,8 @@ namespace MatchStats.ViewModels
                     tournament.TournamentGrade = SelectedGrade.ToString();
                 }
             }
-               
+
+            match.Tournament = tournament;
             match.PlayerTwo = BuildPlayerTwo();
             MessageBus.Current.SendMessage(match);
         }
