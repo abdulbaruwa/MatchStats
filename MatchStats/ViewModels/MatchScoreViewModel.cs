@@ -28,6 +28,11 @@ namespace MatchStats.ViewModels
         private void StartMatch(object param)
         {
             ShowHideMatchPopup = false;
+            var match = param as Match;
+            if (match != null)
+            {
+                RxApp.DependencyResolver.GetService<IMatchStatsApi>().SaveMatch(match);
+            }
         }
 
         private void NavigateBackToHomePage()

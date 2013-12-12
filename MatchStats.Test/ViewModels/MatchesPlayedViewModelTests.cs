@@ -1,16 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive;
 using System.Reactive.Linq;
-using System.Reactive.Threading.Tasks;
-using System.Threading.Tasks;
 using Akavache;
 using MatchStats.DesignTimeStuff;
 using MatchStats.Model;
 using MatchStats.ViewModels;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
-using Microsoft.VisualStudio.TestPlatform.UnitTestFramework.AppContainer;
 using ReactiveUI;
 using Assert = Microsoft.VisualStudio.TestPlatform.UnitTestFramework.Assert;
 
@@ -68,6 +64,11 @@ namespace MatchStats.Test.ViewModels
         }
 
         public void SaveMatchStats(List<MyMatchStats> matchStats)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveMatch(Match matches)
         {
             throw new NotImplementedException();
         }

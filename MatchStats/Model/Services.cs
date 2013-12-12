@@ -14,6 +14,7 @@ namespace MatchStats.Model
     public interface IMatchStatsApi
     {
         void SaveMatchStats(List<MyMatchStats> matchStats);
+        void SaveMatch(Match matches);
         IObservable<List<MyMatchStats>> FetchMatchStats();
     }
 
@@ -28,8 +29,12 @@ namespace MatchStats.Model
         public void SaveMatchStats(List<MyMatchStats> matchStats)
         {
             _blobCache.InsertObject("MyMatchStats", matchStats);
-            _blobCache.InsertObject("Stuff","MyData");
             var test = _blobCache.GetAllKeys();
+        }
+
+        public void SaveMatch(Match matches)
+        {
+            throw new NotImplementedException();
         }
 
         public IObservable<List<MyMatchStats>> FetchMatchStats()

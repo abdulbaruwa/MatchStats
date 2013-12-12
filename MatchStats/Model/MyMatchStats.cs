@@ -4,6 +4,8 @@ namespace MatchStats.Model
 {
     public class MyMatchStats
     {
+        //There is a duplication between this entity and the 'Match' entity. 
+        //Eventually I need to merge them.
         public string TournamentName { get; set; }
         public DateTime Date { get; set; }
 

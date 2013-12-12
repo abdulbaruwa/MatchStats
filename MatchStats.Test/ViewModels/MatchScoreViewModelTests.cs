@@ -13,7 +13,6 @@ namespace MatchStats.Test.ViewModels
             var fixture = new MatchScoreViewModel();
             
             fixture.NewMatchControlViewModel = new NewMatchControlViewModel();
-
         }
     }
 }

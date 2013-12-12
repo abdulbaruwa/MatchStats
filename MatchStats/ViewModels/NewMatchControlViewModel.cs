@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
+using Windows.Media.PlayTo;
 using MatchStats.Enums;
 using MatchStats.Model;
 using ReactiveUI;
@@ -35,12 +36,49 @@ namespace MatchStats.ViewModels
                 SetsFormat = (SetsFormat) this.SelectedSetsFormat
             };
 
-            match.PlayerTwo = new Player()
+            if (! UseDefaultPlayer)
             {
-                FirstName = PlayerOneFirstName
-            };
+                match.PlayerOne = BuildPlayerOne();
+            }
+
+            var tournament = new Tournament();
+            if (! string.IsNullOrEmpty(TournamentName))
+            {
+                tournament.TournamentName = TournamentName;
+                if (SelectedGrade != null)
+                {
+                    tournament.TournamentGrade = SelectedGrade.ToString();
+                }
+            }
+               
+            match.PlayerTwo = BuildPlayerTwo();
             MessageBus.Current.SendMessage(match);
         }
+
+        private Player BuildPlayerOne()
+        {
+            var player = new Player();
+            player.FirstName = PlayerOneFirstName;
+            player.SurName = PlayerOneLastName;
+            if (SelectedPlayerOneRating != null)
+            {
+                player.Rating = SelectedPlayerOneRating.ToString();
+            }
+            return player;
+        }
+
+        private Player BuildPlayerTwo()
+        {
+            var player = new Player();
+            player.FirstName = PlayerTwoFirstName;
+            player.SurName = PlayerTwoLastName;
+            if (SelectedPlayerTwoRating != null)
+            {
+                player.Rating = SelectedPlayerTwoRating.ToString();
+            }
+            return player;
+        }
+
 
         public IObservable<bool> IsValidForSave()
         {
@@ -157,16 +195,16 @@ namespace MatchStats.ViewModels
         }
 
         [DataMember]
-        private Rating _selectedPlayerOneRating;
-        public Rating SelectedPlayerOneRating
+        private object _selectedPlayerOneRating;
+        public object SelectedPlayerOneRating
         {
             get { return _selectedPlayerOneRating; }
             set { this.RaiseAndSetIfChanged(ref _selectedPlayerOneRating, value); }
         }
 
         [DataMember]
-        private Rating _selectedPlayerTwoRating;
-        public Rating SelectedPlayerTwoRating
+        private object _selectedPlayerTwoRating;
+        public object SelectedPlayerTwoRating
         {
             get { return _selectedPlayerTwoRating; }
             set { this.RaiseAndSetIfChanged(ref _selectedPlayerTwoRating, value); }
@@ -208,8 +246,8 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _selectedDueceFormat, value); }
         }
 
-        [DataMember] private Grade _selecedGrade;
-        public Grade SelectedGrade
+        [DataMember] private object _selecedGrade;
+        public object SelectedGrade
         {
             get { return _selecedGrade; }
             set { this.RaiseAndSetIfChanged(ref _selecedGrade, value); }
