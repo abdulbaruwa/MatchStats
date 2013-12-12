@@ -32,7 +32,7 @@ namespace MatchStats.Test.ViewModels
                 });
 
             var fixture = new MatchScoreViewModel();
-            var testMatch = BuildTestMatchObject();
+            var testMatch = BuildTestMatchObject(Guid.NewGuid());
             
             //Act => Send message with Match details
             MessageBus.Current.SendMessage<Match>(testMatch);
@@ -44,9 +44,38 @@ namespace MatchStats.Test.ViewModels
             Assert.IsTrue((currentListOfMatches.Count + 1) == newListOfMatchesAfterSave.Count);
         }
 
-        private Match BuildTestMatchObject()
+        [TestMethod]
+        public void ShouldSaveMatchInCurrentMatchEntity()
         {
-            var matchGuid = Guid.NewGuid();
+
+            //Arrange
+            var blobCache = new TestBlobCache();
+            RxApp.MutableResolver.Register(() => new MatchStatsApi(), typeof(IMatchStatsApi));
+            RxApp.MutableResolver.RegisterConstant(blobCache, typeof(IBlobCache), "UserAccount");
+
+            var currentListOfMatches = new List<Match>();
+            var newListOfMatchesAfterSave = new List<Match>();
+            var matchStatsApi = RxApp.DependencyResolver.GetService<IMatchStatsApi>();
+
+            blobCache.GetObjectAsync<List<Match>>("MyMatches").Subscribe(currentListOfMatches.AddRange,
+                ex =>
+                {
+                    //Ignore the exception that the list my not exist. 
+                });
+            var fixture = new MatchScoreViewModel();
+            var newMatchGuid = Guid.NewGuid();
+            var testMatch = BuildTestMatchObject(newMatchGuid);
+
+            //Act => Send message with Match details
+            MessageBus.Current.SendMessage<Match>(testMatch);
+
+            //Assert => CurrentMatch is now this match
+            blobCache.GetObjectAsync<Match>("CurrentMatch").Subscribe(x => Assert.AreEqual(x.MatchGuid, newMatchGuid ),
+                ex => Assert.Fail("Current Match not saved"));
+        }
+
+        private Match BuildTestMatchObject(Guid matchGuid)
+        {
             var matchToSave = new Match();
             matchToSave.MatchFormat = new MatchFormat()
             {
@@ -75,6 +104,7 @@ namespace MatchStats.Test.ViewModels
                 TournamentName = "Surrey Open",
                 StartDate = DateTime.Now
             };
+            matchToSave.MatchGuid = matchGuid;
             return matchToSave;
         }
     }

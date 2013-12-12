@@ -48,6 +48,7 @@ namespace MatchStats.Model
             existingMatches.Add(match);
 
             _blobCache.InsertObject<List<Match>>("MyMatches", existingMatches);
+            _blobCache.InsertObject<Match>("CurrentMatch", match);
         }
 
         public IObservable<List<MyMatchStats>> FetchMatchStats()
