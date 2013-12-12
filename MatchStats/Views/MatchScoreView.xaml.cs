@@ -19,7 +19,8 @@ namespace MatchStats.Views
             this.Bind(ViewModel, x => x.PlayerTwoSecondSet, x => x.PlayerTwoSecondSet.Text);
             this.Bind(ViewModel, x => x.PlayerOneThirdSet, x => x.PlayerOneThirdSet.Text);
             this.Bind(ViewModel, x => x.PlayerTwoThirdSet, x => x.PlayerTwoThirdSet.Text);
-            this.Bind(ViewModel, x => x.PlayerOnesName, x => x.PlayerOnesName.Text);
+            //this.OneWayBind(ViewModel, x => x.PlayerOnesName, x => x.PlayerOnesName.Text);
+            this.OneWayBind(ViewModel, x => x.PlayerOnesName, x => x.PlayerNames.Text);
             this.Bind(ViewModel, x => x.PlayerTwosName, x => x.PlayerTwosName.Text);
             this.OneWayBind(ViewModel, x => x.HostScreen.Router.NavigateBack, x => x.backButton.Command);
             this.Bind(ViewModel, x => x.NewMatchControlViewModel, x => x.AddNewMatchControl.ViewModel);

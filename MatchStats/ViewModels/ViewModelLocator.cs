@@ -1,5 +1,8 @@
-﻿using MatchStats.Controls;
+﻿using System;
+using Windows.UI.Xaml.Controls;
+using MatchStats.Controls;
 using MatchStats.DesignTimeStuff;
+using MatchStats.Enums;
 using MatchStats.Model;
 using ReactiveUI;
 
@@ -21,18 +24,20 @@ namespace MatchStats.ViewModels
             get
             {
                 var pageVm = new MatchScoreViewModel();
-
+                pageVm.CurrentMatch = new Match()
+                {
+                    MatchFormat = new MatchFormat() { DueceFormat = DueceFormat.Normal, FinalSetType = FinalSetFormats.Normal, Sets = 3, SetsFormat = SetsFormat.ShortSetToFour}
+                    ,
+                    MatchGuid = Guid.NewGuid(),
+                    MatchTime = DateTime.Now,
+                    PlayerOne = new Player() { FirstName = "Ademola" },
+                    PlayerTwo = new Player() { FirstName = "Nadal" }
+                };
                 for (int i = 0; i < 10; i++)
                 {
                     pageVm.ScorePoints.Add(new ScorePoint() { Name = "Action " + i, Player = new Player(){FirstName =  "Ademola" }});
                 }
-                pageVm.ShowHideMatchPopup = true;
-                pageVm.PlayerOnesName = "Ademola";
-                pageVm.PlayerTwosName = "Kieran";
-                pageVm.PlayerOneCurrentGame = "0";
-                pageVm.PlayerTwoCurrentGame = "15";
-                pageVm.PlayerOneFirstSet = "6";
-                pageVm.PlayerTwoFirstSet = "4";
+
                 return pageVm;
             }
         }

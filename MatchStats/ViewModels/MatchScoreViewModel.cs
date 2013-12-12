@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive.Linq;
 using System.Runtime.Serialization;
 using MatchStats.Model;
 using ReactiveUI;
@@ -23,6 +24,17 @@ namespace MatchStats.ViewModels
             StartMatchCommand.Subscribe(StartMatch);
             NewMatchControlViewModel = RxApp.DependencyResolver.GetService<NewMatchControlViewModel>();
             MessageBus.Current.Listen<Match>().InvokeCommand(StartMatchCommand);
+
+            //Map for when we get Current Match to set the VM ReadOnly properties
+            _playerOnesName = this.WhenAny(x => x.CurrentMatch, x => x.Value)
+                .Select(x => x == null ? "" : x.PlayerOne.FirstName)
+                .ToProperty(this, x => x.PlayerOnesName,"");
+
+                ////.Where(x => x != null)
+                //.Select(x => x == null ? "" : x.PlayerOne.FirstName)
+                //.Catch(Observable.Return(""))
+                //.ToProperty(this, x => x.PlayerOnesName,"");
+
         }
 
         private void StartMatch(object param)
@@ -65,12 +77,10 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _playerTwoCurrentGame, value); }
         }
 
-        [DataMember]
-        private string _playerOnesName = "";
+        ObservableAsPropertyHelper<string> _playerOnesName ;
         public string PlayerOnesName
         {
-            get { return _playerOnesName; }
-            set { this.RaiseAndSetIfChanged(ref _playerOnesName, value); }
+            get{return _playerOnesName.Value;}
         }
 
         [DataMember]
