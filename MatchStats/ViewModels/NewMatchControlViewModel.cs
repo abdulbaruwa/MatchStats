@@ -11,7 +11,6 @@ namespace MatchStats.ViewModels
     [DataContract]
     public class NewMatchControlViewModel : ReactiveObject
     {
-        
         private static List<FinalSetFormats> _finalSet;
         private static List<DueceFormat> _dueceFormat;
         private static List<SetsFormat> _setsFormat;
@@ -24,6 +23,7 @@ namespace MatchStats.ViewModels
         {
             SaveCommand = new ReactiveCommand(IsValidForSave());
             SaveCommand.Subscribe(_ => SaveCommandImplementation());
+            _showMe = true;
         }
 
         private void SaveCommandImplementation()
@@ -53,7 +53,9 @@ namespace MatchStats.ViewModels
 
             match.Tournament = tournament;
             match.PlayerTwo = BuildPlayerTwo();
-            MessageBus.Current.SendMessage(match);
+            SavedMatch = match;
+            ShowMe = false;
+            //MessageBus.Current.SendMessage(match);
         }
 
         private Player BuildPlayerOne()
@@ -100,7 +102,22 @@ namespace MatchStats.ViewModels
 
                 ));
         }
+        
+        [DataMember]
+        private bool _showMe;
+        public bool ShowMe
+        {
+            get { return _showMe; }
+            set { this.RaiseAndSetIfChanged(ref _showMe, value); }
+        }
 
+        [DataMember]
+        private Match _savedMatch;
+        public Match SavedMatch
+        {
+            get { return _savedMatch; }
+            set { this.RaiseAndSetIfChanged(ref _savedMatch, value); }
+        }
         public IReactiveCommand SaveCommand { get; protected set; }
 
         public IEnumerable<string> FinalSetStrings

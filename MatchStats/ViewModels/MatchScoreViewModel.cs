@@ -24,28 +24,29 @@ namespace MatchStats.ViewModels
             StartMatchCommand.Subscribe(StartMatch);
             NewMatchControlViewModel = RxApp.DependencyResolver.GetService<NewMatchControlViewModel>();
             MessageBus.Current.Listen<Match>().InvokeCommand(StartMatchCommand);
+            RandomGuid = Guid.NewGuid();
 
-            //Map for when we get Current Match to set the VM ReadOnly properties
-            _playerOnesName = this.WhenAny(x => x.CurrentMatch, x => x.Value)
-                .Select(x => x == null ? "" : x.PlayerOne.FirstName)
-                .ToProperty(this, x => x.PlayerOnesName,"");
+            //Observe the NewMatchControlVM.ShowMe property, Hide pop up depending on value.
+            _showHidePop = this.WhenAny(x => x.NewMatchControlViewModel.ShowMe, x => x.Value)
+                .Where(x => x == false)
+                .Select(x => x)
+                .ToProperty(this, x => x.ShowHidePopup, true);
 
-                ////.Where(x => x != null)
-                //.Select(x => x == null ? "" : x.PlayerOne.FirstName)
-                //.Catch(Observable.Return(""))
-                //.ToProperty(this, x => x.PlayerOnesName,"");
-
+           //Observe the NewMatchControlVM.ShowMe property, if just set call start match and set the CurrentMatch Property
+            _currentMatch = this.WhenAny(x => x.NewMatchControlViewModel.ShowMe, x => x.Value)
+                .Where(x => x == false)
+                .Select(x => this.NewMatchControlViewModel.SavedMatch)
+                .Do(StartMatch)
+                .ToProperty(this, x => x.CurrentMatch, new Match());
         }
 
         private void StartMatch(object param)
         {
-            ShowHideMatchPopup = false;
             var match = param as Match;
             if (match != null)
             {
                 var matchStatsApi = RxApp.DependencyResolver.GetService<IMatchStatsApi>();
                 matchStatsApi.SaveMatch(match);
-                CurrentMatch = match;
             }
         }
 
@@ -54,11 +55,20 @@ namespace MatchStats.ViewModels
             HostScreen.Router.NavigateBack.Execute(null);
         }
 
-        [DataMember] private Match _currentMatch;
+        [DataMember]
+        Guid _RandomGuid;
+        public Guid RandomGuid
+        {
+            get { return _RandomGuid; }
+            set { this.RaiseAndSetIfChanged(ref _RandomGuid, value); }
+        }
+
+
+
+        private ObservableAsPropertyHelper<Match> _currentMatch;
         public Match CurrentMatch
         {
-            get { return _currentMatch; }
-            set { this.RaiseAndSetIfChanged(ref _currentMatch, value); }
+            get { return _currentMatch.Value; }
         }
         
         [DataMember]
@@ -77,12 +87,24 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _playerTwoCurrentGame, value); }
         }
 
-        ObservableAsPropertyHelper<string> _playerOnesName ;
+        //[DataMember]
+        //private string _playerOnesName = "";
+        //public string PlayerOnesName
+        //{
+        //    get{return _playerOnesName;}
+        //    set { this.RaiseAndSetIfChanged(ref _playerOnesName, value); }
+        //}
+
+        ObservableAsPropertyHelper<string> _playerOnesName;
         public string PlayerOnesName
         {
-            get{return _playerOnesName.Value;}
+            get { return _playerOnesName.Value; }
         }
 
+        ObservableAsPropertyHelper<bool> _showHidePop;
+        public bool ShowHidePopup
+        { get { return _showHidePop.Value; } }
+            
         [DataMember]
         private string _playerTwosName = "";
         public string PlayerTwosName

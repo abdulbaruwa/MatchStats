@@ -7,6 +7,7 @@ namespace MatchStats.Views
     public sealed partial class MatchesPlayedView : IViewFor<MatchesPlayedViewModel>
     {
 
+         
         public MatchesPlayedView()
         {
             this.InitializeComponent();

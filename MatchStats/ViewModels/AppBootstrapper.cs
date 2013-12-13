@@ -88,15 +88,14 @@ namespace MatchStats.ViewModels
                 Resolver.Register(() => new MatchStatsApi(), typeof(IMatchStatsApi));
 
                 Resolver.Register(() => new MatchesPlayedViewModel(this), typeof(MatchesPlayedViewModel));
-                Resolver.Register(() => new MatchesPlayedView(), typeof (IViewFor<MatchesPlayedViewModel>));
+                Resolver.Register(() => new MatchesPlayedView(), typeof (IViewFor<MatchesPlayedViewModel>),"FullScreenLandscape");
 
                 Resolver.Register(() => new NewMatchControlViewModel(), typeof(NewMatchControlViewModel));
                 Resolver.Register(() => new NewMatchUserControl(), typeof(IViewFor<NewMatchControlViewModel>));
 
                 Resolver.Register(() => new MatchScoreViewModel(), typeof(MatchScoreViewModel));
-                Resolver.Register(() => new MatchScoreView(), typeof (IViewFor<MatchScoreViewModel>));
+                Resolver.Register(() => new MatchScoreView(), typeof (IViewFor<MatchScoreViewModel>), "FullScreenLandscape");
                 Resolver.Register(() => new UserService(), typeof (IUserService));
-
 
 #if DEBUG
                 var testBlobCache = new TestBlobCache();
