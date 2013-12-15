@@ -28,15 +28,27 @@ namespace MatchStats.Test.ViewModels
             blobCache.GetObjectAsync<List<Match>>("MyMatches").Subscribe(currentListOfMatches.AddRange,
                 ex =>
                 {
-                   //Ignore the exception that the list my not exist. 
+                   //Ignore the exception that the list may not exist. 
                 });
 
             var fixture = new MatchScoreViewModel();
-            var testMatch = BuildTestMatchObject(Guid.NewGuid());
+
+            fixture.NewMatchControlViewModel = new NewMatchControlViewModel();
+            fixture.NewMatchControlViewModel.PlayerOneFirstName = "William";
+            fixture.NewMatchControlViewModel.PlayerOneLastName = "Dof";
+            fixture.NewMatchControlViewModel.PlayerTwoFirstName = "Drake";
+            fixture.NewMatchControlViewModel.PlayerTwoLastName = "Dufus";
+            fixture.NewMatchControlViewModel.SelectedGrade = Grade.Grade3;
+            fixture.NewMatchControlViewModel.SelectedAgeGroup = AgeGroup.U14;
+            fixture.NewMatchControlViewModel.SelectedDueceFormat = DueceFormat.Normal;
+            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.Normal;
+            fixture.NewMatchControlViewModel.SelectedPlayerOneRating = Rating.FiveOne;
+            fixture.NewMatchControlViewModel.SelectedPlayerTwoRating = Rating.FiveOne;
+            fixture.NewMatchControlViewModel.SelectedSetsFormat = SetsFormat.ShortSetToFour;
+            fixture.NewMatchControlViewModel.TournamentName = "Sutton Open";
             
             //Act => Send message with Match details
-            MessageBus.Current.SendMessage<Match>(testMatch);
-            
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);     
 
             //Assert => it has been saved
             blobCache.GetObjectAsync<List<Match>>("MyMatches").Subscribe(newListOfMatchesAfterSave.AddRange,
@@ -54,23 +66,32 @@ namespace MatchStats.Test.ViewModels
             RxApp.MutableResolver.RegisterConstant(blobCache, typeof(IBlobCache), "UserAccount");
 
             var currentListOfMatches = new List<Match>();
-            var newListOfMatchesAfterSave = new List<Match>();
-            var matchStatsApi = RxApp.DependencyResolver.GetService<IMatchStatsApi>();
-
             blobCache.GetObjectAsync<List<Match>>("MyMatches").Subscribe(currentListOfMatches.AddRange,
                 ex =>
                 {
                     //Ignore the exception that the list my not exist. 
                 });
             var fixture = new MatchScoreViewModel();
-            var newMatchGuid = Guid.NewGuid();
-            var testMatch = BuildTestMatchObject(newMatchGuid);
 
-            //Act => Send message with Match details
-            MessageBus.Current.SendMessage<Match>(testMatch);
+            fixture.NewMatchControlViewModel = new NewMatchControlViewModel();
+            fixture.NewMatchControlViewModel.PlayerOneFirstName = "William";
+            fixture.NewMatchControlViewModel.PlayerOneLastName = "Dof";
+            fixture.NewMatchControlViewModel.PlayerTwoFirstName = "Drake";
+            fixture.NewMatchControlViewModel.PlayerTwoLastName = "Dufus";
+            fixture.NewMatchControlViewModel.SelectedGrade = Grade.Grade3;
+            fixture.NewMatchControlViewModel.SelectedAgeGroup = AgeGroup.U14;
+            fixture.NewMatchControlViewModel.SelectedDueceFormat = DueceFormat.Normal;
+            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.Normal;
+            fixture.NewMatchControlViewModel.SelectedPlayerOneRating = Rating.FiveOne;
+            fixture.NewMatchControlViewModel.SelectedPlayerTwoRating = Rating.FiveOne;
+            fixture.NewMatchControlViewModel.SelectedSetsFormat = SetsFormat.ShortSetToFour;
+            fixture.NewMatchControlViewModel.TournamentName = "Sutton Open";
+
+            //Act => 
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
 
             //Assert => CurrentMatch is now this match
-            blobCache.GetObjectAsync<Match>("CurrentMatch").Subscribe(x => Assert.AreEqual(x.MatchGuid, newMatchGuid ),
+            blobCache.GetObjectAsync<Match>("CurrentMatch").Subscribe(x => Assert.AreEqual(x.MatchGuid, fixture.CurrentMatch.MatchGuid),
                 ex => Assert.Fail("Current Match not saved"));
         }
 

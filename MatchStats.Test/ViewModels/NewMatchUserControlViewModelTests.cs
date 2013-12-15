@@ -14,7 +14,7 @@ namespace MatchStats.Test.ViewModels
     public class NewMatchUserControlViewModelTests
     {
         [TestMethod]
-        public void ShouldFireSaveCommandIfAllRequiredFieldsAreSet()
+        public void ShouldUpdateSaveMatchIfSaveCommandIsFired()
         {
             var fixture = new NewMatchControlViewModel();
             fixture.PlayerOneFirstName = "Ademola";
@@ -28,31 +28,35 @@ namespace MatchStats.Test.ViewModels
 
             fixture.SelectedSetsFormat = SetsFormat.ShortSetToFour;
             fixture.SelectedDueceFormat = DueceFormat.SuddenDeath;
-
             fixture.SelectedGrade = Grade.Grade5;
 
-            Match matchMessage = null;
-            MessageBus.Current.Listen<Match>().Subscribe(x =>
-            {
-                matchMessage = x;
-            });
-
+            //Act
             fixture.SaveCommand.Execute(null);
+           
+            //Assert
+            Assert.IsNotNull(fixture.SavedMatch, "Saved match was not set by Save Command execution");
+        }
 
-            Assert.IsNotNull(matchMessage, "Message to save Match not received");
-            //RxApp.DependencyResolver.GetService<IBlobCache>().InvalidateObject<List<Match>>("MatchList");
-            //var matches = new List<Match>();
-            //var matchListTestObservable =
-            //    RxApp.DependencyResolver.GetService<IBlobCache>().GetObjectAsync<List<Match>>("MatchList");
-            //matchListTestObservable.Subscribe(x =>
-            //{
-            //    if (x != null)
-            //    {
-            //        matches.AddRange(x);
-            //    }
-            //});
+        [TestMethod]
+        public void ShouldEnableSaveCommandIfRequiredFieldsAreUpdated()
+        {
+            var fixture = new NewMatchControlViewModel();
+            fixture.PlayerOneFirstName = "Ademola";
+            fixture.PlayerOneLastName = "Baruwa";
 
-            //Assert.IsTrue(matches.Count.Equals(1));
+            fixture.PlayerTwoFirstName = "Winston";
+            fixture.PlayerTwoLastName = "Babolat";
+
+            fixture.TournamentName = "Sutton Open";
+            fixture.SelectedAgeGroup = AgeGroup.U14;
+            fixture.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
+            fixture.SelectedSetsFormat = SetsFormat.ShortSetToFour;
+            fixture.SelectedDueceFormat = DueceFormat.SuddenDeath;
+            fixture.SelectedGrade = Grade.Grade5;
+
+            //Act & Assert
+            Assert.IsTrue(fixture.SaveCommand.CanExecute(null), "Parameters for Save Command not set");
+
         }
 
         [TestMethod]
@@ -65,16 +69,7 @@ namespace MatchStats.Test.ViewModels
             fixture.PlayerTwoFirstName = "Winston";
             fixture.PlayerTwoLastName = "Babolat";
 
-            Match matchMessage = null;
-            MessageBus.Current.Listen<Match>().Subscribe(x =>
-            {
-                matchMessage = x;
-            });
-
-            Assert.IsFalse(fixture.SaveCommand.CanExecute(null), "ViewModel Validation failed, Message to save Match will be received, when it should not have been sent.");
-            Assert.IsNull(matchMessage, "ViewModel Validation failed, Message to save Match received, when it should not have been sent."); 
-
- 
+            Assert.IsFalse(fixture.SaveCommand.CanExecute(null), "ViewModel SaveCommand CanExecute validation failed");
         }
     }
 }
