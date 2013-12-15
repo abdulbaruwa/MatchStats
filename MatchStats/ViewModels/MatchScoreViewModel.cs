@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
 using MatchStats.Model;
@@ -9,13 +10,18 @@ namespace MatchStats.ViewModels
     [DataContract]
     public class MatchScoreViewModel : ReactiveObject, IRoutableViewModel
     {
-        public ReactiveList<ScorePoint> ScorePoints { get; protected set; }
+        public ReactiveList<IGameAction> ScorePoints { get; protected set; }
+        public ReactiveList<IGameAction> PlayerOneActions { get; protected set; }
+        public ReactiveList<IGameAction> PlayerTwoActions { get; protected set; }
         public IReactiveCommand NavToHomePageCommand { get; protected set; }
         public IReactiveCommand StartMatchCommand { get; protected set; }
+        private readonly IReactiveCommand addItemsCommand;
 
         public MatchScoreViewModel(IScreen screen = null)
         {
-            ScorePoints = new ReactiveList<ScorePoint>();
+            PlayerOneActions = new ReactiveList<IGameAction>();
+            PlayerTwoActions = new ReactiveList<IGameAction>();
+            ScorePoints = new ReactiveList<IGameAction>();
             HostScreen = screen ?? RxApp.DependencyResolver.GetService<IScreen>();
             UrlPathSegment = "MatchScore";
             NavToHomePageCommand = new ReactiveCommand();
@@ -32,12 +38,23 @@ namespace MatchStats.ViewModels
                 .Select(x => x)
                 .ToProperty(this, x => x.ShowHidePopup, true);
 
-           //Observe the NewMatchControlVM.ShowMe property, if just set call start match and set the CurrentMatch Property
+            //Observe the NewMatchControlVM.ShowMe property, if just set call start match and set the CurrentMatch Property
             _currentMatch = this.WhenAny(x => x.NewMatchControlViewModel.ShowMe, x => x.Value)
                 .Where(x => x == false)
                 .Select(x => this.NewMatchControlViewModel.SavedMatch)
                 .Do(StartMatch)
                 .ToProperty(this, x => x.CurrentMatch, new Match());
+     }
+
+        private  IObservable<IGameAction> GetGameCommandsForPlayer(Player player)
+        {
+            var listOfActions = new List<IGameAction>
+            {
+                new DoubleFaultCommand(player),
+                new ForeHandWinnerCommand(player),
+            };
+
+            return listOfActions.ToObservable();
         }
 
         private void StartMatch(object param)
@@ -47,6 +64,10 @@ namespace MatchStats.ViewModels
             {
                 var matchStatsApi = RxApp.DependencyResolver.GetService<IMatchStatsApi>();
                 matchStatsApi.SaveMatch(match);
+                PlayerOneActions.Clear();
+
+                GetGameCommandsForPlayer(match.PlayerOne).Subscribe(x => PlayerOneActions.Add(x));
+                GetGameCommandsForPlayer(match.PlayerTwo).Subscribe(x => PlayerTwoActions.Add(x));
             }
         }
 
@@ -62,13 +83,17 @@ namespace MatchStats.ViewModels
             get { return _RandomGuid; }
             set { this.RaiseAndSetIfChanged(ref _RandomGuid, value); }
         }
-
-
-
+        
         private ObservableAsPropertyHelper<Match> _currentMatch;
         public Match CurrentMatch
         {
             get { return _currentMatch.Value; }
+        }
+
+        private ObservableAsPropertyHelper<List<IGameAction>> _playerOneActions;
+        public List<IGameAction> PlayerOneCommands
+        {
+            get { return _playerOneActions.Value; }
         }
         
         [DataMember]
@@ -86,14 +111,6 @@ namespace MatchStats.ViewModels
             get { return _playerTwoCurrentGame; }
             set { this.RaiseAndSetIfChanged(ref _playerTwoCurrentGame, value); }
         }
-
-        //[DataMember]
-        //private string _playerOnesName = "";
-        //public string PlayerOnesName
-        //{
-        //    get{return _playerOnesName;}
-        //    set { this.RaiseAndSetIfChanged(ref _playerOnesName, value); }
-        //}
 
         ObservableAsPropertyHelper<string> _playerOnesName;
         public string PlayerOnesName

@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.System.UserProfile;
@@ -17,14 +17,17 @@ namespace MatchStats.Model
         void SaveMatchStats(List<MyMatchStats> matchStats);
         void SaveMatch(Match match);
         IObservable<List<MyMatchStats>> FetchMatchStats();
+        IObservable<Match> ExecuteActionCommand(ICommand command);
     }
 
     public class MatchStatsApi : IMatchStatsApi
     {
+        private Stack<ICommand> undoCommands;
         private IBlobCache _blobCache;
         public MatchStatsApi(IBlobCache blocCache = null)
         {
             _blobCache = blocCache ?? RxApp.DependencyResolver.GetService<IBlobCache>("UserAccount");
+            undoCommands = new Stack<ICommand>();
         }
 
         public void SaveMatchStats(List<MyMatchStats> matchStats)
@@ -55,6 +58,11 @@ namespace MatchStats.Model
         {
             var observableRes = _blobCache.GetObjectAsync<List<MyMatchStats>>("MyMatchStats");
             return observableRes;
+        }
+
+        public IObservable<Match> ExecuteActionCommand(ICommand command)
+        {
+            throw new NotImplementedException();
         }
     }
 

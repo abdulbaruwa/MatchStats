@@ -9,8 +9,10 @@ namespace MatchStats.Views
         public MatchScoreView()
         {
             this.InitializeComponent();
-            this.OneWayBind(ViewModel, x => x.ScorePoints, x => x.PlayerOneCommands.ItemsSource);
-            this.OneWayBind(ViewModel, x => x.ScorePoints, x => x.PlayerTwoCommands.ItemsSource);
+            this.OneWayBind(ViewModel, x => x.PlayerOneActions, x => x.PlayerOneCommands.ItemsSource);
+            this.OneWayBind(ViewModel, x => x.PlayerTwoActions, x => x.PlayerTwoCommands.ItemsSource);
+            //this.OneWayBind(ViewModel, x => x.ScorePoints, x => x.PlayerOneCommands.ItemsSource);
+            //this.OneWayBind(ViewModel, x => x.ScorePoints, x => x.PlayerTwoCommands.ItemsSource);
             this.Bind(ViewModel, x => x.PlayerOneCurrentGame, x => x.PlayerOneCurrentGame.Text);
             this.Bind(ViewModel, x => x.PlayerTwoCurrentGame, x => x.PlayerTwoCurrentGame.Text);
             this.Bind(ViewModel, x => x.PlayerOneFirstSet, x => x.PlayerOneFirstSet.Text);
