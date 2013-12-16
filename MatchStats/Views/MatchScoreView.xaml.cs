@@ -11,8 +11,6 @@ namespace MatchStats.Views
             this.InitializeComponent();
             this.OneWayBind(ViewModel, x => x.PlayerOneActions, x => x.PlayerOneCommands.ItemsSource);
             this.OneWayBind(ViewModel, x => x.PlayerTwoActions, x => x.PlayerTwoCommands.ItemsSource);
-            //this.OneWayBind(ViewModel, x => x.ScorePoints, x => x.PlayerOneCommands.ItemsSource);
-            //this.OneWayBind(ViewModel, x => x.ScorePoints, x => x.PlayerTwoCommands.ItemsSource);
             this.Bind(ViewModel, x => x.PlayerOneCurrentGame, x => x.PlayerOneCurrentGame.Text);
             this.Bind(ViewModel, x => x.PlayerTwoCurrentGame, x => x.PlayerTwoCurrentGame.Text);
             this.Bind(ViewModel, x => x.PlayerOneFirstSet, x => x.PlayerOneFirstSet.Text);
@@ -26,7 +24,9 @@ namespace MatchStats.Views
             this.OneWayBind(ViewModel, x => x.HostScreen.Router.NavigateBack, x => x.backButton.Command);
             this.Bind(ViewModel, x => x.NewMatchControlViewModel, x => x.AddNewMatchControl.ViewModel);
             this.Bind(ViewModel, x => x.ShowHidePopup, x => x.AddMatchPoupup.IsOpen);
+           // this.Bind(ViewModel, x => x.SelectedPlayerOneAction, x => x.PlayerOneCommands.)
             //this.Bind(ViewModel, x => x.ShowHideMatchPopup, x => x.AddMatchPoupup.IsOpen);
+
         }
 
         object IViewFor.ViewModel

@@ -3,7 +3,7 @@
     public class Game
     {
         public Player Winner { get; set; }
-        public int ForScore { get; set; }
-        public int AgainstScore { get; set; }
+        public int PlayerOneScore { get; set; }
+        public int PlayerTwoScore { get; set; }
     }
 }

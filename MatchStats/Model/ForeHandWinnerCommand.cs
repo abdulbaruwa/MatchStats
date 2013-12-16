@@ -2,7 +2,7 @@
 
 namespace MatchStats.Model
 {
-    public class ForeHandWinnerCommand : GameAction
+    public class ForeHandWinnerCommand : GameActionViewModel
     {
         public ForeHandWinnerCommand(Player player = null)
         {
@@ -24,12 +24,7 @@ namespace MatchStats.Model
             }
         }
 
-        public override bool CanExecute(object parameter)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Execute(object parameter)
+        public override void Execute()
         {
             throw new NotImplementedException();
         }

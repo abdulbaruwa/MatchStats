@@ -29,6 +29,10 @@ namespace MatchStats.ViewModels
         private void SaveCommandImplementation()
         {
             var match = new Match(){MatchGuid = Guid.NewGuid(), MatchTime = DateTime.Now};
+            match.Score = new Score()
+            {
+                GameOne = new Game()
+            };
             match.MatchFormat = new MatchFormat()
             {
                 DueceFormat = (DueceFormat) this.SelectedDueceFormat,

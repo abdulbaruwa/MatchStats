@@ -13,5 +13,6 @@ namespace MatchStats.Model
         public Player PlayerTwo { get; set; }
         public Tournament Tournament { get; set; }
         public MatchFormat MatchFormat { get; set; }
+        public Score Score { get; set; }
     }
 }

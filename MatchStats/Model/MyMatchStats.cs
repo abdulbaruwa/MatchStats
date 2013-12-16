@@ -47,11 +47,11 @@ namespace MatchStats.Model
             string matchScore;
             if (Score.GameOne.Winner == PlayerOne)
             {
-                matchScore = game.ForScore + "-" + game.AgainstScore;
+                matchScore = game.PlayerOneScore + "-" + game.PlayerTwoScore;
             }
             else
             {
-                matchScore = game.AgainstScore + "-" + game.ForScore;
+                matchScore = game.PlayerTwoScore + "-" + game.PlayerOneScore;
             }
             return matchScore;
         }

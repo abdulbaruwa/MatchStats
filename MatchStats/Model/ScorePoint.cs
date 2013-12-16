@@ -5,22 +5,23 @@ using ReactiveUI;
 
 namespace MatchStats.Model
 {
-    public interface IGameAction : ICommand
+    public interface IGameActionViewModel
     {
         string Name { get; set; }
         string DisplayName { get; set; }
         Player Player { get; set; }
+        void Execute();
+        IReactiveCommand ActionCommand { get; set; }
     }
 
-    public abstract class GameAction : IGameAction
+    public abstract class GameActionViewModel : IGameActionViewModel
     {
         public string Name { get; set; }
         public string DisplayName { get; set; }
         public Player Player { get; set; }
-        public abstract bool CanExecute(object parameter);
-        public abstract void Execute(object parameter);
+        public abstract void Execute();
 
-        public event EventHandler CanExecuteChanged;
+        public IReactiveCommand ActionCommand { get; set; }
     }
         //    ForeHandWinner, >>>
         //BackHandWinner,
@@ -33,52 +34,40 @@ namespace MatchStats.Model
         //ForcedError
          //DoubleFault
 
-    public class ScoreGamePointAction : GameAction
+    public class ScoreGamePointActionViewModel : GameActionViewModel
     {
         public PointReason PointReason { get; set; }
         public bool ScoreForOpponent { get; set; }
-        public override bool CanExecute(object parameter)
-        {
-            throw new NotImplementedException();
-        }
 
-        public override void Execute(object parameter)
+
+        public override void Execute()
         {
             throw new NotImplementedException();
         }
     }
 
-    public class NonScoreGameAction : GameAction
+    public class NonScoreGameActionViewModel : GameActionViewModel
     {
         public NonScoreActionReason NonScoreActionReason { get; set; }
-        public override bool CanExecute(object parameter)
-        {
-            throw new NotImplementedException();
-        }
 
-        public override void Execute(object parameter)
+        public override void Execute()
         {
             throw new NotImplementedException();
         }
     }
 
-    public class ScorePoint : IGameAction
+    public class ScorePoint : IGameActionViewModel
     {
         public string Name { get; set; }
         public string DisplayName { get; set; }
         public PointReason PointReason { get; set; }
         public Player Player { get; set; }
-        public bool CanExecute(object parameter)
+        public void Execute()
         {
             throw new NotImplementedException();
         }
 
-        public void Execute(object parameter)
-        {
-            throw new NotImplementedException();
-        }
-
-        public event EventHandler CanExecuteChanged;
+        public IReactiveCommand ActionCommand { get; set; }
     }
 
     public class ScorPoint

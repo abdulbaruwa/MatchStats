@@ -22,9 +22,9 @@ namespace MatchStats.DesignTimeStuff
         {
             var playerOne = new Player() { FirstName = "Adeomola", Rating = "7.2", SurName = "Baruwa" };
             var playerTwo = new Player() { FirstName = "Kieran", Rating = "7.1", SurName = "Reed" };
-            var gameOne = new Game() { AgainstScore = 7, ForScore = 5, Winner = playerTwo };
-            var gameTwo = new Game() { AgainstScore = 7, ForScore = 6, Winner = playerOne };
-            var gameThree = new Game() { AgainstScore = 6, ForScore = 3, Winner = playerOne };
+            var gameOne = new Game() { PlayerTwoScore = 7, PlayerOneScore = 5, Winner = playerTwo };
+            var gameTwo = new Game() { PlayerTwoScore = 7, PlayerOneScore = 6, Winner = playerOne };
+            var gameThree = new Game() { PlayerTwoScore = 6, PlayerOneScore = 3, Winner = playerOne };
 
             return new MyMatchStats()
             {
@@ -43,9 +43,9 @@ namespace MatchStats.DesignTimeStuff
         {
             var playerOne = new Player() { FirstName = "Adeomola", Rating = "7.2", SurName = "Baruwa" };
             var playerTwo = new Player() { FirstName = "Adam", Rating = "7.1", SurName = "Keop" };
-            var gameOne = new Game() { AgainstScore = 7, ForScore = 5, Winner = playerTwo };
-            var gameTwo = new Game() { AgainstScore = 7, ForScore = 6, Winner = playerOne };
-            var gameThree = new Game() { AgainstScore = 6, ForScore = 3, Winner = playerOne };
+            var gameOne = new Game() { PlayerTwoScore = 7, PlayerOneScore = 5, Winner = playerTwo };
+            var gameTwo = new Game() { PlayerTwoScore = 7, PlayerOneScore = 6, Winner = playerOne };
+            var gameThree = new Game() { PlayerTwoScore = 6, PlayerOneScore = 3, Winner = playerOne };
 
             return new MyMatchStats()
             {
@@ -65,9 +65,9 @@ namespace MatchStats.DesignTimeStuff
         {
             var playerOne = new Player() { FirstName = "Adeomola", Rating = "7.2", SurName = "Baruwa" };
             var playerTwo = new Player() { FirstName = "Quinton", Rating = "6.1", SurName = "Kumaressagem" };
-            var gameOne = new Game() { AgainstScore = 7, ForScore = 5, Winner = playerTwo };
-            var gameTwo = new Game() { AgainstScore = 7, ForScore = 6, Winner = playerOne };
-            var gameThree = new Game() { AgainstScore = 6, ForScore = 2, Winner = playerTwo };
+            var gameOne = new Game() { PlayerTwoScore = 7, PlayerOneScore = 5, Winner = playerTwo };
+            var gameTwo = new Game() { PlayerTwoScore = 7, PlayerOneScore = 6, Winner = playerOne };
+            var gameThree = new Game() { PlayerTwoScore = 6, PlayerOneScore = 2, Winner = playerTwo };
 
             return new MyMatchStats()
             {

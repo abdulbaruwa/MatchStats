@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Akavache;
 using MatchStats.Enums;
 using MatchStats.Model;
@@ -17,13 +18,9 @@ namespace MatchStats.Test.ViewModels
         public void ShouldSaveGivenGameToListOfGames()
         {
             //Arrange
-            var blobCache = new TestBlobCache();
-            RxApp.MutableResolver.Register(() => new MatchStatsApi(), typeof(IMatchStatsApi));
-            RxApp.MutableResolver.RegisterConstant(blobCache, typeof(IBlobCache), "UserAccount");
-
+            var blobCache = RegisterComponents();
             var currentListOfMatches = new List<Match>();
             var newListOfMatchesAfterSave = new List<Match>();
-            var matchStatsApi = RxApp.DependencyResolver.GetService<IMatchStatsApi>();
 
             blobCache.GetObjectAsync<List<Match>>("MyMatches").Subscribe(currentListOfMatches.AddRange,
                 ex =>
@@ -31,22 +28,8 @@ namespace MatchStats.Test.ViewModels
                    //Ignore the exception that the list may not exist. 
                 });
 
-            var fixture = new MatchScoreViewModel();
+            var fixture = BuildAMatchToScore();
 
-            fixture.NewMatchControlViewModel = new NewMatchControlViewModel();
-            fixture.NewMatchControlViewModel.PlayerOneFirstName = "William";
-            fixture.NewMatchControlViewModel.PlayerOneLastName = "Dof";
-            fixture.NewMatchControlViewModel.PlayerTwoFirstName = "Drake";
-            fixture.NewMatchControlViewModel.PlayerTwoLastName = "Dufus";
-            fixture.NewMatchControlViewModel.SelectedGrade = Grade.Grade3;
-            fixture.NewMatchControlViewModel.SelectedAgeGroup = AgeGroup.U14;
-            fixture.NewMatchControlViewModel.SelectedDueceFormat = DueceFormat.Normal;
-            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.Normal;
-            fixture.NewMatchControlViewModel.SelectedPlayerOneRating = Rating.FiveOne;
-            fixture.NewMatchControlViewModel.SelectedPlayerTwoRating = Rating.FiveOne;
-            fixture.NewMatchControlViewModel.SelectedSetsFormat = SetsFormat.ShortSetToFour;
-            fixture.NewMatchControlViewModel.TournamentName = "Sutton Open";
-            
             //Act => Send message with Match details
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);     
 
@@ -59,11 +42,8 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldSaveMatchInCurrentMatchEntity()
         {
-
             //Arrange
-            var blobCache = new TestBlobCache();
-            RxApp.MutableResolver.Register(() => new MatchStatsApi(), typeof(IMatchStatsApi));
-            RxApp.MutableResolver.RegisterConstant(blobCache, typeof(IBlobCache), "UserAccount");
+            var blobCache = RegisterComponents();
 
             var currentListOfMatches = new List<Match>();
             blobCache.GetObjectAsync<List<Match>>("MyMatches").Subscribe(currentListOfMatches.AddRange,
@@ -71,6 +51,43 @@ namespace MatchStats.Test.ViewModels
                 {
                     //Ignore the exception that the list my not exist. 
                 });
+
+            var fixture = BuildAMatchToScore();
+
+            //Act => 
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+
+            //Assert => CurrentMatch is now this match
+            blobCache.GetObjectAsync<Match>("CurrentMatch").Subscribe(x => Assert.AreEqual(x.MatchGuid, fixture.CurrentMatch.MatchGuid),
+                ex => Assert.Fail("Current Match not saved"));
+        }
+
+        [TestMethod]
+        public void ShouldAddPointForOpponentOnDoubleFaultAction()
+        {
+            //Arrange
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+
+            //Act
+            fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
+
+            //Assert
+            Assert.IsTrue(fixture.CurrentMatch.Score.GameOne.PlayerOneScore.Equals(1), "Point not added for action");
+            Assert.IsTrue(fixture.CurrentMatch.Score.GameOne.PlayerTwoScore.Equals(0), "Wrongly updated the score for player");
+        }
+
+        private static TestBlobCache RegisterComponents()
+        {
+            var blobCache = new TestBlobCache();
+            RxApp.MutableResolver.Register(() => new MatchStatsApi(), typeof (IMatchStatsApi));
+            RxApp.MutableResolver.RegisterConstant(blobCache, typeof (IBlobCache), "UserAccount");
+            return blobCache;
+        }
+
+        private static MatchScoreViewModel BuildAMatchToScore()
+        {
             var fixture = new MatchScoreViewModel();
 
             fixture.NewMatchControlViewModel = new NewMatchControlViewModel();
@@ -86,13 +103,7 @@ namespace MatchStats.Test.ViewModels
             fixture.NewMatchControlViewModel.SelectedPlayerTwoRating = Rating.FiveOne;
             fixture.NewMatchControlViewModel.SelectedSetsFormat = SetsFormat.ShortSetToFour;
             fixture.NewMatchControlViewModel.TournamentName = "Sutton Open";
-
-            //Act => 
-            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
-
-            //Assert => CurrentMatch is now this match
-            blobCache.GetObjectAsync<Match>("CurrentMatch").Subscribe(x => Assert.AreEqual(x.MatchGuid, fixture.CurrentMatch.MatchGuid),
-                ex => Assert.Fail("Current Match not saved"));
+            return fixture;
         }
 
         private Match BuildTestMatchObject(Guid matchGuid)

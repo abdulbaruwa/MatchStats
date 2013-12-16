@@ -10,26 +10,29 @@ namespace MatchStats.ViewModels
     [DataContract]
     public class MatchScoreViewModel : ReactiveObject, IRoutableViewModel
     {
-        public ReactiveList<IGameAction> ScorePoints { get; protected set; }
-        public ReactiveList<IGameAction> PlayerOneActions { get; protected set; }
-        public ReactiveList<IGameAction> PlayerTwoActions { get; protected set; }
+        public ReactiveList<IGameActionViewModel> ScorePoints { get; protected set; }
+        public ReactiveList<IGameActionViewModel> PlayerOneActions { get; protected set; }
+        public ReactiveList<IGameActionViewModel> PlayerTwoActions { get; protected set; }
         public IReactiveCommand NavToHomePageCommand { get; protected set; }
         public IReactiveCommand StartMatchCommand { get; protected set; }
+        public IReactiveCommand PlayerOneActionCommand { get; protected set; }
         private readonly IReactiveCommand addItemsCommand;
 
         public MatchScoreViewModel(IScreen screen = null)
         {
-            PlayerOneActions = new ReactiveList<IGameAction>();
-            PlayerTwoActions = new ReactiveList<IGameAction>();
-            ScorePoints = new ReactiveList<IGameAction>();
+            PlayerOneActions = new ReactiveList<IGameActionViewModel>();
+            PlayerTwoActions = new ReactiveList<IGameActionViewModel>();
+            ScorePoints = new ReactiveList<IGameActionViewModel>();
             HostScreen = screen ?? RxApp.DependencyResolver.GetService<IScreen>();
             UrlPathSegment = "MatchScore";
             NavToHomePageCommand = new ReactiveCommand();
             NavToHomePageCommand.Subscribe(_ => NavigateBackToHomePage());
+            PlayerOneActionCommand = new ReactiveCommand();
+            PlayerOneActionCommand.Subscribe(x => ExecuteActionForPlayer(x));
             StartMatchCommand = new ReactiveCommand();
             StartMatchCommand.Subscribe(StartMatch);
             NewMatchControlViewModel = RxApp.DependencyResolver.GetService<NewMatchControlViewModel>();
-            MessageBus.Current.Listen<Match>().InvokeCommand(StartMatchCommand);
+            //MessageBus.Current.Listen<Match>().InvokeCommand(StartMatchCommand);
             RandomGuid = Guid.NewGuid();
 
             //Observe the NewMatchControlVM.ShowMe property, Hide pop up depending on value.
@@ -46,9 +49,14 @@ namespace MatchStats.ViewModels
                 .ToProperty(this, x => x.CurrentMatch, new Match());
      }
 
-        private  IObservable<IGameAction> GetGameCommandsForPlayer(Player player)
+        private void ExecuteActionForPlayer(object param)
         {
-            var listOfActions = new List<IGameAction>
+            throw new NotImplementedException();
+        }
+
+        private  IObservable<IGameActionViewModel> GetGameCommandsForPlayer(Player player)
+        {
+            var listOfActions = new List<IGameActionViewModel>
             {
                 new DoubleFaultCommand(player),
                 new ForeHandWinnerCommand(player),
@@ -90,10 +98,18 @@ namespace MatchStats.ViewModels
             get { return _currentMatch.Value; }
         }
 
-        private ObservableAsPropertyHelper<List<IGameAction>> _playerOneActions;
-        public List<IGameAction> PlayerOneCommands
+        private ObservableAsPropertyHelper<List<IGameActionViewModel>> _playerOneActions;
+        public List<IGameActionViewModel> PlayerOneCommands
         {
             get { return _playerOneActions.Value; }
+        }
+
+        [DataMember]
+        private object _selectedPlayerOneAction;
+        public object SelectedPlayerOneAction
+        {
+            get { return _selectedPlayerOneAction; }
+            set { this.RaiseAndSetIfChanged(ref _selectedPlayerOneAction, value); }
         }
         
         [DataMember]

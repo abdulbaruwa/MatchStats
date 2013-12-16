@@ -42,7 +42,6 @@ namespace MatchStats.Controls
 
             this.Bind(ViewModel, x => x.Ratings, x => x.PlayerTwoRating.ItemsSource);
             this.Bind(ViewModel, x => x.SelectedPlayerTwoRating, x => x.PlayerTwoRating.SelectedValue);
-            //this.Bind(ViewModel, x => x.SelectedPlayerTwoRatingIndex, x => x.PlayerTwoRating.SelectedItem);
         }
 
         public static readonly DependencyProperty ViewModelProperty = DependencyProperty.Register("ViewModel",

@@ -1,39 +1,22 @@
 ﻿using System;
+using ReactiveUI;
 
 namespace MatchStats.Model
 {
-    public class DoubleFaultCommand : GameAction
+    public class DoubleFaultCommand : GameActionViewModel
     {
 
         public DoubleFaultCommand(Player player = null)
         {
             Player = player ?? new Player();
+            base.Name = "DoubleFault";
+            base.DisplayName = "Double Fault";
+            ActionCommand = new ReactiveCommand();
+            ActionCommand.Subscribe(x => this.Execute());
         }
 
-        public new string Name
+        public override void Execute()
         {
-            get
-            {
-                return "DoubleFault";
-            }
-        }
-
-        public new string DisplayName
-        {
-            get
-            {
-                return "Double Fault";
-            }
-        }
-
-        public override bool CanExecute(object parameter)
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Execute(object parameter)
-        {
-            throw new NotImplementedException();
         }
     }
 }
