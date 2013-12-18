@@ -1,10 +1,11 @@
 ﻿using System;
+using MatchStats.Model;
 
-namespace MatchStats.Model
+namespace MatchStats.ViewModels
 {
-    public class ForeHandWinnerCommand : GameActionViewModel
+    public class ForeHandWinnerCommandViewModel : GameActionViewModel
     {
-        public ForeHandWinnerCommand(Player player = null)
+        public ForeHandWinnerCommandViewModel(Player player = null)
         {
             Player = player ?? new Player();
         }

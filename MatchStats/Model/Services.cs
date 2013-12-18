@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Windows.Storage;
@@ -15,9 +17,10 @@ namespace MatchStats.Model
     public interface IMatchStatsApi
     {
         void SaveMatchStats(List<MyMatchStats> matchStats);
-        void SaveMatch(Match match);
+        IObservable<Unit> SaveMatch(Match match);
         IObservable<List<MyMatchStats>> FetchMatchStats();
         IObservable<Match> ExecuteActionCommand(ICommand command);
+        IObservable<Match> GetCurrentMatch();
     }
 
     public class MatchStatsApi : IMatchStatsApi
@@ -36,7 +39,7 @@ namespace MatchStats.Model
             var test = _blobCache.GetAllKeys();
         }
 
-        public void SaveMatch(Match match)
+        public IObservable<Unit> SaveMatch(Match match)
         {
             //Get match and add to it.
             var existingMatches = new List<Match>();
@@ -50,8 +53,9 @@ namespace MatchStats.Model
             }
             existingMatches.Add(match);
 
-            _blobCache.InsertObject<List<Match>>("MyMatches", existingMatches);
-            _blobCache.InsertObject<Match>("CurrentMatch", match);
+            return Observable.Concat(
+                            _blobCache.InsertObject<List<Match>>("MyMatches", existingMatches),
+                            _blobCache.InsertObject<Match>("CurrentMatch", match));
         }
 
         public IObservable<List<MyMatchStats>> FetchMatchStats()
@@ -63,6 +67,12 @@ namespace MatchStats.Model
         public IObservable<Match> ExecuteActionCommand(ICommand command)
         {
             throw new NotImplementedException();
+        }
+
+        public IObservable<Match> GetCurrentMatch()
+        {
+            var currentMatchObservable  = _blobCache.GetObjectAsync<Match>("CurrentMatch");
+            return currentMatchObservable;
         }
     }
 

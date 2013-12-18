@@ -33,6 +33,8 @@ namespace MatchStats.ViewModels
             {
                 GameOne = new Game()
             };
+            match.Score.Games.Add(new Game(){IsCurrentGame = true});
+
             match.MatchFormat = new MatchFormat()
             {
                 DueceFormat = (DueceFormat) this.SelectedDueceFormat,
@@ -43,6 +45,7 @@ namespace MatchStats.ViewModels
             if (! UseDefaultPlayer)
             {
                 match.PlayerOne = BuildPlayerOne();
+
             }
 
             var tournament = new Tournament();
@@ -64,9 +67,7 @@ namespace MatchStats.ViewModels
 
         private Player BuildPlayerOne()
         {
-            var player = new Player();
-            player.FirstName = PlayerOneFirstName;
-            player.SurName = PlayerOneLastName;
+            var player = new Player {IsPlayerOne = true, FirstName = PlayerOneFirstName, SurName = PlayerOneLastName};
             if (SelectedPlayerOneRating != null)
             {
                 player.Rating = SelectedPlayerOneRating.ToString();

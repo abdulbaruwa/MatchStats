@@ -9,5 +9,6 @@
             get { return FirstName + " " + SurName; }
         }
         public string Rating { get; set; }
+        public bool IsPlayerOne { get; set; }
     }
 }

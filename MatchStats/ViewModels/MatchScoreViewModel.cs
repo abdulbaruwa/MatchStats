@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
 using MatchStats.Model;
@@ -10,6 +11,7 @@ namespace MatchStats.ViewModels
     [DataContract]
     public class MatchScoreViewModel : ReactiveObject, IRoutableViewModel
     {
+        
         public ReactiveList<IGameActionViewModel> ScorePoints { get; protected set; }
         public ReactiveList<IGameActionViewModel> PlayerOneActions { get; protected set; }
         public ReactiveList<IGameActionViewModel> PlayerTwoActions { get; protected set; }
@@ -47,7 +49,27 @@ namespace MatchStats.ViewModels
                 .Select(x => this.NewMatchControlViewModel.SavedMatch)
                 .Do(StartMatch)
                 .ToProperty(this, x => x.CurrentMatch, new Match());
-     }
+
+            this.WhenAny(x => x.CurrMatch, x => x.Value)
+                .Select(x => x)
+                .ToProperty(this, x => x.CurrentMatch, new Match());
+
+            _playerOneFirstSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
+                .Where(x => x.Games.FirstOrDefault() != null)
+                .Select(x => x.Games.First().PlayerOneScore.ToString())
+                .ToProperty(this, x => x.PlayerOneFirstSet, "");
+                
+            _playerTwoFirstSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
+                .Where(x => x.Games.FirstOrDefault() != null)
+                .Select(x => x.Games.First().PlayerTwoScore.ToString())
+                .ToProperty(this, x => x.PlayerTwoFirstSet, "");
+                
+            MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch")
+                .Select(x => x)
+                .ToProperty(this, x => x.CurrentMatch, new Match()).Subscribe(x => CurrMatch = x );
+
+            MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch").Subscribe(x => CurrMatch = x);
+        }
 
         private void ExecuteActionForPlayer(object param)
         {
@@ -58,8 +80,8 @@ namespace MatchStats.ViewModels
         {
             var listOfActions = new List<IGameActionViewModel>
             {
-                new DoubleFaultCommand(player),
-                new ForeHandWinnerCommand(player),
+                new DoubleFaultCommandViewModel(player),
+                new ForeHandWinnerCommandViewModel(player),
             };
 
             return listOfActions.ToObservable();
@@ -120,6 +142,15 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _playerOneCurrentGame, value); }
         }
 
+
+        [DataMember]
+        private Match _currMatch;
+        public Match CurrMatch
+        {
+            get { return _currMatch; }
+            set { this.RaiseAndSetIfChanged(ref _currMatch, value); }
+        }
+            
         [DataMember]
         private string _playerTwoCurrentGame = "";
         public string PlayerTwoCurrentGame
@@ -147,51 +178,45 @@ namespace MatchStats.ViewModels
         }
 
         [DataMember]
-        private string _playerTwoThirdSet = "";
+        private ObservableAsPropertyHelper<string> _playerTwoThirdSet;
         public string PlayerTwoThirdSet
         {
-            get { return _playerTwoThirdSet; }
-            set { this.RaiseAndSetIfChanged(ref _playerTwoThirdSet, value); }
+            get { return _playerTwoThirdSet.Value; }
         }
 
         [DataMember]
-        private string _playerOneThirdSet = "";
+        private ObservableAsPropertyHelper<string> _playerOneThirdSet;
         public string PlayerOneThirdSet
         {
-            get { return _playerOneThirdSet; }
-            set { this.RaiseAndSetIfChanged(ref _playerOneThirdSet, value); }
+            get { return _playerOneThirdSet.Value; }
         }
 
         [DataMember]
-        private string _playerOneSecondSet = "";
+        private ObservableAsPropertyHelper<string> _playerOneSecondSet;
         public string PlayerOneSecondSet
         {
-            get { return _playerOneSecondSet; }
-            set { this.RaiseAndSetIfChanged(ref _playerOneSecondSet, value); }
+            get { return _playerOneSecondSet.Value; }
         }
 
         [DataMember]
-        private string _playerTwoSecondSet = "";
+        private ObservableAsPropertyHelper<string> _playerTwoSecondSet;
         public string PlayerTwoSecondSet
         {
-            get { return _playerTwoSecondSet; }
-            set { this.RaiseAndSetIfChanged(ref _playerTwoSecondSet, value); }
+            get { return _playerTwoSecondSet.Value; }
         }
 
         [DataMember]
-        private string _playerOneFirstSet = "";
+        private ObservableAsPropertyHelper<string> _playerOneFirstSet;
         public string PlayerOneFirstSet
         {
-            get { return _playerOneFirstSet; }
-            set { this.RaiseAndSetIfChanged(ref _playerOneFirstSet, value); }
+            get { return _playerOneFirstSet.Value; }
         }
 
         [DataMember]
-        private string _playerTwoFirstSet = "";
+        private ObservableAsPropertyHelper<string> _playerTwoFirstSet;
         public string PlayerTwoFirstSet
         {
-            get { return _playerTwoFirstSet; }
-            set { this.RaiseAndSetIfChanged(ref _playerTwoFirstSet, value); }
+           get { return _playerTwoFirstSet.Value; }
         }
 
         [DataMember]

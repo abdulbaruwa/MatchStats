@@ -1,4 +1,5 @@
-﻿using Windows.UI.Xaml;
+﻿using System.Linq;
+using Windows.UI.Xaml;
 using MatchStats.ViewModels;
 using ReactiveUI;
 
@@ -24,9 +25,6 @@ namespace MatchStats.Views
             this.OneWayBind(ViewModel, x => x.HostScreen.Router.NavigateBack, x => x.backButton.Command);
             this.Bind(ViewModel, x => x.NewMatchControlViewModel, x => x.AddNewMatchControl.ViewModel);
             this.Bind(ViewModel, x => x.ShowHidePopup, x => x.AddMatchPoupup.IsOpen);
-           // this.Bind(ViewModel, x => x.SelectedPlayerOneAction, x => x.PlayerOneCommands.)
-            //this.Bind(ViewModel, x => x.ShowHideMatchPopup, x => x.AddMatchPoupup.IsOpen);
-
         }
 
         object IViewFor.ViewModel

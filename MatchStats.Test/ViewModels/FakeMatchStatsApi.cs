@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Windows.Input;
 using MatchStats.DesignTimeStuff;
@@ -20,7 +21,7 @@ namespace MatchStats.Test.ViewModels
             throw new NotImplementedException();
         }
 
-        public void SaveMatch(Match match)
+        public IObservable<Unit> SaveMatch(Match match)
         {
             throw new NotImplementedException();
         }
@@ -41,6 +42,11 @@ namespace MatchStats.Test.ViewModels
         }
 
         public IObservable<Match> ExecuteActionCommand(ICommand command)
+        {
+            throw new NotImplementedException();
+        }
+
+        public IObservable<Match> GetCurrentMatch()
         {
             throw new NotImplementedException();
         }

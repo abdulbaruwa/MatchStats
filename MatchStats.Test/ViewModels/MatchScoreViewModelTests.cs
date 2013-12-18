@@ -74,8 +74,8 @@ namespace MatchStats.Test.ViewModels
             fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
 
             //Assert
-            Assert.IsTrue(fixture.CurrentMatch.Score.GameOne.PlayerOneScore.Equals(1), "Point not added for action");
-            Assert.IsTrue(fixture.CurrentMatch.Score.GameOne.PlayerTwoScore.Equals(0), "Wrongly updated the score for player");
+            Assert.IsTrue(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).PlayerOneScore.Equals(1), "Point not added for action");
+            Assert.IsTrue(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).PlayerTwoScore.Equals(0), "Wrongly updated the score for player");
         }
 
         private static TestBlobCache RegisterComponents()
