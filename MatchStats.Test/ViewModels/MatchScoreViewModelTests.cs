@@ -74,6 +74,39 @@ namespace MatchStats.Test.ViewModels
             fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
 
             //Assert
+            Assert.IsTrue(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).PlayerTwoScore.Equals(1), "Point not added for action");
+            Assert.IsTrue(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).PlayerOneScore.Equals(0), "Wrongly updated the score for player");
+        }
+
+        [TestMethod]
+        public void ShouldAddPointForPlayerOneIfOpponentDoubleFaults()
+        {
+            //Arrange
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+
+            //Act
+            fixture.PlayerTwoActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
+
+            //Assert
+            Assert.IsTrue(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).PlayerTwoScore.Equals(0), "Wrongly updated the score for player");
+            Assert.IsTrue(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).PlayerOneScore.Equals(1), "Point not added for action");
+
+        }
+
+        [TestMethod]
+        public void ShouldAddPointForPlayerOneForForeHandWinner()
+        {
+            //Arrange
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+
+            //Act
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            //Assert
             Assert.IsTrue(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).PlayerOneScore.Equals(1), "Point not added for action");
             Assert.IsTrue(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).PlayerTwoScore.Equals(0), "Wrongly updated the score for player");
         }

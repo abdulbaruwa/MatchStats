@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using MatchStats.Model;
+using ReactiveUI;
 
 namespace MatchStats.ViewModels
 {
@@ -8,26 +10,33 @@ namespace MatchStats.ViewModels
         public ForeHandWinnerCommandViewModel(Player player = null)
         {
             Player = player ?? new Player();
+            base.Name = "ForeHandWinner";
+            base.DisplayName = "Fore Hand Winner";
+            ActionCommand = new ReactiveCommand();
+            ActionCommand.Subscribe(x => Execute());
         }
         
-            public new string Name
-        {
-            get
-            {
-                return "ForeHandWinner";
-            }
-        }
-        public new string DisplayName
-        {
-            get
-            {
-                return "Fore Hand Winner";
-            }
-        }
-
         public override void Execute()
         {
-            throw new NotImplementedException();
+            Match currentMatch = null;
+            var matchStatsApi = RxApp.DependencyResolver.GetService<IMatchStatsApi>();
+            //Can this be passed in when the command is called?
+            matchStatsApi.GetCurrentMatch().Subscribe(x => currentMatch = x);
+            Game currentGame = currentMatch.Score.Games.FirstOrDefault(x => x.IsCurrentGame);
+            if (currentGame != null)
+            {
+                if (Player.IsPlayerOne)
+                {
+                    currentGame.PlayerOneScore += 1;
+                }
+                else
+                {
+                    currentGame.PlayerTwoScore += 1;
+                }
+            }
+
+            matchStatsApi.SaveMatch(currentMatch);
+            MessageBus.Current.SendMessage(currentMatch, "PointUpdateForCurrentMatch");
         }
     }
 }

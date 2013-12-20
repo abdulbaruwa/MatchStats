@@ -64,6 +64,26 @@ namespace MatchStats.ViewModels
                 .Select(x => x.Games.First().PlayerTwoScore.ToString())
                 .ToProperty(this, x => x.PlayerTwoFirstSet, "");
                 
+            _playerOneSecondSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
+                .Where(x => x.Games.SecondOrDefault() != null)
+                .Select(x => x.Games.SecondOrDefault().PlayerOneScore.ToString())
+                .ToProperty(this, x => x.PlayerOneFirstSet, "");
+                
+            _playerTwoSecondSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
+                .Where(x => x.Games.SecondOrDefault() != null)
+                .Select(x => x.Games.SecondOrDefault().PlayerTwoScore.ToString())
+                .ToProperty(this, x => x.PlayerTwoSecondSet, "");
+
+            _playerOneThirdSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
+                .Where(x => x.Games.SecondOrDefault() != null)
+                .Select(x => x.Games.SecondOrDefault().PlayerOneScore.ToString())
+                .ToProperty(this, x => x.PlayerOneThirdSet, "");
+
+            _playerTwoThirdSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
+                .Where(x => x.Games.SecondOrDefault() != null)
+                .Select(x => x.Games.SecondOrDefault().PlayerTwoScore.ToString())
+                .ToProperty(this, x => x.PlayerTwoThirdSet, "");
+                
             MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch")
                 .Select(x => x)
                 .ToProperty(this, x => x.CurrentMatch, new Match()).Subscribe(x => CurrMatch = x );

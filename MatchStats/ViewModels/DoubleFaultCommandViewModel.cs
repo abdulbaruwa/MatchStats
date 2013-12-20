@@ -29,18 +29,16 @@ namespace MatchStats.ViewModels
             {
                 if (Player.IsPlayerOne)
                 {
-                    currentGame.PlayerOneScore += 1;
+                    currentGame.PlayerTwoScore += 1;
                 }
                 else
                 {
-                    currentGame.PlayerTwoScore += 1;
+                    currentGame.PlayerOneScore += 1;
                 }
             }
 
             matchStatsApi.SaveMatch(currentMatch);
             MessageBus.Current.SendMessage(currentMatch, "PointUpdateForCurrentMatch");
-
-            //Get the API and pass call the relevant function
         }
     }
 }

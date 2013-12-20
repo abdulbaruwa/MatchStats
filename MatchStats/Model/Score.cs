@@ -8,6 +8,7 @@ namespace MatchStats.Model
         {
             Games = new List<Game>();
         }
+
         public List<Game> Games { get; set; }
         public Game GameOne { get; set; }
         public Game GameTwo { get; set; }
