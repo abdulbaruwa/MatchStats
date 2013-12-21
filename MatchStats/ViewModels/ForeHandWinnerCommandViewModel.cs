@@ -35,6 +35,7 @@ namespace MatchStats.ViewModels
                 }
             }
 
+            currentMatch = matchStatsApi.ApplyGameRules(currentMatch);
             matchStatsApi.SaveMatch(currentMatch);
             MessageBus.Current.SendMessage(currentMatch, "PointUpdateForCurrentMatch");
         }

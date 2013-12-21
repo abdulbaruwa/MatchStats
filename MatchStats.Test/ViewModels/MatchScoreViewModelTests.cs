@@ -111,6 +111,80 @@ namespace MatchStats.Test.ViewModels
             Assert.IsTrue(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).PlayerTwoScore.Equals(0), "Wrongly updated the score for player");
         }
 
+        [TestMethod]
+        public void ShouldFlagAGameAsWonWhenAplayerAcquiresTheRelevantPointsForNormalGameAndNormalDuece()
+        {
+
+            //Arrange
+            //To win a normal game, player should
+            //1. Lead by 2
+            //2. Be the first to reach 5 whilst leading by at least 2,
+            //(1)15, (2)30, (3)40, (4) 50 (5)
+            //(1)15, (2)30, (3)40, (4) 50 (5)
+            // 
+
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+
+            //Act
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            //Assert
+            Assert.IsNotNull(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).Winner, "Failed to flag game with a valid winner");
+            Assert.AreEqual(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).Winner.FirstName, fixture.CurrMatch.PlayerOne.FirstName, "Failed to flag game as over");
+        }
+    
+        [TestMethod]
+        public void ShouldSetGameStatusAsDueceAt4040Game()
+        {
+
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+
+            //Act
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            //Assert
+            Assert.IsNull(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).Winner, "Game is flagged as won when it should be Duece");
+            Assert.IsTrue(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).GameStatus.Status == Status.Duece, "Game Status should be flagged as Duece");
+        }
+
+        [TestMethod]
+        public void ShouldSetGameStatusAsBreakPointIfAT3040Game()
+        {
+
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+
+            //Act
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            //Assert
+            Assert.IsNull(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).Winner, "Game is flagged as won when it should be Duece");
+            Assert.IsTrue(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).GameStatus.Status == Status.BreakPoint, "Game Status should be flagged as Break Point");
+            Assert.AreEqual(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).GameStatus.Player.FirstName, fixture.CurrMatch.PlayerTwo.FirstName, "Game Status should be Break Point for PlayerTwo");
+        }
+
         private static TestBlobCache RegisterComponents()
         {
             var blobCache = new TestBlobCache();

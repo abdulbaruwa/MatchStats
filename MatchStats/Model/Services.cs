@@ -5,6 +5,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.Globalization.NumberFormatting;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.System.UserProfile;
@@ -21,6 +22,7 @@ namespace MatchStats.Model
         IObservable<List<MyMatchStats>> FetchMatchStats();
         IObservable<Match> ExecuteActionCommand(ICommand command);
         IObservable<Match> GetCurrentMatch();
+        Match ApplyGameRules(Match currentMatch);
     }
 
     public class MatchStatsApi : IMatchStatsApi
@@ -73,6 +75,79 @@ namespace MatchStats.Model
         {
             var currentMatchObservable  = _blobCache.GetObjectAsync<Match>("CurrentMatch");
             return currentMatchObservable;
+        }
+
+        public Match ApplyGameRules(Match currentMatch)
+        {
+            //currentMatch
+            //Is current game over?
+            //Func<Game, bool> 
+            var currentGame = currentMatch.Score.Games.First(x => x.IsCurrentGame);
+            if (currentGame.PlayerOneScore > currentGame.PlayerTwoScore)
+            {
+                //PlayerOne is leading
+                if ((currentGame.PlayerOneScore == 4) && (currentGame.PlayerTwoScore <= 2))
+                {
+                    currentGame.Winner = currentMatch.PlayerOne;
+                }
+            }
+
+            //PlayerTwo Breakpoint or GamePoint
+            if ((currentGame.PlayerTwoScore == 3) && (currentGame.PlayerOneScore <= 2))
+            {
+                if (currentMatch.Score.CurrentServer.IsPlayerOne)
+                {
+                    currentGame.GameStatus = new GameStatus()
+                    {
+                        Status = Status.BreakPoint,
+                        Player = currentMatch.PlayerTwo
+                    };
+                }
+                else
+                {
+                    currentGame.GameStatus = new GameStatus()
+                    {
+                        Status = Status.GamePoint,
+                        Player = currentMatch.PlayerTwo
+                    };
+                }
+            }
+
+            //Player One BreakPoint or GamePoint
+            if ((currentGame.PlayerOneScore == 3) && (currentGame.PlayerTwoScore <= 2))
+            {
+                if (currentMatch.Score.CurrentServer.IsPlayerOne)
+                {
+                    currentGame.GameStatus = new GameStatus()
+                    {
+                        Status = Status.GamePoint,
+                        Player = currentMatch.PlayerOne
+                    };
+                }
+                else
+                {
+                    currentGame.GameStatus = new GameStatus()
+                    {
+                        Status = Status.BreakPoint,
+                        Player = currentMatch.PlayerOne
+                    };
+ 
+                }
+            }
+
+
+            //Duece
+            if (currentGame.PlayerOneScore >= 3)
+            {
+                if (currentGame.PlayerOneScore == currentGame.PlayerTwoScore)
+                {
+                    currentGame.GameStatus.Status = Status.Duece;
+                    currentGame.GameStatus.Player = null;
+                }
+            }
+
+
+            return currentMatch;
         }
     }
 

@@ -13,5 +13,6 @@ namespace MatchStats.Model
         public Game GameOne { get; set; }
         public Game GameTwo { get; set; }
         public Game GameThree { get; set; }
+        public Player CurrentServer { get; set; }
     }
 }

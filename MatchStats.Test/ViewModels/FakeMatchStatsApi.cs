@@ -51,6 +51,11 @@ namespace MatchStats.Test.ViewModels
             throw new NotImplementedException();
         }
 
+        public Match ApplyGameRules(Match currentMatch)
+        {
+            throw new NotImplementedException();
+        }
+
         public IObservable<MyMatchStats> FetchMatchStats()
         {
             var outputList = new ReactiveList<MyMatchStats>();
