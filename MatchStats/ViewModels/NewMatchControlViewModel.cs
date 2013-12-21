@@ -62,7 +62,6 @@ namespace MatchStats.ViewModels
             match.PlayerTwo = BuildPlayerTwo();
             SavedMatch = match;
             ShowMe = false;
-            //MessageBus.Current.SendMessage(match);
         }
 
         private Player BuildPlayerOne()

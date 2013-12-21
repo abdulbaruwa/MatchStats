@@ -18,6 +18,8 @@ namespace MatchStats.ViewModels
         public IReactiveCommand NavToHomePageCommand { get; protected set; }
         public IReactiveCommand StartMatchCommand { get; protected set; }
         public IReactiveCommand PlayerOneActionCommand { get; protected set; }
+        public IReactiveCommand SetPlayerOneAsCurrentServerCommand { get; protected set; }
+        public IReactiveCommand SetPlayerTwoAsCurrentServerCommand { get; protected set; }
         private readonly IReactiveCommand addItemsCommand;
 
         public MatchScoreViewModel(IScreen screen = null)
@@ -32,7 +34,11 @@ namespace MatchStats.ViewModels
             StartMatchCommand = new ReactiveCommand();
             StartMatchCommand.Subscribe(StartMatch);
             NewMatchControlViewModel = RxApp.DependencyResolver.GetService<NewMatchControlViewModel>();
-            //MessageBus.Current.Listen<Match>().InvokeCommand(StartMatchCommand);
+            SetPlayerOneAsCurrentServerCommand = new ReactiveCommand(CanSetCurrentServerToPlayerOne());
+            SetPlayerOneAsCurrentServerCommand.Subscribe(x => CurrentMatch.Score.CurrentServer = CurrentMatch.PlayerOne);
+            SetPlayerTwoAsCurrentServerCommand = new ReactiveCommand(CanSetCurrentServerToPlayerTwo());
+            SetPlayerTwoAsCurrentServerCommand.Subscribe(_ => CurrentMatch.Score.CurrentServer = CurrentMatch.PlayerTwo);
+
             RandomGuid = Guid.NewGuid();
 
             //Observe the NewMatchControlVM.ShowMe property, Hide pop up depending on value.
@@ -88,6 +94,21 @@ namespace MatchStats.ViewModels
 
             MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch").Subscribe(x => CurrMatch = x);
         }
+
+        private IObservable<bool> CanSetCurrentServerToPlayerOne()
+        {
+            return this.WhenAny(x => CurrentMatch.Score, x => CurrentMatch.PlayerOne,
+                (score, playerone) =>
+                    (score.Value != null && score.Value.CurrentServer.FullName != playerone.Value.FullName));
+        }
+
+        private IObservable<bool> CanSetCurrentServerToPlayerTwo()
+        {
+            return this.WhenAny(x => CurrentMatch.Score, x => CurrentMatch.PlayerTwo,
+                (score, playertwo) =>
+                    (score.Value != null && score.Value.CurrentServer.FullName != playertwo.Value.FullName));
+        }
+
 
         private  IObservable<IGameActionViewModel> GetGameCommandsForPlayer(Player player)
         {

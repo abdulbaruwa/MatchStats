@@ -131,10 +131,8 @@ namespace MatchStats.Model
                         Status = Status.BreakPoint,
                         Player = currentMatch.PlayerOne
                     };
- 
                 }
             }
-
 
             //Duece
             if (currentGame.PlayerOneScore >= 3)
