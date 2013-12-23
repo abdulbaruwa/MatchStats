@@ -5,7 +5,6 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.Globalization.NumberFormatting;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.System.UserProfile;
@@ -27,8 +26,9 @@ namespace MatchStats.Model
 
     public class MatchStatsApi : IMatchStatsApi
     {
+        private readonly IBlobCache _blobCache;
         private Stack<ICommand> undoCommands;
-        private IBlobCache _blobCache;
+
         public MatchStatsApi(IBlobCache blocCache = null)
         {
             _blobCache = blocCache ?? RxApp.DependencyResolver.GetService<IBlobCache>("UserAccount");
@@ -38,31 +38,34 @@ namespace MatchStats.Model
         public void SaveMatchStats(List<MyMatchStats> matchStats)
         {
             _blobCache.InsertObject("MyMatchStats", matchStats);
-            var test = _blobCache.GetAllKeys();
+            IEnumerable<string> test = _blobCache.GetAllKeys();
         }
 
         public IObservable<Unit> SaveMatch(Match match)
         {
             //Get match and add to it.
             var existingMatches = new List<Match>();
-            var observable = _blobCache.GetObjectAsync<List<Match>>("MyMatches");
+            IObservable<List<Match>> observable = _blobCache.GetObjectAsync<List<Match>>("MyMatches");
             observable.Subscribe(existingMatches.AddRange,
-                ex => {/**log exceptions, the exception could be due to missing key**/ });
-            var existingMatch = existingMatches.FirstOrDefault(x => x.MatchGuid == match.MatchGuid);
+                ex =>
+                {
+/**log exceptions, the exception could be due to missing key**/
+                });
+            Match existingMatch = existingMatches.FirstOrDefault(x => x.MatchGuid == match.MatchGuid);
             if (existingMatch != null)
             {
                 existingMatches.Remove(existingMatch);
             }
             existingMatches.Add(match);
 
-            return Observable.Concat(
-                            _blobCache.InsertObject<List<Match>>("MyMatches", existingMatches),
-                            _blobCache.InsertObject<Match>("CurrentMatch", match));
+            return
+                _blobCache.InsertObject("MyMatches", existingMatches)
+                    .Concat(_blobCache.InsertObject("CurrentMatch", match));
         }
 
         public IObservable<List<MyMatchStats>> FetchMatchStats()
         {
-            var observableRes = _blobCache.GetObjectAsync<List<MyMatchStats>>("MyMatchStats");
+            IObservable<List<MyMatchStats>> observableRes = _blobCache.GetObjectAsync<List<MyMatchStats>>("MyMatchStats");
             return observableRes;
         }
 
@@ -73,7 +76,7 @@ namespace MatchStats.Model
 
         public IObservable<Match> GetCurrentMatch()
         {
-            var currentMatchObservable  = _blobCache.GetObjectAsync<Match>("CurrentMatch");
+            IObservable<Match> currentMatchObservable = _blobCache.GetObjectAsync<Match>("CurrentMatch");
             return currentMatchObservable;
         }
 
@@ -82,22 +85,14 @@ namespace MatchStats.Model
             //currentMatch
             //Is current game over?
             //Func<Game, bool> 
-            var currentGame = currentMatch.Score.Games.First(x => x.IsCurrentGame);
-            if (currentGame.PlayerOneScore > currentGame.PlayerTwoScore)
-            {
-                //PlayerOne is leading
-                if ((currentGame.PlayerOneScore == 4) && (currentGame.PlayerTwoScore <= 2))
-                {
-                    currentGame.Winner = currentMatch.PlayerOne;
-                }
-            }
+            Game currentGame = currentMatch.Score.Games.First(x => x.IsCurrentGame);
 
             //PlayerTwo Breakpoint or GamePoint
             if ((currentGame.PlayerTwoScore == 3) && (currentGame.PlayerOneScore <= 2))
             {
                 if (currentMatch.Score.CurrentServer.IsPlayerOne)
                 {
-                    currentGame.GameStatus = new GameStatus()
+                    currentGame.GameStatus = new GameStatus
                     {
                         Status = Status.BreakPoint,
                         Player = currentMatch.PlayerTwo
@@ -105,7 +100,7 @@ namespace MatchStats.Model
                 }
                 else
                 {
-                    currentGame.GameStatus = new GameStatus()
+                    currentGame.GameStatus = new GameStatus
                     {
                         Status = Status.GamePoint,
                         Player = currentMatch.PlayerTwo
@@ -118,7 +113,7 @@ namespace MatchStats.Model
             {
                 if (currentMatch.Score.CurrentServer.IsPlayerOne)
                 {
-                    currentGame.GameStatus = new GameStatus()
+                    currentGame.GameStatus = new GameStatus
                     {
                         Status = Status.GamePoint,
                         Player = currentMatch.PlayerOne
@@ -126,7 +121,7 @@ namespace MatchStats.Model
                 }
                 else
                 {
-                    currentGame.GameStatus = new GameStatus()
+                    currentGame.GameStatus = new GameStatus
                     {
                         Status = Status.BreakPoint,
                         Player = currentMatch.PlayerTwo
@@ -134,16 +129,65 @@ namespace MatchStats.Model
                 }
             }
 
-            //Duece
-            if (currentGame.PlayerOneScore >= 3)
+            //Advantage
+            if (currentGame.PlayerOneScore >= 3 && currentGame.PlayerTwoScore >= 3)
             {
-                if (currentGame.PlayerOneScore == currentGame.PlayerTwoScore)
+                if (currentGame.PlayerOneScore == currentGame.PlayerTwoScore + 1)
                 {
-                    currentGame.GameStatus.Status = Status.Duece;
-                    currentGame.GameStatus.Player = null;
+                    //Advantage to playerOne
+                    currentGame.GameStatus = new GameStatus
+                    {
+                        Status = Status.Advantage,
+                        Player = currentMatch.PlayerOne
+                    };
+                    
+                }
+                else if (currentGame.PlayerTwoScore == currentGame.PlayerOneScore + 1)
+                {
+                    //Advantage to PlayerTwo
+                    currentGame.GameStatus = new GameStatus
+                    {
+                        Status = Status.Advantage,
+                        Player = currentMatch.PlayerTwo
+                    };
+                }
+            }
+            
+            //Game over rules
+            if (currentGame.PlayerOneScore > currentGame.PlayerTwoScore)
+            {
+                //Player one is leading by two points after 4 points
+                if (currentGame.PlayerOneScore >= 4 && currentGame.PlayerTwoScore <= (currentGame.PlayerOneScore - 2))
+                {
+                    currentGame.Winner = currentMatch.PlayerOne;
+                    currentGame.GameStatus = new GameStatus
+                    {
+                        Status = Status.GameOver,
+                        Player = currentMatch.PlayerOne
+                    };
+                }
+            }
+            else if (currentGame.PlayerTwoScore > currentGame.PlayerOneScore)
+            {
+                //Player two is leading by two points after 4 points
+                if (currentGame.PlayerTwoScore >= 4 && currentGame.PlayerOneScore <= (currentGame.PlayerTwoScore - 2))
+                {
+                    currentGame.Winner = currentMatch.PlayerTwo;
+                    currentGame.GameStatus = new GameStatus
+                    {
+                        Status = Status.GameOver,
+                        Player = currentMatch.PlayerTwo
+                    };
                 }
             }
 
+            
+            //Duece
+            if (currentGame.PlayerOneScore == currentGame.PlayerTwoScore && currentGame.PlayerOneScore >= 3)
+            {
+                currentGame.GameStatus.Status = Status.Duece;
+                currentGame.GameStatus.Player = null; // TODO: We should set this to the player that just earned the point but it is not passed in Should refactor later
+            }
 
             return currentMatch;
         }
