@@ -88,72 +88,36 @@ namespace MatchStats.Model
             Game currentGame = currentMatch.Score.Games.First(x => x.IsCurrentGame);
 
             //PlayerTwo Breakpoint or GamePoint
-            if ((currentGame.PlayerTwoScore == 3) && (currentGame.PlayerOneScore <= 2))
-            {
-                if (currentMatch.Score.CurrentServer.IsPlayerOne)
-                {
-                    currentGame.GameStatus = new GameStatus
-                    {
-                        Status = Status.BreakPoint,
-                        Player = currentMatch.PlayerTwo
-                    };
-                }
-                else
-                {
-                    currentGame.GameStatus = new GameStatus
-                    {
-                        Status = Status.GamePoint,
-                        Player = currentMatch.PlayerTwo
-                    };
-                }
-            }
+            CheckBreakPointForPlayerOneRule(ref currentMatch, currentGame);
 
             //Player One BreakPoint or GamePoint
-            if ((currentGame.PlayerOneScore == 3) && (currentGame.PlayerTwoScore <= 2))
-            {
-                if (currentMatch.Score.CurrentServer.IsPlayerOne)
-                {
-                    currentGame.GameStatus = new GameStatus
-                    {
-                        Status = Status.GamePoint,
-                        Player = currentMatch.PlayerOne
-                    };
-                }
-                else
-                {
-                    currentGame.GameStatus = new GameStatus
-                    {
-                        Status = Status.BreakPoint,
-                        Player = currentMatch.PlayerTwo
-                    };
-                }
-            }
+            CheckBreakPointForPlayerTwoRule(ref currentMatch, currentGame);
 
             //Advantage
-            if (currentGame.PlayerOneScore >= 3 && currentGame.PlayerTwoScore >= 3)
-            {
-                if (currentGame.PlayerOneScore == currentGame.PlayerTwoScore + 1)
-                {
-                    //Advantage to playerOne
-                    currentGame.GameStatus = new GameStatus
-                    {
-                        Status = Status.Advantage,
-                        Player = currentMatch.PlayerOne
-                    };
-                    
-                }
-                else if (currentGame.PlayerTwoScore == currentGame.PlayerOneScore + 1)
-                {
-                    //Advantage to PlayerTwo
-                    currentGame.GameStatus = new GameStatus
-                    {
-                        Status = Status.Advantage,
-                        Player = currentMatch.PlayerTwo
-                    };
-                }
-            }
+            CheckAdvantageRule(ref currentMatch, currentGame);
             
             //Game over rules
+            CheckGameOverRule(ref currentMatch, currentGame);
+
+            //Duece
+            CheckDueceRule(ref currentGame);
+
+            return currentMatch;
+        }
+
+        private static bool CheckDueceRule(ref Game currentGame)
+        {
+            if (currentGame.PlayerOneScore == currentGame.PlayerTwoScore && currentGame.PlayerOneScore >= 3)
+            {
+                currentGame.GameStatus.Status = Status.Duece;
+                currentGame.GameStatus.Player = null; // TODO: We should set this to the player that just earned the point but it is not passed in Should refactor later
+                return true;
+            }
+            return false;
+        }
+
+        private static bool CheckGameOverRule(ref Match currentMatch, Game currentGame)
+        {
             if (currentGame.PlayerOneScore > currentGame.PlayerTwoScore)
             {
                 //Player one is leading by two points after 4 points
@@ -165,6 +129,7 @@ namespace MatchStats.Model
                         Status = Status.GameOver,
                         Player = currentMatch.PlayerOne
                     };
+                    return true;
                 }
             }
             else if (currentGame.PlayerTwoScore > currentGame.PlayerOneScore)
@@ -178,18 +143,87 @@ namespace MatchStats.Model
                         Status = Status.GameOver,
                         Player = currentMatch.PlayerTwo
                     };
+                    return true;
                 }
             }
+            return false;
+        }
 
-            
-            //Duece
-            if (currentGame.PlayerOneScore == currentGame.PlayerTwoScore && currentGame.PlayerOneScore >= 3)
+        private static bool CheckAdvantageRule(ref Match currentMatch, Game currentGame)
+        {
+            if (currentGame.PlayerOneScore >= 3 && currentGame.PlayerTwoScore >= 3)
             {
-                currentGame.GameStatus.Status = Status.Duece;
-                currentGame.GameStatus.Player = null; // TODO: We should set this to the player that just earned the point but it is not passed in Should refactor later
+                if (currentGame.PlayerOneScore == currentGame.PlayerTwoScore + 1)
+                {
+                    //Advantage to playerOne
+                    currentGame.GameStatus = new GameStatus
+                    {
+                        Status = Status.Advantage,
+                        Player = currentMatch.PlayerOne
+                    };
+                    return true;
+                }
+                if (currentGame.PlayerTwoScore == currentGame.PlayerOneScore + 1)
+                {
+                    //Advantage to PlayerTwo
+                    currentGame.GameStatus = new GameStatus
+                    {
+                        Status = Status.Advantage,
+                        Player = currentMatch.PlayerTwo
+                    };
+                    return true;
+                }
             }
+            return false;
+        }
 
-            return currentMatch;
+        private static bool CheckBreakPointForPlayerTwoRule(ref Match currentMatch, Game currentGame)
+        {
+            if ((currentGame.PlayerOneScore == 3) && (currentGame.PlayerTwoScore <= 2))
+            {
+                if (currentMatch.Score.CurrentServer.IsPlayerOne)
+                {
+                    currentGame.GameStatus = new GameStatus
+                    {
+                        Status = Status.GamePoint,
+                        Player = currentMatch.PlayerOne
+                    };
+                    return true;
+                }
+                else
+                {
+                    currentGame.GameStatus = new GameStatus
+                    {
+                        Status = Status.BreakPoint,
+                        Player = currentMatch.PlayerTwo
+                    };
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool CheckBreakPointForPlayerOneRule(ref Match currentMatch, Game currentGame)
+        {
+            if ((currentGame.PlayerTwoScore == 3) && (currentGame.PlayerOneScore <= 2))
+            {
+                if (currentMatch.Score.CurrentServer.IsPlayerOne)
+                {
+                    currentGame.GameStatus = new GameStatus
+                    {
+                        Status = Status.BreakPoint,
+                        Player = currentMatch.PlayerTwo
+                    };
+                    return true;
+                }
+                currentGame.GameStatus = new GameStatus
+                {
+                    Status = Status.GamePoint,
+                    Player = currentMatch.PlayerTwo
+                };
+                return true;
+            }
+            return true;
         }
     }
 
