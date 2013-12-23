@@ -35,9 +35,18 @@ namespace MatchStats.ViewModels
             StartMatchCommand.Subscribe(StartMatch);
             NewMatchControlViewModel = RxApp.DependencyResolver.GetService<NewMatchControlViewModel>();
             SetPlayerOneAsCurrentServerCommand = new ReactiveCommand(CanSetCurrentServerToPlayerOne());
-            SetPlayerOneAsCurrentServerCommand.Subscribe(x => CurrentMatch.Score.CurrentServer = CurrentMatch.PlayerOne);
+            SetPlayerOneAsCurrentServerCommand.Subscribe(_ =>
+            {
+                CurrentMatch.Score.CurrentServer = CurrentMatch.PlayerOne;
+                SaveMatch(CurrentMatch);
+            });
+
             SetPlayerTwoAsCurrentServerCommand = new ReactiveCommand(CanSetCurrentServerToPlayerTwo());
-            SetPlayerTwoAsCurrentServerCommand.Subscribe(_ => CurrentMatch.Score.CurrentServer = CurrentMatch.PlayerTwo);
+            SetPlayerTwoAsCurrentServerCommand.Subscribe(_ =>
+            {
+                CurrentMatch.Score.CurrentServer = CurrentMatch.PlayerTwo;
+                SaveMatch(CurrentMatch);
+            });
 
             RandomGuid = Guid.NewGuid();
 
@@ -97,16 +106,18 @@ namespace MatchStats.ViewModels
 
         private IObservable<bool> CanSetCurrentServerToPlayerOne()
         {
-            return this.WhenAny(x => CurrentMatch.Score, x => CurrentMatch.PlayerOne,
-                (score, playerone) =>
-                    (score.Value != null && score.Value.CurrentServer.FullName != playerone.Value.FullName));
+            return this.WhenAny(vm => vm.CurrMatch,
+                (match) =>
+                    (match.Value != null && match.Value.Score != null 
+                                         && (match.Value.Score.CurrentServer == null || match.Value.Score.CurrentServer.FullName != match.Value.PlayerOne.FullName)));
         }
 
         private IObservable<bool> CanSetCurrentServerToPlayerTwo()
         {
-            return this.WhenAny(x => CurrentMatch.Score, x => CurrentMatch.PlayerTwo,
-                (score, playertwo) =>
-                    (score.Value != null && score.Value.CurrentServer.FullName != playertwo.Value.FullName));
+            return this.WhenAny(vm => vm.CurrMatch,
+                (match) =>
+                    (match.Value != null && match.Value.Score != null 
+                                         &&(match.Value.Score.CurrentServer == null || match.Value.Score.CurrentServer.FullName != match.Value.PlayerTwo.FullName)));
         }
 
 
@@ -126,13 +137,19 @@ namespace MatchStats.ViewModels
             var match = param as Match;
             if (match != null)
             {
-                var matchStatsApi = RxApp.DependencyResolver.GetService<IMatchStatsApi>();
-                matchStatsApi.SaveMatch(match);
+                SaveMatch(match);
                 PlayerOneActions.Clear();
 
                 GetGameCommandsForPlayer(match.PlayerOne).Subscribe(x => PlayerOneActions.Add(x));
                 GetGameCommandsForPlayer(match.PlayerTwo).Subscribe(x => PlayerTwoActions.Add(x));
             }
+        }
+
+        private static void SaveMatch(Match match)
+        {
+            if (match == null) return;
+            var matchStatsApi = RxApp.DependencyResolver.GetService<IMatchStatsApi>();
+            matchStatsApi.SaveMatch(match);
         }
 
         private void NavigateBackToHomePage()

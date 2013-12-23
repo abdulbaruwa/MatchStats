@@ -129,7 +129,7 @@ namespace MatchStats.Model
                     currentGame.GameStatus = new GameStatus()
                     {
                         Status = Status.BreakPoint,
-                        Player = currentMatch.PlayerOne
+                        Player = currentMatch.PlayerTwo
                     };
                 }
             }

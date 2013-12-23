@@ -172,7 +172,6 @@ namespace MatchStats.Test.ViewModels
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
             //Act
-            fixture.CurrentMatch.Score.CurrentServer = fixture.CurrentMatch.PlayerTwo;
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
