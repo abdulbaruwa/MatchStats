@@ -24,7 +24,13 @@ namespace MatchStats.ViewModels
                 //Can this be passed in when the command is called?
             matchStatsApi.GetCurrentMatch().Subscribe(x => currentMatch = x);
 
-            Game currentGame = currentMatch.Score.Games.FirstOrDefault(x => x.IsCurrentGame);
+            Game currentGame = null;
+            var currentSet = currentMatch.Score.Sets.FirstOrDefault(x => x.IsCurrentSet);
+            if (currentSet != null)
+            {
+                currentGame = currentSet.Games.FirstOrDefault(x => x.IsCurrentGame);
+            }
+
             if (currentGame != null)
             {
                 if (Player.IsPlayerOne)

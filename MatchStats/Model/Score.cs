@@ -6,13 +6,24 @@ namespace MatchStats.Model
     {
         public Score()
         {
-            Games = new List<Game>();
+            Sets = new List<Set>();
         }
 
-        public List<Game> Games { get; set; }
+        public List<Set> Sets { get; set; }
+        //public List<Game> Games { get; set; }
         public Game GameOne { get; set; }
         public Game GameTwo { get; set; }
         public Game GameThree { get; set; }
         public Player CurrentServer { get; set; }
+    }
+
+    public class Set
+    {
+        public Set()
+        {
+            Games = new List<Game>();
+        }
+        public List<Game> Games { get; set; }
+        public bool IsCurrentSet { get; set; }
     }
 }

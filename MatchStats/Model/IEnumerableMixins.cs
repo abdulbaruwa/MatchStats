@@ -21,5 +21,20 @@ namespace MatchStats.Model
             }
             return default(TSource);
         }
+        public static TSource ThirdOrDefault<TSource>(this IEnumerable<TSource> source)
+        {
+            if (source.Count() <= 2) return default(TSource);
+            int count = 0;
+            foreach (var item in source)
+            {
+                if (count == 2)
+                {
+                    return item;
+                    break;
+                }
+                count = count + 1;
+            }
+            return default(TSource);
+        }
     }
 }

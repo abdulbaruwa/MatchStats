@@ -12,7 +12,7 @@ using Windows.UI.Xaml.Media.Imaging;
 using Akavache;
 using MatchStats.Enums;
 using ReactiveUI;
-
+using MatchStats.Model;
 namespace MatchStats.Model
 {
     public interface IMatchStatsApi
@@ -86,7 +86,11 @@ namespace MatchStats.Model
             //currentMatch
             //Is current game over?
             //Func<Game, bool> 
-            Game currentGame = currentMatch.Score.Games.First(x => x.IsCurrentGame);
+            var currentSet = currentMatch.Score.Sets.FirstOrDefault(x => x.IsCurrentSet);
+            if (currentSet == null) return currentMatch;
+
+            Game currentGame = currentSet.Games.FirstOrDefault(x => x.IsCurrentGame);
+            if (currentGame == null) return currentMatch;
 
             //PlayerTwo Breakpoint or GamePoint
             CheckBreakPointForPlayerOneRule(currentMatch, ref currentGame);
@@ -112,14 +116,14 @@ namespace MatchStats.Model
 
         private bool CheckGameIsOverAndInitializeNewGameIfNeedBe(Match currentMatch)
         {
-            var gamesCount = (int) currentMatch.MatchFormat.SetsFormat;
-            var currentGame = currentMatch.Score.Games.First(x => x.IsCurrentGame);
+            var gamesCount = (int)currentMatch.MatchFormat.SetsFormat;
+            var currentGame = currentMatch.CurrentGame();
             if (currentGame.GameStatus.Status == Status.GameOver)
             {
                 currentGame.IsCurrentGame = false;
-                if (currentMatch.Score.Games.Count() < gamesCount)
+                if (currentMatch.CurrentSet() != null && (currentMatch.CurrentSet().Games.Count() < gamesCount))
                 {
-                    currentMatch.Score.Games.Add(new Game(){IsCurrentGame = true});
+                    currentMatch.CurrentSet().Games.Add(new Game() {IsCurrentGame = true});
                     return true;
                 }
             }

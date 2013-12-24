@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.Serialization;
 using Windows.Media.PlayTo;
 using MatchStats.Enums;
@@ -33,7 +34,9 @@ namespace MatchStats.ViewModels
             {
                 GameOne = new Game()
             };
-            match.Score.Games.Add(new Game(){IsCurrentGame = true});
+
+            match.Score.Sets.Add(new Set(){IsCurrentSet = true});
+            match.Score.Sets.First().Games.Add(new Game(){IsCurrentGame = true});
 
             match.MatchFormat = new MatchFormat()
             {

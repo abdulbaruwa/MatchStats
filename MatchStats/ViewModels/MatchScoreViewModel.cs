@@ -68,33 +68,33 @@ namespace MatchStats.ViewModels
                 .ToProperty(this, x => x.CurrentMatch, new Match());
 
             _playerOneFirstSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
-                .Where(x => x.Games.FirstOrDefault() != null)
-                .Select(x => x.Games.First().PlayerOneScore.ToString())
+                .Where(x => x.Sets.FirstOrDefault() != null)
+                .Select(x => x.Sets.First().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerOne.FullName).ToString())
                 .ToProperty(this, x => x.PlayerOneFirstSet, "");
                 
             _playerTwoFirstSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
-                .Where(x => x.Games.FirstOrDefault() != null)
-                .Select(x => x.Games.First().PlayerTwoScore.ToString())
+                .Where(x => x.Sets.FirstOrDefault() != null)
+                .Select(x => x.Sets.First().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName).ToString())
                 .ToProperty(this, x => x.PlayerTwoFirstSet, "");
                 
             _playerOneSecondSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
-                .Where(x => x.Games.SecondOrDefault() != null)
-                .Select(x => x.Games.SecondOrDefault().PlayerOneScore.ToString())
+                .Where(x => x.Sets.SecondOrDefault() != null)
+                .Select(x => x.Sets.SecondOrDefault().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerOne.FullName).ToString())
                 .ToProperty(this, x => x.PlayerOneFirstSet, "");
                 
             _playerTwoSecondSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
-                .Where(x => x.Games.SecondOrDefault() != null)
-                .Select(x => x.Games.SecondOrDefault().PlayerTwoScore.ToString())
+                .Where(x => x.Sets.SecondOrDefault() != null)
+                .Select(x => x.Sets.First().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName).ToString())
                 .ToProperty(this, x => x.PlayerTwoSecondSet, "");
 
             _playerOneThirdSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
-                .Where(x => x.Games.SecondOrDefault() != null)
-                .Select(x => x.Games.SecondOrDefault().PlayerOneScore.ToString())
+                .Where(x => x.Sets.ThirdOrDefault() != null)
+                .Select(x => x.Sets.First().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerOne.FullName).ToString())
                 .ToProperty(this, x => x.PlayerOneThirdSet, "");
 
             _playerTwoThirdSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
-                .Where(x => x.Games.SecondOrDefault() != null)
-                .Select(x => x.Games.SecondOrDefault().PlayerTwoScore.ToString())
+                .Where(x => x.Sets.ThirdOrDefault() != null) //TODO: Need to 
+                .Select(x => x.Sets.First().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName).ToString())
                 .ToProperty(this, x => x.PlayerTwoThirdSet, "");
                 
             MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch").Subscribe(x => CurrMatch = x);
