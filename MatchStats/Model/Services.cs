@@ -10,6 +10,7 @@ using Windows.Storage.Streams;
 using Windows.System.UserProfile;
 using Windows.UI.Xaml.Media.Imaging;
 using Akavache;
+using MatchStats.Enums;
 using ReactiveUI;
 
 namespace MatchStats.Model
@@ -101,6 +102,9 @@ namespace MatchStats.Model
 
             //Duece
             CheckDueceRule(ref currentGame);
+
+            //Duece Sudden Death
+            CheckGamePointOnSuddenDeathDueceRule(ref currentMatch, currentGame);
 
             return currentMatch;
         }
@@ -195,6 +199,32 @@ namespace MatchStats.Model
                     currentGame.GameStatus = new GameStatus
                     {
                         Status = Status.BreakPoint,
+                        Player = currentMatch.PlayerTwo
+                    };
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool CheckGamePointOnSuddenDeathDueceRule(ref Match currentMatch, Game currentGame)
+        {
+            if (currentMatch.MatchFormat.DueceFormat == DueceFormat.SuddenDeath)
+            {
+                if (currentGame.PlayerOneScore == 4)
+                {
+                    currentGame.GameStatus = new GameStatus
+                    {
+                        Status = Status.GameOver,
+                        Player = currentMatch.PlayerOne
+                    };
+                    return true;
+                }
+                if (currentGame.PlayerTwoScore == 4)
+                {
+                    currentGame.GameStatus = new GameStatus
+                    {
+                        Status = Status.GameOver,
                         Player = currentMatch.PlayerTwo
                     };
                     return true;

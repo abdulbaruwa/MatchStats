@@ -262,7 +262,6 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldSetGameStatusAsAdvantageAt15UpAfterDueuce()
         {
-
             var blobCache = RegisterComponents();
             var fixture = BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
@@ -284,6 +283,37 @@ namespace MatchStats.Test.ViewModels
             Assert.IsNull(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).Winner, "Game Winner should be Null");
             Assert.IsTrue(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).GameStatus.Status == Status.Advantage, "Game Status should be flagged as Advantage Point");
             Assert.AreEqual(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).GameStatus.Player.FirstName, fixture.CurrMatch.PlayerTwo.FirstName, "Game Status should be Advantage for PlayerTwo");
+        }
+
+        [TestMethod]
+        public void ShouldSetGameStatusAsGamePointAt4040SuddenDeath()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SelectedDueceFormat = DueceFormat.SuddenDeath;
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            //Act  --> Score is 50-50
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            //Assert --> at Duece for Sudden Death duece format it should be Game Point for any player
+            Assert.AreEqual(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).GameStatus.Status, Status.GamePoint, "Should be Game Point");
+
+            //Act --> A point to any player should be Game  
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            //Assert
+            Assert.IsNotNull(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).Winner, "Game Winner should not be Null");
+            Assert.IsTrue(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).GameStatus.Status == Status.GameOver, "Game Status should be flagged as Game");
+            Assert.AreEqual(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).GameStatus.Player.FirstName, fixture.CurrMatch.PlayerTwo.FirstName, "Game Status should be Game for PlayerTwo");
+            Assert.AreEqual(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).Winner.FirstName, fixture.CurrMatch.PlayerTwo.FirstName, "Game Winner Name should be that of PlayerTwo ");
         }
 
         private static TestBlobCache RegisterComponents()
