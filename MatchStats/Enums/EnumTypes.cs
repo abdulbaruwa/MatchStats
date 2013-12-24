@@ -11,8 +11,8 @@ namespace MatchStats.Enums
 
     public enum SetsFormat
     {
-        [Display(Name = "Short Set to Four")] ShortSetToFour,
-        [Display(Name = "Normal Set to Six")] LongSetSix
+        [Display(Name = "Short Set to Four")] ShortSetToFour = 4,
+        [Display(Name = "Normal Set to Six")] LongSetSix = 6
     }
 
     public enum DueceFormat

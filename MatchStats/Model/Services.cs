@@ -89,38 +89,63 @@ namespace MatchStats.Model
             Game currentGame = currentMatch.Score.Games.First(x => x.IsCurrentGame);
 
             //PlayerTwo Breakpoint or GamePoint
-            CheckBreakPointForPlayerOneRule(ref currentMatch, currentGame);
+            CheckBreakPointForPlayerOneRule(currentMatch, ref currentGame);
 
             //Player One BreakPoint or GamePoint
-            CheckBreakPointForPlayerTwoRule(ref currentMatch, currentGame);
+            CheckBreakPointForPlayerTwoRule(currentMatch, ref currentGame);
 
             //Advantage
-            CheckAdvantageRule(ref currentMatch, currentGame);
+            CheckAdvantageRule(currentMatch, ref currentGame);
             
             //Game over rules
-            CheckGameOverRule(ref currentMatch, currentGame);
+            CheckGameOverRule(currentMatch, ref currentGame);
 
             //Duece
-            CheckDueceRule(ref currentGame);
+            CheckDueceRule(currentMatch, ref currentGame);
 
             //Duece Sudden Death
-            CheckGamePointOnSuddenDeathDueceRule(ref currentMatch, currentGame);
+            CheckGamePointOnSuddenDeathDueceRule(currentMatch, ref currentGame);
 
+            CheckGameIsOverAndInitializeNewGameIfNeedBe(currentMatch);
             return currentMatch;
         }
 
-        private static bool CheckDueceRule(ref Game currentGame)
+        private bool CheckGameIsOverAndInitializeNewGameIfNeedBe(Match currentMatch)
+        {
+            var gamesCount = (int) currentMatch.MatchFormat.SetsFormat;
+            var currentGame = currentMatch.Score.Games.First(x => x.IsCurrentGame);
+            if (currentGame.GameStatus.Status == Status.GameOver)
+            {
+                currentGame.IsCurrentGame = false;
+                if (currentMatch.Score.Games.Count() < gamesCount)
+                {
+                    currentMatch.Score.Games.Add(new Game(){IsCurrentGame = true});
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private static bool CheckDueceRule(Match currentMatch, ref Game currentGame)
         {
             if (currentGame.PlayerOneScore == currentGame.PlayerTwoScore && currentGame.PlayerOneScore >= 3)
             {
-                currentGame.GameStatus.Status = Status.Duece;
+                if (currentMatch.MatchFormat.DueceFormat == DueceFormat.SuddenDeath)
+                {
+                    //It is Game point to either player
+                    currentGame.GameStatus.Status = Status.GamePoint;
+                }
+                else
+                {
+                    currentGame.GameStatus.Status = Status.Duece;
+                }
                 currentGame.GameStatus.Player = null; // TODO: We should set this to the player that just earned the point but it is not passed in Should refactor later
                 return true;
             }
             return false;
         }
 
-        private static bool CheckGameOverRule(ref Match currentMatch, Game currentGame)
+        private static bool CheckGameOverRule(Match currentMatch, ref Game currentGame)
         {
             if (currentGame.PlayerOneScore > currentGame.PlayerTwoScore)
             {
@@ -153,7 +178,7 @@ namespace MatchStats.Model
             return false;
         }
 
-        private static bool CheckAdvantageRule(ref Match currentMatch, Game currentGame)
+        private static bool CheckAdvantageRule(Match currentMatch, ref Game currentGame)
         {
             if (currentGame.PlayerOneScore >= 3 && currentGame.PlayerTwoScore >= 3)
             {
@@ -181,7 +206,7 @@ namespace MatchStats.Model
             return false;
         }
 
-        private static bool CheckBreakPointForPlayerTwoRule(ref Match currentMatch, Game currentGame)
+        private static bool CheckBreakPointForPlayerTwoRule(Match currentMatch, ref Game currentGame)
         {
             if ((currentGame.PlayerOneScore == 3) && (currentGame.PlayerTwoScore <= 2))
             {
@@ -207,12 +232,13 @@ namespace MatchStats.Model
             return false;
         }
 
-        private static bool CheckGamePointOnSuddenDeathDueceRule(ref Match currentMatch, Game currentGame)
+        private static bool CheckGamePointOnSuddenDeathDueceRule(Match currentMatch, ref Game currentGame)
         {
             if (currentMatch.MatchFormat.DueceFormat == DueceFormat.SuddenDeath)
             {
                 if (currentGame.PlayerOneScore == 4)
                 {
+                    currentGame.Winner = currentMatch.PlayerOne;
                     currentGame.GameStatus = new GameStatus
                     {
                         Status = Status.GameOver,
@@ -222,6 +248,7 @@ namespace MatchStats.Model
                 }
                 if (currentGame.PlayerTwoScore == 4)
                 {
+                    currentGame.Winner = currentMatch.PlayerTwo;
                     currentGame.GameStatus = new GameStatus
                     {
                         Status = Status.GameOver,
@@ -233,7 +260,7 @@ namespace MatchStats.Model
             return false;
         }
 
-        private static bool CheckBreakPointForPlayerOneRule(ref Match currentMatch, Game currentGame)
+        private static bool CheckBreakPointForPlayerOneRule(Match currentMatch, ref Game currentGame)
         {
             if ((currentGame.PlayerTwoScore == 3) && (currentGame.PlayerOneScore <= 2))
             {

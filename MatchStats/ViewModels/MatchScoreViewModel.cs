@@ -97,10 +97,6 @@ namespace MatchStats.ViewModels
                 .Select(x => x.Games.SecondOrDefault().PlayerTwoScore.ToString())
                 .ToProperty(this, x => x.PlayerTwoThirdSet, "");
                 
-            //MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch")
-            //    .Select(x => x)
-            //    .ToProperty(this, x => x.CurrentMatch, new Match()).Subscribe(x => CurrMatch = x );
-
             MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch").Subscribe(x => CurrMatch = x);
         }
 
@@ -119,7 +115,6 @@ namespace MatchStats.ViewModels
                     (match.Value != null && match.Value.Score != null 
                                          &&(match.Value.Score.CurrentServer == null || match.Value.Score.CurrentServer.FullName != match.Value.PlayerTwo.FullName)));
         }
-
 
         private  IObservable<IGameActionViewModel> GetGameCommandsForPlayer(Player player)
         {

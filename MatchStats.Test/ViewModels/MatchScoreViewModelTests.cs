@@ -137,8 +137,8 @@ namespace MatchStats.Test.ViewModels
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
             //Assert
-            Assert.IsNotNull(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).Winner, "Failed to flag game with a valid winner");
-            Assert.AreEqual(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).Winner.FirstName, fixture.CurrMatch.PlayerOne.FirstName, "Failed to flag game as over");
+            Assert.IsNotNull(fixture.CurrMatch.Score.Games.First().Winner, "Failed to flag game with a valid winner");
+            Assert.AreEqual(fixture.CurrMatch.Score.Games.First().Winner.FirstName, fixture.CurrMatch.PlayerOne.FirstName, "Failed to flag game as over");
         }
     
         [TestMethod]
@@ -172,6 +172,7 @@ namespace MatchStats.Test.ViewModels
             var fixture = BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
             //Act
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
@@ -228,10 +229,10 @@ namespace MatchStats.Test.ViewModels
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
             //Assert
-            Assert.IsNotNull(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).Winner, "Game Winner should not be Null");
-            Assert.IsTrue(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).GameStatus.Status == Status.GameOver, "Game Status should be flagged as Game Point");
-            Assert.AreEqual(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).GameStatus.Player.FirstName, fixture.CurrMatch.PlayerTwo.FirstName, "Game Status should be GameOver for PlayerTwo");
-            Assert.AreEqual(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).Winner.FirstName, fixture.CurrMatch.PlayerTwo.FirstName, "Game Winner should be PlayerTwo");
+            Assert.IsNotNull(fixture.CurrMatch.Score.Games.First().Winner, "Game Winner should not be Null");
+            Assert.IsTrue(fixture.CurrMatch.Score.Games.First().GameStatus.Status == Status.GameOver, "Game Status should be flagged as Game Point");
+            Assert.AreEqual(fixture.CurrMatch.Score.Games.First().GameStatus.Player.FirstName, fixture.CurrMatch.PlayerTwo.FirstName, "Game Status should be GameOver for PlayerTwo");
+            Assert.AreEqual(fixture.CurrMatch.Score.Games.First().Winner.FirstName, fixture.CurrMatch.PlayerTwo.FirstName, "Game Winner should be PlayerTwo");
         }
 
         [TestMethod]
@@ -253,10 +254,10 @@ namespace MatchStats.Test.ViewModels
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
             //Assert
-            Assert.IsNotNull(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).Winner, "Game Winner should not be Null");
-            Assert.IsTrue(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).GameStatus.Status == Status.GameOver, "Game Status should be flagged as Game Point");
-            Assert.AreEqual(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).GameStatus.Player.FirstName, fixture.CurrMatch.PlayerOne.FirstName, "Game Status should be GameOver for PlayerOne");
-            Assert.AreEqual(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).Winner.FirstName, fixture.CurrMatch.PlayerOne.FirstName, "Game Winner should be PlayerOne");
+            Assert.IsNotNull(fixture.CurrMatch.Score.Games.First().Winner, "Game Winner should not be Null");
+            Assert.IsTrue(fixture.CurrMatch.Score.Games.First().GameStatus.Status == Status.GameOver, "Game Status should be flagged as Game Point");
+            Assert.AreEqual(fixture.CurrMatch.Score.Games.First().GameStatus.Player.FirstName, fixture.CurrMatch.PlayerOne.FirstName, "Game Status should be GameOver for PlayerOne");
+            Assert.AreEqual(fixture.CurrMatch.Score.Games.First().Winner.FirstName, fixture.CurrMatch.PlayerOne.FirstName, "Game Winner should be PlayerOne");
         }
 
         [TestMethod]
@@ -286,7 +287,7 @@ namespace MatchStats.Test.ViewModels
         }
 
         [TestMethod]
-        public void ShouldSetGameStatusAsGamePointAt4040SuddenDeath()
+        public void ShouldSetGameStatusAsGamePointAt4040SuddenDeathDuece()
         {
             var blobCache = RegisterComponents();
             var fixture = BuildAMatchToScore();
@@ -310,10 +311,35 @@ namespace MatchStats.Test.ViewModels
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
             //Assert
-            Assert.IsNotNull(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).Winner, "Game Winner should not be Null");
-            Assert.IsTrue(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).GameStatus.Status == Status.GameOver, "Game Status should be flagged as Game");
-            Assert.AreEqual(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).GameStatus.Player.FirstName, fixture.CurrMatch.PlayerTwo.FirstName, "Game Status should be Game for PlayerTwo");
-            Assert.AreEqual(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).Winner.FirstName, fixture.CurrMatch.PlayerTwo.FirstName, "Game Winner Name should be that of PlayerTwo ");
+            Assert.IsNotNull(fixture.CurrMatch.Score.Games.First().Winner, "Game Winner should not be Null");
+            Assert.IsTrue(fixture.CurrMatch.Score.Games.First().GameStatus.Status == Status.GameOver, "Game Status should be flagged as Game");
+            Assert.AreEqual(fixture.CurrMatch.Score.Games.First().GameStatus.Player.FirstName, fixture.CurrMatch.PlayerTwo.FirstName, "Game Status should be Game for PlayerTwo");
+            Assert.AreEqual(fixture.CurrMatch.Score.Games.First().Winner.FirstName, fixture.CurrMatch.PlayerTwo.FirstName, "Game Winner Name should be that of PlayerTwo ");
+        }
+
+        [TestMethod]
+        public void ShouldSetIsCurrentGameStatusToFalseAndInitializeNewGameWhenIfAt3050Game()
+        {
+
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            //Act  --> Score is 30-50
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            //Assert
+            Assert.IsNull(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).Winner, "Game Winner should be Null");
+            Assert.IsTrue(fixture.CurrMatch.Score.Games.First(x => x.IsCurrentGame).GameStatus.Status == Status.Neutral, "Game Status should be flagged be Neutral, it is a new Game");
+            Assert.IsNotNull(fixture.CurrMatch.Score.Games.SecondOrDefault(), "The second game should be initialized after the first game is over");
+            Assert.IsTrue(fixture.CurrMatch.Score.Games.SecondOrDefault().IsCurrentGame, "The Second game should be the current game");
         }
 
         private static TestBlobCache RegisterComponents()

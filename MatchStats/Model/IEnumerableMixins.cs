@@ -17,6 +17,7 @@ namespace MatchStats.Model
                     return item;
                     break;
                 }
+                isFirst = false;
             }
             return default(TSource);
         }
