@@ -194,8 +194,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition MaxHeight="60"/>
                             <RowDefinition MaxHeight="60"/>
-                            <RowDefinition />
-                            <RowDefinition MaxHeight="40"/>
+                            <RowDefinition MaxHeight="80"/>
                         </Grid.RowDefinitions>
                         <Grid Name="ServeStats">
                             <Grid.ColumnDefinitions>
@@ -222,7 +221,24 @@
                             <Button Name="PlayerTwoFirstServeOut"  Grid.Column="2" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">First Serve Out</Button>
                             <Button Name="PlayerTwoSecondServeOut"  Grid.Column="3" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">Second Serve Out</Button>
                         </Grid>
-                    </Grid>
+                            <Grid Grid.Row="2">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <ToggleButton Name="PlayerOneIsServing" Height="60" HorizontalAlignment="Stretch" >Player One Serving</ToggleButton>
+                                <ToggleButton Name="PlayerTwoIsServing" Grid.Column="1" Height="60" HorizontalAlignment="Stretch" >Player Two Serving</ToggleButton>
+
+                            </Grid>
+                            <!--<Grid Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                                <Button Name="PlayerOneIsServing" Grid.Column="0"  Height="60" HorizontalAlignment="Stretch" >Player One Serving</Button>
+                                <ToggleButton Name="PlayerTwoIsServing" Grid.Column="1" Height="60" HorizontalAlignment="Stretch" >Player Two Serving</ToggleButton>
+                            </Grid>-->
+                        </Grid>
                 </Border>
             </Grid>
 

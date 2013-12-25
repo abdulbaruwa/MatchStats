@@ -25,6 +25,13 @@ namespace MatchStats.Views
             this.OneWayBind(ViewModel, x => x.HostScreen.Router.NavigateBack, x => x.backButton.Command);
             this.Bind(ViewModel, x => x.NewMatchControlViewModel, x => x.AddNewMatchControl.ViewModel);
             this.Bind(ViewModel, x => x.ShowHidePopup, x => x.AddMatchPoupup.IsOpen);
+            this.Bind(ViewModel, x => x.PlayerOneIsServing, x => x.PlayerOneIsServing.IsChecked);
+            this.Bind(ViewModel, x => x.PlayerTwoIsServing, x => x.PlayerTwoIsServing.IsChecked);
+
+            this.BindCommand(ViewModel, x => x.SetPlayerOneAsCurrentServerCommand, x => x.PlayerOneIsServing);
+            this.BindCommand(ViewModel, x => x.SetPlayerTwoAsCurrentServerCommand, x => x.PlayerTwoIsServing);
+            this.Bind(ViewModel, x => x.ServerSelected, x => x.PlayerOneCommands.IsEnabled);
+            this.Bind(ViewModel, x => x.ServerSelected, x => x.PlayerTwoCommands.IsEnabled);
         }
 
         object IViewFor.ViewModel

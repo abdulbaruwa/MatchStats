@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
+using System.Windows.Input;
 using MatchStats.Model;
 using ReactiveUI;
 
@@ -34,19 +35,26 @@ namespace MatchStats.ViewModels
             StartMatchCommand = new ReactiveCommand();
             StartMatchCommand.Subscribe(StartMatch);
             NewMatchControlViewModel = RxApp.DependencyResolver.GetService<NewMatchControlViewModel>();
-            SetPlayerOneAsCurrentServerCommand = new ReactiveCommand(CanSetCurrentServerToPlayerOne());
+            SetPlayerOneAsCurrentServerCommand = new ReactiveCommand();
             SetPlayerOneAsCurrentServerCommand.Subscribe(_ =>
             {
                 CurrentMatch.Score.CurrentServer = CurrentMatch.PlayerOne;
+                CurrMatch = CurrentMatch;  //TODO: I hate having to do this, it is retarded
+                PlayerOneIsServing = true;
+                PlayerTwoIsServing = false;
                 SaveMatch(CurrentMatch);
             });
 
-            SetPlayerTwoAsCurrentServerCommand = new ReactiveCommand(CanSetCurrentServerToPlayerTwo());
+            SetPlayerTwoAsCurrentServerCommand = new ReactiveCommand();
             SetPlayerTwoAsCurrentServerCommand.Subscribe(_ =>
             {
                 CurrentMatch.Score.CurrentServer = CurrentMatch.PlayerTwo;
+                CurrMatch = CurrentMatch; //TODO: I hate having to do this
+                PlayerTwoIsServing = true;
+                PlayerOneIsServing = false;
                 SaveMatch(CurrentMatch);
             });
+
 
             RandomGuid = Guid.NewGuid();
 
@@ -96,24 +104,12 @@ namespace MatchStats.ViewModels
                 .Where(x => x.Sets.ThirdOrDefault() != null) //TODO: Need to 
                 .Select(x => x.Sets.First().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName).ToString())
                 .ToProperty(this, x => x.PlayerTwoThirdSet, "");
-                
+
+            _ServerSeleced = this.WhenAny(x => x.CurrMatch.Score.CurrentServer, x => x.Value)
+                .Select(x => x != null)
+                .ToProperty(this, x => x.ServerSelected);
+
             MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch").Subscribe(x => CurrMatch = x);
-        }
-
-        private IObservable<bool> CanSetCurrentServerToPlayerOne()
-        {
-            return this.WhenAny(vm => vm.CurrMatch,
-                (match) =>
-                    (match.Value != null && match.Value.Score != null 
-                                         && (match.Value.Score.CurrentServer == null || match.Value.Score.CurrentServer.FullName != match.Value.PlayerOne.FullName)));
-        }
-
-        private IObservable<bool> CanSetCurrentServerToPlayerTwo()
-        {
-            return this.WhenAny(vm => vm.CurrMatch,
-                (match) =>
-                    (match.Value != null && match.Value.Score != null 
-                                         &&(match.Value.Score.CurrentServer == null || match.Value.Score.CurrentServer.FullName != match.Value.PlayerTwo.FullName)));
         }
 
         private  IObservable<IGameActionViewModel> GetGameCommandsForPlayer(Player player)
@@ -134,7 +130,7 @@ namespace MatchStats.ViewModels
             {
                 SaveMatch(match);
                 PlayerOneActions.Clear();
-
+                
                 GetGameCommandsForPlayer(match.PlayerOne).Subscribe(x => PlayerOneActions.Add(x));
                 GetGameCommandsForPlayer(match.PlayerTwo).Subscribe(x => PlayerTwoActions.Add(x));
             }
@@ -223,6 +219,20 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _playerTwosName, value); }
         }
 
+        [DataMember] private bool _playerOneIsServing;
+        public bool PlayerOneIsServing
+        {
+            get { return _playerOneIsServing; }
+            set { this.RaiseAndSetIfChanged(ref _playerOneIsServing, value); }
+        }
+
+        [DataMember] private bool _playerTwoIsServing;
+        public bool PlayerTwoIsServing
+        {
+            get { return _playerTwoIsServing; }
+            set { this.RaiseAndSetIfChanged(ref _playerTwoIsServing, value); }
+        }
+
         [DataMember]
         private ObservableAsPropertyHelper<string> _playerTwoThirdSet;
         public string PlayerTwoThirdSet
@@ -265,6 +275,12 @@ namespace MatchStats.ViewModels
            get { return _playerTwoFirstSet.Value; }
         }
 
+        [DataMember] private ObservableAsPropertyHelper<bool> _ServerSeleced;
+        public bool ServerSelected
+        {
+            get { return _ServerSeleced.Value; }
+        }
+
         [DataMember]
         private bool _showHideMatchPopup;
         public bool ShowHideMatchPopup
@@ -280,6 +296,7 @@ namespace MatchStats.ViewModels
             get { return _newMatchControlViewModel; }
             set { this.RaiseAndSetIfChanged(ref _newMatchControlViewModel, value); }
         }
+
 
         public string UrlPathSegment { get; private set; }
         public IScreen HostScreen { get; private set; }
