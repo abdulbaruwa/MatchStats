@@ -10,7 +10,6 @@ namespace MatchStats.Model
         }
 
         public List<Set> Sets { get; set; }
-        //public List<Game> Games { get; set; }
         public Game GameOne { get; set; }
         public Game GameTwo { get; set; }
         public Game GameThree { get; set; }

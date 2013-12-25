@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using SQLite;
 
 namespace MatchStats.Model
 {
@@ -19,6 +20,42 @@ namespace MatchStats.Model
             var currentSet = This.Score.Sets.FirstOrDefault(x => x.IsCurrentSet);
             if (currentSet == null) return null;
             return currentSet;
+        }
+
+        public static string GetPlayerOneCurrentScore(this Match This)
+        {
+            string result = string.Empty;
+            var currentGame = This.CurrentGame();
+            if (currentGame == null) return result;
+            var currentStatus = currentGame.GameStatus.Status;
+            if ( currentStatus == Status.Neutral || currentStatus == Status.GamePoint)
+            {
+                var score = This.CurrentGame().PlayerOneScore;
+                if (score == 0) result = "0";
+                else if (score == 1) result = "15";
+                else if (score == 2) result = "30";
+                else if (score == 3) result = "40";
+                else if (score == 4) result = "*";
+            }
+            return result;
+        }
+
+        public static string GetPlayerTwoCurrentScore(this Match This)
+        {
+            string result = string.Empty;
+            var currentGame = This.CurrentGame();
+            if (currentGame == null) return result;
+            var currentStatus = currentGame.GameStatus.Status;
+            if ( currentStatus == Status.Neutral || currentStatus == Status.GamePoint)
+            {
+                var score = This.CurrentGame().PlayerTwoScore;
+                if (score == 0) result = "0";
+                else if (score == 1) result = "15";
+                else if (score == 2) result = "30";
+                else if (score == 3) result = "40";
+                else if (score == 4) result = "*";
+            }
+            return result;
         }
 
         public static Game GetGameForKnownSetAndGame(this Match This, int setNumber, int gameNumber)

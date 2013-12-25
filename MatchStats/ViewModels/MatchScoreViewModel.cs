@@ -109,6 +109,16 @@ namespace MatchStats.ViewModels
                 .Select(x => x != null)
                 .ToProperty(this, x => x.ServerSelected);
 
+            _playerOneCurrentGame = this.WhenAny(x => x.CurrMatch, x => x.Value)
+                .Where(x => x != null)
+                .Select(x => x.GetPlayerOneCurrentScore())
+                .ToProperty(this, x => x.PlayerOneCurrentGame, "");
+
+            _playerTwoCurrentGame = this.WhenAny(x => x.CurrMatch, x => x.Value)
+                .Where(x => x != null)
+                .Select(x => x.GetPlayerTwoCurrentScore())
+                .ToProperty(this, x => x.PlayerTwoCurrentGame, "");
+
             MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch").Subscribe(x => CurrMatch = x);
         }
 
@@ -177,13 +187,11 @@ namespace MatchStats.ViewModels
         }
         
         [DataMember]
-        private string _playerOneCurrentGame = "";
+        private ObservableAsPropertyHelper<string> _playerOneCurrentGame;
         public string PlayerOneCurrentGame
         {
-            get { return _playerOneCurrentGame; }
-            set { this.RaiseAndSetIfChanged(ref _playerOneCurrentGame, value); }
+            get { return _playerOneCurrentGame.Value; }
         }
-
 
         [DataMember]
         private Match _currMatch;
@@ -194,11 +202,10 @@ namespace MatchStats.ViewModels
         }
             
         [DataMember]
-        private string _playerTwoCurrentGame = "";
+        private ObservableAsPropertyHelper<string> _playerTwoCurrentGame;
         public string PlayerTwoCurrentGame
         {
-            get { return _playerTwoCurrentGame; }
-            set { this.RaiseAndSetIfChanged(ref _playerTwoCurrentGame, value); }
+            get { return _playerTwoCurrentGame.Value; }
         }
 
         ObservableAsPropertyHelper<string> _playerOnesName;
