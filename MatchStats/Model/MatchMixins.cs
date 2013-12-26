@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using SQLite;
 
 namespace MatchStats.Model
 {
@@ -28,14 +27,25 @@ namespace MatchStats.Model
             var currentGame = This.CurrentGame();
             if (currentGame == null) return result;
             var currentStatus = currentGame.GameStatus.Status;
-            if ( currentStatus == Status.Neutral || currentStatus == Status.GamePoint)
+            if (currentStatus != Status.Neutral && currentStatus != Status.GamePoint) return result;
+            var score = This.CurrentGame().PlayerOneScore;
+            switch (score)
             {
-                var score = This.CurrentGame().PlayerOneScore;
-                if (score == 0) result = "0";
-                else if (score == 1) result = "15";
-                else if (score == 2) result = "30";
-                else if (score == 3) result = "40";
-                else if (score == 4) result = "*";
+                case 0:
+                    result = "0";
+                    break;
+                case 1:
+                    result = "15";
+                    break;
+                case 2:
+                    result = "30";
+                    break;
+                case 3:
+                    result = "40";
+                    break;
+                case 4:
+                    result = "*";
+                    break;
             }
             return result;
         }
@@ -46,14 +56,25 @@ namespace MatchStats.Model
             var currentGame = This.CurrentGame();
             if (currentGame == null) return result;
             var currentStatus = currentGame.GameStatus.Status;
-            if ( currentStatus == Status.Neutral || currentStatus == Status.GamePoint)
+            if (currentStatus != Status.Neutral && currentStatus != Status.GamePoint) return result;
+            var score = This.CurrentGame().PlayerTwoScore;
+            switch (score)
             {
-                var score = This.CurrentGame().PlayerTwoScore;
-                if (score == 0) result = "0";
-                else if (score == 1) result = "15";
-                else if (score == 2) result = "30";
-                else if (score == 3) result = "40";
-                else if (score == 4) result = "*";
+                case 0:
+                    result = "0";
+                    break;
+                case 1:
+                    result = "15";
+                    break;
+                case 2:
+                    result = "30";
+                    break;
+                case 3:
+                    result = "40";
+                    break;
+                case 4:
+                    result = "*";
+                    break;
             }
             return result;
         }

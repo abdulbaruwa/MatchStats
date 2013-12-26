@@ -58,7 +58,7 @@ namespace MatchStats.Test.ViewModels
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
 
             //Assert => CurrentMatch is now this match
-            blobCache.GetObjectAsync<Match>("CurrentMatch").Subscribe(x => Assert.AreEqual(x.MatchGuid, fixture.CurrentMatch.MatchGuid),
+            blobCache.GetObjectAsync<Match>("CurrentMatch").Subscribe(x => Assert.AreEqual(x.MatchGuid, fixture.CurrMatch.MatchGuid),
                 ex => Assert.Fail("Current Match not saved"));
         }
 

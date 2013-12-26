@@ -12,7 +12,6 @@ namespace MatchStats.ViewModels
     [DataContract]
     public class MatchScoreViewModel : ReactiveObject, IRoutableViewModel
     {
-        
         public ReactiveList<IGameActionViewModel> ScorePoints { get; protected set; }
         public ReactiveList<IGameActionViewModel> PlayerOneActions { get; protected set; }
         public ReactiveList<IGameActionViewModel> PlayerTwoActions { get; protected set; }
@@ -38,23 +37,22 @@ namespace MatchStats.ViewModels
             SetPlayerOneAsCurrentServerCommand = new ReactiveCommand();
             SetPlayerOneAsCurrentServerCommand.Subscribe(_ =>
             {
-                CurrentMatch.Score.CurrentServer = CurrentMatch.PlayerOne;
-                CurrMatch = CurrentMatch;  //TODO: I hate having to do this, it is retarded
+                CurrMatch.Score.CurrentServer = CurrMatch.PlayerOne;
+                CurrentServer = CurrMatch.PlayerOne;
                 PlayerOneIsServing = true;
                 PlayerTwoIsServing = false;
-                SaveMatch(CurrentMatch);
+                SaveMatch(CurrMatch);
             });
 
             SetPlayerTwoAsCurrentServerCommand = new ReactiveCommand();
             SetPlayerTwoAsCurrentServerCommand.Subscribe(_ =>
             {
-                CurrentMatch.Score.CurrentServer = CurrentMatch.PlayerTwo;
-                CurrMatch = CurrentMatch; //TODO: I hate having to do this
+                CurrMatch.Score.CurrentServer = CurrMatch.PlayerTwo;
+                CurrentServer = CurrMatch.PlayerTwo;
                 PlayerTwoIsServing = true;
                 PlayerOneIsServing = false;
-                SaveMatch(CurrentMatch);
+                SaveMatch(CurrMatch);
             });
-
 
             RandomGuid = Guid.NewGuid();
 
@@ -65,15 +63,13 @@ namespace MatchStats.ViewModels
                 .ToProperty(this, x => x.ShowHidePopup, true);
 
             //Observe the NewMatchControlVM.ShowMe property, if just set call start match and set the CurrentMatch Property
-            _currentMatch = this.WhenAny(x => x.NewMatchControlViewModel.ShowMe, x => x.Value)
+            this.WhenAny(x => x.NewMatchControlViewModel.ShowMe, x => x.Value)
                 .Where(x => x == false)
-                .Select(x => this.NewMatchControlViewModel.SavedMatch)
-                .Do(StartMatch)
-                .ToProperty(this, x => x.CurrentMatch, new Match());
+                .Select(x => this.NewMatchControlViewModel.SavedMatch).Subscribe(x => StartMatch(x));
 
-            this.WhenAny(x => x.CurrMatch, x => x.Value)
-                .Select(x => x)
-                .ToProperty(this, x => x.CurrentMatch, new Match());
+            //this.WhenAny(x => x.CurrMatch, x => x.Value)
+            //    .Select(x => x)
+            //    .ToProperty(this, x => x.CurrentMatch, new Match());
 
             _playerOneFirstSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
                 .Where(x => x.Sets.FirstOrDefault() != null)
@@ -105,7 +101,7 @@ namespace MatchStats.ViewModels
                 .Select(x => x.Sets.First().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName).ToString())
                 .ToProperty(this, x => x.PlayerTwoThirdSet, "");
 
-            _ServerSeleced = this.WhenAny(x => x.CurrMatch.Score.CurrentServer, x => x.Value)
+            _ServerSeleced = this.WhenAny(x => x.CurrentServer, x => x.Value)
                 .Select(x => x != null)
                 .ToProperty(this, x => x.ServerSelected);
 
@@ -136,14 +132,13 @@ namespace MatchStats.ViewModels
         private void StartMatch(object param)
         {
             var match = param as Match;
-            if (match != null)
-            {
-                SaveMatch(match);
-                PlayerOneActions.Clear();
+            if (match == null) return;
+            CurrMatch = match;
+            SaveMatch(match);
+            PlayerOneActions.Clear();
                 
-                GetGameCommandsForPlayer(match.PlayerOne).Subscribe(x => PlayerOneActions.Add(x));
-                GetGameCommandsForPlayer(match.PlayerTwo).Subscribe(x => PlayerTwoActions.Add(x));
-            }
+            GetGameCommandsForPlayer(match.PlayerOne).Subscribe(x => PlayerOneActions.Add(x));
+            GetGameCommandsForPlayer(match.PlayerTwo).Subscribe(x => PlayerTwoActions.Add(x));
         }
 
         private static void SaveMatch(Match match)
@@ -166,16 +161,23 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _RandomGuid, value); }
         }
         
-        private ObservableAsPropertyHelper<Match> _currentMatch;
-        public Match CurrentMatch
-        {
-            get { return _currentMatch.Value; }
-        }
+        //private ObservableAsPropertyHelper<Match> _currentMatch;
+        //public Match CurrentMatch
+        //{
+        //    get { return _currentMatch.Value; }
+        //}
 
         private ObservableAsPropertyHelper<List<IGameActionViewModel>> _playerOneActions;
         public List<IGameActionViewModel> PlayerOneCommands
         {
             get { return _playerOneActions.Value; }
+        }
+
+        [DataMember] private Player _currentServer;
+        public Player CurrentServer
+        {
+            get { return _currentServer; }
+            set { this.RaiseAndSetIfChanged(ref _currentServer, value); }
         }
 
         [DataMember]
