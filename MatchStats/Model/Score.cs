@@ -24,5 +24,6 @@ namespace MatchStats.Model
         }
         public List<Game> Games { get; set; }
         public bool IsCurrentSet { get; set; }
+        public Player Winner { get; set; }
     }
 }

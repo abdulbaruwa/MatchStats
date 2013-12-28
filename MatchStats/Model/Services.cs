@@ -121,6 +121,13 @@ namespace MatchStats.Model
             if (currentGame.GameStatus.Status == Status.GameOver)
             {
                 currentGame.IsCurrentGame = false;
+                var currentSetGames = currentMatch.CurrentSet().Games;
+                if (currentSetGames.Any())
+                {
+                    //Any player that has reached the number of required games?
+                    var xx = currentSetGames.GroupBy(x => x.Winner);
+                    //currentSetGames.win
+                }
                 if (currentMatch.CurrentSet() != null && (currentMatch.CurrentSet().Games.Count() < gamesCount))
                 {
                     currentMatch.CurrentSet().Games.Add(new Game() {IsCurrentGame = true});
