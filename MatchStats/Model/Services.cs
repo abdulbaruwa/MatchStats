@@ -13,6 +13,8 @@ using Akavache;
 using MatchStats.Enums;
 using ReactiveUI;
 using MatchStats.Model;
+using WinRTXamlToolkit.Imaging;
+
 namespace MatchStats.Model
 {
     public interface IMatchStatsApi
@@ -125,13 +127,58 @@ namespace MatchStats.Model
                 if (currentSetGames.Any())
                 {
                     //Any player that has reached the number of required games?
-                    var xx = currentSetGames.GroupBy(x => x.Winner);
-                    //currentSetGames.win
-                }
-                if (currentMatch.CurrentSet() != null && (currentMatch.CurrentSet().Games.Count() < gamesCount))
-                {
-                    currentMatch.CurrentSet().Games.Add(new Game() {IsCurrentGame = true});
-                    return true;
+                    var groupedWinner = (from n in currentSetGames
+                        group n by n.Winner.IsPlayerOne
+                        into winloss
+                        select new {WinnerIsPlayerOne = winloss.Key, gameCount = winloss.Count()}).ToList();
+                    var maxGamesWon = groupedWinner.Max(x => x.gameCount);
+
+                    if (currentMatch.CurrentSet() != null)
+                    {
+                        if( maxGamesWon < gamesCount)
+                        {
+                            currentMatch.CurrentSet().Games.Add(new Game() {IsCurrentGame = true});
+                            return true;
+                        }
+
+                        var playerOneGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne).gameCount;
+                        var playerTwoGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne == false).gameCount;
+                        
+                        //4-3 (3-4) or 6-5 (5-6) --> We can create a new game
+                        if (maxGamesWon == gamesCount && playerOneGamesCount.DiffValueWith(playerTwoGamesCount) == 1)
+                        {
+                            currentMatch.CurrentSet().Games.Add(new Game() { IsCurrentGame = true });
+                            return true;
+                        }
+
+                        // 4-4 or 6 - 6
+                        if (maxGamesWon == gamesCount && playerOneGamesCount == playerTwoGamesCount)
+                        {
+                            currentMatch.CurrentSet().Games.Add(new Game() { IsCurrentGame = true, GameType = GameType.SevenPointer });
+                            return true;
+                        }
+                    }
+                    
+                    //Check if the set is over
+                    if (currentMatch.MatchFormat.SetsFormat == SetsFormat.ShortSetToFour)
+                    {
+                        var playerOneGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne).gameCount;
+                        var playerTwoGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne == false).gameCount;
+
+                        //3-4 or 4-3
+                        if (playerOneGamesCount >= 3 || playerTwoGamesCount >= 3)
+                        {
+                            if (playerOneGamesCount.DiffValueWith(playerTwoGamesCount) >= 2)
+                            {
+                                var playerOneIsWinner = playerOneGamesCount > playerTwoGamesCount;
+                                currentMatch.CurrentSet().Winner = playerOneIsWinner ? currentMatch.PlayerOne : currentMatch.PlayerTwo;
+                                currentMatch.CurrentSet().IsCurrentSet = false;
+                                currentMatch.Score.Sets.Add(new Set(){IsCurrentSet = true});
+
+                            }
+                            //We still need to deal with a Tie-Break
+                        }
+                    }
                 }
             }
             return false;

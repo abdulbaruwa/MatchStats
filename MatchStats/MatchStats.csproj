@@ -112,6 +112,7 @@
     <Compile Include="Common\RichTextColumns.cs" />
     <Compile Include="Common\EnumDescriptionConverter.cs" />
     <Compile Include="Model\IEnumerableMixins.cs" />
+    <Compile Include="Model\IntMixins.cs" />
     <Compile Include="Model\MatchMixins.cs" />
     <Compile Include="ViewModels\DoubleFaultCommandViewModel.cs" />
     <Compile Include="ViewModels\ForeHandWinnerCommandViewModel.cs" />

@@ -7,6 +7,7 @@ namespace MatchStats.Model
         public Game()
         {
             GameStatus = new GameStatus();
+            GameType = GameType.Normal;
         }
 
         public Player Winner { get; set; }
@@ -14,6 +15,7 @@ namespace MatchStats.Model
         public int PlayerTwoScore { get; set; }
         public bool IsCurrentGame { get; set; }
         public GameStatus GameStatus { get; set; }
+        public GameType GameType { get; set; }
     }
 
     public class GameStatus
@@ -24,6 +26,16 @@ namespace MatchStats.Model
         }
         public Player Player { get; set; }
         public Status Status { get; set; }
+    }
+
+    public enum GameType
+    {
+        [Display(Name= "Normal Game")]
+        Normal,
+        [Display(Name = "Seven Point Game")]
+        SevenPointer,
+        [Display(Name = "Ten Point Game")]
+        TenPointer
     }
 
     public enum Status
