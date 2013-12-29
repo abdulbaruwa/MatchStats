@@ -343,7 +343,7 @@ namespace MatchStats.Test.ViewModels
         }
 
         [TestMethod]
-        public void ShouldStartNewSetAndWhenASetIsOne()
+        public void ShouldStartNewSetWhenASetIsWon()
         {
 
             var blobCache = RegisterComponents();
@@ -352,34 +352,74 @@ namespace MatchStats.Test.ViewModels
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             //Act  --> PlayerOne wins 4 games to 1
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            AddAGameForPlayerOne(fixture);
+            //1-1
+            AddAGameForPlayerTwo(fixture);
 
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            //2-1
+            AddAGameForPlayerOne(fixture);
 
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            //3-1
+            AddAGameForPlayerOne(fixture);
 
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            //Set wont 4-1 to player one
+            AddAGameForPlayerOne(fixture);
 
             //Assert
             Assert.IsNotNull(fixture.CurrMatch.Score.Sets.First().Winner, "Set Winner should not be Null");
             Assert.AreEqual(fixture.CurrMatch.Score.Sets.First().Winner.FullName, fixture.CurrMatch.PlayerOne.FullName, "The Second game should be the current game");
+        }
+
+        [TestMethod]
+        public void ShouldStartNewSetWhenASetIsWonForLongSetMatch()
+        {
+
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SelectedSetsFormat = SetsFormat.LongSetSix;
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            //Act  --> PlayerOne wins 4 games to 1
+            AddAGameForPlayerOne(fixture);
+            //1-1
+            AddAGameForPlayerTwo(fixture);
+
+            //2-1
+            AddAGameForPlayerOne(fixture);
+
+            //3-1
+            AddAGameForPlayerOne(fixture);
+
+            //4-1
+            AddAGameForPlayerOne(fixture);
+
+            //5-1
+            AddAGameForPlayerOne(fixture);
+
+            //6-1
+            AddAGameForPlayerOne(fixture);
+
+            //Assert
+            Assert.IsNotNull(fixture.CurrMatch.Score.Sets.First().Winner, "Set Winner should not be Null");
+            Assert.AreEqual(fixture.CurrMatch.Score.Sets.First().Winner.FullName, fixture.CurrMatch.PlayerOne.FullName, "The Second game should be the current game");
+        }
+
+
+        private void AddAGameForPlayerOne(MatchScoreViewModel fixture)
+        {
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+        }        
+
+        private void AddAGameForPlayerTwo(MatchScoreViewModel fixture)
+        {
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
         }
 
         private static TestBlobCache RegisterComponents()

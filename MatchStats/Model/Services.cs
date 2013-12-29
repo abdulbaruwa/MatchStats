@@ -112,8 +112,53 @@ namespace MatchStats.Model
             //Duece Sudden Death
             CheckGamePointOnSuddenDeathDueceRule(currentMatch, ref currentGame);
 
+            //Is game over 
             CheckGameIsOverAndInitializeNewGameIfNeedBe(currentMatch);
+
+            //Is Set Over
+            CheckSetIsOverAndInitializeNewSetIfNeedBe(currentMatch);
+
             return currentMatch;
+        }
+
+        private bool CheckSetIsOverAndInitializeNewSetIfNeedBe(Match currentMatch)
+        {
+            var gamesCount = (int)currentMatch.MatchFormat.SetsFormat;
+
+            var currentSetGames = currentMatch.CurrentSet().Games;
+            if (currentSetGames.Any(x => x.Winner == null)) return false;
+            if (currentSetGames.Any())
+            {
+                var groupedWinner = (from n in currentSetGames
+                    group n by n.Winner.IsPlayerOne
+                    into winloss
+                    select new {WinnerIsPlayerOne = winloss.Key, gameCount = winloss.Count()}).ToList();
+
+                //Check if the set is over
+                var playerOneGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne).gameCount;
+                var playerTwoGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne == false).gameCount;
+
+                //Has any player reached 4 or 6
+                if (playerOneGamesCount >= gamesCount - 1 || playerTwoGamesCount >= gamesCount - 1)
+                {
+                    //Has that player won the set
+                    if (playerOneGamesCount.DiffValueWith(playerTwoGamesCount) >= 2)
+                    {
+                        var playerOneIsWinner = playerOneGamesCount > playerTwoGamesCount;
+                        currentMatch.CurrentSet().Winner = playerOneIsWinner
+                            ? currentMatch.PlayerOne
+                            : currentMatch.PlayerTwo;
+                        currentMatch.CurrentSet().IsCurrentSet = false;
+                        currentMatch.Score.Sets.Add(new Set() {IsCurrentSet = true});
+
+                        return true;
+
+                    }
+                    //We still need to deal with a Tie-Break
+                }
+            }
+
+            return false;
         }
 
         private bool CheckGameIsOverAndInitializeNewGameIfNeedBe(Match currentMatch)
@@ -159,26 +204,7 @@ namespace MatchStats.Model
                         }
                     }
                     
-                    //Check if the set is over
-                    if (currentMatch.MatchFormat.SetsFormat == SetsFormat.ShortSetToFour)
-                    {
-                        var playerOneGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne).gameCount;
-                        var playerTwoGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne == false).gameCount;
-
-                        //3-4 or 4-3
-                        if (playerOneGamesCount >= 3 || playerTwoGamesCount >= 3)
-                        {
-                            if (playerOneGamesCount.DiffValueWith(playerTwoGamesCount) >= 2)
-                            {
-                                var playerOneIsWinner = playerOneGamesCount > playerTwoGamesCount;
-                                currentMatch.CurrentSet().Winner = playerOneIsWinner ? currentMatch.PlayerOne : currentMatch.PlayerTwo;
-                                currentMatch.CurrentSet().IsCurrentSet = false;
-                                currentMatch.Score.Sets.Add(new Set(){IsCurrentSet = true});
-
-                            }
-                            //We still need to deal with a Tie-Break
-                        }
-                    }
+                    //
                 }
             }
             return false;
