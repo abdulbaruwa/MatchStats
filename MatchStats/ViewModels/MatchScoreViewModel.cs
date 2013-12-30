@@ -84,21 +84,21 @@ namespace MatchStats.ViewModels
             _playerOneSecondSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
                 .Where(x => x.Sets.SecondOrDefault() != null)
                 .Select(x => x.Sets.SecondOrDefault().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerOne.FullName).ToString())
-                .ToProperty(this, x => x.PlayerOneFirstSet, "");
+                .ToProperty(this, x => x.PlayerOneSecondSet, "");
                 
             _playerTwoSecondSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
                 .Where(x => x.Sets.SecondOrDefault() != null)
-                .Select(x => x.Sets.First().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName).ToString())
+                .Select(x => x.Sets.SecondOrDefault().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName).ToString())
                 .ToProperty(this, x => x.PlayerTwoSecondSet, "");
 
             _playerOneThirdSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
                 .Where(x => x.Sets.ThirdOrDefault() != null)
-                .Select(x => x.Sets.First().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerOne.FullName).ToString())
+                .Select(x => x.Sets.ThirdOrDefault().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerOne.FullName).ToString())
                 .ToProperty(this, x => x.PlayerOneThirdSet, "");
 
             _playerTwoThirdSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
                 .Where(x => x.Sets.ThirdOrDefault() != null) //TODO: Need to 
-                .Select(x => x.Sets.First().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName).ToString())
+                .Select(x => x.Sets.ThirdOrDefault().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName).ToString())
                 .ToProperty(this, x => x.PlayerTwoThirdSet, "");
 
             _ServerSeleced = this.WhenAny(x => x.CurrentServer, x => x.Value)

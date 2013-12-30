@@ -160,8 +160,9 @@ namespace MatchStats.Model
                         currentMatch.CurrentSet().IsCurrentSet = false;
                         currentMatch.Score.Sets.Add(new Set() {IsCurrentSet = true});
 
+                        //Add new Game
+                        currentMatch.CurrentSet().Games.Add(new Game() {IsCurrentGame = true});
                         return true;
-
                     }
                     // 4-5(5-4) or 6-7(7-6) --> Code is repetitive but simpler to read
                     if (playerOneGamesCount.DiffValueWith(playerTwoGamesCount) == 1 
@@ -174,6 +175,7 @@ namespace MatchStats.Model
                             : currentMatch.PlayerTwo;
                         currentMatch.CurrentSet().IsCurrentSet = false;
                         currentMatch.Score.Sets.Add(new Set() { IsCurrentSet = true });
+                        currentMatch.CurrentSet().Games.Add(new Game() { IsCurrentGame = true });
 
                         return true;
                     }
