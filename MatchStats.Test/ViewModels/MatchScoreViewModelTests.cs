@@ -405,6 +405,102 @@ namespace MatchStats.Test.ViewModels
             Assert.AreEqual(fixture.CurrMatch.Score.Sets.First().Winner.FullName, fixture.CurrMatch.PlayerOne.FullName, "The Second game should be the current game");
         }
 
+        [TestMethod]
+        public void ShouldStartTieBreakerifGamesAreEven()
+        {
+
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            AddAGameForPlayerOne(fixture);
+            AddAGameForPlayerTwo(fixture);
+
+            AddAGameForPlayerOne(fixture);
+            AddAGameForPlayerTwo(fixture);
+
+            AddAGameForPlayerOne(fixture);
+            AddAGameForPlayerTwo(fixture);
+
+            AddAGameForPlayerOne(fixture);
+            AddAGameForPlayerTwo(fixture);
+
+            Assert.IsNull(fixture.CurrMatch.Score.Sets.First().Winner, "Sets winner should be null");
+            Assert.AreEqual(GameType.SevenPointer, fixture.CurrMatch.CurrentGame().GameType,"Game type should be a Seven Point Tiebreaker");
+
+        }
+
+        [TestMethod]
+        public void ShouldScoreASevenPointTieBreakToSeven()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            AddAGameForPlayerOne(fixture);
+            AddAGameForPlayerTwo(fixture);
+
+            AddAGameForPlayerOne(fixture);
+            AddAGameForPlayerTwo(fixture);
+
+            AddAGameForPlayerOne(fixture);
+            AddAGameForPlayerTwo(fixture);
+
+            AddAGameForPlayerOne(fixture);
+            AddAGameForPlayerTwo(fixture);
+
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            Assert.AreEqual(1, fixture.CurrMatch.Score.Sets.Count, "Should still be on the first set");
+            Assert.IsNull(fixture.CurrMatch.Score.Sets.First().Winner, "Sets winner should be null at 5-2 in a Seven Point Tie Breaker game");
+            Assert.IsNotNull(fixture.CurrMatch.CurrentGame(), "The current game should be a Tie Breaker game ");
+            Assert.AreEqual(5, fixture.CurrMatch.CurrentGame().PlayerOneScore, "Player one score should be 5");
+            Assert.IsNull(fixture.CurrMatch.CurrentGame().Winner, "The current game should not have a winner");
+        }
+
+        [TestMethod]
+        public void ShouldScoreASevenPointTieBreakToSevenAndSetWinnerWhenAnyPlayerGetsToSeven()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            AddAGameForPlayerOne(fixture);
+            AddAGameForPlayerTwo(fixture);
+
+            AddAGameForPlayerOne(fixture);
+            AddAGameForPlayerTwo(fixture);
+
+            AddAGameForPlayerOne(fixture);
+            AddAGameForPlayerTwo(fixture);
+
+            AddAGameForPlayerOne(fixture);
+            AddAGameForPlayerTwo(fixture);
+
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            Assert.IsNotNull(fixture.CurrMatch.Score.Sets.First().Winner, "Sets winner should not be null at 7-2 in a Seven Point Tie Breaker game");
+            Assert.AreEqual(2, fixture.CurrMatch.Score.Sets.Count, "Should still be on the first set");
+        }
 
         private void AddAGameForPlayerOne(MatchScoreViewModel fixture)
         {

@@ -5,6 +5,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.Media.Effects;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.System.UserProfile;
@@ -106,6 +107,9 @@ namespace MatchStats.Model
             //Game over rules
             CheckGameOverRule(currentMatch, ref currentGame);
 
+            //Game over Short Tie Breaker to seven
+            CheckTieBreakerGameOverRule(currentMatch, ref currentGame);
+
             //Duece
             CheckDueceRule(currentMatch, ref currentGame);
 
@@ -134,7 +138,7 @@ namespace MatchStats.Model
                     into winloss
                     select new {WinnerIsPlayerOne = winloss.Key, gameCount = winloss.Count()}).ToList();
 
-                //Check if the set is over
+                //Get games won by each player
                 var playerOneGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne).gameCount;
                 var playerTwoGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne == false).gameCount;
 
@@ -143,6 +147,7 @@ namespace MatchStats.Model
                 {
                     //Has that player won the set
                     if (playerOneGamesCount.DiffValueWith(playerTwoGamesCount) >= 2)
+
                     {
                         var playerOneIsWinner = playerOneGamesCount > playerTwoGamesCount;
                         currentMatch.CurrentSet().Winner = playerOneIsWinner
@@ -154,7 +159,20 @@ namespace MatchStats.Model
                         return true;
 
                     }
-                    //We still need to deal with a Tie-Break
+                    // 4-5(5-4) or 6-7(7-6) --> Code is repetitive but simpler to read
+                    if (playerOneGamesCount.DiffValueWith(playerTwoGamesCount) == 1 
+                        && playerOneGamesCount >= gamesCount
+                        && playerTwoGamesCount >= gamesCount)
+                    {
+                        var playerOneIsWinner = playerOneGamesCount > playerTwoGamesCount;
+                        currentMatch.CurrentSet().Winner = playerOneIsWinner
+                            ? currentMatch.PlayerOne
+                            : currentMatch.PlayerTwo;
+                        currentMatch.CurrentSet().IsCurrentSet = false;
+                        currentMatch.Score.Sets.Add(new Set() { IsCurrentSet = true });
+
+                        return true;
+                    }
                 }
             }
 
@@ -212,7 +230,7 @@ namespace MatchStats.Model
 
         private static bool CheckDueceRule(Match currentMatch, ref Game currentGame)
         {
-            if (currentGame.PlayerOneScore == currentGame.PlayerTwoScore && currentGame.PlayerOneScore >= 3)
+            if (currentGame.GameType == GameType.Normal && currentGame.PlayerOneScore == currentGame.PlayerTwoScore && currentGame.PlayerOneScore >= 3)
             {
                 if (currentMatch.MatchFormat.DueceFormat == DueceFormat.SuddenDeath)
                 {
@@ -229,12 +247,12 @@ namespace MatchStats.Model
             return false;
         }
 
-        private static bool CheckGameOverRule(Match currentMatch, ref Game currentGame)
+        private static bool CheckTieBreakerGameOverRule(Match currentMatch, ref Game currentGame)
         {
-            if (currentGame.PlayerOneScore > currentGame.PlayerTwoScore)
+
+            if (currentGame.GameType == GameType.SevenPointer)
             {
-                //Player one is leading by two points after 4 points
-                if (currentGame.PlayerOneScore >= 4 && currentGame.PlayerTwoScore <= (currentGame.PlayerOneScore - 2))
+                if (currentGame.PlayerOneScore >= 7)
                 {
                     currentGame.Winner = currentMatch.PlayerOne;
                     currentGame.GameStatus = new GameStatus
@@ -244,11 +262,7 @@ namespace MatchStats.Model
                     };
                     return true;
                 }
-            }
-            else if (currentGame.PlayerTwoScore > currentGame.PlayerOneScore)
-            {
-                //Player two is leading by two points after 4 points
-                if (currentGame.PlayerTwoScore >= 4 && currentGame.PlayerOneScore <= (currentGame.PlayerTwoScore - 2))
+                if (currentGame.PlayerTwoScore >= 7)
                 {
                     currentGame.Winner = currentMatch.PlayerTwo;
                     currentGame.GameStatus = new GameStatus
@@ -259,6 +273,45 @@ namespace MatchStats.Model
                     return true;
                 }
             }
+            return false;
+        }
+
+        private static bool CheckGameOverRule(Match currentMatch, ref Game currentGame)
+        {
+            if (currentGame.GameType == GameType.Normal)
+            {
+                if (currentGame.PlayerOneScore > currentGame.PlayerTwoScore)
+                {
+                    //Player one is leading by two points after 4 points
+                    if (currentGame.PlayerOneScore >= 4 &&
+                        currentGame.PlayerTwoScore <= (currentGame.PlayerOneScore - 2))
+                    {
+                        currentGame.Winner = currentMatch.PlayerOne;
+                        currentGame.GameStatus = new GameStatus
+                        {
+                            Status = Status.GameOver,
+                            Player = currentMatch.PlayerOne
+                        };
+                        return true;
+                    }
+                }
+                else if (currentGame.PlayerTwoScore > currentGame.PlayerOneScore)
+                {
+                    //Player two is leading by two points after 4 points
+                    if (currentGame.PlayerTwoScore >= 4 &&
+                        currentGame.PlayerOneScore <= (currentGame.PlayerTwoScore - 2))
+                    {
+                        currentGame.Winner = currentMatch.PlayerTwo;
+                        currentGame.GameStatus = new GameStatus
+                        {
+                            Status = Status.GameOver,
+                            Player = currentMatch.PlayerTwo
+                        };
+                        return true;
+                    }
+                }
+            }
+
             return false;
         }
 
