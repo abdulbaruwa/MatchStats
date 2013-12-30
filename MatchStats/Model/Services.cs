@@ -139,8 +139,12 @@ namespace MatchStats.Model
                     select new {WinnerIsPlayerOne = winloss.Key, gameCount = winloss.Count()}).ToList();
 
                 //Get games won by each player
-                var playerOneGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne).gameCount;
-                var playerTwoGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne == false).gameCount;
+                var playerOneGamesCount = 0;
+                    if(groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne) != null) 
+                        playerOneGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne).gameCount;
+                var playerTwoGamesCount = 0;
+                    if(groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne == false) != null)
+                        playerTwoGamesCount =groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne == false).gameCount;
 
                 //Has any player reached 4 or 6
                 if (playerOneGamesCount >= gamesCount - 1 || playerTwoGamesCount >= gamesCount - 1)
@@ -204,8 +208,12 @@ namespace MatchStats.Model
                             return true;
                         }
 
-                        var playerOneGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne).gameCount;
-                        var playerTwoGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne == false).gameCount;
+                        var playerOneGamesCount = 0;
+                        if (groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne) != null) 
+                             playerOneGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne).gameCount;
+                        var playerTwoGamesCount = 0;
+                        if(groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne == false) != null)     
+                             playerTwoGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne == false).gameCount;
                         
                         //4-3 (3-4) or 6-5 (5-6) --> We can create a new game
                         if (maxGamesWon == gamesCount && playerOneGamesCount.DiffValueWith(playerTwoGamesCount) == 1)
