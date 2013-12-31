@@ -31,11 +31,11 @@ namespace MatchStats.Model
     public enum GameType
     {
         [Display(Name= "Normal Game")]
-        Normal,
+        Normal = 0,
         [Display(Name = "Seven Point Game")]
-        SevenPointer,
+        SevenPointer = 7,
         [Display(Name = "Ten Point Game")]
-        TenPointer
+        TenPointer = 10
     }
 
     public enum Status

@@ -231,7 +231,7 @@ namespace MatchStats.Test.ViewModels
             //Assert
             Assert.IsNotNull(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).Winner, "Game Winner should not be Null");
             Assert.IsTrue(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).GameStatus.Status == Status.GameOver, "Game Status should be flagged as Game Point");
-            Assert.AreEqual(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).GameStatus.Player.FirstName, fixture.CurrMatch.PlayerTwo.FirstName, "Game Status should be GameOver for PlayerTwo");
+            Assert.AreEqual(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).GameStatus.Player.FirstName, fixture.CurrMatch.PlayerTwo.FirstName, "Game Status should be MatchOver for PlayerTwo");
             Assert.AreEqual(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).Winner.FirstName, fixture.CurrMatch.PlayerTwo.FirstName, "Game Winner should be PlayerTwo");
         }
 
@@ -256,7 +256,7 @@ namespace MatchStats.Test.ViewModels
             //Assert
             Assert.IsNotNull(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).Winner, "Game Winner should not be Null");
             Assert.IsTrue(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).GameStatus.Status == Status.GameOver, "Game Status should be flagged as Game Point");
-            Assert.AreEqual(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).GameStatus.Player.FirstName, fixture.CurrMatch.PlayerOne.FirstName, "Game Status should be GameOver for PlayerOne");
+            Assert.AreEqual(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).GameStatus.Player.FirstName, fixture.CurrMatch.PlayerOne.FirstName, "Game Status should be MatchOver for PlayerOne");
             Assert.AreEqual(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).Winner.FirstName, fixture.CurrMatch.PlayerOne.FirstName, "Game Winner should be PlayerOne");
         }
 
@@ -560,6 +560,7 @@ namespace MatchStats.Test.ViewModels
 
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
@@ -568,11 +569,14 @@ namespace MatchStats.Test.ViewModels
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
-            Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.Count == 1, "The TieBreaker set should only have one game");
-            Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.First().PlayerTwoScore == 7);
-            Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.First().PlayerOneScore == 2);
-            Assert.IsTrue(fixture.CurrMatch.Score.GameOver, "Game should be flagged as over");
+            Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.Count == 1,  string.Format("The TieBreaker set should only have 1 game, but has {0}",fixture.CurrMatch.CurrentSet().Games.Count));
+            Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.First().PlayerTwoScore == 10);
+            Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.First().PlayerOneScore == 3);
+            Assert.IsTrue(fixture.CurrMatch.Score.MatchOver, "Game should be flagged as over");
             Assert.IsNotNull(fixture.CurrMatch.Score.Winner, "Winning player should not be null");
         }
 

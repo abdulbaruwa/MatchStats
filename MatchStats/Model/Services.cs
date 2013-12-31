@@ -142,7 +142,7 @@ namespace MatchStats.Model
                 if (winner != null)
                 {
                     currentMatch.Score.Winner = winner.WinnerIsPlayerOne ? currentMatch.PlayerOne : currentMatch.PlayerTwo;
-                    currentMatch.Score.GameOver = true;
+                    currentMatch.Score.MatchOver = true;
                 }
             }
             return false;
@@ -233,6 +233,7 @@ namespace MatchStats.Model
 
         private bool CheckGameIsOverAndInitializeNewGameIfNeedBe(Match currentMatch)
         {
+            if (currentMatch.Score.MatchOver) return false;
             var gamesCount = (int)currentMatch.MatchFormat.SetsFormat;
             var currentGame = currentMatch.CurrentGame();
             if (currentGame.GameStatus.Status == Status.GameOver)
