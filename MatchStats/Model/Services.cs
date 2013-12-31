@@ -122,7 +122,30 @@ namespace MatchStats.Model
             //Is Set Over
             CheckSetIsOverAndInitializeNewSetIfNeedBe(currentMatch);
 
+            CheckMatchIsOverRule(currentMatch);
+
             return currentMatch;
+        }
+
+        private bool CheckMatchIsOverRule(Match currentMatch)
+        {
+            var currentSetGames = currentMatch.CurrentSet().Games;
+            if (currentSetGames.Any(x => x.Winner == null)) return false;
+            if (currentSetGames.Any())
+            {
+                var groupedWinner = (from n in currentSetGames
+                                     group n by n.Winner.IsPlayerOne
+                                         into winloss
+                                         select new { WinnerIsPlayerOne = winloss.Key, gameCount = winloss.Count() }).ToList();
+
+                var winner = groupedWinner.FirstOrDefault(x => x.gameCount >= 2);
+                if (winner != null)
+                {
+                    currentMatch.Score.Winner = winner.WinnerIsPlayerOne ? currentMatch.PlayerOne : currentMatch.PlayerTwo;
+                    currentMatch.Score.GameOver = true;
+                }
+            }
+            return false;
         }
 
         private bool CheckSetIsOverAndInitializeNewSetIfNeedBe(Match currentMatch)
@@ -320,11 +343,7 @@ namespace MatchStats.Model
                         currentGame.PlayerTwoScore <= (currentGame.PlayerOneScore - 2))
                     {
                         currentGame.Winner = currentMatch.PlayerOne;
-                        currentGame.GameStatus = new GameStatus
-                        {
-                            Status = Status.GameOver,
-                            Player = currentMatch.PlayerOne
-                        };
+                        SetPlayerOneAsWinnerOfGame(currentMatch, currentGame);
                         return true;
                     }
                 }
@@ -335,17 +354,47 @@ namespace MatchStats.Model
                         currentGame.PlayerOneScore <= (currentGame.PlayerTwoScore - 2))
                     {
                         currentGame.Winner = currentMatch.PlayerTwo;
-                        currentGame.GameStatus = new GameStatus
-                        {
-                            Status = Status.GameOver,
-                            Player = currentMatch.PlayerTwo
-                        };
+                        SetPlayerTwoAsWinnerOfGame(currentMatch, currentGame);
                         return true;
                     }
                 }
             }
+            if (currentGame.GameType != GameType.Normal)
+            {
+                var gameCounts = (int) currentGame.GameType;
+                if (currentGame.PlayerOneScore == gameCounts)
+                {
+                    SetPlayerOneAsWinnerOfGame(currentMatch, currentGame);
+                    return true;
+                }
+                if (currentGame.PlayerTwoScore == gameCounts)
+                {
+                    currentGame.Winner = currentMatch.PlayerTwo;
+                    SetPlayerTwoAsWinnerOfGame(currentMatch, currentGame);
+                    return true;
+                }
 
+            }
             return false;
+        }
+
+        private static void SetPlayerTwoAsWinnerOfGame(Match currentMatch, Game currentGame)
+        {
+            currentGame.GameStatus = new GameStatus
+            {
+                Status = Status.GameOver,
+                Player = currentMatch.PlayerTwo
+            };
+        }
+
+        private static void SetPlayerOneAsWinnerOfGame(Match currentMatch, Game currentGame)
+        {
+            currentGame.Winner = currentMatch.PlayerOne;
+            currentGame.GameStatus = new GameStatus
+            {
+                Status = Status.GameOver,
+                Player = currentMatch.PlayerOne
+            };
         }
 
         private static bool CheckAdvantageRule(Match currentMatch, ref Game currentGame)

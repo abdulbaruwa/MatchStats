@@ -546,6 +546,36 @@ namespace MatchStats.Test.ViewModels
             Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.First().PlayerOneScore == 2);
         }
 
+        [TestMethod]
+        public void ShouldScoreEndADecidingTieBreakerAfterSetPoints()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            AddASetForPlayer(fixture, true);
+            AddASetForPlayer(fixture, false);
+
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.Count == 1, "The TieBreaker set should only have one game");
+            Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.First().PlayerTwoScore == 7);
+            Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.First().PlayerOneScore == 2);
+            Assert.IsTrue(fixture.CurrMatch.Score.GameOver, "Game should be flagged as over");
+            Assert.IsNotNull(fixture.CurrMatch.Score.Winner, "Winning player should not be null");
+        }
+
 
         private void AddASetForPlayer(MatchScoreViewModel fixture, bool IsPlayerOne)
         {
