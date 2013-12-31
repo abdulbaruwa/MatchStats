@@ -149,6 +149,8 @@ namespace MatchStats.Model
                 //Has any player reached 4 or 6
                 if (playerOneGamesCount >= gamesCount - 1 || playerTwoGamesCount >= gamesCount - 1)
                 {
+                    var setsToPlay = ((int)currentMatch.MatchFormat.SetsFormat);
+
                     //Has that player won the set
                     if (playerOneGamesCount.DiffValueWith(playerTwoGamesCount) >= 2)
 
@@ -160,8 +162,17 @@ namespace MatchStats.Model
                         currentMatch.CurrentSet().IsCurrentSet = false;
                         currentMatch.Score.Sets.Add(new Set() {IsCurrentSet = true});
 
-                        //Add new Game
-                        currentMatch.CurrentSet().Games.Add(new Game() {IsCurrentGame = true});
+                        if (setsToPlay.DiffValueWith(currentMatch.Score.Sets.Count) == 1 && currentMatch.MatchFormat.FinalSetType == FinalSetFormats.TenPointChampionShipTieBreak)
+                        {
+                            //This is the final set and it is a Tiebreaker                        
+                            currentMatch.CurrentSet().Games.Add(new Game() { IsCurrentGame = true, GameType = GameType.TenPointer });
+
+                        }
+                        else
+                        {
+                            currentMatch.CurrentSet().Games.Add(new Game() { IsCurrentGame = true });
+                        }
+        
                         return true;
                     }
                     // 4-5(5-4) or 6-7(7-6) --> Code is repetitive but simpler to read
@@ -174,8 +185,20 @@ namespace MatchStats.Model
                             ? currentMatch.PlayerOne
                             : currentMatch.PlayerTwo;
                         currentMatch.CurrentSet().IsCurrentSet = false;
+                        
                         currentMatch.Score.Sets.Add(new Set() { IsCurrentSet = true });
-                        currentMatch.CurrentSet().Games.Add(new Game() { IsCurrentGame = true });
+
+                        //Is this the final set?
+                        if (setsToPlay.DiffValueWith(currentMatch.Score.Sets.Count) == 1 && currentMatch.MatchFormat.FinalSetType == FinalSetFormats.TenPointChampionShipTieBreak)
+                        {
+                            //This is the final set                            
+                            currentMatch.CurrentSet().Games.Add(new Game() { IsCurrentGame = true, GameType = GameType.TenPointer });
+                            
+                        }
+                        else
+                        {
+                            currentMatch.CurrentSet().Games.Add(new Game() { IsCurrentGame = true });
+                        }
 
                         return true;
                     }

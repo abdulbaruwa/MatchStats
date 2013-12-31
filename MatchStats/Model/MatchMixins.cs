@@ -30,23 +30,31 @@ namespace MatchStats.Model
             var currentStatus = currentGame.GameStatus.Status;
             if (currentStatus == Status.GameOver) return result;
             var score = This.CurrentGame().PlayerOneScore;
-            switch (score)
+            if (currentGame.GameType != GameType.Normal)
             {
-                case 0:
-                    result = "0";
-                    break;
-                case 1:
-                    result = "15";
-                    break;
-                case 2:
-                    result = "30";
-                    break;
-                case 3:
-                    result = "40";
-                    break;
-                case 4:
-                    result = "-";
-                    break;
+                result = score.ToString();
+            }
+            else
+            {
+
+                switch (score)
+                {
+                    case 0:
+                        result = "0";
+                        break;
+                    case 1:
+                        result = "15";
+                        break;
+                    case 2:
+                        result = "30";
+                        break;
+                    case 3:
+                        result = "40";
+                        break;
+                    case 4:
+                        result = "-";
+                        break;
+                }
             }
             return result;
         }
@@ -55,27 +63,34 @@ namespace MatchStats.Model
         {
             string result = string.Empty;
             var currentGame = This.CurrentGame();
-            if (currentGame == null) return result;
+            if (currentGame == null)  return result;
             var currentStatus = currentGame.GameStatus.Status;
             if (currentStatus == Status.GameOver) return result;
             var score = This.CurrentGame().PlayerTwoScore;
-            switch (score)
+            if (currentGame.GameType != GameType.Normal)
             {
-                case 0:
-                    result = "0";
-                    break;
-                case 1:
-                    result = "15";
-                    break;
-                case 2:
-                    result = "30";
-                    break;
-                case 3:
-                    result = "40";
-                    break;
-                case 4:
-                    result = "-";
-                    break;
+                result = score.ToString();
+            }
+            else
+            {
+                switch (score)
+                {
+                    case 0:
+                        result = "0";
+                        break;
+                    case 1:
+                        result = "15";
+                        break;
+                    case 2:
+                        result = "30";
+                        break;
+                    case 3:
+                        result = "40";
+                        break;
+                    case 4:
+                        result = "-";
+                        break;
+                }
             }
             return result;
         }

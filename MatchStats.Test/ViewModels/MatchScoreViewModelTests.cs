@@ -516,7 +516,7 @@ namespace MatchStats.Test.ViewModels
 
             //Score is 1-1 in sets
             Assert.IsTrue(fixture.CurrMatch.Score.Sets.Count == 3);
-            Assert.IsTrue(fixture.CurrMatch.CurrentGame().GameType == GameType.TenPointer);
+            Assert.IsTrue(fixture.CurrMatch.CurrentGame().GameType == GameType.TenPointer, "");
         }
 
         private void AddASetForPlayer(MatchScoreViewModel fixture, bool IsPlayerOne)
