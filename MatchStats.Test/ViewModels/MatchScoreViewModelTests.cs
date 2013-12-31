@@ -519,6 +519,34 @@ namespace MatchStats.Test.ViewModels
             Assert.IsTrue(fixture.CurrMatch.CurrentGame().GameType == GameType.TenPointer, "");
         }
 
+        [TestMethod]
+        public void ShouldScoreADecidingTieBreakerAccordingly()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            AddASetForPlayer(fixture, true);
+            AddASetForPlayer(fixture, false);
+
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.Count == 1, "The TieBreaker set should only have one game");
+            Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.First().PlayerTwoScore == 6);
+            Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.First().PlayerOneScore == 2);
+        }
+
+
         private void AddASetForPlayer(MatchScoreViewModel fixture, bool IsPlayerOne)
         {
             var sets = (int)fixture.CurrMatch.MatchFormat.SetsFormat;
