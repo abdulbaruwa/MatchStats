@@ -502,6 +502,39 @@ namespace MatchStats.Test.ViewModels
             Assert.AreEqual(2, fixture.CurrMatch.Score.Sets.Count, "Should still be on the first set");
         }
 
+        [TestMethod]
+        public void ShouldScoreThirdSetAsSinglePointersIfFinalSetFormatIsChampionShipTieBreak()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            AddASetForPlayer(fixture,true);
+            AddASetForPlayer(fixture,false);
+
+            //Score is 1-1 in sets
+            Assert.IsTrue(fixture.CurrMatch.Score.Sets.Count == 3);
+            Assert.IsTrue(fixture.CurrMatch.CurrentGame().GameType == GameType.TenPointer);
+        }
+
+        private void AddASetForPlayer(MatchScoreViewModel fixture, bool IsPlayerOne)
+        {
+            var sets = (int)fixture.CurrMatch.MatchFormat.SetsFormat;
+            for (int i = 0; i < sets; i++)
+            {
+                if (IsPlayerOne)
+                {
+                    AddAGameForPlayerOne(fixture);
+                }
+                else
+                {
+                    AddAGameForPlayerTwo(fixture);
+                }
+
+            }
+        }
         private void AddAGameForPlayerOne(MatchScoreViewModel fixture)
         {
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
