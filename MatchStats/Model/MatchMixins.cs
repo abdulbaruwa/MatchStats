@@ -28,7 +28,7 @@ namespace MatchStats.Model
             var currentGame = This.CurrentGame();
             if (currentGame == null) return result;
             var currentStatus = currentGame.GameStatus.Status;
-            if (currentStatus != Status.Neutral && currentStatus != Status.GamePoint) return result;
+            if (currentStatus == Status.GameOver) return result;
             var score = This.CurrentGame().PlayerOneScore;
             switch (score)
             {
@@ -45,7 +45,7 @@ namespace MatchStats.Model
                     result = "40";
                     break;
                 case 4:
-                    result = "*";
+                    result = "-";
                     break;
             }
             return result;
@@ -57,7 +57,7 @@ namespace MatchStats.Model
             var currentGame = This.CurrentGame();
             if (currentGame == null) return result;
             var currentStatus = currentGame.GameStatus.Status;
-            if (currentStatus != Status.Neutral && currentStatus != Status.GamePoint) return result;
+            if (currentStatus == Status.GameOver) return result;
             var score = This.CurrentGame().PlayerTwoScore;
             switch (score)
             {
@@ -74,7 +74,7 @@ namespace MatchStats.Model
                     result = "40";
                     break;
                 case 4:
-                    result = "*";
+                    result = "-";
                     break;
             }
             return result;
