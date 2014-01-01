@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
 using System.Windows.Input;
+using MatchStats.Common;
 using MatchStats.Model;
 using ReactiveUI;
 
@@ -67,10 +69,6 @@ namespace MatchStats.ViewModels
                 .Where(x => x == false)
                 .Select(x => this.NewMatchControlViewModel.SavedMatch).Subscribe(x => StartMatch(x));
 
-            //this.WhenAny(x => x.CurrMatch, x => x.Value)
-            //    .Select(x => x)
-            //    .ToProperty(this, x => x.CurrentMatch, new Match());
-
             _playerOneFirstSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
                 .Where(x => x.Sets.FirstOrDefault() != null)
                 .Select(x => x.Sets.First().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerOne.FullName).ToString())
@@ -114,6 +112,14 @@ namespace MatchStats.ViewModels
                 .Where(x => x != null)
                 .Select(x => x.GetPlayerTwoCurrentScore())
                 .ToProperty(this, x => x.PlayerTwoCurrentGame, "");
+
+            _matchStatus = this.WhenAny(x => x.CurrMatch.Score.Status, x => x.Value)
+                .Select(x => x.GetAttribute<DisplayAttribute>().Name)
+                .ToProperty(this, x => x.MatchStatus, "");
+
+            _ServerSeleced =  this.WhenAny(x => x.CurrMatch.Score.IsMatchOver, x => x.Value)
+                .Select(x => ! x)
+                .ToProperty(this, x => x.ServerSelected);
 
             MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch").Subscribe(x => CurrMatch = x);
         }
@@ -288,6 +294,12 @@ namespace MatchStats.ViewModels
         public bool ServerSelected
         {
             get { return _ServerSeleced.Value; }
+        }
+
+        [DataMember] private ObservableAsPropertyHelper<string> _matchStatus;
+        public string MatchStatus
+        {
+            get { return _matchStatus.Value; }
         }
 
         [DataMember]

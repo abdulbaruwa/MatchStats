@@ -231,7 +231,7 @@ namespace MatchStats.Test.ViewModels
             //Assert
             Assert.IsNotNull(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).Winner, "Game Winner should not be Null");
             Assert.IsTrue(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).GameStatus.Status == Status.GameOver, "Game Status should be flagged as Game Point");
-            Assert.AreEqual(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).GameStatus.Player.FirstName, fixture.CurrMatch.PlayerTwo.FirstName, "Game Status should be MatchOver for PlayerTwo");
+            Assert.AreEqual(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).GameStatus.Player.FirstName, fixture.CurrMatch.PlayerTwo.FirstName, "Game Status should be IsMatchOver for PlayerTwo");
             Assert.AreEqual(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).Winner.FirstName, fixture.CurrMatch.PlayerTwo.FirstName, "Game Winner should be PlayerTwo");
         }
 
@@ -256,7 +256,7 @@ namespace MatchStats.Test.ViewModels
             //Assert
             Assert.IsNotNull(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).Winner, "Game Winner should not be Null");
             Assert.IsTrue(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).GameStatus.Status == Status.GameOver, "Game Status should be flagged as Game Point");
-            Assert.AreEqual(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).GameStatus.Player.FirstName, fixture.CurrMatch.PlayerOne.FirstName, "Game Status should be MatchOver for PlayerOne");
+            Assert.AreEqual(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).GameStatus.Player.FirstName, fixture.CurrMatch.PlayerOne.FirstName, "Game Status should be IsMatchOver for PlayerOne");
             Assert.AreEqual(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).Winner.FirstName, fixture.CurrMatch.PlayerOne.FirstName, "Game Winner should be PlayerOne");
         }
 
@@ -576,10 +576,43 @@ namespace MatchStats.Test.ViewModels
             Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.Count == 1,  string.Format("The TieBreaker set should only have 1 game, but has {0}",fixture.CurrMatch.CurrentSet().Games.Count));
             Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.First().PlayerTwoScore == 10);
             Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.First().PlayerOneScore == 3);
-            Assert.IsTrue(fixture.CurrMatch.Score.MatchOver, "Game should be flagged as over");
+            Assert.IsTrue(fixture.CurrMatch.Score.IsMatchOver, "Game should be flagged as over");
             Assert.IsNotNull(fixture.CurrMatch.Score.Winner, "Winning player should not be null");
         }
 
+        [TestMethod]
+        public void ShouldSetAMatchIsOverWhenAPlayerOneWinsBy2()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            AddASetForPlayer(fixture, true);
+            AddASetForPlayer(fixture, true);
+            
+            Assert.IsTrue(fixture.CurrMatch.Score.IsMatchOver,"MatchOver flag should be true");
+            Assert.IsNotNull(fixture.CurrMatch.Score.Winner,"Winner should not be null");
+            Assert.IsTrue(fixture.CurrMatch.Score.Winner.IsPlayerOne, "Match winner should be player one but it is not");
+        }
+
+        [TestMethod]
+        public void ShouldSetAMatchIsOverWhenAPlayerTwoWinsBy2()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            AddASetForPlayer(fixture, false);
+            AddASetForPlayer(fixture, false);
+
+            Assert.IsTrue(fixture.CurrMatch.Score.IsMatchOver, "MatchOver flag should be true");
+            Assert.IsNotNull(fixture.CurrMatch.Score.Winner, "Winner should not be null");
+            Assert.IsFalse(fixture.CurrMatch.Score.Winner.IsPlayerOne, "Match winner should be player two but it is not");
+        }
 
         private void AddASetForPlayer(MatchScoreViewModel fixture, bool IsPlayerOne)
         {

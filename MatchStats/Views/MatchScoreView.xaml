@@ -84,7 +84,7 @@
                 </Grid.RowDefinitions>
                 <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center"  HorizontalAlignment="Center" FontWeight="SemiBold" Style="{StaticResource GroupHeaderTextStyle}">Sutton Summer Open - G3</TextBlock>
                 <TextBlock Name="PlayerNames" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource GroupHeaderTextStyle}" Margin="163,5,137,-5"/>
-                <TextBlock Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource GroupHeaderTextStyle}">Match Time:  00:01:45</TextBlock>
+                    <TextBlock Name="MatchStatus" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource GroupHeaderTextStyle}"/>
             </Grid>
 
             <Grid Grid.Column="1" Name="Center" Grid.Row="1" Grid.RowSpan="2">

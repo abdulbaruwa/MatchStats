@@ -14,8 +14,9 @@ namespace MatchStats.Model
         public Game GameTwo { get; set; }
         public Game GameThree { get; set; }
         public Player CurrentServer { get; set; }
-        public bool MatchOver { get; set; }
+        public bool IsMatchOver { get; set; }
         public Player Winner { get; set; }
+        public Status Status { get; set; }
     }
 
     public class Set

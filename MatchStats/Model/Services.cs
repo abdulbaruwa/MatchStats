@@ -122,27 +122,24 @@ namespace MatchStats.Model
             //Is Set Over
             CheckSetIsOverAndInitializeNewSetIfNeedBe(currentMatch);
 
-            CheckMatchIsOverRule(currentMatch);
-
             return currentMatch;
         }
 
         private bool CheckMatchIsOverRule(Match currentMatch)
         {
-            var currentSetGames = currentMatch.CurrentSet().Games;
-            if (currentSetGames.Any(x => x.Winner == null)) return false;
-            if (currentSetGames.Any())
+            if (currentMatch.Score.Sets.Any(x => x.Winner == null)) return false;
+            if (currentMatch.Score.Sets.Any())
             {
-                var groupedWinner = (from n in currentSetGames
-                                     group n by n.Winner.IsPlayerOne
-                                         into winloss
-                                         select new { WinnerIsPlayerOne = winloss.Key, gameCount = winloss.Count() }).ToList();
+                var groupedSetWiners = (from n in currentMatch.Score.Sets
+                    group n by n.Winner.IsPlayerOne
+                    into setWinners
+                    select new {WinnerIsPlayerOne = setWinners.Key, setCount = setWinners.Count()}).ToList();
 
-                var winner = groupedWinner.FirstOrDefault(x => x.gameCount >= 2);
+                var winner = groupedSetWiners.FirstOrDefault(x => x.setCount >= 2);
                 if (winner != null)
                 {
                     currentMatch.Score.Winner = winner.WinnerIsPlayerOne ? currentMatch.PlayerOne : currentMatch.PlayerTwo;
-                    currentMatch.Score.MatchOver = true;
+                    currentMatch.Score.IsMatchOver = true;
                 }
             }
             return false;
@@ -150,6 +147,7 @@ namespace MatchStats.Model
 
         private bool CheckSetIsOverAndInitializeNewSetIfNeedBe(Match currentMatch)
         {
+            if (currentMatch.Score.IsMatchOver) return true;
             var gamesCount = (int)currentMatch.MatchFormat.SetsFormat;
 
             var currentSetGames = currentMatch.CurrentSet().Games;
@@ -183,6 +181,8 @@ namespace MatchStats.Model
                             ? currentMatch.PlayerOne
                             : currentMatch.PlayerTwo;
                         currentMatch.CurrentSet().IsCurrentSet = false;
+
+                        if (CheckMatchIsOverRule(currentMatch)) return true;
                         currentMatch.Score.Sets.Add(new Set() {IsCurrentSet = true});
 
                         if (setsToPlay.DiffValueWith(currentMatch.Score.Sets.Count) == 1 && currentMatch.MatchFormat.FinalSetType == FinalSetFormats.TenPointChampionShipTieBreak)
@@ -208,7 +208,8 @@ namespace MatchStats.Model
                             ? currentMatch.PlayerOne
                             : currentMatch.PlayerTwo;
                         currentMatch.CurrentSet().IsCurrentSet = false;
-                        
+
+                        if (CheckMatchIsOverRule(currentMatch)) return true;
                         currentMatch.Score.Sets.Add(new Set() { IsCurrentSet = true });
 
                         //Is this the final set?
@@ -231,10 +232,21 @@ namespace MatchStats.Model
             return false;
         }
 
+        private int GetNumberOfGamesForSet(Match currentMatch)
+        {
+            if (currentMatch.Score.Sets.Count == 3 && currentMatch.MatchFormat.FinalSetType == FinalSetFormats.TenPointChampionShipTieBreak)
+            {
+                return 1;
+            }
+            return (int)currentMatch.MatchFormat.SetsFormat;
+        }
+
         private bool CheckGameIsOverAndInitializeNewGameIfNeedBe(Match currentMatch)
         {
-            if (currentMatch.Score.MatchOver) return false;
-            var gamesCount = (int)currentMatch.MatchFormat.SetsFormat;
+            CheckMatchIsOverRule(currentMatch);
+            if (currentMatch.Score.IsMatchOver) return false;
+
+            var gamesCount = GetNumberOfGamesForSet(currentMatch);
             var currentGame = currentMatch.CurrentGame();
             if (currentGame.GameStatus.Status == Status.GameOver)
             {
@@ -360,18 +372,24 @@ namespace MatchStats.Model
                     }
                 }
             }
+
             if (currentGame.GameType != GameType.Normal)
             {
                 var gameCounts = (int) currentGame.GameType;
                 if (currentGame.PlayerOneScore == gameCounts)
                 {
                     SetPlayerOneAsWinnerOfGame(currentMatch, currentGame);
+                    //If this is the final set -> the match is over
+                    FlagSetWinnerForChampionShipTieBreak(currentMatch, currentMatch.PlayerOne);
                     return true;
                 }
+
                 if (currentGame.PlayerTwoScore == gameCounts)
                 {
                     currentGame.Winner = currentMatch.PlayerTwo;
                     SetPlayerTwoAsWinnerOfGame(currentMatch, currentGame);
+                    //If this is the final set -> the match is over
+                    FlagSetWinnerForChampionShipTieBreak(currentMatch, currentMatch.PlayerTwo);
                     return true;
                 }
 
@@ -379,8 +397,17 @@ namespace MatchStats.Model
             return false;
         }
 
+        private static void FlagSetWinnerForChampionShipTieBreak(Match currentMatch, Player setWinner)
+        {
+            if (currentMatch.Score.Sets.Count == 3)
+            {
+                currentMatch.CurrentSet().Winner = setWinner;
+            }
+        }
+
         private static void SetPlayerTwoAsWinnerOfGame(Match currentMatch, Game currentGame)
         {
+            currentGame.Winner = currentMatch.PlayerTwo;
             currentGame.GameStatus = new GameStatus
             {
                 Status = Status.GameOver,
