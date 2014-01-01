@@ -13,7 +13,7 @@ namespace MatchStats.ViewModels
     public class NewMatchControlViewModel : ReactiveObject
     {
         private static List<FinalSetFormats> _finalSet;
-        private static List<DueceFormat> _dueceFormat;
+        private static List<DeuceFormat> _DeuceFormat;
         private static List<SetsFormat> _setsFormat;
         private static List<Grade> _matchGrades;
         private static List<AgeGroup> _matchAgeGroups;
@@ -40,7 +40,7 @@ namespace MatchStats.ViewModels
 
             match.MatchFormat = new MatchFormat()
             {
-                DueceFormat = (DueceFormat) this.SelectedDueceFormat,
+                DeuceFormat = (DeuceFormat) this.SelectedDeuceFormat,
                 FinalSetType = (FinalSetFormats) this.SelectedFinalSet,
                 SetsFormat = (SetsFormat) this.SelectedSetsFormat
             };
@@ -97,13 +97,13 @@ namespace MatchStats.ViewModels
                 x => x.UseDefaultPlayer,
                 x => x.PlayerOneFirstName,
                 x => x.PlayerTwoFirstName,
-                x => x.SelectedDueceFormat,
+                x => x.SelectedDeuceFormat,
                 x => x.SelectedFinalSet,
                 x => x.SelectedSetsFormat,
                 x => x.TournamentName,
-                (defaultplayer, playerOneFname, playertwoFname, duece, finalset, sets, tournament) =>
+                (defaultplayer, playerOneFname, playertwoFname, Deuce, finalset, sets, tournament) =>
                 (
-                    duece.Value != null && finalset.Value != null && sets.Value != null && ! string.IsNullOrWhiteSpace(tournament.Value) &&
+                    Deuce.Value != null && finalset.Value != null && sets.Value != null && ! string.IsNullOrWhiteSpace(tournament.Value) &&
                     (defaultplayer.Value == true || (! string.IsNullOrEmpty(playerOneFname.Value))) &&
                     ! string.IsNullOrEmpty(playertwoFname.Value)
 
@@ -143,9 +143,9 @@ namespace MatchStats.ViewModels
             }
         }
 
-        public List<DueceFormat> DueceFormats
+        public List<DeuceFormat> DeuceFormats
         {
-            get { return _dueceFormat ?? (_dueceFormat = GetEnumAsList<DueceFormat>()); }
+            get { return _DeuceFormat ?? (_DeuceFormat = GetEnumAsList<DeuceFormat>()); }
         }
 
         public List<SetsFormat> SetsFormats
@@ -264,11 +264,11 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _selectedSetsFormat, value); }
         }
 
-        [DataMember] private object _selectedDueceFormat;
-        public object SelectedDueceFormat
+        [DataMember] private object _selectedDeuceFormat;
+        public object SelectedDeuceFormat
         {
-            get { return _selectedDueceFormat; }
-            set { this.RaiseAndSetIfChanged(ref _selectedDueceFormat, value); }
+            get { return _selectedDeuceFormat; }
+            set { this.RaiseAndSetIfChanged(ref _selectedDeuceFormat, value); }
         }
 
         [DataMember] private object _selecedGrade;

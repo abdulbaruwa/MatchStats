@@ -26,8 +26,8 @@ namespace MatchStats.Controls
             this.Bind(ViewModel, x => x.AgeGroups, x => x.AgeGroup.ItemsSource);
             this.Bind(ViewModel, x => x.SelectedAgeGroup, x => x.AgeGroup.SelectedValue);
 
-            this.Bind(ViewModel, x => x.DueceFormats, x => x.DueceFormat.ItemsSource);
-            this.Bind(ViewModel, x => x.SelectedDueceFormat, x => x.DueceFormat.SelectedValue);
+            this.Bind(ViewModel, x => x.DeuceFormats, x => x.DeuceFormat.ItemsSource);
+            this.Bind(ViewModel, x => x.SelectedDeuceFormat, x => x.DeuceFormat.SelectedValue);
 
             this.Bind(ViewModel, x => x.TournamentName, x => x.Tournament.Text);
 

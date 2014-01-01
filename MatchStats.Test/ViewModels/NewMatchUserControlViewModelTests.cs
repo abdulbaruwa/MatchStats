@@ -27,7 +27,7 @@ namespace MatchStats.Test.ViewModels
             fixture.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
 
             fixture.SelectedSetsFormat = SetsFormat.ShortSetToFour;
-            fixture.SelectedDueceFormat = DueceFormat.SuddenDeath;
+            fixture.SelectedDeuceFormat = DeuceFormat.SuddenDeath;
             fixture.SelectedGrade = Grade.Grade5;
 
             //Act
@@ -51,7 +51,7 @@ namespace MatchStats.Test.ViewModels
             fixture.SelectedAgeGroup = AgeGroup.U14;
             fixture.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.SelectedSetsFormat = SetsFormat.ShortSetToFour;
-            fixture.SelectedDueceFormat = DueceFormat.SuddenDeath;
+            fixture.SelectedDeuceFormat = DeuceFormat.SuddenDeath;
             fixture.SelectedGrade = Grade.Grade5;
 
             //Act & Assert

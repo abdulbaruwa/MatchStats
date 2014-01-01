@@ -26,7 +26,7 @@ namespace MatchStats.ViewModels
                 var pageVm = new MatchScoreViewModel();
                 //pageVm.CurrentMatch = new Match()
                 //{
-                //    MatchFormat = new MatchFormat() { DueceFormat = DueceFormat.Normal, FinalSetType = FinalSetFormats.Normal, Sets = 3, SetsFormat = SetsFormat.ShortSetToFour}
+                //    MatchFormat = new MatchFormat() { DeuceFormat = DeuceFormat.Normal, FinalSetType = FinalSetFormats.Normal, Sets = 3, SetsFormat = SetsFormat.ShortSetToFour}
                 //    ,
                 //    MatchGuid = Guid.NewGuid(),
                 //    MatchTime = DateTime.Now,

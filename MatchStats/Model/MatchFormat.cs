@@ -7,6 +7,6 @@ namespace MatchStats.Model
         public int Sets { get; set; }
         public SetsFormat SetsFormat { get; set; }
         public FinalSetFormats FinalSetType { get; set; }
-        public DueceFormat DueceFormat { get; set; }
+        public DeuceFormat DeuceFormat { get; set; }
     }
 }

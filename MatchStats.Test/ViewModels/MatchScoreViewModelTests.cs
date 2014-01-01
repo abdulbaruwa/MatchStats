@@ -112,7 +112,7 @@ namespace MatchStats.Test.ViewModels
         }
 
         [TestMethod]
-        public void ShouldFlagAGameAsWonWhenAplayerAcquiresTheRelevantPointsForNormalGameAndNormalDuece()
+        public void ShouldFlagAGameAsWonWhenAplayerAcquiresTheRelevantPointsForNormalGameAndNormalDeuce()
         {
 
             //Arrange
@@ -142,7 +142,7 @@ namespace MatchStats.Test.ViewModels
         }
     
         [TestMethod]
-        public void ShouldSetGameStatusAsDueceAt4040Game()
+        public void ShouldSetGameStatusAsDeuceAt4040Game()
         {
 
             var blobCache = RegisterComponents();
@@ -160,8 +160,8 @@ namespace MatchStats.Test.ViewModels
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
             //Assert
-            Assert.IsNull(fixture.CurrMatch.CurrentGame().Winner, "Game is flagged as won when it should be Duece");
-            Assert.IsTrue(fixture.CurrMatch.CurrentGame().GameStatus.Status == Status.Duece, "Game Status should be flagged as Duece");
+            Assert.IsNull(fixture.CurrMatch.CurrentGame().Winner, "Game is flagged as won when it should be Deuce");
+            Assert.IsTrue(fixture.CurrMatch.CurrentGame().GameStatus.Status == Status.Deuce, "Game Status should be flagged as Deuce");
         }
 
         [TestMethod]
@@ -182,7 +182,7 @@ namespace MatchStats.Test.ViewModels
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
             //Assert
-            Assert.IsNull(fixture.CurrMatch.CurrentGame().Winner, "Game is flagged as won when it should be Duece");
+            Assert.IsNull(fixture.CurrMatch.CurrentGame().Winner, "Game is flagged as won when it should be Deuce");
             Assert.IsTrue(fixture.CurrMatch.CurrentGame().GameStatus.Status == Status.BreakPoint, "Game Status should be flagged as Break Point");
             Assert.AreEqual(fixture.CurrMatch.CurrentGame().GameStatus.Player.FirstName, fixture.CurrMatch.PlayerTwo.FirstName, "Game Status should be Break Point for PlayerTwo");
         }
@@ -261,7 +261,7 @@ namespace MatchStats.Test.ViewModels
         }
 
         [TestMethod]
-        public void ShouldSetGameStatusAsAdvantageAt15UpAfterDueuce()
+        public void ShouldSetGameStatusAsAdvantageAt15UpAfterDeuce()
         {
             var blobCache = RegisterComponents();
             var fixture = BuildAMatchToScore();
@@ -287,11 +287,11 @@ namespace MatchStats.Test.ViewModels
         }
 
         [TestMethod]
-        public void ShouldSetGameStatusAsGamePointAt4040SuddenDeathDuece()
+        public void ShouldSetGameStatusAsGamePointAt4040SuddenDeathDeuce()
         {
             var blobCache = RegisterComponents();
             var fixture = BuildAMatchToScore();
-            fixture.NewMatchControlViewModel.SelectedDueceFormat = DueceFormat.SuddenDeath;
+            fixture.NewMatchControlViewModel.SelectedDeuceFormat = DeuceFormat.SuddenDeath;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
@@ -304,7 +304,7 @@ namespace MatchStats.Test.ViewModels
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
-            //Assert --> at Duece for Sudden Death duece format it should be Game Point for any player
+            //Assert --> at Deuce for Sudden Death Deuce format it should be Game Point for any player
             Assert.AreEqual(fixture.CurrMatch.CurrentGame().GameStatus.Status, Status.GamePoint, "Should be Game Point");
 
             //Act --> A point to any player should be Game  
@@ -665,7 +665,7 @@ namespace MatchStats.Test.ViewModels
             fixture.NewMatchControlViewModel.PlayerTwoLastName = "Dufus";
             fixture.NewMatchControlViewModel.SelectedGrade = Grade.Grade3;
             fixture.NewMatchControlViewModel.SelectedAgeGroup = AgeGroup.U14;
-            fixture.NewMatchControlViewModel.SelectedDueceFormat = DueceFormat.Normal;
+            fixture.NewMatchControlViewModel.SelectedDeuceFormat = DeuceFormat.Normal;
             fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.Normal;
             fixture.NewMatchControlViewModel.SelectedPlayerOneRating = Rating.FiveOne;
             fixture.NewMatchControlViewModel.SelectedPlayerTwoRating = Rating.FiveOne;
@@ -679,7 +679,7 @@ namespace MatchStats.Test.ViewModels
             var matchToSave = new Match();
             matchToSave.MatchFormat = new MatchFormat()
             {
-                DueceFormat = DueceFormat.SuddenDeath,
+                DeuceFormat = DeuceFormat.SuddenDeath,
                 FinalSetType = FinalSetFormats.TenPointChampionShipTieBreak,
                 Sets = 3,
                 SetsFormat = SetsFormat.ShortSetToFour

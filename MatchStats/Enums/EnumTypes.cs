@@ -15,10 +15,10 @@ namespace MatchStats.Enums
         [Display(Name = "Normal Set to Six")] LongSetSix = 6
     }
 
-    public enum DueceFormat
+    public enum DeuceFormat
     {
-        [Display(Name = "Normal Dueuce lead by two")] Normal,
-        [Display(Name = "Sudden death Dueuce first to two")] SuddenDeath
+        [Display(Name = "Normal Deuce lead by two")] Normal,
+        [Display(Name = "Sudden death Deuce")] SuddenDeath
     }
 
     public enum AgeGroup

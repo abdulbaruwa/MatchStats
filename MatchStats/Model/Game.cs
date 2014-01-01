@@ -42,9 +42,9 @@ namespace MatchStats.Model
     {
         [Display(Name = "Neutral")]
         Neutral,
-        [Display(Name = "Duece")]
-        Duece,
-        [Display(Name = "Duece")]
+        [Display(Name = "Deuce")]
+        Deuce,
+        [Display(Name = "Deuce")]
         BreakPoint,
         [Display(Name = "Advantage")]
         Advantage,

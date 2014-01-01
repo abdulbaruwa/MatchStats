@@ -53,7 +53,7 @@ namespace MatchStats.Model
             observable.Subscribe(existingMatches.AddRange,
                 ex =>
                 {
-/**log exceptions, the exception could be due to missing key**/
+                    /**log exceptions, the exception could be due to missing key**/
                 });
             Match existingMatch = existingMatches.FirstOrDefault(x => x.MatchGuid == match.MatchGuid);
             if (existingMatch != null)
@@ -110,11 +110,11 @@ namespace MatchStats.Model
             //Game over Short Tie Breaker to seven
             CheckTieBreakerGameOverRule(currentMatch, ref currentGame);
 
-            //Duece
-            CheckDueceRule(currentMatch, ref currentGame);
+            //Deuce
+            CheckDeuceRule(currentMatch, ref currentGame);
 
-            //Duece Sudden Death
-            CheckGamePointOnSuddenDeathDueceRule(currentMatch, ref currentGame);
+            //Deuce Sudden Death
+            CheckGamePointOnSuddenDeathDeuceRule(currentMatch, ref currentGame);
 
             //Is game over 
             CheckGameIsOverAndInitializeNewGameIfNeedBe(currentMatch);
@@ -297,18 +297,18 @@ namespace MatchStats.Model
             return false;
         }
 
-        private static bool CheckDueceRule(Match currentMatch, ref Game currentGame)
+        private static bool CheckDeuceRule(Match currentMatch, ref Game currentGame)
         {
             if (currentGame.GameType == GameType.Normal && currentGame.PlayerOneScore == currentGame.PlayerTwoScore && currentGame.PlayerOneScore >= 3)
             {
-                if (currentMatch.MatchFormat.DueceFormat == DueceFormat.SuddenDeath)
+                if (currentMatch.MatchFormat.DeuceFormat == DeuceFormat.SuddenDeath)
                 {
                     //It is Game point to either player
                     currentGame.GameStatus.Status = Status.GamePoint;
                 }
                 else
                 {
-                    currentGame.GameStatus.Status = Status.Duece;
+                    currentGame.GameStatus.Status = Status.Deuce;
                 }
                 currentGame.GameStatus.Player = null; // TODO: We should set this to the player that just earned the point but it is not passed in Should refactor later
                 return true;
@@ -479,9 +479,9 @@ namespace MatchStats.Model
             return false;
         }
 
-        private static bool CheckGamePointOnSuddenDeathDueceRule(Match currentMatch, ref Game currentGame)
+        private static bool CheckGamePointOnSuddenDeathDeuceRule(Match currentMatch, ref Game currentGame)
         {
-            if (currentMatch.MatchFormat.DueceFormat == DueceFormat.SuddenDeath)
+            if (currentMatch.MatchFormat.DeuceFormat == DeuceFormat.SuddenDeath)
             {
                 if (currentGame.PlayerOneScore == 4)
                 {
