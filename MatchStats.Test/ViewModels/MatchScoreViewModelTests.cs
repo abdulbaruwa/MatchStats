@@ -639,6 +639,20 @@ namespace MatchStats.Test.ViewModels
             Assert.IsFalse(fixture.CurrMatch.Score.Winner.IsPlayerOne, "Match winner should be player two but it is not");
         }
 
+        [TestMethod]
+        public void ShouldSetSwitchCurrentServerAtTheEndOfAGame()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            AddAGameForPlayerOne(fixture);
+
+            Assert.AreEqual(fixture.CurrentServer.FullName, fixture.CurrMatch.PlayerOne.FullName, string.Format("The current server should be {0} not {1}", fixture.CurrMatch.PlayerOne.FullName, fixture.CurrMatch.PlayerTwo.FullName));
+        }
+
         private void AddASetForPlayer(MatchScoreViewModel fixture, bool IsPlayerOne)
         {
             var sets = (int)fixture.CurrMatch.MatchFormat.SetsFormat;
