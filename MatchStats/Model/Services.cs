@@ -481,28 +481,27 @@ namespace MatchStats.Model
 
         private static bool CheckGamePointOnSuddenDeathDeuceRule(Match currentMatch, ref Game currentGame)
         {
-            if (currentMatch.MatchFormat.DeuceFormat == DeuceFormat.SuddenDeath)
+            if (currentGame.GameType != GameType.Normal) return false;
+            if (currentMatch.MatchFormat.DeuceFormat != DeuceFormat.SuddenDeath) return false;
+            if (currentGame.PlayerOneScore == 4)
             {
-                if (currentGame.PlayerOneScore == 4)
+                currentGame.Winner = currentMatch.PlayerOne;
+                currentGame.GameStatus = new GameStatus
                 {
-                    currentGame.Winner = currentMatch.PlayerOne;
-                    currentGame.GameStatus = new GameStatus
-                    {
-                        Status = Status.GameOver,
-                        Player = currentMatch.PlayerOne
-                    };
-                    return true;
-                }
-                if (currentGame.PlayerTwoScore == 4)
+                    Status = Status.GameOver,
+                    Player = currentMatch.PlayerOne
+                };
+                return true;
+            }
+            if (currentGame.PlayerTwoScore == 4)
+            {
+                currentGame.Winner = currentMatch.PlayerTwo;
+                currentGame.GameStatus = new GameStatus
                 {
-                    currentGame.Winner = currentMatch.PlayerTwo;
-                    currentGame.GameStatus = new GameStatus
-                    {
-                        Status = Status.GameOver,
-                        Player = currentMatch.PlayerTwo
-                    };
-                    return true;
-                }
+                    Status = Status.GameOver,
+                    Player = currentMatch.PlayerTwo
+                };
+                return true;
             }
             return false;
         }

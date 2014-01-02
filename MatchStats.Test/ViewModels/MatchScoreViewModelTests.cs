@@ -581,6 +581,31 @@ namespace MatchStats.Test.ViewModels
         }
 
         [TestMethod]
+        public void ShouldScoreADecidingTieBreakerBeyoundFourPoints()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SelectedDeuceFormat = DeuceFormat.SuddenDeath;
+            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            AddASetForPlayer(fixture, true);
+            AddASetForPlayer(fixture, false);
+
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            Assert.AreEqual(fixture.CurrMatch.CurrentGame().PlayerTwoScore, 5, string.Format("Game score should be 4 but it is {0}", fixture.CurrMatch.CurrentGame().PlayerTwoScore));
+        }
+
+        [TestMethod]
         public void ShouldSetAMatchIsOverWhenAPlayerOneWinsBy2()
         {
             var blobCache = RegisterComponents();
