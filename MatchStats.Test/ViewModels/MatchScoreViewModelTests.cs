@@ -652,6 +652,7 @@ namespace MatchStats.Test.ViewModels
             AddAGameForPlayerOne(fixture);
 
             Assert.AreEqual(fixture.CurrentServer.FullName, fixture.CurrMatch.PlayerOne.FullName, string.Format("The current server should be {0} not {1}", fixture.CurrMatch.PlayerOne.FullName, fixture.CurrMatch.PlayerTwo.FullName));
+            Assert.IsTrue(fixture.PlayerOneIsServing);
         }
 
         [TestMethod]
