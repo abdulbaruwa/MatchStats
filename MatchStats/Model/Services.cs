@@ -116,6 +116,8 @@ namespace MatchStats.Model
             //Deuce Sudden Death
             CheckGamePointOnSuddenDeathDeuceRule(currentMatch, ref currentGame);
 
+            //Switch Server on ChampionShip TieBreak
+            CheckAndSwitchCurrentServerOnChampionShipTieBreakPoints(currentMatch, ref currentGame);
             //Is game over 
             CheckGameIsOverAndInitializeNewGameIfNeedBe(currentMatch);
 
@@ -124,6 +126,20 @@ namespace MatchStats.Model
 
             return currentMatch;
         }
+
+        private void CheckAndSwitchCurrentServerOnChampionShipTieBreakPoints(Match currentMatch, ref Game currentGame)
+        {
+            if (currentMatch.MatchFormat.FinalSetType == FinalSetFormats.TenPointChampionShipTieBreak 
+                && currentGame.GameType == GameType.TenPointer )
+            {
+                //We should switch if the total score is an odd number
+                if ((currentGame.PlayerOneScore + currentGame.PlayerTwoScore)%2 == 1)
+                {
+                    SwitchCurrentServer(currentMatch);
+                }
+            }
+        }
+
 
         private bool CheckMatchIsOverRule(Match currentMatch)
         {
