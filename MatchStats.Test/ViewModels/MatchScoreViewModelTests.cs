@@ -617,10 +617,37 @@ namespace MatchStats.Test.ViewModels
 
             AddASetForPlayer(fixture, true);
             AddASetForPlayer(fixture, true);
-            
+
             Assert.IsTrue(fixture.CurrMatch.Score.IsMatchOver,"MatchOver flag should be true");
             Assert.IsNotNull(fixture.CurrMatch.Score.Winner,"Winner should not be null");
             Assert.IsTrue(fixture.CurrMatch.Score.Winner.IsPlayerOne, "Match winner should be player one but it is not");
+        }
+
+        [TestMethod]
+        public void ShouldChangeServerAfterFirstServeOfTieBreaker()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            AddAGameForPlayerOne(fixture);
+            AddAGameForPlayerOne(fixture);
+            AddAGameForPlayerOne(fixture);
+            AddAGameForPlayerTwo(fixture);
+            AddAGameForPlayerTwo(fixture);
+            AddAGameForPlayerTwo(fixture);
+            AddAGameForPlayerTwo(fixture);
+            AddAGameForPlayerOne(fixture);
+
+            bool currentIsPlayerOne = fixture.CurrentServer.IsPlayerOne;
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            Assert.AreNotEqual(fixture.CurrentServer.IsPlayerOne, currentIsPlayerOne); 
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            currentIsPlayerOne = fixture.CurrentServer.IsPlayerOne;
+            Assert.AreEqual(fixture.CurrentServer.IsPlayerOne, currentIsPlayerOne); 
         }
 
         [TestMethod]

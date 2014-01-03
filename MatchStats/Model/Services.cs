@@ -336,6 +336,12 @@ namespace MatchStats.Model
 
             if (currentGame.GameType == GameType.SevenPointer)
             {
+                //We should switch if the total score is an odd number
+                if ((currentGame.PlayerOneScore + currentGame.PlayerTwoScore)%2 == 1)
+                {
+                   SwitchCurrentServer(currentMatch); 
+                }
+
                 if (currentGame.PlayerOneScore >= 7)
                 {
                     currentGame.Winner = currentMatch.PlayerOne;
