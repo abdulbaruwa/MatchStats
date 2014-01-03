@@ -99,8 +99,9 @@ namespace MatchStats.ViewModels
                 .Select(x => x.Sets.ThirdOrDefault().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName).ToString())
                 .ToProperty(this, x => x.PlayerTwoThirdSet, "");
 
-            _ServerSeleced = this.WhenAny(x => x.CurrentServer, x => x.Value)
-                .Select(x => x != null)
+            _ServerSeleced = this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.Score.IsMatchOver, 
+                (server, isMatchOver) => server.Value != null && isMatchOver.Value == false)
+                .Select(x => x)
                 .ToProperty(this, x => x.ServerSelected);
 
             _playerOneCurrentGame = this.WhenAny(x => x.CurrMatch, x => x.Value)
@@ -117,9 +118,10 @@ namespace MatchStats.ViewModels
                 .Select(x => x.GetAttribute<DisplayAttribute>().Name)
                 .ToProperty(this, x => x.MatchStatus, "");
 
-            _ServerSeleced =  this.WhenAny(x => x.CurrMatch.Score.IsMatchOver, x => x.Value)
-                .Select(x => ! x)
-                .ToProperty(this, x => x.ServerSelected);
+            //_ServerSeleced = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
+            //    .Where(x => x.Sets.Count >= 2)
+            //    .Select(x => ! x.IsMatchOver )
+            //    .ToProperty(this, x => x.ServerSelected);
 
             this.WhenAny(x => x.CurrMatch.Score.CurrentServer, x => x.Value)
                 .Where(x => x != null)
