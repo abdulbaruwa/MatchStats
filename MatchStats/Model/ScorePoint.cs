@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Input;
 using ReactiveUI;
 
 namespace MatchStats.Model
@@ -113,7 +112,10 @@ namespace MatchStats.Model
         FirstServeIn,
         FirstServeOut,
         SecondServeIn,
-        DoubleFault
+        DoubleFault,
+        GamePoint,
+        BreakPoint,
+        GameOver
     }
 
     public enum NonScoreActionReason

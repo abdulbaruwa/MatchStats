@@ -121,6 +121,25 @@ namespace MatchStats.ViewModels
                 .Select(x => ! x)
                 .ToProperty(this, x => x.ServerSelected);
 
+            this.WhenAny(x => x.CurrMatch.Score.CurrentServer, x => x.Value)
+                .Where(x => x != null)
+                .Select(x => x)
+                .Subscribe(x =>
+                {
+                    CurrentServer = x;
+
+                    if (x.IsPlayerOne)
+                    {
+                        PlayerTwoIsServing = false;
+                        PlayerOneIsServing = true;
+                    }
+                    else
+                    {
+                        PlayerOneIsServing = false;
+                        PlayerTwoIsServing = true;
+                    }
+                });
+
             MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch").Subscribe(x => CurrMatch = x);
         }
 

@@ -50,6 +50,7 @@ namespace MatchStats.ViewModels
                 }
             }
 
+            currentMatch.MatchStats.Add(matchStat);
             currentMatch = matchStatsApi.ApplyGameRules(currentMatch);
             matchStatsApi.SaveMatch(currentMatch);
             MessageBus.Current.SendMessage(currentMatch, "PointUpdateForCurrentMatch");

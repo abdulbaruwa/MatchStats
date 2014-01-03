@@ -189,11 +189,11 @@ namespace MatchStats.Model
                         {
                             //This is the final set and it is a Tiebreaker                        
                             currentMatch.CurrentSet().Games.Add(new Game() { IsCurrentGame = true, GameType = GameType.TenPointer });
-
+                            SwitchCurrentServer(currentMatch);
                         }
                         else
                         {
-                            currentMatch.CurrentSet().Games.Add(new Game() { IsCurrentGame = true });
+                            AddNewGameToCurrentSetAndSwitchCurrentServer(currentMatch);
                         }
         
                         return true;
@@ -213,15 +213,16 @@ namespace MatchStats.Model
                         currentMatch.Score.Sets.Add(new Set() { IsCurrentSet = true });
 
                         //Is this the final set?
-                        if (setsToPlay.DiffValueWith(currentMatch.Score.Sets.Count) == 1 && currentMatch.MatchFormat.FinalSetType == FinalSetFormats.TenPointChampionShipTieBreak)
+                        if (setsToPlay.DiffValueWith(currentMatch.Score.Sets.Count) == 1 &&
+                            currentMatch.MatchFormat.FinalSetType == FinalSetFormats.TenPointChampionShipTieBreak)
                         {
                             //This is the final set                            
-                            currentMatch.CurrentSet().Games.Add(new Game() { IsCurrentGame = true, GameType = GameType.TenPointer });
-                            
+                            currentMatch.CurrentSet().Games.Add(new Game() {IsCurrentGame = true, GameType = GameType.TenPointer});
+                            SwitchCurrentServer(currentMatch);
                         }
                         else
                         {
-                            currentMatch.CurrentSet().Games.Add(new Game() { IsCurrentGame = true });
+                            AddNewGameToCurrentSetAndSwitchCurrentServer(currentMatch);
                         }
 
                         return true;
@@ -230,6 +231,13 @@ namespace MatchStats.Model
             }
 
             return false;
+        }
+
+        private static void SwitchCurrentServer(Match currentMatch)
+        {
+            currentMatch.Score.CurrentServer = currentMatch.Score.CurrentServer.IsPlayerOne
+                ? currentMatch.PlayerTwo
+                : currentMatch.PlayerOne;
         }
 
         private int GetNumberOfGamesForSet(Match currentMatch)
@@ -265,7 +273,7 @@ namespace MatchStats.Model
                     {
                         if( maxGamesWon < gamesCount)
                         {
-                            currentMatch.CurrentSet().Games.Add(new Game() {IsCurrentGame = true});
+                            AddNewGameToCurrentSetAndSwitchCurrentServer(currentMatch);
                             return true;
                         }
 
@@ -279,7 +287,7 @@ namespace MatchStats.Model
                         //4-3 (3-4) or 6-5 (5-6) --> We can create a new game
                         if (maxGamesWon == gamesCount && playerOneGamesCount.DiffValueWith(playerTwoGamesCount) == 1)
                         {
-                            currentMatch.CurrentSet().Games.Add(new Game() { IsCurrentGame = true });
+                            AddNewGameToCurrentSetAndSwitchCurrentServer(currentMatch);
                             return true;
                         }
 
@@ -287,6 +295,7 @@ namespace MatchStats.Model
                         if (maxGamesWon == gamesCount && playerOneGamesCount == playerTwoGamesCount)
                         {
                             currentMatch.CurrentSet().Games.Add(new Game() { IsCurrentGame = true, GameType = GameType.SevenPointer });
+                            SwitchCurrentServer(currentMatch);
                             return true;
                         }
                     }
@@ -295,6 +304,12 @@ namespace MatchStats.Model
                 }
             }
             return false;
+        }
+
+        private static void AddNewGameToCurrentSetAndSwitchCurrentServer(Match currentMatch)
+        {
+            currentMatch.CurrentSet().Games.Add(new Game() {IsCurrentGame = true});
+            SwitchCurrentServer(currentMatch);
         }
 
         private static bool CheckDeuceRule(Match currentMatch, ref Game currentGame)
@@ -432,25 +447,27 @@ namespace MatchStats.Model
                 if (currentGame.PlayerOneScore == currentGame.PlayerTwoScore + 1)
                 {
                     //Advantage to playerOne
-                    currentGame.GameStatus = new GameStatus
-                    {
-                        Status = Status.Advantage,
-                        Player = currentMatch.PlayerOne
-                    };
+                    SetGameStatusForPlayer(currentMatch.PlayerOne, currentGame, Status.Advantage);
                     return true;
                 }
                 if (currentGame.PlayerTwoScore == currentGame.PlayerOneScore + 1)
                 {
                     //Advantage to PlayerTwo
-                    currentGame.GameStatus = new GameStatus
-                    {
-                        Status = Status.Advantage,
-                        Player = currentMatch.PlayerTwo
-                    };
+                    SetGameStatusForPlayer(currentMatch.PlayerTwo, currentGame, Status.Advantage);
                     return true;
                 }
             }
             return false;
+        }
+
+        private static void SetGameStatusForPlayer(Player player, Game currentGame, Status status)
+        {
+            currentGame.GameStatus = new GameStatus
+            {
+                Status = status,
+                Player = player
+            };
+
         }
 
         private static bool CheckBreakPointForPlayerTwoRule(Match currentMatch, ref Game currentGame)
@@ -459,20 +476,23 @@ namespace MatchStats.Model
             {
                 if (currentMatch.Score.CurrentServer.IsPlayerOne)
                 {
-                    currentGame.GameStatus = new GameStatus
+                    SetGameStatusForPlayer(currentMatch.PlayerOne, currentGame, Status.GamePoint);
+                    currentMatch.MatchStats.Add(new MatchStat()
                     {
-                        Status = Status.GamePoint,
-                        Player = currentMatch.PlayerOne
-                    };
+                        Player = currentMatch.PlayerOne,
+                        PointWonLostOrNone = PointWonLostOrNone.NotAPoint,
+                        Reason = StatDescription.GamePoint,
+                        Server = currentMatch.Score.CurrentServer
+                    });
                     return true;
                 }
                 else
                 {
-                    currentGame.GameStatus = new GameStatus
+                    SetGameStatusForPlayer(currentMatch.PlayerTwo, currentGame, Status.BreakPoint);
+                    currentMatch.MatchStats.Add(new MatchStat()
                     {
-                        Status = Status.BreakPoint,
-                        Player = currentMatch.PlayerTwo
-                    };
+                        Player = currentMatch.PlayerTwo, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.BreakPoint, Server = currentMatch.Score.CurrentServer
+                    });
                     return true;
                 }
             }
@@ -486,21 +506,27 @@ namespace MatchStats.Model
             if (currentGame.PlayerOneScore == 4)
             {
                 currentGame.Winner = currentMatch.PlayerOne;
-                currentGame.GameStatus = new GameStatus
+                SetGameStatusForPlayer(currentMatch.PlayerOne, currentGame, Status.GameOver);
+                currentMatch.MatchStats.Add(new MatchStat()
                 {
-                    Status = Status.GameOver,
-                    Player = currentMatch.PlayerOne
-                };
+                    Player = currentMatch.PlayerOne,
+                    PointWonLostOrNone = PointWonLostOrNone.NotAPoint,
+                    Reason = StatDescription.GameOver,
+                    Server = currentMatch.Score.CurrentServer
+                });
                 return true;
             }
             if (currentGame.PlayerTwoScore == 4)
             {
                 currentGame.Winner = currentMatch.PlayerTwo;
-                currentGame.GameStatus = new GameStatus
+                SetGameStatusForPlayer(currentMatch.PlayerTwo, currentGame, Status.GameOver);
+                currentMatch.MatchStats.Add(new MatchStat()
                 {
-                    Status = Status.GameOver,
-                    Player = currentMatch.PlayerTwo
-                };
+                    Player = currentMatch.PlayerTwo,
+                    PointWonLostOrNone = PointWonLostOrNone.NotAPoint,
+                    Reason = StatDescription.GameOver,
+                    Server = currentMatch.Score.CurrentServer
+                });
                 return true;
             }
             return false;
@@ -512,18 +538,25 @@ namespace MatchStats.Model
             {
                 if (currentMatch.Score.CurrentServer.IsPlayerOne)
                 {
-                    currentGame.GameStatus = new GameStatus
+                    SetGameStatusForPlayer(currentMatch.PlayerTwo, currentGame, Status.BreakPoint);
+                    currentMatch.MatchStats.Add(new MatchStat()
                     {
-                        Status = Status.BreakPoint,
-                        Player = currentMatch.PlayerTwo
-                    };
+                        Player = currentMatch.PlayerTwo,
+                        PointWonLostOrNone = PointWonLostOrNone.NotAPoint,
+                        Reason = StatDescription.BreakPoint,
+                        Server = currentMatch.Score.CurrentServer
+                    });
                     return true;
                 }
-                currentGame.GameStatus = new GameStatus
+
+                SetGameStatusForPlayer(currentMatch.PlayerTwo, currentGame, Status.GamePoint);
+                currentMatch.MatchStats.Add(new MatchStat()
                 {
-                    Status = Status.GamePoint,
-                    Player = currentMatch.PlayerTwo
-                };
+                    Player = currentMatch.PlayerTwo,
+                    PointWonLostOrNone = PointWonLostOrNone.NotAPoint,
+                    Reason = StatDescription.GamePoint,
+                    Server = currentMatch.Score.CurrentServer
+                });
                 return true;
             }
             return true;

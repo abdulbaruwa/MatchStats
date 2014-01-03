@@ -641,7 +641,7 @@ namespace MatchStats.Test.ViewModels
         }
 
         [TestMethod]
-        public void ShouldSetSwitchCurrentServerAtTheEndOfAGame()
+        public void ShouldSwitchCurrentServerAtTheEndOfAGame()
         {
             var blobCache = RegisterComponents();
             var fixture = BuildAMatchToScore();
@@ -681,9 +681,46 @@ namespace MatchStats.Test.ViewModels
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
             Assert.IsNotNull(fixture.CurrMatch.MatchStats.FirstOrDefault(x => x.Reason == StatDescription.DoubleFault), "Match stats should have one element in it");
-            Assert.AreEqual(fixture.CurrMatch.MatchStats.Count, 2, "There should be two elements in the MatchStats list");
+            Assert.AreEqual(2, fixture.CurrMatch.MatchStats.Count, "There should be two elements in the MatchStats list");
+        }
+ 
+        [TestMethod]
+        public void MatchStatShouldStoreGamePointStatWhenAtGamePoint()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            Assert.IsNotNull(fixture.CurrMatch.MatchStats.FirstOrDefault(x => x.Reason == StatDescription.DoubleFault), "Match stats should have one element in it");
+            Assert.AreEqual(5, fixture.CurrMatch.MatchStats.Count, "There should be two elements in the MatchStats list");
+            Assert.IsNotNull(fixture.CurrMatch.MatchStats.Last().Reason == StatDescription.GamePoint);
         }
 
+        [TestMethod]
+        public void MatchStatShouldStoreBreakPointStatWhenAtBreakPoint()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            Assert.IsNotNull(fixture.CurrMatch.MatchStats.FirstOrDefault(x => x.Reason == StatDescription.DoubleFault), "Match stats should have one element in it");
+            Assert.AreEqual(5, fixture.CurrMatch.MatchStats.Count, "There should be two elements in the MatchStats list");
+            Assert.IsNotNull(fixture.CurrMatch.MatchStats.Last().Reason == StatDescription.BreakPoint);
+        }
 
         private void AddASetForPlayer(MatchScoreViewModel fixture, bool IsPlayerOne)
         {
