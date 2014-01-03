@@ -651,6 +651,20 @@ namespace MatchStats.Test.ViewModels
         }
 
         [TestMethod]
+        public void ShouldChangeServerAfterFirstServeOfChampionShipTieBreake()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            AddASetForPlayer(fixture, false);
+            AddASetForPlayer(fixture, true);
+            
+        }
+
+        [TestMethod]
         public void ShouldSetAMatchIsOverWhenAPlayerTwoWinsBy2()
         {
             var blobCache = RegisterComponents();
