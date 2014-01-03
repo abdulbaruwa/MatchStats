@@ -29,14 +29,23 @@ namespace MatchStats.ViewModels
                 currentGame = currentSet.Games.FirstOrDefault(x => x.IsCurrentGame);
             }
 
+            var matchStat = new MatchStat
+            {
+                PointWonLostOrNone = PointWonLostOrNone.PointWon,
+                Reason = StatDescription.ForeHandWinner,
+                Server = currentMatch.Score.CurrentServer
+            };
+
             if (currentGame != null)
             {
                 if (Player.IsPlayerOne)
                 {
+                    matchStat.Player = currentMatch.PlayerOne;
                     currentGame.PlayerOneScore += 1;
                 }
                 else
                 {
+                    matchStat.Player = currentMatch.PlayerTwo;
                     currentGame.PlayerTwoScore += 1;
                 }
             }

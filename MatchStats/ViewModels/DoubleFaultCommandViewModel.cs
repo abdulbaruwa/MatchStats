@@ -31,18 +31,28 @@ namespace MatchStats.ViewModels
                 currentGame = currentSet.Games.FirstOrDefault(x => x.IsCurrentGame);
             }
 
+            var matchStat = new MatchStat
+            {
+                PointWonLostOrNone = PointWonLostOrNone.PointWon,
+                Reason = StatDescription.DoubleFault,
+                Server = currentMatch.Score.CurrentServer
+            };
+
             if (currentGame != null)
             {
                 if (Player.IsPlayerOne)
                 {
+                    matchStat.Player = currentMatch.PlayerTwo;
                     currentGame.PlayerTwoScore += 1;
                 }
                 else
                 {
+                    matchStat.Player = currentMatch.PlayerOne;
                     currentGame.PlayerOneScore += 1;
                 }
             }
 
+            currentMatch.MatchStats.Add(matchStat);
             currentMatch = matchStatsApi.ApplyGameRules(currentMatch);
             matchStatsApi.SaveMatch(currentMatch);
             MessageBus.Current.SendMessage(currentMatch, "PointUpdateForCurrentMatch");

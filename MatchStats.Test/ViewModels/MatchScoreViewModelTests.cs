@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Xml.Linq;
 using Akavache;
 using MatchStats.Enums;
 using MatchStats.Model;
@@ -652,6 +653,37 @@ namespace MatchStats.Test.ViewModels
 
             Assert.AreEqual(fixture.CurrentServer.FullName, fixture.CurrMatch.PlayerOne.FullName, string.Format("The current server should be {0} not {1}", fixture.CurrMatch.PlayerOne.FullName, fixture.CurrMatch.PlayerTwo.FullName));
         }
+
+        [TestMethod]
+        public void ShouldStoreDoubleFaultActionAsInMatchStatsList()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
+            
+            Assert.IsNotNull(fixture.CurrMatch.MatchStats.FirstOrDefault(x => x.Reason == StatDescription.DoubleFault), "Match stats should have one element in it");
+        }
+
+        [TestMethod]
+        public void ShouldBeAbleToStoreAndRetrieveActions()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            Assert.IsNotNull(fixture.CurrMatch.MatchStats.FirstOrDefault(x => x.Reason == StatDescription.DoubleFault), "Match stats should have one element in it");
+            Assert.AreEqual(fixture.CurrMatch.MatchStats.Count, 2, "There should be two elements in the MatchStats list");
+        }
+
 
         private void AddASetForPlayer(MatchScoreViewModel fixture, bool IsPlayerOne)
         {

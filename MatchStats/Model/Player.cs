@@ -11,4 +11,20 @@
         public string Rating { get; set; }
         public bool IsPlayerOne { get; set; }
     }
+
+    public class MatchStat
+    {
+        public Player Server { get; set; }
+        public StatDescription Reason { get; set; }
+        public PointWonLostOrNone PointWonLostOrNone { get; set; }
+        public Player Player { get; set; }
+    }
+
+
+    public enum PointWonLostOrNone
+    {
+        NotAPoint = 0,
+        PointWon = 1,
+        PointLost = 2
+    }
 }

@@ -98,6 +98,24 @@ namespace MatchStats.Model
         ForcedError
     }
 
+
+    public enum StatDescription
+    {
+        ForeHandWinner,
+        BackHandWinner,
+        VolleyWinner,
+        DropShotWinner,
+        OverheadWinner,
+        UnforcedForehandError,
+        UnforcedBackhadError,
+        UnforcedVolleyError,
+        ForcedError,
+        FirstServeIn,
+        FirstServeOut,
+        SecondServeIn,
+        DoubleFault
+    }
+
     public enum NonScoreActionReason
     {
         FirstServeIn,
