@@ -771,6 +771,18 @@ namespace MatchStats.Test.ViewModels
             Assert.IsNotNull(fixture.CurrMatch.MatchStats.Last().Reason == StatDescription.BreakPoint);
         }
 
+        [TestMethod]
+        public void ShouldRecordServeInStatsAgainstPlayerServing()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
+
+        }
+
         private void AddASetForPlayer(MatchScoreViewModel fixture, bool IsPlayerOne)
         {
             var sets = (int)fixture.CurrMatch.MatchFormat.SetsFormat;
@@ -787,6 +799,7 @@ namespace MatchStats.Test.ViewModels
 
             }
         }
+
         private void AddAGameForPlayerOne(MatchScoreViewModel fixture)
         {
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);

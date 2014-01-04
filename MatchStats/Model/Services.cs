@@ -118,6 +118,7 @@ namespace MatchStats.Model
 
             //Switch Server on ChampionShip TieBreak
             CheckAndSwitchCurrentServerOnChampionShipTieBreakPoints(currentMatch, ref currentGame);
+
             //Is game over 
             CheckGameIsOverAndInitializeNewGameIfNeedBe(currentMatch);
 
