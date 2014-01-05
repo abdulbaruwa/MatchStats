@@ -32,6 +32,7 @@ namespace MatchStats.Views
             this.BindCommand(ViewModel, x => x.SetPlayerTwoAsCurrentServerCommand, x => x.PlayerTwoIsServing);
             this.Bind(ViewModel, x => x.ServerSelected, x => x.PlayerOneCommands.IsEnabled);
             this.Bind(ViewModel, x => x.ServerSelected, x => x.PlayerTwoCommands.IsEnabled);
+            this.BindCommand(ViewModel, x => x.PlayerOneFirstServeInActionCommand.ActionCommand, x => x.PlayerOneFirstServe.Command);
         }
 
         object IViewFor.ViewModel

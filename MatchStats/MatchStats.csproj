@@ -115,6 +115,7 @@
     <Compile Include="Model\IntMixins.cs" />
     <Compile Include="Model\MatchMixins.cs" />
     <Compile Include="ViewModels\DoubleFaultCommandViewModel.cs" />
+    <Compile Include="ViewModels\FirstServeInCommandViewModel.cs" />
     <Compile Include="ViewModels\ForeHandWinnerCommandViewModel.cs" />
     <Compile Include="Model\Game.cs" />
     <Compile Include="Model\MatchFormat.cs" />

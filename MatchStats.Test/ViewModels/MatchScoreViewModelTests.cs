@@ -779,8 +779,13 @@ namespace MatchStats.Test.ViewModels
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
-            fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
+            fixture.PlayerOneFirstServeInActionCommand.ActionCommand.Execute(null);
 
+            Assert.IsNotNull(fixture.CurrMatch.MatchStats.FirstOrDefault(), "Match stats should have one element in it");
+            Assert.IsTrue(fixture.CurrMatch.MatchStats.First().Reason == StatDescription.FirstServeIn);
+            Assert.AreEqual(fixture.CurrMatch.MatchStats.First().Player.FullName, fixture.CurrMatch.Score.CurrentServer.FullName);
+            Assert.AreEqual(fixture.CurrMatch.MatchStats.First().Server.FullName, fixture.CurrMatch.Score.CurrentServer.FullName);
+            Assert.AreEqual(fixture.CurrMatch.MatchStats.First().PointWonLostOrNone, PointWonLostOrNone.NotAPoint);
         }
 
         private void AddASetForPlayer(MatchScoreViewModel fixture, bool IsPlayerOne)

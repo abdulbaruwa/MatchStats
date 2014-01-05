@@ -22,6 +22,7 @@ namespace MatchStats.ViewModels
         public IReactiveCommand PlayerOneActionCommand { get; protected set; }
         public IReactiveCommand SetPlayerOneAsCurrentServerCommand { get; protected set; }
         public IReactiveCommand SetPlayerTwoAsCurrentServerCommand { get; protected set; }
+        public IGameActionViewModel PlayerOneFirstServeInActionCommand { get; protected set; }
         private readonly IReactiveCommand addItemsCommand;
 
         public MatchScoreViewModel(IScreen screen = null)
@@ -56,6 +57,7 @@ namespace MatchStats.ViewModels
                 SaveMatch(CurrMatch);
             });
 
+            PlayerOneFirstServeInActionCommand = new FirstServeInCommandViewModel();
             RandomGuid = Guid.NewGuid();
 
             //Observe the NewMatchControlVM.ShowMe property, Hide pop up depending on value.
@@ -342,6 +344,7 @@ namespace MatchStats.ViewModels
 
         public string UrlPathSegment { get; private set; }
         public IScreen HostScreen { get; private set; }
+        
     }
 
     
