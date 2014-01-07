@@ -23,10 +23,13 @@ namespace MatchStats.ViewModels
         public IReactiveCommand SetPlayerOneAsCurrentServerCommand { get; protected set; }
         public IReactiveCommand SetPlayerTwoAsCurrentServerCommand { get; protected set; }
         public IGameActionViewModel PlayerOneFirstServeInActionCommand { get; protected set; }
+        public IReactiveCommand FirstServeInCommand { get; protected set; }
         private readonly IReactiveCommand addItemsCommand;
 
         public MatchScoreViewModel(IScreen screen = null)
         {
+            FirstServeInCommand = new ReactiveCommand(FirstServePending());
+            FirstServeInCommand.Subscribe(_ => PlayerOneFirstServeInActionCommand.ActionCommand.Execute(null));
             PlayerOneActions = new ReactiveList<IGameActionViewModel>();
             PlayerTwoActions = new ReactiveList<IGameActionViewModel>();
             ScorePoints = new ReactiveList<IGameActionViewModel>();
@@ -182,6 +185,21 @@ namespace MatchStats.ViewModels
             HostScreen.Router.NavigateBack.Execute(null);
         }
 
+        /// <summary>
+        /// Rule for First Server in
+        /// The last action is not a first serve in for player one with not further recorded point
+        /// The Current Server is not player one
+        /// </summary>
+        /// <returns></returns>
+        private IObservable<bool> FirstServePending()
+        {
+            return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, (server, matchStats) => (
+                //The last action is not a first serve in for player with not further recorded point
+                (matchStats.Value.LastOrDefault() != null &&  ! (matchStats.Value.LastOrDefault().Server.IsPlayerOne && matchStats.Value.Last().Reason == StatDescription.FirstServeIn))) 
+                // || (server != null && (! server.Value.IsPlayerOne))
+                );
+        }
+
         [DataMember]
         Guid _RandomGuid;
         public Guid RandomGuid
@@ -190,12 +208,6 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _RandomGuid, value); }
         }
         
-        //private ObservableAsPropertyHelper<Match> _currentMatch;
-        //public Match CurrentMatch
-        //{
-        //    get { return _currentMatch.Value; }
-        //}
-
         private ObservableAsPropertyHelper<List<IGameActionViewModel>> _playerOneActions;
         public List<IGameActionViewModel> PlayerOneCommands
         {
