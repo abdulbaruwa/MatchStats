@@ -24,12 +24,16 @@ namespace MatchStats.ViewModels
         public IReactiveCommand SetPlayerTwoAsCurrentServerCommand { get; protected set; }
         public IGameActionViewModel PlayerOneFirstServeInActionCommand { get; protected set; }
         public IReactiveCommand FirstServeInCommand { get; protected set; }
+        public IReactiveCommand FirstServeOutCommand { get; protected set; }
         private readonly IReactiveCommand addItemsCommand;
 
         public MatchScoreViewModel(IScreen screen = null)
         {
-            FirstServeInCommand = new ReactiveCommand(FirstServePending());
+            FirstServeInCommand = new ReactiveCommand(FirstServePending(StatDescription.FirstServeIn));
+            FirstServeOutCommand = new ReactiveCommand(FirstServeOutPending(StatDescription.FirstServeOut));
             FirstServeInCommand.Subscribe(_ => PlayerOneFirstServeInActionCommand.ActionCommand.Execute(null));
+            FirstServeOutCommand.Subscribe(_ => PlayerOneFirstServeInActionCommand.ActionCommand.Execute(null));
+
             PlayerOneActions = new ReactiveList<IGameActionViewModel>();
             PlayerTwoActions = new ReactiveList<IGameActionViewModel>();
             ScorePoints = new ReactiveList<IGameActionViewModel>();
@@ -123,11 +127,6 @@ namespace MatchStats.ViewModels
                 .Select(x => x.GetAttribute<DisplayAttribute>().Name)
                 .ToProperty(this, x => x.MatchStatus, "");
 
-            //_ServerSeleced = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
-            //    .Where(x => x.Sets.Count >= 2)
-            //    .Select(x => ! x.IsMatchOver )
-            //    .ToProperty(this, x => x.ServerSelected);
-
             this.WhenAny(x => x.CurrMatch.Score.CurrentServer, x => x.Value)
                 .Where(x => x != null)
                 .Select(x => x)
@@ -191,15 +190,33 @@ namespace MatchStats.ViewModels
         /// The Current Server is not player one
         /// </summary>
         /// <returns></returns>
-        private IObservable<bool> FirstServePending()
+        private IObservable<bool> FirstServePending(StatDescription statDescription)
         {
             return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, (server, matchStats) => (
                 //The last action is not a first serve in for player with not further recorded point
-                (matchStats.Value.LastOrDefault() != null &&  ! (matchStats.Value.LastOrDefault().Server.IsPlayerOne && matchStats.Value.Last().Reason == StatDescription.FirstServeIn))) 
-                // || (server != null && (! server.Value.IsPlayerOne))
+                matchStats.Value.LastOrDefault() == null 
+                || (
+                        matchStats.Value.LastOrDefault() != null
+                        &&  ! (matchStats.Value.LastOrDefault().Server.IsPlayerOne && matchStats.Value.Last().Reason == statDescription)) 
+                        || (server != null && (! server.Value.IsPlayerOne))
+                    )
                 );
         }
 
+        private IObservable<bool> FirstServeOutPending(StatDescription statDescription)
+        {
+            return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, (server, matchStats) => (
+                //The last action is not a first serve in for player with not further recorded point
+                matchStats.Value.LastOrDefault() == null
+                || (
+                        matchStats.Value.LastOrDefault() != null
+                        && !(matchStats.Value.LastOrDefault().Server.IsPlayerOne && matchStats.Value.Last().Reason == statDescription))
+//                        || (server != null && (!server.Value.IsPlayerOne))
+                    )
+                );
+        }
+
+            
         [DataMember]
         Guid _RandomGuid;
         public Guid RandomGuid
