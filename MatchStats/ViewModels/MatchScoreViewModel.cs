@@ -25,12 +25,15 @@ namespace MatchStats.ViewModels
         public IGameActionViewModel PlayerOneFirstServeInActionCommand { get; protected set; }
         public IReactiveCommand FirstServeInCommand { get; protected set; }
         public IReactiveCommand FirstServeOutCommand { get; protected set; }
+        public IReactiveCommand PlayerOneSecondServeInCommand { get; protected set; }
+
         private readonly IReactiveCommand addItemsCommand;
 
         public MatchScoreViewModel(IScreen screen = null)
         {
-            FirstServeInCommand = new ReactiveCommand(FirstServePending(StatDescription.FirstServeIn));
-            FirstServeOutCommand = new ReactiveCommand(FirstServeOutPending(StatDescription.FirstServeOut));
+            FirstServeInCommand = new ReactiveCommand(FirstServePending());
+            FirstServeOutCommand = new ReactiveCommand(FirstServePending());
+            PlayerOneSecondServeInCommand = new ReactiveCommand(SecondServePending(true));
             FirstServeInCommand.Subscribe(_ => PlayerOneFirstServeInActionCommand.ActionCommand.Execute(null));
             FirstServeOutCommand.Subscribe(_ => PlayerOneFirstServeInActionCommand.ActionCommand.Execute(null));
 
@@ -155,6 +158,8 @@ namespace MatchStats.ViewModels
             {
                 new DoubleFaultCommandViewModel(player),
                 new ForeHandWinnerCommandViewModel(player),
+                new FirstServeInCommandViewModel(player),
+                new FirstServeOutCommandViewModel(player)
             };
 
             return listOfActions.ToObservable();
@@ -190,33 +195,39 @@ namespace MatchStats.ViewModels
         /// The Current Server is not player one
         /// </summary>
         /// <returns></returns>
-        private IObservable<bool> FirstServePending(StatDescription statDescription)
+        private IObservable<bool> FirstServePending()
         {
             return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, (server, matchStats) => (
                 //The last action is not a first serve in for player with not further recorded point
                 matchStats.Value.LastOrDefault() == null 
                 || (
-                        matchStats.Value.LastOrDefault() != null
-                        &&  ! (matchStats.Value.LastOrDefault().Server.IsPlayerOne && matchStats.Value.Last().Reason == statDescription)) 
-                        || (server != null && (! server.Value.IsPlayerOne))
-                    )
-                );
+                        ValidateForServeInOrOut(matchStats.Value.LastOrDefault())
+                    )));
         }
 
-        private IObservable<bool> FirstServeOutPending(StatDescription statDescription)
+        private bool ValidateForServeInOrOut(MatchStat matchStat)
+        {
+            if (matchStat == null) return true;
+            return matchStat.PointWonLostOrNone != PointWonLostOrNone.NotAPoint;
+        }
+
+        private IObservable<bool> SecondServePending(bool isPlayerOne)
         {
             return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, (server, matchStats) => (
-                //The last action is not a first serve in for player with not further recorded point
-                matchStats.Value.LastOrDefault() == null
-                || (
-                        matchStats.Value.LastOrDefault() != null
-                        && !(matchStats.Value.LastOrDefault().Server.IsPlayerOne && matchStats.Value.Last().Reason == statDescription))
-//                        || (server != null && (!server.Value.IsPlayerOne))
-                    )
+                ValidateForSecondServeCommand(matchStats.Value.LastOrDefault(), isPlayerOne))
                 );
         }
 
-            
+        private bool ValidateForSecondServeCommand(MatchStat matchStat, bool isPlayerOne)
+        {
+            if (matchStat == null) return false;
+            if (matchStat.Server.IsPlayerOne == isPlayerOne)
+            {
+                return matchStat.Reason == StatDescription.FirstServeOut;
+            }
+            return false;
+        }
+
         [DataMember]
         Guid _RandomGuid;
         public Guid RandomGuid
@@ -373,7 +384,6 @@ namespace MatchStats.ViewModels
 
         public string UrlPathSegment { get; private set; }
         public IScreen HostScreen { get; private set; }
-        
     }
 
     

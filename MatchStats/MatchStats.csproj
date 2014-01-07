@@ -116,6 +116,7 @@
     <Compile Include="Model\MatchMixins.cs" />
     <Compile Include="ViewModels\DoubleFaultCommandViewModel.cs" />
     <Compile Include="ViewModels\FirstServeInCommandViewModel.cs" />
+    <Compile Include="ViewModels\FirstServeOutCommandViewModel.cs" />
     <Compile Include="ViewModels\ForeHandWinnerCommandViewModel.cs" />
     <Compile Include="Model\Game.cs" />
     <Compile Include="Model\MatchFormat.cs" />
@@ -139,6 +140,7 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\MatchesPlayedViewModel.cs" />
+    <Compile Include="ViewModels\SecondServeInCommandViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\MatchScoreView.xaml.cs">
       <DependentUpon>MatchScoreView.xaml</DependentUpon>

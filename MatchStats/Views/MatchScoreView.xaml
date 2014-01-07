@@ -16,7 +16,7 @@
     <Page.Resources>
 
         <Style x:Key="ServeTextBoxStyle" TargetType="Button">
-        <Setter Property="Height" Value="55"/> 
+            <Setter Property="Height" Value="55"/>
         </Style>
     </Page.Resources>
 
@@ -24,203 +24,204 @@
         <Popup Height="500" Width="700"  HorizontalOffset="1" VerticalOffset="10"  IsOpen="{Binding ShowHideMatchPopup}" x:Name="AddMatchPoupup" Margin="0,0,0,0">
             <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <controls1:NewMatchUserControl x:Name="AddNewMatchControl" Height="500" Width="700"/>
-           </Border>
+            </Border>
         </Popup>
 
-    <Grid Style="{StaticResource LayoutRootStyle}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="60" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-        <Grid Grid.Row="1">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="600" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+        <Grid Style="{StaticResource LayoutRootStyle}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
-                <RowDefinition Height="46*" />
-                <RowDefinition Height="41*"/>
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="600" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="46*" />
+                    <RowDefinition Height="41*"/>
+                </Grid.RowDefinitions>
 
-            <Grid Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                <TextBlock Style="{StaticResource GroupHeaderTextStyle}">Player One</TextBlock>
-            </Grid>
-            <ItemsControl Name="PlayerOneCommands" ItemsSource="{Binding ScorePoints}" Grid.Column="0" Grid.Row="1">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <controls:UniformGrid/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border RenderTransformOrigin="0.5,0.5" BorderThickness="2" BorderBrush="WhiteSmoke" Margin="3">
-                            <Button
+                <Grid Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                    <TextBlock Style="{StaticResource GroupHeaderTextStyle}">Player One</TextBlock>
+                </Grid>
+                <ItemsControl Name="PlayerOneCommands" ItemsSource="{Binding ScorePoints}" Grid.Column="0" Grid.Row="1">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <controls:UniformGrid/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border RenderTransformOrigin="0.5,0.5" BorderThickness="2" BorderBrush="WhiteSmoke" Margin="3">
+                                <Button
                                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                                     AutomationProperties.Name="Group Title"
                                     Command="{Binding ActionCommand}"
                                   
                               >
-                                <StackPanel Orientation="Vertical">
-                                    <TextBlock Text="{Binding Name}"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center"/>
-                                    <TextBlock Text="{StaticResource  DiamondUnderbarGlyph}" HorizontalAlignment="Center" FontFamily="Segoe UI Symbol"  Style="{StaticResource GroupHeaderTextStyle}"/>
-                                </StackPanel>
-                            </Button>
-                        </Border>
-                    </DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding Name}"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="{StaticResource  DiamondUnderbarGlyph}" HorizontalAlignment="Center" FontFamily="Segoe UI Symbol"  Style="{StaticResource GroupHeaderTextStyle}"/>
+                                    </StackPanel>
+                                </Button>
+                            </Border>
+                        </DataTemplate>
 
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
 
-            <Grid Grid.Column="1" Grid.Row="0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition />
-                    <ColumnDefinition />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center"  HorizontalAlignment="Center" FontWeight="SemiBold" Style="{StaticResource GroupHeaderTextStyle}">Sutton Summer Open - G3</TextBlock>
-                <TextBlock Name="PlayerNames" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource GroupHeaderTextStyle}" Margin="163,5,137,-5"/>
-                    <TextBlock Name="MatchStatus" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource GroupHeaderTextStyle}"/>
-            </Grid>
-
-            <Grid Grid.Column="1" Name="Center" Grid.Row="1" Grid.RowSpan="2">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="100" />
-                    <RowDefinition Height="250" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <Grid Grid.Row="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition />
-                        <RowDefinition />
-                        <RowDefinition />
-                    </Grid.RowDefinitions>
+                <Grid Grid.Column="1" Grid.Row="0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition />
-                        <ColumnDefinition MaxWidth="50"/>
-                        <ColumnDefinition MaxWidth="50"/>
-                        <ColumnDefinition MaxWidth="50"/>
-                        <ColumnDefinition MaxWidth="50"/>
+                        <ColumnDefinition />
                     </Grid.ColumnDefinitions>
-
-                    <Rectangle  Stroke="Yellow" StrokeThickness="2" Margin="0,2,2,2" Grid.Row="0" Grid.ColumnSpan="5" />
-                    <TextBlock Style="{StaticResource SubtitleTextStyle}" Margin="10,0,0,0">Players</TextBlock>
-
-                    <Rectangle  Stroke="Yellow" StrokeThickness="2" Margin="0,-4,2,2" Grid.Row="1" Grid.ColumnSpan="5" />
-                    <TextBlock Name="PlayerOnesName" Style="{StaticResource SubtitleTextStyle}" Grid.Row="1" Margin="10,0,0,0" Text="{Binding PlayerOnesName}"/>
-
-                    <Rectangle  Stroke="Yellow" StrokeThickness="2" Margin="0,-4,2,2" Grid.Row="2" Grid.ColumnSpan="5" />
-                    <TextBlock Name="PlayerTwosName" Style="{StaticResource SubtitleTextStyle}" Grid.Row="2" Margin="10,0,0,0" Text="{Binding PlayerTwosName}"/>
-
-                    <Rectangle  Stroke="Yellow" StrokeThickness="2" Margin="0,2,2,2" Grid.Column="1" Grid.RowSpan="3" />
-                    <TextBlock Style="{StaticResource SubtitleTextStyle}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center">1</TextBlock>
-
-                    <Rectangle  Stroke="Yellow" StrokeThickness="2" Margin="-4,2,2,2" Grid.Column="2" Grid.RowSpan="3" />
-                    <TextBlock Name="PlayerOneFirstSet" Style="{StaticResource SubtitleTextStyle}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding PlayerOneFirstSet}"/>
-
-                    <Rectangle  Stroke="Yellow" StrokeThickness="2" Margin="-4,2,2,2" Grid.Column="3" Grid.RowSpan="3" />
-                    <TextBlock Name="PlayerTwoFirstSet" Style="{StaticResource SubtitleTextStyle}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding PlayerTwoFirstSet}"/>
-
-                    <TextBlock Style="{StaticResource SubtitleTextStyle}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center">2</TextBlock>
-                    <TextBlock Name="PlayerOneSecondSet" Style="{StaticResource SubtitleTextStyle}" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Text="{Binding PlayerOneSecondSet}"/>
-                    <TextBlock Name="PlayerTwoSecondSet" Style="{StaticResource SubtitleTextStyle}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Text="{Binding PlayerTwoSecondSet}"/>
-
-                    <TextBlock Style="{StaticResource SubtitleTextStyle}" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center">3</TextBlock>
-
-                    <TextBlock Name="PlayerOneThirdSet" Style="{StaticResource SubtitleTextStyle}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" Text="{Binding PlayerOneThirdSet}"/>
-                    <TextBlock Name="PlayerTwoThirdSet" Style="{StaticResource SubtitleTextStyle}" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" Text="{Binding PlayerTwoThirdSet}"/>
-
-                    <Rectangle  Stroke="Yellow" StrokeThickness="2" Margin="-4,2,2,2" Grid.Column="4" Grid.RowSpan="3" />
-                    <TextBlock Style="{StaticResource SubtitleTextStyle}" Grid.Row="0" Grid.Column="4">Current</TextBlock>
-                    <TextBlock Name="PlayerOneCurrentGame" Style="{StaticResource SubtitleTextStyle}" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" Text="{Binding PlayerOneCurrentGame}"/>
-                    <TextBlock Name="PlayerTwoCurrentGame" Style="{StaticResource SubtitleTextStyle}" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Center" Text="{Binding PlayerTwoCurrentGame}"/>
-
+                    <Grid.RowDefinitions>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center"  HorizontalAlignment="Center" FontWeight="SemiBold" Style="{StaticResource GroupHeaderTextStyle}">Sutton Summer Open - G3</TextBlock>
+                    <TextBlock Name="PlayerNames" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource GroupHeaderTextStyle}" Margin="163,5,137,-5"/>
+                    <TextBlock Name="MatchStatus" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource GroupHeaderTextStyle}"/>
                 </Grid>
 
-                <Border BorderThickness="2" Grid.Row="1">
-                    <Grid>
+                <Grid Grid.Column="1" Name="Center" Grid.Row="1" Grid.RowSpan="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100" />
+                        <RowDefinition Height="250" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100"/>
                             <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition MaxWidth="50"/>
+                            <ColumnDefinition MaxWidth="50"/>
+                            <ColumnDefinition MaxWidth="50"/>
+                            <ColumnDefinition MaxWidth="50"/>
                         </Grid.ColumnDefinitions>
 
-                        <Grid Grid.Column="1">
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <Border Grid.Row="0" BorderThickness="2">
-                                <Canvas Name="LeftLeftServeBox" Background="DarkKhaki"></Canvas>
-                            </Border>
+                        <Rectangle  Stroke="Yellow" StrokeThickness="2" Margin="0,2,2,2" Grid.Row="0" Grid.ColumnSpan="5" />
+                        <TextBlock Style="{StaticResource SubtitleTextStyle}" Margin="10,0,0,0">Players</TextBlock>
 
-                            <Border Grid.Row="1" BorderThickness="2">
-                                <Canvas Name="LeftRightServeBox" Background="DarkKhaki"></Canvas>
-                            </Border>
-                        </Grid>
+                        <Rectangle  Stroke="Yellow" StrokeThickness="2" Margin="0,-4,2,2" Grid.Row="1" Grid.ColumnSpan="5" />
+                        <TextBlock Name="PlayerOnesName" Style="{StaticResource SubtitleTextStyle}" Grid.Row="1" Margin="10,0,0,0" Text="{Binding PlayerOnesName}"/>
 
-                        <Grid Grid.Column="2">
-                            <Grid.RowDefinitions>
-                                <RowDefinition />
-                                <RowDefinition />
-                            </Grid.RowDefinitions>
-                            <Border Grid.Row="0" BorderThickness="2">
-                                <Canvas Name="RightRigthServeBox" Background="DarkKhaki"></Canvas>
-                            </Border>
-                            <Border Grid.Row="1" BorderThickness="2">
-                                <Canvas Name="RightLeftServeBox" Background="DarkKhaki"></Canvas>
-                            </Border>
+                        <Rectangle  Stroke="Yellow" StrokeThickness="2" Margin="0,-4,2,2" Grid.Row="2" Grid.ColumnSpan="5" />
+                        <TextBlock Name="PlayerTwosName" Style="{StaticResource SubtitleTextStyle}" Grid.Row="2" Margin="10,0,0,0" Text="{Binding PlayerTwosName}"/>
 
-                        </Grid>
+                        <Rectangle  Stroke="Yellow" StrokeThickness="2" Margin="0,2,2,2" Grid.Column="1" Grid.RowSpan="3" />
+                        <TextBlock Style="{StaticResource SubtitleTextStyle}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center">1</TextBlock>
 
-                        <Border Grid.Column="0" BorderThickness="2">
-                            <Canvas Name="LeftCourt" Grid.Column="0" Background="DarkOliveGreen"/>
-                        </Border>
-                        <Border Grid.Column="3" BorderThickness="2">
-                            <Canvas Name="RightCourt" Grid.Column="3" Background="DarkOliveGreen"></Canvas>
-                        </Border>
-                        <TextBox Name="Position" Height="40" Grid.Column="3" Margin="209,381,-209,-175" ></TextBox>
+                        <Rectangle  Stroke="Yellow" StrokeThickness="2" Margin="-4,2,2,2" Grid.Column="2" Grid.RowSpan="3" />
+                        <TextBlock Name="PlayerOneFirstSet" Style="{StaticResource SubtitleTextStyle}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding PlayerOneFirstSet}"/>
+
+                        <Rectangle  Stroke="Yellow" StrokeThickness="2" Margin="-4,2,2,2" Grid.Column="3" Grid.RowSpan="3" />
+                        <TextBlock Name="PlayerTwoFirstSet" Style="{StaticResource SubtitleTextStyle}" Grid.Row="2" Grid.Column="1" HorizontalAlignment="Center" Text="{Binding PlayerTwoFirstSet}"/>
+
+                        <TextBlock Style="{StaticResource SubtitleTextStyle}" Grid.Row="0" Grid.Column="2" HorizontalAlignment="Center">2</TextBlock>
+                        <TextBlock Name="PlayerOneSecondSet" Style="{StaticResource SubtitleTextStyle}" Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Text="{Binding PlayerOneSecondSet}"/>
+                        <TextBlock Name="PlayerTwoSecondSet" Style="{StaticResource SubtitleTextStyle}" Grid.Row="2" Grid.Column="2" HorizontalAlignment="Center" Text="{Binding PlayerTwoSecondSet}"/>
+
+                        <TextBlock Style="{StaticResource SubtitleTextStyle}" Grid.Row="0" Grid.Column="3" HorizontalAlignment="Center">3</TextBlock>
+
+                        <TextBlock Name="PlayerOneThirdSet" Style="{StaticResource SubtitleTextStyle}" Grid.Row="1" Grid.Column="3" HorizontalAlignment="Center" Text="{Binding PlayerOneThirdSet}"/>
+                        <TextBlock Name="PlayerTwoThirdSet" Style="{StaticResource SubtitleTextStyle}" Grid.Row="2" Grid.Column="3" HorizontalAlignment="Center" Text="{Binding PlayerTwoThirdSet}"/>
+
+                        <Rectangle  Stroke="Yellow" StrokeThickness="2" Margin="-4,2,2,2" Grid.Column="4" Grid.RowSpan="3" />
+                        <TextBlock Style="{StaticResource SubtitleTextStyle}" Grid.Row="0" Grid.Column="4">Current</TextBlock>
+                        <TextBlock Name="PlayerOneCurrentGame" Style="{StaticResource SubtitleTextStyle}" Grid.Row="1" Grid.Column="4" HorizontalAlignment="Center" Text="{Binding PlayerOneCurrentGame}"/>
+                        <TextBlock Name="PlayerTwoCurrentGame" Style="{StaticResource SubtitleTextStyle}" Grid.Row="2" Grid.Column="4" HorizontalAlignment="Center" Text="{Binding PlayerTwoCurrentGame}"/>
+
                     </Grid>
-                </Border>
 
-                <Border Name="boarderForGameNotes" BorderThickness="1" Grid.Row="2">
-                    <Grid>
-                        <Grid.RowDefinitions>
-                            <RowDefinition MaxHeight="60"/>
-                            <RowDefinition MaxHeight="60"/>
-                            <RowDefinition MaxHeight="80"/>
-                        </Grid.RowDefinitions>
-                        <Grid Name="ServeStats">
+                    <Border BorderThickness="2" Grid.Row="1">
+                        <Grid>
                             <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
                                 <ColumnDefinition />
                                 <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition />
+                                <ColumnDefinition Width="100"/>
                             </Grid.ColumnDefinitions>
-                            <Button Name="PlayerOneFirstServe" Grid.Column="0" Height="60" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">First Serve In</Button>
-                            <Button Name="PlayerOneSecondndServe" Grid.Column="1" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">Second Serve In</Button>
-                            <Button Name="PlayerTwoFirstServe"  Grid.Column="2" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">First Serve In</Button>
-                            <Button Name="PlayerTwoSecondServe"  Grid.Column="3" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">Second Serve In</Button>
-                        </Grid>
 
-                        <Grid Name="ServeStatsOut" Grid.Row="1">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="150*" />
-                                <ColumnDefinition Width="149*" />
-                                <ColumnDefinition Width="150*" />
-                                <ColumnDefinition Width="149" />
-                            </Grid.ColumnDefinitions>
-                            <Button Name="PlayerOneFirstServeOut" Grid.Column="0" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">First Serve Out</Button>
-                            <Button Name="PlayerOneSecondndServeOut" Grid.Column="1" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">Second Serve Out</Button>
-                            <Button Name="PlayerTwoFirstServeOut"  Grid.Column="2" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">First Serve Out</Button>
-                            <Button Name="PlayerTwoSecondServeOut"  Grid.Column="3" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">Second Serve Out</Button>
+                            <Grid Grid.Column="1">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0" BorderThickness="2">
+                                    <Canvas Name="LeftLeftServeBox" Background="DarkKhaki"></Canvas>
+                                </Border>
+
+                                <Border Grid.Row="1" BorderThickness="2">
+                                    <Canvas Name="LeftRightServeBox" Background="DarkKhaki"></Canvas>
+                                </Border>
+                            </Grid>
+
+                            <Grid Grid.Column="2">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition />
+                                    <RowDefinition />
+                                </Grid.RowDefinitions>
+                                <Border Grid.Row="0" BorderThickness="2">
+                                    <Canvas Name="RightRigthServeBox" Background="DarkKhaki"></Canvas>
+                                </Border>
+                                <Border Grid.Row="1" BorderThickness="2">
+                                    <Canvas Name="RightLeftServeBox" Background="DarkKhaki"></Canvas>
+                                </Border>
+
+                            </Grid>
+
+                            <Border Grid.Column="0" BorderThickness="2">
+                                <Canvas Name="LeftCourt" Grid.Column="0" Background="DarkOliveGreen"/>
+                            </Border>
+                            <Border Grid.Column="3" BorderThickness="2">
+                                <Canvas Name="RightCourt" Grid.Column="3" Background="DarkOliveGreen"></Canvas>
+                            </Border>
+                            <TextBox Name="Position" Height="40" Grid.Column="3" Margin="209,381,-209,-175" ></TextBox>
                         </Grid>
+                    </Border>
+
+                    <Border Name="boarderForGameNotes" BorderThickness="1" Grid.Row="2">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition MaxHeight="60"/>
+                                <RowDefinition MaxHeight="60"/>
+                                <RowDefinition MaxHeight="80"/>
+                            </Grid.RowDefinitions>
+                            <Grid Name="ServeStats">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                                <Button Name="PlayerOneFirstServe" Grid.Column="0" Height="60" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">First Serve In</Button>
+                                <Button Name="PlayerOneSecondServe" Grid.Column="1" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">Second Serve In</Button>
+                                <Button Name="PlayerTwoFirstServe"  Grid.Column="2" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">First Serve In</Button>
+                                <Button Name="PlayerTwoSecondServe"  Grid.Column="3" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">Second Serve In</Button>
+                            </Grid>
+
+                            <Grid Name="ServeStatsOut" Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="98*" />
+                                    <ColumnDefinition Width="52*"/>
+                                    <ColumnDefinition Width="149*" />
+                                    <ColumnDefinition Width="150*" />
+                                    <ColumnDefinition Width="149" />
+                                </Grid.ColumnDefinitions>
+                                <Button Name="PlayerOneFirstServeOut" Grid.Column="0" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Grid.ColumnSpan="3" Margin="0,3,148.857,2">First Serve Out</Button>
+                                <Button Name="PlayerOneSecondndServeOut" Grid.Column="2" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Grid.ColumnSpan="2" Margin="0.143,3,149.714,2">Second Serve Out</Button>
+                                <Button Name="PlayerTwoFirstServeOut"  Grid.Column="3" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Grid.ColumnSpan="2" Margin="0.143,3,149,2">First Serve Out</Button>
+                                <Button Name="PlayerTwoSecondServeOut"  Grid.Column="4" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Margin="0.286,3,0,2">Second Serve Out</Button>
+                            </Grid>
                             <Grid Grid.Row="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
@@ -239,42 +240,42 @@
                                 <ToggleButton Name="PlayerTwoIsServing" Grid.Column="1" Height="60" HorizontalAlignment="Stretch" >Player Two Serving</ToggleButton>
                             </Grid>-->
                         </Grid>
-                </Border>
-            </Grid>
+                    </Border>
+                </Grid>
 
-            <Grid Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                <TextBlock Style="{StaticResource GroupHeaderTextStyle}">Player Two</TextBlock>
-            </Grid>
+                <Grid Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                    <TextBlock Style="{StaticResource GroupHeaderTextStyle}">Player Two</TextBlock>
+                </Grid>
 
-            <ItemsControl Name="PlayerTwoCommands" ItemsSource="{Binding ScorePoints}" Grid.Column="2" Grid.Row="1" >
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <controls:UniformGrid/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <Border RenderTransformOrigin="0.5,0.5" BorderThickness="2" BorderBrush="WhiteSmoke" Margin="3">
-                            <Button 
+                <ItemsControl Name="PlayerTwoCommands" ItemsSource="{Binding ScorePoints}" Grid.Column="2" Grid.Row="1" >
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <controls:UniformGrid/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border RenderTransformOrigin="0.5,0.5" BorderThickness="2" BorderBrush="WhiteSmoke" Margin="3">
+                                <Button 
                                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                                     AutomationProperties.Name="Group Title"
                                     Command="{Binding ActionCommand}">
-                                <StackPanel Orientation="Vertical">
-                                    <TextBlock Text="{Binding Name}"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center"/>
-                                    <TextBlock Text="{StaticResource  DiamondUnderbarGlyph}" HorizontalAlignment="Center" FontFamily="Segoe UI Symbol"  Style="{StaticResource GroupHeaderTextStyle}"/>
-                                </StackPanel>
-                            </Button>
-                        </Border>
-                    </DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding Name}"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="{StaticResource  DiamondUnderbarGlyph}" HorizontalAlignment="Center" FontFamily="Segoe UI Symbol"  Style="{StaticResource GroupHeaderTextStyle}"/>
+                                    </StackPanel>
+                                </Button>
+                            </Border>
+                        </DataTemplate>
 
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
 
-        </Grid>
+            </Grid>
 
 
-        <!-- Vertical scrolling list only used when snapped -->
-        <ListView
+            <!-- Vertical scrolling list only used when snapped -->
+            <ListView
             x:Name="itemListView"
             AutomationProperties.AutomationId="ItemListView"
             AutomationProperties.Name="Grouped Items"
@@ -288,69 +289,69 @@
             IsSwipeEnabled="false"
             IsItemClickEnabled="True">
 
-        </ListView>
+            </ListView>
 
-        <!-- Back button and page title -->
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-            <Button x:Name="backButton" 
+            <!-- Back button and page title -->
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Button x:Name="backButton" 
                     Style="{StaticResource BackButtonStyle}" Margin="36,0,0,8" />
-            <TextBlock x:Name="pageTitle" Text="Play Match" Grid.Column="1" IsHitTestVisible="false"
+                <TextBlock x:Name="pageTitle" Text="Play Match" Grid.Column="1" IsHitTestVisible="false"
                        Style="{StaticResource PageHeaderTextStyle}" Margin="0,0,30,18"/>
-        </Grid>
+            </Grid>
 
-        <VisualStateManager.VisualStateGroups>
+            <VisualStateManager.VisualStateGroups>
 
-            <!-- Visual states reflect the application's view state -->
-            <VisualStateGroup x:Name="ApplicationViewStates">
-                <VisualState x:Name="FullScreenLandscape" />
-                <VisualState x:Name="Filled" />
+                <!-- Visual states reflect the application's view state -->
+                <VisualStateGroup x:Name="ApplicationViewStates">
+                    <VisualState x:Name="FullScreenLandscape" />
+                    <VisualState x:Name="Filled" />
 
-                <!-- The entire page respects the narrower 100-pixel margin convention for portrait -->
-                <VisualState x:Name="FullScreenPortrait">
-                    <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton"
+                    <!-- The entire page respects the narrower 100-pixel margin convention for portrait -->
+                    <VisualState x:Name="FullScreenPortrait">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton"
                                                        Storyboard.TargetProperty="Style">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}" />
-                        </ObjectAnimationUsingKeyFrames>
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}" />
+                            </ObjectAnimationUsingKeyFrames>
 
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemGridView"
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemGridView"
                                                        Storyboard.TargetProperty="Padding">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="96,137,10,56" />
-                        </ObjectAnimationUsingKeyFrames>
-                    </Storyboard>
-                </VisualState>
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="96,137,10,56" />
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
 
-                <!--
+                    <!--
                     The back button and title have different styles when snapped, and the list representation is substituted
                     for the grid displayed in all other view states
                 -->
-                <VisualState x:Name="Snapped">
-                    <Storyboard>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton"
+                    <VisualState x:Name="Snapped">
+                        <Storyboard>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton"
                                                        Storyboard.TargetProperty="Style">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedBackButtonStyle}" />
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle"
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedBackButtonStyle}" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="pageTitle"
                                                        Storyboard.TargetProperty="Style">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}" />
-                        </ObjectAnimationUsingKeyFrames>
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedPageHeaderTextStyle}" />
+                            </ObjectAnimationUsingKeyFrames>
 
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemListView"
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemListView"
                                                        Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
-                        </ObjectAnimationUsingKeyFrames>
-                        <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemGridView"
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="Visible" />
+                            </ObjectAnimationUsingKeyFrames>
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="itemGridView"
                                                        Storyboard.TargetProperty="Visibility">
-                            <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
-                        </ObjectAnimationUsingKeyFrames>
-                    </Storyboard>
-                </VisualState>
-            </VisualStateGroup>
-        </VisualStateManager.VisualStateGroups>
+                                <DiscreteObjectKeyFrame KeyTime="0" Value="Collapsed" />
+                            </ObjectAnimationUsingKeyFrames>
+                        </Storyboard>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
+        </Grid>
     </Grid>
- </Grid>
 </Page>
