@@ -852,6 +852,7 @@ namespace MatchStats.Test.ViewModels
             Assert.IsFalse(fixture.FirstServeOutCommand.CanExecute(null));
         }
 
+
         [TestMethod]
         public void AtGamePointTheFirstServeInAndOutCommandsShouldBeExecutable()
         {
@@ -871,6 +872,46 @@ namespace MatchStats.Test.ViewModels
 
             Assert.IsTrue(fixture.FirstServeInCommand.CanExecute(null));
         }
+
+        [TestMethod]
+        public void FirstServeInCommandForPlayerTwoShouldBeExcutableAfterAPointHasBeenScoredAndPlayerTwoIsServing()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            Assert.IsTrue(fixture.FirstServeInCommand.CanExecute(null));
+        }
+
+
+        [TestMethod]
+        public void FirstServeInAndOutForPlayerTwoShouldNotBeExecutableIfCurrentServerIsPlayerOne()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            Assert.IsFalse(fixture.PlayerTwoSecondServeInCommand.CanExecute(null));
+            Assert.IsFalse(fixture.PlayerTwoFirsrtServeInCommand.CanExecute(null));
+            Assert.IsFalse(fixture.PlayerTwoFirsrtServeOutCommand.CanExecute(null));
+        }
+
+        [TestMethod]
+        public void FirstServeInForPlayerTwoShouldAddMatchStatForPlayerTwo()
+        {
+
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerTwoFirsrtServeInCommand.Execute(null);
+            Assert.IsNotNull(fixture.MatchStatus.FirstOrDefault());
+
+        }
+
 
         private void AddASetForPlayer(MatchScoreViewModel fixture, bool IsPlayerOne)
         {

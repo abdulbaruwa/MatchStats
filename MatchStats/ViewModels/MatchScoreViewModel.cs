@@ -29,6 +29,10 @@ namespace MatchStats.ViewModels
         public IReactiveCommand FirstServeOutCommand { get; protected set; }
         public IReactiveCommand PlayerOneSecondServeInCommand { get; protected set; }
 
+        public IReactiveCommand PlayerTwoFirsrtServeInCommand { get; protected set; }
+        public IReactiveCommand PlayerTwoFirsrtServeOutCommand { get; protected set; }
+        public IReactiveCommand PlayerTwoSecondServeInCommand { get; protected set; }
+
         private readonly IReactiveCommand addItemsCommand;
 
         public MatchScoreViewModel(IScreen screen = null)
@@ -44,6 +48,10 @@ namespace MatchStats.ViewModels
             FirstServeInCommand.Subscribe(_ => PlayerOneFirstServeInActionCommand.ActionCommand.Execute(null));
             FirstServeOutCommand.Subscribe(_ => PlayerOneFirstServeOutActionCommand.ActionCommand.Execute(null));
             PlayerOneSecondServeInCommand.Subscribe(_ => PlayerOneSecondServeInActionCommand.ActionCommand.Execute(null));
+
+            PlayerTwoFirsrtServeInCommand = new ReactiveCommand();
+            PlayerTwoFirsrtServeOutCommand = new ReactiveCommand();
+            PlayerTwoSecondServeInCommand = new ReactiveCommand();
 
             PlayerOneActions = new ReactiveList<IGameActionViewModel>();
             PlayerTwoActions = new ReactiveList<IGameActionViewModel>();

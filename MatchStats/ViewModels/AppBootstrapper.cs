@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Linq;
-using System.Reactive.Linq;
 using System.Reactive.Threading.Tasks;
-using System.Runtime.InteropServices;
 using System.Runtime.Serialization;
-using System.Text.RegularExpressions;
 using Akavache;
 using MatchStats.Controls;
 using MatchStats.DesignTimeStuff;
@@ -96,6 +93,8 @@ namespace MatchStats.ViewModels
                 Resolver.Register(() => new MatchScoreViewModel(), typeof(MatchScoreViewModel));
                 Resolver.Register(() => new MatchScoreView(), typeof (IViewFor<MatchScoreViewModel>), "FullScreenLandscape");
                 Resolver.Register(() => new UserService(), typeof (IUserService));
+
+               
 
 #if DEBUG
                 var testBlobCache = new TestBlobCache();
