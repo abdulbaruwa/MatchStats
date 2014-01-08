@@ -841,6 +841,37 @@ namespace MatchStats.Test.ViewModels
             Assert.IsTrue(fixture.PlayerOneSecondServeInCommand.CanExecute(null));
         }
 
+        [TestMethod]
+        public void FirstServeInAndOutCommandsShouldNotBeExecutableIfCurrentServerIsNotSet()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+
+            Assert.IsFalse(fixture.FirstServeInCommand.CanExecute(null));
+            Assert.IsFalse(fixture.FirstServeOutCommand.CanExecute(null));
+        }
+
+        [TestMethod]
+        public void AtGamePointTheFirstServeInAndOutCommandsShouldBeExecutable()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerOneActions.First(x => x.Name == "FirstServeIn").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneActions.First(x => x.Name == "FirstServeIn").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneActions.First(x => x.Name == "FirstServeIn").ActionCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            Assert.IsTrue(fixture.FirstServeInCommand.CanExecute(null));
+        }
+
         private void AddASetForPlayer(MatchScoreViewModel fixture, bool IsPlayerOne)
         {
             var sets = (int)fixture.CurrMatch.MatchFormat.SetsFormat;

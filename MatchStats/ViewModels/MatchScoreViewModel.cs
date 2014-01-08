@@ -205,16 +205,18 @@ namespace MatchStats.ViewModels
         private IObservable<bool> FirstServePending(bool serveIsIn)
         {
             return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, (server, matchStats) => (
-                //The last action is not a first serve in for player with not further recorded point
-                matchStats.Value.LastOrDefault() == null 
-                || (
-                        ValidateForServeInOrOut(matchStats.Value.LastOrDefault(),serveIsIn)
-                    )));
+                        //The last action is not a first serve in for player with not further recorded point
+                        ValidateForServeInOrOut(matchStats.Value.LastOrDefault(), server.Value)
+                    ));
         }
 
-        private bool ValidateForServeInOrOut(MatchStat matchStat, bool serveIsIn)
+        private bool ValidateForServeInOrOut(MatchStat matchStat, Player server)
         {
+            if (server == null) return false;
             if (matchStat == null) return true;
+            if (matchStat.Reason == StatDescription.BreakPoint || matchStat.Reason == StatDescription.GamePoint ||
+                matchStat.Reason == StatDescription.GameOver)
+                return true;
             return matchStat.PointWonLostOrNone != PointWonLostOrNone.NotAPoint;
 
             //if (serveIsIn)
@@ -233,7 +235,7 @@ namespace MatchStats.ViewModels
 
         private bool ValidateForSecondServeCommand(MatchStat matchStat, bool isPlayerOne)
         {
-            if (matchStat == null) return false;
+            if (matchStat == null || matchStat.Server == null) return false;
             if (matchStat.Server.IsPlayerOne == isPlayerOne)
             {
                 return matchStat.Reason == StatDescription.FirstServeOut;
