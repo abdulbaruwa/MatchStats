@@ -23,6 +23,8 @@ namespace MatchStats.ViewModels
         public IReactiveCommand SetPlayerOneAsCurrentServerCommand { get; protected set; }
         public IReactiveCommand SetPlayerTwoAsCurrentServerCommand { get; protected set; }
         public IGameActionViewModel PlayerOneFirstServeInActionCommand { get; protected set; }
+        public IGameActionViewModel PlayerOneFirstServeOutActionCommand { get; protected set; }
+        public IGameActionViewModel PlayerOneSecondServeInActionCommand { get; protected set; }
         public IReactiveCommand FirstServeInCommand { get; protected set; }
         public IReactiveCommand FirstServeOutCommand { get; protected set; }
         public IReactiveCommand PlayerOneSecondServeInCommand { get; protected set; }
@@ -31,11 +33,17 @@ namespace MatchStats.ViewModels
 
         public MatchScoreViewModel(IScreen screen = null)
         {
-            FirstServeInCommand = new ReactiveCommand(FirstServePending());
-            FirstServeOutCommand = new ReactiveCommand(FirstServePending());
+            PlayerOneFirstServeInActionCommand = new FirstServeInCommandViewModel(null);
+            PlayerOneFirstServeOutActionCommand = new FirstServeOutCommandViewModel(null);
+            PlayerOneSecondServeInActionCommand = new SecondServeInCommandViewModel(null);
+
+            FirstServeInCommand = new ReactiveCommand(FirstServePending(true));
+            FirstServeOutCommand = new ReactiveCommand(FirstServePending(false));
             PlayerOneSecondServeInCommand = new ReactiveCommand(SecondServePending(true));
+
             FirstServeInCommand.Subscribe(_ => PlayerOneFirstServeInActionCommand.ActionCommand.Execute(null));
-            FirstServeOutCommand.Subscribe(_ => PlayerOneFirstServeInActionCommand.ActionCommand.Execute(null));
+            FirstServeOutCommand.Subscribe(_ => PlayerOneFirstServeOutActionCommand.ActionCommand.Execute(null));
+            PlayerOneSecondServeInCommand.Subscribe(_ => PlayerOneSecondServeInActionCommand.ActionCommand.Execute(null));
 
             PlayerOneActions = new ReactiveList<IGameActionViewModel>();
             PlayerTwoActions = new ReactiveList<IGameActionViewModel>();
@@ -158,8 +166,6 @@ namespace MatchStats.ViewModels
             {
                 new DoubleFaultCommandViewModel(player),
                 new ForeHandWinnerCommandViewModel(player),
-                new FirstServeInCommandViewModel(player),
-                new FirstServeOutCommandViewModel(player)
             };
 
             return listOfActions.ToObservable();
@@ -194,21 +200,28 @@ namespace MatchStats.ViewModels
         /// The last action is not a first serve in for player one with not further recorded point
         /// The Current Server is not player one
         /// </summary>
+        /// <param name="b"></param>
         /// <returns></returns>
-        private IObservable<bool> FirstServePending()
+        private IObservable<bool> FirstServePending(bool serveIsIn)
         {
             return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, (server, matchStats) => (
                 //The last action is not a first serve in for player with not further recorded point
                 matchStats.Value.LastOrDefault() == null 
                 || (
-                        ValidateForServeInOrOut(matchStats.Value.LastOrDefault())
+                        ValidateForServeInOrOut(matchStats.Value.LastOrDefault(),serveIsIn)
                     )));
         }
 
-        private bool ValidateForServeInOrOut(MatchStat matchStat)
+        private bool ValidateForServeInOrOut(MatchStat matchStat, bool serveIsIn)
         {
             if (matchStat == null) return true;
             return matchStat.PointWonLostOrNone != PointWonLostOrNone.NotAPoint;
+
+            //if (serveIsIn)
+            //{
+            //   return  matchStat.PointWonLostOrNone != PointWonLostOrNone.NotAPoint;
+            //}
+            //return matchStat.Reason == StatDescription.FirstServeOut;
         }
 
         private IObservable<bool> SecondServePending(bool isPlayerOne)
