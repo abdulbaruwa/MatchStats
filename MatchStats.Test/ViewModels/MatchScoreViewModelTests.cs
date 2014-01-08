@@ -836,7 +836,7 @@ namespace MatchStats.Test.ViewModels
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
-            fixture.PlayerOneActions.First(x => x.Name == "FirstServeOut").ActionCommand.Execute(null);
+            fixture.FirstServeOutCommand.Execute(null);
 
             Assert.IsTrue(fixture.PlayerOneSecondServeInCommand.CanExecute(null));
         }
@@ -860,13 +860,13 @@ namespace MatchStats.Test.ViewModels
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
-            fixture.PlayerOneActions.First(x => x.Name == "FirstServeIn").ActionCommand.Execute(null);
+            fixture.FirstServeInCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
-            fixture.PlayerOneActions.First(x => x.Name == "FirstServeIn").ActionCommand.Execute(null);
+            fixture.FirstServeInCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
-            fixture.PlayerOneActions.First(x => x.Name == "FirstServeIn").ActionCommand.Execute(null);
+            fixture.FirstServeInCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
             Assert.IsTrue(fixture.FirstServeInCommand.CanExecute(null));
