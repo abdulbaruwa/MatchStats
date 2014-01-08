@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
+using System.ServiceModel;
 using System.Windows.Input;
 using MatchStats.Common;
 using MatchStats.Model;
@@ -42,16 +43,21 @@ namespace MatchStats.ViewModels
             PlayerOneSecondServeInActionCommand = new SecondServeInCommandViewModel(null);
 
             FirstServeInCommand = new ReactiveCommand(FirstServePending(true));
-            FirstServeOutCommand = new ReactiveCommand(FirstServePending(false));
+            FirstServeOutCommand = new ReactiveCommand(FirstServePending(true));
             PlayerOneSecondServeInCommand = new ReactiveCommand(SecondServePending(true));
 
             FirstServeInCommand.Subscribe(_ => PlayerOneFirstServeInActionCommand.ActionCommand.Execute(null));
             FirstServeOutCommand.Subscribe(_ => PlayerOneFirstServeOutActionCommand.ActionCommand.Execute(null));
             PlayerOneSecondServeInCommand.Subscribe(_ => PlayerOneSecondServeInActionCommand.ActionCommand.Execute(null));
 
-            PlayerTwoFirsrtServeInCommand = new ReactiveCommand();
-            PlayerTwoFirsrtServeOutCommand = new ReactiveCommand();
-            PlayerTwoSecondServeInCommand = new ReactiveCommand();
+            PlayerTwoFirsrtServeInCommand = new ReactiveCommand(FirstServePending(false));
+            PlayerTwoFirsrtServeInCommand.Subscribe(_ => new FirstServeInCommandViewModel(CurrentServer).ActionCommand.Execute(null));
+            
+            PlayerTwoFirsrtServeOutCommand = new ReactiveCommand(FirstServePending(false));
+            PlayerTwoFirsrtServeOutCommand.Subscribe(_ => new FirstServeOutCommandViewModel(CurrentServer).ActionCommand.Execute(null));
+
+            PlayerTwoSecondServeInCommand = new ReactiveCommand(SecondServePending(false));
+            PlayerTwoSecondServeInCommand.Subscribe(_ => new SecondServeInCommandViewModel(CurrentServer).ActionCommand.Execute(null));
 
             PlayerOneActions = new ReactiveList<IGameActionViewModel>();
             PlayerTwoActions = new ReactiveList<IGameActionViewModel>();
@@ -210,28 +216,27 @@ namespace MatchStats.ViewModels
         /// </summary>
         /// <param name="b"></param>
         /// <returns></returns>
-        private IObservable<bool> FirstServePending(bool serveIsIn)
+        private IObservable<bool> FirstServePending(bool isPlayerOne)
         {
             return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, (server, matchStats) => (
                         //The last action is not a first serve in for player with not further recorded point
-                        ValidateForServeInOrOut(matchStats.Value.LastOrDefault(), server.Value)
+                        ValidateForServeInOrOut(matchStats.Value.LastOrDefault(), server.Value, isPlayerOne)
                     ));
         }
 
-        private bool ValidateForServeInOrOut(MatchStat matchStat, Player server)
+        private bool ValidateForServeInOrOut(MatchStat matchStat, Player server,  bool isPlayerOne)
         {
             if (server == null) return false;
-            if (matchStat == null) return true;
-            if (matchStat.Reason == StatDescription.BreakPoint || matchStat.Reason == StatDescription.GamePoint ||
-                matchStat.Reason == StatDescription.GameOver)
-                return true;
-            return matchStat.PointWonLostOrNone != PointWonLostOrNone.NotAPoint;
-
-            //if (serveIsIn)
-            //{
-            //   return  matchStat.PointWonLostOrNone != PointWonLostOrNone.NotAPoint;
-            //}
-            //return matchStat.Reason == StatDescription.FirstServeOut;
+            if (server.IsPlayerOne == isPlayerOne)
+            {
+                if (matchStat == null) return true;
+                if (server.IsPlayerOne == isPlayerOne &&
+                    (matchStat.Reason == StatDescription.BreakPoint || matchStat.Reason == StatDescription.GamePoint ||
+                     matchStat.Reason == StatDescription.GameOver))
+                    return true;
+                return server.IsPlayerOne == isPlayerOne && matchStat.PointWonLostOrNone != PointWonLostOrNone.NotAPoint;
+            }
+            return false;
         }
 
         private IObservable<bool> SecondServePending(bool isPlayerOne)

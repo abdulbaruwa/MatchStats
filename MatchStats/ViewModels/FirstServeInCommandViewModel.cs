@@ -4,7 +4,7 @@ using MatchStats.Model;
 using ReactiveUI;
 
 namespace MatchStats.ViewModels
-{
+{   
     public class FirstServeInCommandViewModel : GameActionViewModel
     {
         public FirstServeInCommandViewModel(Player player = null)

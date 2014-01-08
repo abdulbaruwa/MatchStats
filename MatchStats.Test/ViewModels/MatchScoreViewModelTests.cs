@@ -881,7 +881,10 @@ namespace MatchStats.Test.ViewModels
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
-            Assert.IsTrue(fixture.FirstServeInCommand.CanExecute(null));
+            fixture.PlayerTwoSecondServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            Assert.IsTrue(fixture.PlayerTwoFirsrtServeInCommand.CanExecute(null));
         }
 
 
@@ -891,7 +894,7 @@ namespace MatchStats.Test.ViewModels
             var blobCache = RegisterComponents();
             var fixture = BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
-            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
             Assert.IsFalse(fixture.PlayerTwoSecondServeInCommand.CanExecute(null));
             Assert.IsFalse(fixture.PlayerTwoFirsrtServeInCommand.CanExecute(null));
@@ -912,6 +915,18 @@ namespace MatchStats.Test.ViewModels
 
         }
 
+        [TestMethod]
+        public void FirstServeOutForPlayerTwoShouldMakeSecondServeExecutable()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerTwoFirsrtServeOutCommand.Execute(null);
+
+            Assert.IsTrue(fixture.PlayerTwoSecondServeInCommand.CanExecute(null));
+        }
 
         private void AddASetForPlayer(MatchScoreViewModel fixture, bool IsPlayerOne)
         {
