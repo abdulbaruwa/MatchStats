@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -57,7 +57,7 @@ namespace MatchStats.ViewModels
             
             WhenAnyPropertyBindings();
 
-            //ActionCommandsEnableBindings();
+            ActionCommandsEnableBindings();
 
             MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch").Subscribe(x => CurrMatch = x);
         }
@@ -68,7 +68,6 @@ namespace MatchStats.ViewModels
                 (server, isMatchOver) => server.Value != null && isMatchOver.Value == false)
                 .Do(x =>
                 {
-                    //if (x) return;
                     foreach (var command in PlayerOneActions)
                     {
                         command.IsEnabled = false;
@@ -159,18 +158,6 @@ namespace MatchStats.ViewModels
                             .Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName)
                             .ToString())
                 .ToProperty(this, x => x.PlayerTwoThirdSet, "");
-
-            _ServerSeleced = this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.Score.IsMatchOver,
-                (server, isMatchOver) => server.Value != null && isMatchOver.Value == false)
-                .Do(x =>
-                {
-                    foreach (var command in PlayerOneActions)
-                    {
-                        command.IsEnabled = x;
-                    }
-                })
-                .Select(x => x)
-                .ToProperty(this, x => x.ServerSelected);
 
             _playerOneCurrentGame = this.WhenAny(x => x.CurrMatch, x => x.Value)
                 .Where(x => x != null)
