@@ -4,8 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
-using System.ServiceModel;
-using System.Windows.Input;
 using MatchStats.Common;
 using MatchStats.Model;
 using ReactiveUI;
@@ -29,7 +27,6 @@ namespace MatchStats.ViewModels
         public IReactiveCommand FirstServeInCommand { get; protected set; }
         public IReactiveCommand FirstServeOutCommand { get; protected set; }
         public IReactiveCommand PlayerOneSecondServeInCommand { get; protected set; }
-
         public IReactiveCommand PlayerTwoFirsrtServeInCommand { get; protected set; }
         public IReactiveCommand PlayerTwoFirsrtServeOutCommand { get; protected set; }
         public IReactiveCommand PlayerTwoSecondServeInCommand { get; protected set; }
@@ -38,37 +35,33 @@ namespace MatchStats.ViewModels
 
         public MatchScoreViewModel(IScreen screen = null)
         {
-            PlayerOneFirstServeInActionCommand = new FirstServeInCommandViewModel(null);
-            PlayerOneFirstServeOutActionCommand = new FirstServeOutCommandViewModel(null);
-            PlayerOneSecondServeInActionCommand = new SecondServeInCommandViewModel(null);
-
-            FirstServeInCommand = new ReactiveCommand(FirstServePending(true));
-            FirstServeOutCommand = new ReactiveCommand(FirstServePending(true));
-            PlayerOneSecondServeInCommand = new ReactiveCommand(SecondServePending(true));
-
-            FirstServeInCommand.Subscribe(_ => PlayerOneFirstServeInActionCommand.ActionCommand.Execute(null));
-            FirstServeOutCommand.Subscribe(_ => PlayerOneFirstServeOutActionCommand.ActionCommand.Execute(null));
-            PlayerOneSecondServeInCommand.Subscribe(_ => PlayerOneSecondServeInActionCommand.ActionCommand.Execute(null));
-
-            PlayerTwoFirsrtServeInCommand = new ReactiveCommand(FirstServePending(false));
-            PlayerTwoFirsrtServeInCommand.Subscribe(_ => new FirstServeInCommandViewModel(CurrentServer).ActionCommand.Execute(null));
-            
-            PlayerTwoFirsrtServeOutCommand = new ReactiveCommand(FirstServePending(false));
-            PlayerTwoFirsrtServeOutCommand.Subscribe(_ => new FirstServeOutCommandViewModel(CurrentServer).ActionCommand.Execute(null));
-
-            PlayerTwoSecondServeInCommand = new ReactiveCommand(SecondServePending(false));
-            PlayerTwoSecondServeInCommand.Subscribe(_ => new SecondServeInCommandViewModel(CurrentServer).ActionCommand.Execute(null));
+            InitializeServeCommands();
 
             PlayerOneActions = new ReactiveList<IGameActionViewModel>();
             PlayerTwoActions = new ReactiveList<IGameActionViewModel>();
+
+            RandomGuid = Guid.NewGuid();
+            UrlPathSegment = "MatchScore";
+            
             ScorePoints = new ReactiveList<IGameActionViewModel>();
             HostScreen = screen ?? RxApp.DependencyResolver.GetService<IScreen>();
-            UrlPathSegment = "MatchScore";
             NavToHomePageCommand = new ReactiveCommand();
             NavToHomePageCommand.Subscribe(_ => NavigateBackToHomePage());
+            
             StartMatchCommand = new ReactiveCommand();
             StartMatchCommand.Subscribe(StartMatch);
+            
             NewMatchControlViewModel = RxApp.DependencyResolver.GetService<NewMatchControlViewModel>();
+            
+            InitializeCurrentServerCommands();
+            
+            WhenAnyPropertyBindings();
+
+            MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch").Subscribe(x => CurrMatch = x);
+        }
+
+        private void InitializeCurrentServerCommands()
+        {
             SetPlayerOneAsCurrentServerCommand = new ReactiveCommand();
             SetPlayerOneAsCurrentServerCommand.Subscribe(_ =>
             {
@@ -88,10 +81,10 @@ namespace MatchStats.ViewModels
                 PlayerOneIsServing = false;
                 SaveMatch(CurrMatch);
             });
+        }
 
-            PlayerOneFirstServeInActionCommand = new FirstServeInCommandViewModel();
-            RandomGuid = Guid.NewGuid();
-
+        private void WhenAnyPropertyBindings()
+        {
             //Observe the NewMatchControlVM.ShowMe property, Hide pop up depending on value.
             _showHidePop = this.WhenAny(x => x.NewMatchControlViewModel.ShowMe, x => x.Value)
                 .Where(x => x == false)
@@ -105,35 +98,53 @@ namespace MatchStats.ViewModels
 
             _playerOneFirstSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
                 .Where(x => x.Sets.FirstOrDefault() != null)
-                .Select(x => x.Sets.First().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerOne.FullName).ToString())
+                .Select(x =>
+                        x.Sets.First()
+                            .Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerOne.FullName)
+                            .ToString())
                 .ToProperty(this, x => x.PlayerOneFirstSet, "");
-                
+
             _playerTwoFirstSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
                 .Where(x => x.Sets.FirstOrDefault() != null)
-                .Select(x => x.Sets.First().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName).ToString())
+                .Select(x =>
+                        x.Sets.First()
+                            .Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName)
+                            .ToString())
                 .ToProperty(this, x => x.PlayerTwoFirstSet, "");
-                
+
             _playerOneSecondSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
                 .Where(x => x.Sets.SecondOrDefault() != null)
-                .Select(x => x.Sets.SecondOrDefault().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerOne.FullName).ToString())
+                .Select(x =>
+                        x.Sets.SecondOrDefault()
+                            .Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerOne.FullName)
+                            .ToString())
                 .ToProperty(this, x => x.PlayerOneSecondSet, "");
-                
+
             _playerTwoSecondSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
                 .Where(x => x.Sets.SecondOrDefault() != null)
-                .Select(x => x.Sets.SecondOrDefault().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName).ToString())
+                .Select(x =>
+                        x.Sets.SecondOrDefault()
+                            .Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName)
+                            .ToString())
                 .ToProperty(this, x => x.PlayerTwoSecondSet, "");
 
             _playerOneThirdSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
                 .Where(x => x.Sets.ThirdOrDefault() != null)
-                .Select(x => x.Sets.ThirdOrDefault().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerOne.FullName).ToString())
+                .Select(x =>
+                        x.Sets.ThirdOrDefault()
+                            .Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerOne.FullName)
+                            .ToString())
                 .ToProperty(this, x => x.PlayerOneThirdSet, "");
 
             _playerTwoThirdSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
                 .Where(x => x.Sets.ThirdOrDefault() != null) //TODO: Need to 
-                .Select(x => x.Sets.ThirdOrDefault().Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName).ToString())
+                .Select(x =>
+                        x.Sets.ThirdOrDefault()
+                            .Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName)
+                            .ToString())
                 .ToProperty(this, x => x.PlayerTwoThirdSet, "");
 
-            _ServerSeleced = this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.Score.IsMatchOver, 
+            _ServerSeleced = this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.Score.IsMatchOver,
                 (server, isMatchOver) => server.Value != null && isMatchOver.Value == false)
                 .Select(x => x)
                 .ToProperty(this, x => x.ServerSelected);
@@ -170,8 +181,33 @@ namespace MatchStats.ViewModels
                         PlayerTwoIsServing = true;
                     }
                 });
+        }
 
-            MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch").Subscribe(x => CurrMatch = x);
+        private void InitializeServeCommands()
+        {
+            PlayerOneFirstServeInActionCommand = new FirstServeInCommandViewModel(null);
+            PlayerOneFirstServeOutActionCommand = new FirstServeOutCommandViewModel(null);
+            PlayerOneSecondServeInActionCommand = new SecondServeInCommandViewModel(null);
+
+            FirstServeInCommand = new ReactiveCommand(FirstServePending(true));
+            FirstServeOutCommand = new ReactiveCommand(FirstServePending(true));
+            PlayerOneSecondServeInCommand = new ReactiveCommand(SecondServePending(true));
+
+            FirstServeInCommand.Subscribe(_ => PlayerOneFirstServeInActionCommand.ActionCommand.Execute(null));
+            FirstServeOutCommand.Subscribe(_ => PlayerOneFirstServeOutActionCommand.ActionCommand.Execute(null));
+            PlayerOneSecondServeInCommand.Subscribe(_ => PlayerOneSecondServeInActionCommand.ActionCommand.Execute(null));
+
+            PlayerTwoFirsrtServeInCommand = new ReactiveCommand(FirstServePending(false));
+            PlayerTwoFirsrtServeInCommand.Subscribe(
+                _ => new FirstServeInCommandViewModel(CurrentServer).ActionCommand.Execute(null));
+
+            PlayerTwoFirsrtServeOutCommand = new ReactiveCommand(FirstServePending(false));
+            PlayerTwoFirsrtServeOutCommand.Subscribe(
+                _ => new FirstServeOutCommandViewModel(CurrentServer).ActionCommand.Execute(null));
+
+            PlayerTwoSecondServeInCommand = new ReactiveCommand(SecondServePending(false));
+            PlayerTwoSecondServeInCommand.Subscribe(
+                _ => new SecondServeInCommandViewModel(CurrentServer).ActionCommand.Execute(null));
         }
 
         private  IObservable<IGameActionViewModel> GetGameCommandsForPlayer(Player player)
