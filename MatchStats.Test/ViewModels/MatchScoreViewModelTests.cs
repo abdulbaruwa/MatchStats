@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Xml.Linq;
 using Akavache;
 using MatchStats.Enums;
 using MatchStats.Model;
@@ -801,7 +800,10 @@ namespace MatchStats.Test.ViewModels
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
-            Assert.IsTrue(fixture.FirstServeInCommand.CanExecute(null));
+            fixture.PlayerTwoFirsrtServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            Assert.IsTrue(fixture.PlayerTwoFirsrtServeInCommand.CanExecute(null));
         }
 
         [TestMethod]
