@@ -111,6 +111,9 @@
     <Compile Include="Common\EnumHelper.cs" />
     <Compile Include="Common\RichTextColumns.cs" />
     <Compile Include="Common\EnumDescriptionConverter.cs" />
+    <Compile Include="Controls\GameActionControl.xaml.cs">
+      <DependentUpon>GameActionControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Model\IEnumerableMixins.cs" />
     <Compile Include="Model\IntMixins.cs" />
     <Compile Include="Model\MatchMixins.cs" />
@@ -170,6 +173,10 @@
     <Page Include="Common\StandardStyles.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Controls\GameActionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\NewMatchUserControl.xaml">
       <SubType>Designer</SubType>

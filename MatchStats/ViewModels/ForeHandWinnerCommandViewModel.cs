@@ -5,18 +5,32 @@ using ReactiveUI;
 
 namespace MatchStats.ViewModels
 {
-    public class ForeHandWinnerCommandViewModel : GameActionViewModel
+    public class ForeHandWinnerCommandViewModel : ReactiveObject, IGameActionViewModel
     {
         public ForeHandWinnerCommandViewModel(Player player = null)
         {
             Player = player ?? new Player();
-            base.Name = "ForeHandWinner";
-            base.DisplayName = "Fore Hand Winner";
+            Name = "ForeHandWinner";
+            DisplayName = "Fore Hand Winner";
             ActionCommand = new ReactiveCommand();
             ActionCommand.Subscribe(x => Execute());
+            //_isEnabled = true;
         }
-        
-        public override void Execute()
+
+        private bool _isEnabled;
+        public new bool IsEnabled
+        {
+            get { return _isEnabled; }
+            set { this.RaiseAndSetIfChanged(ref _isEnabled, value); }
+        }
+
+        public IReactiveCommand ActionCommand { get; set; }
+
+        public string Name { get; set; }
+        public string DisplayName { get; set; }
+        public Player Player { get; set; }
+
+        public void Execute()
         {
             Match currentMatch = null;
             var matchStatsApi = RxApp.DependencyResolver.GetService<IMatchStatsApi>();

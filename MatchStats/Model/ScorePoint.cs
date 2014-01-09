@@ -10,18 +10,20 @@ namespace MatchStats.Model
         string DisplayName { get; set; }
         Player Player { get; set; }
         void Execute();
+        bool IsEnabled { get; set; }
         IReactiveCommand ActionCommand { get; set; }
     }
 
-    public abstract class GameActionViewModel : IGameActionViewModel
-    {
-        public string Name { get; set; }
-        public string DisplayName { get; set; }
-        public Player Player { get; set; }
-        public abstract void Execute();
+    //public abstract class GameActionViewModel : ReactiveObject, IGameActionViewModel
+    //{
+    //    public string Name { get; set; }
+    //    public string DisplayName { get; set; }
+    //    public Player Player { get; set; }
+    //    public bool IsEnabled { get; set; }
+    //    public abstract void Execute();
 
-        public IReactiveCommand ActionCommand { get; set; }
-    }
+    //    public IReactiveCommand ActionCommand { get; set; }
+    //}
         //    ForeHandWinner, >>>
         //BackHandWinner,
         //VolleyWinner,
@@ -33,26 +35,40 @@ namespace MatchStats.Model
         //ForcedError
          //DoubleFault
 
-    public class ScoreGamePointActionViewModel : GameActionViewModel
+    public class ScoreGamePointActionViewModel : ReactiveObject, IGameActionViewModel
     {
         public PointReason PointReason { get; set; }
         public bool ScoreForOpponent { get; set; }
 
 
-        public override void Execute()
+        public string Name { get; set; }
+        public string DisplayName { get; set; }
+        public Player Player { get; set; }
+
+        public void Execute()
         {
             throw new NotImplementedException();
         }
+
+        public bool IsEnabled { get; set; }
+        public IReactiveCommand ActionCommand { get; set; }
     }
 
-    public class NonScoreGameActionViewModel : GameActionViewModel
+    public class NonScoreGameActionViewModel : ReactiveObject, IGameActionViewModel
     {
         public NonScoreActionReason NonScoreActionReason { get; set; }
 
-        public override void Execute()
+        public string Name { get; set; }
+        public string DisplayName { get; set; }
+        public Player Player { get; set; }
+
+        public void Execute()
         {
             throw new NotImplementedException();
         }
+
+        public bool IsEnabled { get; set; }
+        public IReactiveCommand ActionCommand { get; set; }
     }
 
     public class ScorePoint : IGameActionViewModel
@@ -65,6 +81,8 @@ namespace MatchStats.Model
         {
             throw new NotImplementedException();
         }
+
+        public bool IsEnabled { get; set; }
 
         public IReactiveCommand ActionCommand { get; set; }
     }

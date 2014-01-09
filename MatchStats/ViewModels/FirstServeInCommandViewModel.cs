@@ -5,18 +5,22 @@ using ReactiveUI;
 
 namespace MatchStats.ViewModels
 {   
-    public class FirstServeInCommandViewModel : GameActionViewModel
+    public class FirstServeInCommandViewModel : ReactiveObject, IGameActionViewModel
     {
         public FirstServeInCommandViewModel(Player player = null)
         {
             Player = player;
-            base.Name = "FirstServeIn";
-            base.DisplayName = "Double Fault";
+            Name = "FirstServeIn";
+            DisplayName = "Double Fault";
             ActionCommand = new ReactiveCommand();
             ActionCommand.Subscribe(x => Execute());
         }
 
-        public override void Execute()
+        public string Name { get; set; }
+        public string DisplayName { get; set; }
+        public Player Player { get; set; }
+
+        public void Execute()
         {
             //Update currentMatch for this command
             Match currentMatch = null;
@@ -44,5 +48,8 @@ namespace MatchStats.ViewModels
             matchStatsApi.SaveMatch(currentMatch);
             MessageBus.Current.SendMessage(currentMatch, "PointUpdateForCurrentMatch");
         }
+
+        public bool IsEnabled { get; set; }
+        public IReactiveCommand ActionCommand { get; set; }
     }
 }

@@ -57,7 +57,23 @@ namespace MatchStats.ViewModels
             
             WhenAnyPropertyBindings();
 
+            //ActionCommandsEnableBindings();
+
             MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch").Subscribe(x => CurrMatch = x);
+        }
+
+        private void ActionCommandsEnableBindings()
+        {
+            this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.Score.IsMatchOver,
+                (server, isMatchOver) => server.Value != null && isMatchOver.Value == false)
+                .Do(x =>
+                {
+                    //if (x) return;
+                    foreach (var command in PlayerOneActions)
+                    {
+                        command.IsEnabled = false;
+                    }
+                });
         }
 
         private void InitializeCurrentServerCommands()
@@ -146,6 +162,13 @@ namespace MatchStats.ViewModels
 
             _ServerSeleced = this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.Score.IsMatchOver,
                 (server, isMatchOver) => server.Value != null && isMatchOver.Value == false)
+                .Do(x =>
+                {
+                    foreach (var command in PlayerOneActions)
+                    {
+                        command.IsEnabled = x;
+                    }
+                })
                 .Select(x => x)
                 .ToProperty(this, x => x.ServerSelected);
 
@@ -300,11 +323,11 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _RandomGuid, value); }
         }
         
-        private ObservableAsPropertyHelper<List<IGameActionViewModel>> _playerOneActions;
-        public List<IGameActionViewModel> PlayerOneCommands
-        {
-            get { return _playerOneActions.Value; }
-        }
+        //private ObservableAsPropertyHelper<List<IGameActionViewModel>> _playerOneActions;
+        //public List<IGameActionViewModel> PlayerOneCommands
+        //{
+        //    get { return _playerOneActions.Value; }
+        //}
 
         [DataMember] private Player _currentServer;
         public Player CurrentServer

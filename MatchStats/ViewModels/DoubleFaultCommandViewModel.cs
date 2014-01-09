@@ -5,18 +5,31 @@ using ReactiveUI;
 
 namespace MatchStats.ViewModels
 {
-    public class DoubleFaultCommandViewModel : GameActionViewModel
+    public class DoubleFaultCommandViewModel : ReactiveObject, IGameActionViewModel
     {
         public DoubleFaultCommandViewModel(Player player = null)
         {
             Player = player ?? new Player();
-            base.Name = "DoubleFault";
-            base.DisplayName = "Double Fault";
+            Name = "DoubleFault";
+            DisplayName = "Double Fault";
             ActionCommand = new ReactiveCommand();
             ActionCommand.Subscribe(x => Execute());
         }
 
-        public override void Execute()
+        private bool _isEnabled;
+        public new bool IsEnabled
+        {
+            get { return _isEnabled; }
+            set { this.RaiseAndSetIfChanged(ref _isEnabled, value); }
+        }
+
+        public IReactiveCommand ActionCommand { get; set; }
+
+        public string Name { get; set; }
+        public string DisplayName { get; set; }
+        public Player Player { get; set; }
+
+        public void Execute()
         {
             //Update currentMatch for this command
             Match currentMatch = null;
