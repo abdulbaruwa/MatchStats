@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Akavache;
@@ -893,9 +893,8 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void FirstServeInAndOutForPlayerTwoShouldNotBeExecutableIfCurrentServerIsPlayerOne()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
-            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            var fixture = CreateNewMatchFixture();
+
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
             Assert.IsFalse(fixture.PlayerTwoSecondServeInCommand.CanExecute(null));
@@ -906,28 +905,50 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void FirstServeInForPlayerTwoShouldAddMatchStatForPlayerTwo()
         {
-
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
-            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            var fixture = CreateNewMatchFixture();
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
             fixture.PlayerTwoFirsrtServeInCommand.Execute(null);
             Assert.IsNotNull(fixture.MatchStatus.FirstOrDefault());
-
         }
 
         [TestMethod]
         public void FirstServeOutForPlayerTwoShouldMakeSecondServeExecutable()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
-            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            var fixture = CreateNewMatchFixture();
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             fixture.PlayerTwoFirsrtServeOutCommand.Execute(null);
 
             Assert.IsTrue(fixture.PlayerTwoSecondServeInCommand.CanExecute(null));
+        }
+
+        [TestMethod]
+        public void ShouldDisablePlayerOneDoubleFaultCommandWhenCurrentServerIsPlayerTwo()
+        {
+            var fixture = CreateNewMatchFixture();
+
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            Assert.IsFalse(fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").IsEnabled, "Double fault action for player one should be false when player two is the current server");
+        }
+
+        [TestMethod]
+        public void ShouldDisablePlayerTwoDoubleFaultCommandWhenCurrentServerIsPlayerOne()
+        {
+            var fixture = CreateNewMatchFixture();
+
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            Assert.IsFalse(fixture.PlayerTwoActions.First(x => x.Name == "DoubleFault").IsEnabled, "Double fault action for player two should be false when player one is the current server");
+        }
+
+        private static MatchScoreViewModel CreateNewMatchFixture()
+        {
+            var blobCache = RegisterComponents();
+            var fixture = BuildAMatchToScore();
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            return fixture;
         }
 
         private void AddASetForPlayer(MatchScoreViewModel fixture, bool IsPlayerOne)
