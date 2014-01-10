@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using Windows.UI.Xaml;
 using MatchStats.ViewModels;
 using ReactiveUI;
@@ -30,8 +30,8 @@ namespace MatchStats.Views
             this.Bind(ViewModel, x => x.MatchStatus, x => x.MatchStatus.Text);
             this.BindCommand(ViewModel, x => x.SetPlayerOneAsCurrentServerCommand, x => x.PlayerOneIsServing);
             this.BindCommand(ViewModel, x => x.SetPlayerTwoAsCurrentServerCommand, x => x.PlayerTwoIsServing);
-            this.BindCommand(ViewModel, x => x.FirstServeInCommand, x => x.PlayerOneFirstServe);
-            this.BindCommand(ViewModel, x => x.FirstServeOutCommand, x => x.PlayerOneFirstServeOut);
+            this.BindCommand(ViewModel, x => x.PlayerOneFirstServeInCommand, x => x.PlayerOneFirstServe);
+            this.BindCommand(ViewModel, x => x.PlayerOneFirstServeOutCommand, x => x.PlayerOneFirstServeOut);
             this.BindCommand(ViewModel, x => x.PlayerOneSecondServeInCommand, x => x.PlayerOneSecondServe);
 
             this.BindCommand(ViewModel, x => x.PlayerTwoFirsrtServeInCommand, x => x.PlayerTwoFirstServe);
