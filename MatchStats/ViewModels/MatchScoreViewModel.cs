@@ -21,11 +21,8 @@ namespace MatchStats.ViewModels
         public IReactiveCommand PlayerOneActionCommand { get; protected set; }
         public IReactiveCommand SetPlayerOneAsCurrentServerCommand { get; protected set; }
         public IReactiveCommand SetPlayerTwoAsCurrentServerCommand { get; protected set; }
-        public IGameActionViewModel PlayerOneFirstServeInActionCommand { get; protected set; }
-        public IGameActionViewModel PlayerOneFirstServeOutActionCommand { get; protected set; }
-        public IGameActionViewModel PlayerOneSecondServeInActionCommand { get; protected set; }
-        public IReactiveCommand FirstServeInCommand { get; protected set; }
-        public IReactiveCommand FirstServeOutCommand { get; protected set; }
+        public IReactiveCommand PlayerOneFirstServeInCommand { get; protected set; }
+        public IReactiveCommand PlayerOneFirstServeOutCommand { get; protected set; }
         public IReactiveCommand PlayerOneSecondServeInCommand { get; protected set; }
         public IReactiveCommand PlayerTwoFirsrtServeInCommand { get; protected set; }
         public IReactiveCommand PlayerTwoFirsrtServeOutCommand { get; protected set; }
@@ -238,17 +235,13 @@ namespace MatchStats.ViewModels
 
         private void InitializeServeCommands()
         {
-            PlayerOneFirstServeInActionCommand = new FirstServeInCommandViewModel(null);
-            PlayerOneFirstServeOutActionCommand = new FirstServeOutCommandViewModel(null);
-            PlayerOneSecondServeInActionCommand = new SecondServeInCommandViewModel(null);
-
-            FirstServeInCommand = new ReactiveCommand(FirstServePending(true));
-            FirstServeOutCommand = new ReactiveCommand(FirstServePending(true));
+            PlayerOneFirstServeInCommand = new ReactiveCommand(FirstServePending(true));
+            PlayerOneFirstServeOutCommand = new ReactiveCommand(FirstServePending(true));
             PlayerOneSecondServeInCommand = new ReactiveCommand(SecondServePending(true));
 
-            FirstServeInCommand.Subscribe(_ => PlayerOneFirstServeInActionCommand.ActionCommand.Execute(null));
-            FirstServeOutCommand.Subscribe(_ => PlayerOneFirstServeOutActionCommand.ActionCommand.Execute(null));
-            PlayerOneSecondServeInCommand.Subscribe(_ => PlayerOneSecondServeInActionCommand.ActionCommand.Execute(null));
+            PlayerOneFirstServeInCommand.Subscribe(_ => new FirstServeInCommandViewModel(null).ActionCommand.Execute(null));
+            PlayerOneFirstServeOutCommand.Subscribe(_ => new FirstServeOutCommandViewModel(null).ActionCommand.Execute(null));
+            PlayerOneSecondServeInCommand.Subscribe(_ => new SecondServeInCommandViewModel(null).ActionCommand.Execute(null));
 
             PlayerTwoFirsrtServeInCommand = new ReactiveCommand(FirstServePending(false));
             PlayerTwoFirsrtServeInCommand.Subscribe(
