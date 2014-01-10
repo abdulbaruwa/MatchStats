@@ -783,7 +783,7 @@ namespace MatchStats.Test.ViewModels
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
-            fixture.PlayerOneFirstServeInActionCommand.ActionCommand.Execute(null);
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
 
             Assert.IsNotNull(fixture.CurrMatch.MatchStats.FirstOrDefault(), "Match stats should have one element in it");
             Assert.IsTrue(fixture.CurrMatch.MatchStats.First().Reason == StatDescription.FirstServeIn);
@@ -814,9 +814,9 @@ namespace MatchStats.Test.ViewModels
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
-            fixture.FirstServeInCommand.Execute(null);
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
 
-            Assert.IsFalse(fixture.FirstServeInCommand.CanExecute(null));
+            Assert.IsFalse(fixture.PlayerOneFirstServeInCommand.CanExecute(null));
         }
   
         [TestMethod]
@@ -838,7 +838,7 @@ namespace MatchStats.Test.ViewModels
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
-            fixture.FirstServeOutCommand.Execute(null);
+            fixture.PlayerOneFirstServeOutCommand.Execute(null);
 
             Assert.IsTrue(fixture.PlayerOneSecondServeInCommand.CanExecute(null));
         }
@@ -850,8 +850,8 @@ namespace MatchStats.Test.ViewModels
             var fixture = BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
 
-            Assert.IsFalse(fixture.FirstServeInCommand.CanExecute(null));
-            Assert.IsFalse(fixture.FirstServeOutCommand.CanExecute(null));
+            Assert.IsFalse(fixture.PlayerOneFirstServeInCommand.CanExecute(null));
+            Assert.IsFalse(fixture.PlayerOneFirstServeOutCommand.CanExecute(null));
         }
 
 
@@ -863,16 +863,16 @@ namespace MatchStats.Test.ViewModels
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
-            fixture.FirstServeInCommand.Execute(null);
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
-            fixture.FirstServeInCommand.Execute(null);
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
-            fixture.FirstServeInCommand.Execute(null);
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
-            Assert.IsTrue(fixture.FirstServeInCommand.CanExecute(null));
+            Assert.IsTrue(fixture.PlayerOneFirstServeInCommand.CanExecute(null));
         }
 
         [TestMethod]
@@ -957,7 +957,7 @@ namespace MatchStats.Test.ViewModels
             var fixture = CreateNewMatchFixture();
 
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
-            fixture.FirstServeInCommand.Execute(null);
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
 
             Assert.IsFalse(fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").IsEnabled, "Double fault Command for Player One should be disabled immediately after it has been called");
