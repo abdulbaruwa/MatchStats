@@ -951,6 +951,31 @@ namespace MatchStats.Test.ViewModels
             Assert.IsFalse(fixture.PlayerTwoActions.Any(x => x.IsEnabled), "All Commands for Player Two should be disabled on start up");
         }
 
+        [TestMethod]
+        public void ShouldDisablePlayerOneDoubleFaultActionImmediatelyAfterPlayerOneHasDoubleFaulted()
+        {
+            var fixture = CreateNewMatchFixture();
+
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+            fixture.FirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
+
+            Assert.IsFalse(fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").IsEnabled, "Double fault Command for Player One should be disabled immediately after it has been called");
+        }
+
+        [TestMethod]
+        public void ShouldDisablePlayerTwoDoubleFaultActionImmediatelyAfterPlayerTwoHasDoubleFaulted()
+        {
+            var fixture = CreateNewMatchFixture();
+
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+            fixture.PlayerTwoFirsrtServeOutCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
+
+            Assert.IsFalse(fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").IsEnabled, "Double fault Command for Player One should be disabled immediately after it has been called");
+            
+        }
+
         private static MatchScoreViewModel CreateNewMatchFixture()
         {
             var blobCache = RegisterComponents();
