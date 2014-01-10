@@ -260,6 +260,7 @@
                                 <Button 
                                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                                     AutomationProperties.Name="Group Title"
+                                    IsEnabled ="{Binding IsEnabled}"
                                     Command="{Binding ActionCommand}">
                                     <StackPanel Orientation="Vertical">
                                         <TextBlock Text="{Binding Name}"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center"/>

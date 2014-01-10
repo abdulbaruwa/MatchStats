@@ -66,13 +66,50 @@ namespace MatchStats.ViewModels
         {
             this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.Score.IsMatchOver,
                 (server, isMatchOver) => server.Value != null && isMatchOver.Value == false)
-                .Do(x =>
+                .Subscribe(x =>
                 {
-                    foreach (var command in PlayerOneActions)
+                    foreach (var command in PlayerOneActions.Where(y => y.Name != "DoubleFault" && y.IsEnabled == false))
                     {
-                        command.IsEnabled = false;
+                        command.IsEnabled = true;
+                    }
+
+                    foreach (var command in PlayerTwoActions.Where(y => y.Name != "DoubleFault" && y.IsEnabled == false))
+                    {
+                        command.IsEnabled = true;
+                    }
+
+                    var lastStat = CurrMatch.MatchStats.LastOrDefault();
+
+                    if (CurrentServer != null && CurrentServer.IsPlayerOne)
+                    {
+                        if (lastStat != null && lastStat.Reason == StatDescription.FirstServeOut)
+                            {
+                                PlayerOneActions.First(y => y.Name == "DoubleFault").IsEnabled = true;
+                                PlayerTwoActions.First(y => y.Name == "DoubleFault").IsEnabled = false;
+                        }
+                    }
+
+                    if (CurrentServer != null && (!CurrentServer.IsPlayerOne))
+                    {
+                        if (lastStat != null && lastStat.Reason == StatDescription.FirstServeOut)
+                        {
+                            PlayerTwoActions.First(y => y.Name == "DoubleFault").IsEnabled = true;
+                            PlayerOneActions.First(y => y.Name == "DoubleFault").IsEnabled = false;
+                        } 
                     }
                 });
+            //.Do(x =>
+            //{
+
+            //    foreach (var command in PlayerOneActions)
+            //    {
+            //        command.IsEnabled = x;
+            //    }
+            //    foreach (var command in PlayerTwoActions)
+            //    {
+            //        command.IsEnabled = x;
+            //    }
+            //});
         }
 
         private void InitializeCurrentServerCommands()
@@ -172,6 +209,7 @@ namespace MatchStats.ViewModels
             _matchStatus = this.WhenAny(x => x.CurrMatch.Score.Status, x => x.Value)
                 .Select(x => x.GetAttribute<DisplayAttribute>().Name)
                 .ToProperty(this, x => x.MatchStatus, "");
+
 
             this.WhenAny(x => x.CurrMatch.Score.CurrentServer, x => x.Value)
                 .Where(x => x != null)
@@ -309,12 +347,6 @@ namespace MatchStats.ViewModels
             get { return _RandomGuid; }
             set { this.RaiseAndSetIfChanged(ref _RandomGuid, value); }
         }
-        
-        //private ObservableAsPropertyHelper<List<IGameActionViewModel>> _playerOneActions;
-        //public List<IGameActionViewModel> PlayerOneCommands
-        //{
-        //    get { return _playerOneActions.Value; }
-        //}
 
         [DataMember] private Player _currentServer;
         public Player CurrentServer
@@ -425,12 +457,6 @@ namespace MatchStats.ViewModels
         public string PlayerTwoFirstSet
         {
            get { return _playerTwoFirstSet.Value; }
-        }
-
-        [DataMember] private ObservableAsPropertyHelper<bool> _ServerSeleced;
-        public bool ServerSelected
-        {
-            get { return _ServerSeleced.Value; }
         }
 
         [DataMember] private ObservableAsPropertyHelper<string> _matchStatus;

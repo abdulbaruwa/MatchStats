@@ -943,6 +943,14 @@ namespace MatchStats.Test.ViewModels
             Assert.IsFalse(fixture.PlayerTwoActions.First(x => x.Name == "DoubleFault").IsEnabled, "Double fault action for player two should be false when player one is the current server");
         }
 
+        [TestMethod] 
+        public void ShouldDisablePlayerTwoCommandOnStartUp()
+        {
+            var fixture = CreateNewMatchFixture();
+            Assert.IsFalse(fixture.PlayerOneActions.Any(x => x.IsEnabled), "All Commands for Player Two should be disabled on start up");
+            Assert.IsFalse(fixture.PlayerTwoActions.Any(x => x.IsEnabled), "All Commands for Player Two should be disabled on start up");
+        }
+
         private static MatchScoreViewModel CreateNewMatchFixture()
         {
             var blobCache = RegisterComponents();
