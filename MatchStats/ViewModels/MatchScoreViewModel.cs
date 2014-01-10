@@ -98,18 +98,23 @@ namespace MatchStats.ViewModels
                         } 
                     }
                 });
-            //.Do(x =>
-            //{
 
-            //    foreach (var command in PlayerOneActions)
-            //    {
-            //        command.IsEnabled = x;
-            //    }
-            //    foreach (var command in PlayerTwoActions)
-            //    {
-            //        command.IsEnabled = x;
-            //    }
-            //});
+            // Disable the Double Fault Action immediately after a double fault for Player One
+            this.WhenAny(x => x.CurrMatch.MatchStats, x => x.Value.LastOrDefault())
+                .Where(x => x != null && x.Server.IsPlayerOne && x.Reason == StatDescription.DoubleFault)
+                .Subscribe(_ =>
+                {
+                    PlayerOneActions.First(x => x.Name == "DoubleFault").IsEnabled = false;
+                });
+
+            // Disable the Double Fault Action immediately after a double fault Player Two
+            this.WhenAny(x => x.CurrMatch.MatchStats, x => x.Value.LastOrDefault())
+                .Where(x => x != null && (! x.Server.IsPlayerOne) && x.Reason == StatDescription.DoubleFault)
+                .Subscribe(_ =>
+                {
+                    PlayerTwoActions.First(x => x.Name == "DoubleFault").IsEnabled = false;
+                });
+
         }
 
         private void InitializeCurrentServerCommands()
