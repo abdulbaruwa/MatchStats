@@ -24,7 +24,7 @@ namespace MatchStats.ViewModels
         public IReactiveCommand PlayerOneFirstServeInCommand { get; protected set; }
         public IReactiveCommand PlayerOneFirstServeOutCommand { get; protected set; }
         public IReactiveCommand PlayerOneSecondServeInCommand { get; protected set; }
-        public IReactiveCommand PlayerTwoFirsrtServeInCommand { get; protected set; }
+        public IReactiveCommand PlayerTwoFirstServeInCommand { get; protected set; }
         public IReactiveCommand PlayerTwoFirsrtServeOutCommand { get; protected set; }
         public IReactiveCommand PlayerTwoSecondServeInCommand { get; protected set; }
 
@@ -112,6 +112,16 @@ namespace MatchStats.ViewModels
                     PlayerTwoActions.First(x => x.Name == "DoubleFault").IsEnabled = false;
                 });
 
+            // Disable other actions after a point is added for a player
+            this.WhenAny(x => x.CurrMatch.MatchStats, x => x.Value.LastOrDefault())
+                .Where(x => x != null && x.PointWonLostOrNone != PointWonLostOrNone.NotAPoint)
+                .Subscribe(_ =>
+                {
+                    foreach (var action  in PlayerOneActions.Where(x => x.Name != "DoubleFault"))
+                    {
+                        action.IsEnabled = false;
+                    }
+                });
         }
 
         private void InitializeCurrentServerCommands()
@@ -243,8 +253,8 @@ namespace MatchStats.ViewModels
             PlayerOneFirstServeOutCommand.Subscribe(_ => new FirstServeOutCommandViewModel(null).ActionCommand.Execute(null));
             PlayerOneSecondServeInCommand.Subscribe(_ => new SecondServeInCommandViewModel(null).ActionCommand.Execute(null));
 
-            PlayerTwoFirsrtServeInCommand = new ReactiveCommand(FirstServePending(false));
-            PlayerTwoFirsrtServeInCommand.Subscribe(
+            PlayerTwoFirstServeInCommand = new ReactiveCommand(FirstServePending(false));
+            PlayerTwoFirstServeInCommand.Subscribe(
                 _ => new FirstServeInCommandViewModel(CurrentServer).ActionCommand.Execute(null));
 
             PlayerTwoFirsrtServeOutCommand = new ReactiveCommand(FirstServePending(false));

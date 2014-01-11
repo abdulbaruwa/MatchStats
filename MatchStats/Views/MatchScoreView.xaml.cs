@@ -34,7 +34,7 @@ namespace MatchStats.Views
             this.BindCommand(ViewModel, x => x.PlayerOneFirstServeOutCommand, x => x.PlayerOneFirstServeOut);
             this.BindCommand(ViewModel, x => x.PlayerOneSecondServeInCommand, x => x.PlayerOneSecondServe);
 
-            this.BindCommand(ViewModel, x => x.PlayerTwoFirsrtServeInCommand, x => x.PlayerTwoFirstServe);
+            this.BindCommand(ViewModel, x => x.PlayerTwoFirstServeInCommand, x => x.PlayerTwoFirstServe);
             this.BindCommand(ViewModel, x => x.PlayerTwoFirsrtServeOutCommand, x => x.PlayerTwoFirstServeOut);
             this.BindCommand(ViewModel, x => x.PlayerTwoSecondServeInCommand, x => x.PlayerTwoSecondServe);
         }

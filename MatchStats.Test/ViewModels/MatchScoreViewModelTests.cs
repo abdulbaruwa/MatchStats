@@ -800,10 +800,10 @@ namespace MatchStats.Test.ViewModels
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
-            fixture.PlayerTwoFirsrtServeInCommand.Execute(null);
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
-            Assert.IsTrue(fixture.PlayerTwoFirsrtServeInCommand.CanExecute(null));
+            Assert.IsTrue(fixture.PlayerTwoFirstServeInCommand.CanExecute(null));
         }
 
         [TestMethod]
@@ -886,7 +886,7 @@ namespace MatchStats.Test.ViewModels
             fixture.PlayerTwoSecondServeInCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
-            Assert.IsTrue(fixture.PlayerTwoFirsrtServeInCommand.CanExecute(null));
+            Assert.IsTrue(fixture.PlayerTwoFirstServeInCommand.CanExecute(null));
         }
 
 
@@ -898,7 +898,7 @@ namespace MatchStats.Test.ViewModels
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
             Assert.IsFalse(fixture.PlayerTwoSecondServeInCommand.CanExecute(null));
-            Assert.IsFalse(fixture.PlayerTwoFirsrtServeInCommand.CanExecute(null));
+            Assert.IsFalse(fixture.PlayerTwoFirstServeInCommand.CanExecute(null));
             Assert.IsFalse(fixture.PlayerTwoFirsrtServeOutCommand.CanExecute(null));
         }
 
@@ -908,7 +908,7 @@ namespace MatchStats.Test.ViewModels
             var fixture = CreateNewMatchFixture();
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
-            fixture.PlayerTwoFirsrtServeInCommand.Execute(null);
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
             Assert.IsNotNull(fixture.MatchStatus.FirstOrDefault());
         }
 
@@ -974,6 +974,30 @@ namespace MatchStats.Test.ViewModels
 
             Assert.IsFalse(fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").IsEnabled, "Double fault Command for Player One should be disabled immediately after it has been called");
             
+        }
+
+        [TestMethod]
+        public void ShouldDisableAllActionsForPlayerOneAfterAPointIsScoredTillAfterAServeIsIn()
+        {
+            var fixture = CreateNewMatchFixture();
+            
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            Assert.IsFalse(fixture.PlayerOneActions.Any(x => x.Name != "DoubleFault" && x.IsEnabled), "Actions for Player one should be disabled till after a successful server by the current server");
+        }
+
+        [TestMethod]
+        public void ShoudDisableAllActionsForPlayerTwoAfterAPointIsScoredTillAfterAServeIsIn()
+        {
+            var fixture = CreateNewMatchFixture();
+
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            Assert.IsFalse(fixture.PlayerTwoActions.Any(x => x.Name != "DoubleFault" && x.IsEnabled), "Actions for Player two should be disabled till after a successful server by the current server");
         }
 
         private static MatchScoreViewModel CreateNewMatchFixture()
