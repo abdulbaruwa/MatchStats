@@ -52,7 +52,10 @@ namespace MatchStats.Model
                         result = "40";
                         break;
                     case 4:
-                        result = "-";
+                        result = This.CurrentGame().PlayerTwoScore < 4 ? "Adv" : "40";
+                        break;
+                    default:
+                        result = score > This.CurrentGame().PlayerTwoScore ? "Adv" : "40";
                         break;
                 }
             }
@@ -88,7 +91,10 @@ namespace MatchStats.Model
                         result = "40";
                         break;
                     case 4:
-                        result = "-";
+                        result = This.CurrentGame().PlayerOneScore < 4 ? "Adv" : "40";
+                        break;
+                    default:
+                        result = score > This.CurrentGame().PlayerOneScore ? "Adv" : "40";
                         break;
                 }
             }

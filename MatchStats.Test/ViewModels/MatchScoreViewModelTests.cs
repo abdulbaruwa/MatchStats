@@ -1024,6 +1024,183 @@ namespace MatchStats.Test.ViewModels
             Assert.IsFalse(fixture.PlayerTwoActions.First(x => x.Name == "DoubleFault").IsEnabled, "Player Two Double Fault action should be disable after a second serve has been successful");
         }
 
+        [TestMethod]
+        public void ShouldSetPlayerTwoCurrentScoreTo_Adv_IfTheScoreIsAdvantageToPlayerTwo()
+        {
+            var fixture = CreateNewMatchFixture();
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            // Set score to 40-40
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            // Score is Advantage to Player Two
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            Assert.AreEqual("Adv", fixture.PlayerTwoCurrentGame, "The current score should be advantage for Player Two");
+            Assert.AreEqual("40", fixture.PlayerOneCurrentGame, "The current score should be 40 for Player One");
+        }
+
+        [TestMethod]
+        public void ShouldSetScoreTo4040WhenPlayingNormalDeuceAndAdvantageHasBeenCancelledOut()
+        {
+            var fixture = CreateNewMatchFixture();
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            // Set score to 40-40
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            // Score is Advantage to Player Two
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            // Score is now Deuce
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            Assert.AreEqual("40", fixture.PlayerTwoCurrentGame, "The current score should be 40 for Player Two");
+            Assert.AreEqual("40", fixture.PlayerOneCurrentGame, "The current score should be 40 for Player One");
+
+        }
+
+        [TestMethod]
+        public void ShouldSetScoreTo4040WhenPlayingNormalDeuceAndAdvantageHasBeenCancelledOutAfterTwoDeuces()
+        {
+            var fixture = CreateNewMatchFixture();
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            // Set score to 40-40
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            // Score is Advantage to Player Two
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            // Score is now Deuce
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            // Score is Advantage to Player Two
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            // Score is now Deuce
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            // Score is Advantage to Player Two
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            // Score is now Deuce
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            Assert.AreEqual("40", fixture.PlayerTwoCurrentGame, "The current score should be 40 for Player Two");
+            Assert.AreEqual("40", fixture.PlayerOneCurrentGame, "The current score should be 40 for Player One");
+
+        }
+
+        [TestMethod]
+        public void ShouldSetScoreTo4040WhenPlayingNormalDeuceAndAdvantageHasBeenCancelledOutAfterTwoDeucesAndPlayerOneIsServing()
+        {
+            var fixture = CreateNewMatchFixture();
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            // Set score to 40-40
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            // Score is Advantage to Player Two
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            // Score is now Deuce
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            // Score is Advantage to Player Two
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            // Score is now Deuce
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            // Score is Advantage to Player Two
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            // Score is now Deuce
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            Assert.AreEqual("40", fixture.PlayerTwoCurrentGame, "The current score should be 40 for Player Two");
+            Assert.AreEqual("40", fixture.PlayerOneCurrentGame, "The current score should be 40 for Player One");
+
+        }
+
         private static MatchScoreViewModel CreateNewMatchFixture()
         {
             var blobCache = RegisterComponents();
