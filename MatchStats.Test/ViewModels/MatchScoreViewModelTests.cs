@@ -1001,6 +1001,27 @@ namespace MatchStats.Test.ViewModels
         }
 
         [TestMethod]
+        public void ShoudDisableAllActionsForPlayerTwoAfterPointsAreScoredByBothPlayersTillAfterAServeIsIn()
+        {
+            var fixture = CreateNewMatchFixture();
+
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            Assert.IsFalse(fixture.PlayerTwoActions.Any(x => x.Name != "DoubleFault" && x.IsEnabled), "Actions for Player two should be disabled till after a successful server by the current server");
+        }
+
+        [TestMethod]
         public void ShouldEnableActionCommandsExceptDoubleFaultForBothPlayersOnFirstServeIn()
         {
             var fixture = CreateNewMatchFixture();

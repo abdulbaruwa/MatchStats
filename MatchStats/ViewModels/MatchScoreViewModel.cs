@@ -56,7 +56,29 @@ namespace MatchStats.ViewModels
 
             ActionCommandsEnableBindings();
 
-            MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch").Subscribe(x => CurrMatch = x);
+            MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch").Subscribe(x =>
+            {
+
+                CurrMatch = x;
+                ToggleActionsOffForBothPlayers();
+            });
+            MessageBus.Current.Listen<Match>("NonPointUpdateForCurrentMatch").Subscribe(x =>
+            {
+                CurrMatch = x;
+            });
+        }
+
+        private void ToggleActionsOffForBothPlayers()
+        {
+            foreach (var action in PlayerOneActions.Where(x => x.Name != "DoubleFault"))
+            {
+                action.IsEnabled = false;
+            }
+
+            foreach (var action in PlayerTwoActions.Where(x => x.Name != "DoubleFault"))
+            {
+                action.IsEnabled = false;
+            }
         }
 
         private void ActionCommandsEnableBindings()
@@ -122,22 +144,22 @@ namespace MatchStats.ViewModels
                 });
 
             // Disable other actions after a point is added for a player
-            this.WhenAny(x => x.CurrMatch.MatchStats, x => x.Value.LastOrDefault())
-                .Where(x => x != null && x.PointWonLostOrNone != PointWonLostOrNone.NotAPoint)
-                .Subscribe(_ =>
-                {
-                    foreach (var action  in PlayerOneActions.Where(x => x.Name != "DoubleFault"))
-                    {
-                        action.IsEnabled = false;
-                    }
+            //this.WhenAny(x => x.CurrMatch.MatchStats, x => x.Value.LastOrDefault())
+            //    .Where(x => x != null && x.PointWonLostOrNone != PointWonLostOrNone.NotAPoint)
+            //    .Subscribe(_ =>
+            //    {
+            //        foreach (var action  in PlayerOneActions.Where(x => x.Name != "DoubleFault"))
+            //        {
+            //            action.IsEnabled = false;
+            //        }
 
-                    foreach (var action  in PlayerTwoActions.Where(x => x.Name != "DoubleFault"))
-                    {
-                        action.IsEnabled = false;
-                    }
+            //        foreach (var action  in PlayerTwoActions.Where(x => x.Name != "DoubleFault"))
+            //        {
+            //            action.IsEnabled = false;
+            //        }
 
 
-                });
+            //    });
         }
 
         private void InitializeCurrentServerCommands()

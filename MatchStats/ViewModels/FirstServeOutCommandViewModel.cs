@@ -46,7 +46,7 @@ namespace MatchStats.ViewModels
 
             currentMatch.MatchStats.Add(matchStat);
             matchStatsApi.SaveMatch(currentMatch);
-            MessageBus.Current.SendMessage(currentMatch, "PointUpdateForCurrentMatch");
+            MessageBus.Current.SendMessage(currentMatch, "NonPointUpdateForCurrentMatch");
         }
 
         public bool IsEnabled { get; set; }
