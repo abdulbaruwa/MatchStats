@@ -133,7 +133,9 @@ namespace MatchStats.Model
         DoubleFault,
         GamePoint,
         BreakPoint,
-        GameOver
+        GameOver,
+        FirstServeAce,
+        SecondServeAce
     }
 
     public enum NonScoreActionReason

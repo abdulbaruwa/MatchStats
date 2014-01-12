@@ -15,14 +15,15 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
     public class ActionsViewModelTests
     {
 
-        //[TestMethod]
-        //public void ShouldEnableAceActionCommandWhenAPlayerIsServing()
-        //{
-        //    var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
+        [TestMethod]
+        public void ShouldEnableAceActionCommandWhenAPlayerIsServing()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
-        //    fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
 
-        //    Assert.IsTrue(fixture.PlayerOneActions.Any(x => x.Name == "FirstServeAce" && x.IsEnabled));
-        //}
+            Assert.IsTrue(fixture.PlayerOneActions.Any(x => x.Name == "AceServe" && x.IsEnabled));
+        }
     }
 }

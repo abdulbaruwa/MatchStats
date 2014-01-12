@@ -290,6 +290,7 @@ namespace MatchStats.ViewModels
         {
             var listOfActions = new List<IGameActionViewModel>
             {
+                new AceServeCommandViewModel(player),
                 new DoubleFaultCommandViewModel(player),
                 new ForeHandWinnerCommandViewModel(player),
             };

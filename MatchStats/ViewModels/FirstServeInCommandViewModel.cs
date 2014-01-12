@@ -11,7 +11,7 @@ namespace MatchStats.ViewModels
         {
             Player = player;
             Name = "FirstServeIn";
-            DisplayName = "Double Fault";
+            DisplayName = "First Serve In";
             ActionCommand = new ReactiveCommand();
             ActionCommand.Subscribe(x => Execute());
         }

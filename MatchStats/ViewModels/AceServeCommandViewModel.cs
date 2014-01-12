@@ -1,17 +1,17 @@
-﻿using System;
+using System;
 using System.Linq;
 using MatchStats.Model;
 using ReactiveUI;
 
 namespace MatchStats.ViewModels
 {
-    public class DoubleFaultCommandViewModel : ReactiveObject, IGameActionViewModel
+    public class AceServeCommandViewModel : ReactiveObject, IGameActionViewModel
     {
-        public DoubleFaultCommandViewModel(Player player = null)
+        public AceServeCommandViewModel(Player player = null)
         {
             Player = player ?? new Player();
-            Name = "DoubleFault";
-            DisplayName = "Double Fault";
+            Name = "Ace Serve";
+            DisplayName = "Ace Serve";
             ActionCommand = new ReactiveCommand();
             ActionCommand.Subscribe(x => Execute());
         }
@@ -29,12 +29,22 @@ namespace MatchStats.ViewModels
         public string DisplayName { get; set; }
         public Player Player { get; set; }
 
+        private StatDescription DetermineIfFirstOrSecondServeAce(Match currentMatch)
+        {
+            var lastStat = currentMatch.MatchStats.LastOrDefault();
+            if (lastStat != null && lastStat.Reason == StatDescription.FirstServeOut &&
+                lastStat.Server.FullName == currentMatch.Score.CurrentServer.FullName)
+            {
+                return StatDescription.SecondServeAce;
+            }
+            return StatDescription.FirstServeAce;
+        }
         public void Execute()
         {
             //Update currentMatch for this command
             Match currentMatch = null;
             var matchStatsApi = RxApp.DependencyResolver.GetService<IMatchStatsApi>();
-                //Can this be passed in when the command is called?
+            //Can this be passed in when the command is called?
             matchStatsApi.GetCurrentMatch().Subscribe(x => currentMatch = x);
 
             Game currentGame = null;
@@ -47,7 +57,7 @@ namespace MatchStats.ViewModels
             var matchStat = new MatchStat
             {
                 PointWonLostOrNone = PointWonLostOrNone.PointWon,
-                Reason = StatDescription.DoubleFault,
+                Reason = DetermineIfFirstOrSecondServeAce(currentMatch),
                 Server = currentMatch.Score.CurrentServer
             };
 
@@ -55,13 +65,13 @@ namespace MatchStats.ViewModels
             {
                 if (Player.IsPlayerOne)
                 {
-                    matchStat.Player = currentMatch.PlayerTwo;
-                    currentGame.PlayerTwoScore += 1;
+                    matchStat.Player = currentMatch.PlayerOne;
+                    currentGame.PlayerOneScore += 1;
                 }
                 else
                 {
-                    matchStat.Player = currentMatch.PlayerOne;
-                    currentGame.PlayerOneScore += 1;
+                    matchStat.Player = currentMatch.PlayerTwo;
+                    currentGame.PlayerTwoScore += 1;
                 }
             }
 
@@ -71,5 +81,4 @@ namespace MatchStats.ViewModels
             MessageBus.Current.SendMessage(currentMatch, "PointUpdateForCurrentMatch");
         }
     }
-
 }
