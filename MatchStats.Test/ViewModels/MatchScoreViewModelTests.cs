@@ -1000,6 +1000,30 @@ namespace MatchStats.Test.ViewModels
             Assert.IsFalse(fixture.PlayerTwoActions.Any(x => x.Name != "DoubleFault" && x.IsEnabled), "Actions for Player two should be disabled till after a successful server by the current server");
         }
 
+        [TestMethod]
+        public void ShouldEnableActionCommandsExceptDoubleFaultForBothPlayersOnFirstServeIn()
+        {
+            var fixture = CreateNewMatchFixture();
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+
+            Assert.IsFalse(fixture.PlayerOneActions.Any(x => x.Name != "DoubleFault" && x.IsEnabled == false));
+        }
+
+        [TestMethod]
+        public void ShouldEnableDisableDoubleFaultCommandWhenSecondServeIsIn()
+        {
+            var fixture = CreateNewMatchFixture();
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeOutCommand.Execute(null);
+            fixture.PlayerOneSecondServeInCommand.Execute(null);
+
+            Assert.IsFalse(fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").IsEnabled, "Player One Double Fault action should be disabled after a second serve has been successful");
+            Assert.IsFalse(fixture.PlayerTwoActions.First(x => x.Name == "DoubleFault").IsEnabled, "Player Two Double Fault action should be disable after a second serve has been successful");
+        }
+
         private static MatchScoreViewModel CreateNewMatchFixture()
         {
             var blobCache = RegisterComponents();

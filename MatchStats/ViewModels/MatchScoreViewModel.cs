@@ -65,24 +65,13 @@ namespace MatchStats.ViewModels
                 (server, isMatchOver) => server.Value != null && isMatchOver.Value == false)
                 .Subscribe(x =>
                 {
-                    foreach (var command in PlayerOneActions.Where(y => y.Name != "DoubleFault" && y.IsEnabled == false))
-                    {
-                        command.IsEnabled = true;
-                    }
-
-                    foreach (var command in PlayerTwoActions.Where(y => y.Name != "DoubleFault" && y.IsEnabled == false))
-                    {
-                        command.IsEnabled = true;
-                    }
-
                     var lastStat = CurrMatch.MatchStats.LastOrDefault();
-
                     if (CurrentServer != null && CurrentServer.IsPlayerOne)
                     {
                         if (lastStat != null && lastStat.Reason == StatDescription.FirstServeOut)
-                            {
-                                PlayerOneActions.First(y => y.Name == "DoubleFault").IsEnabled = true;
-                                PlayerTwoActions.First(y => y.Name == "DoubleFault").IsEnabled = false;
+                        {
+                            PlayerOneActions.First(y => y.Name == "DoubleFault").IsEnabled = true;
+                            PlayerTwoActions.First(y => y.Name == "DoubleFault").IsEnabled = false;
                         }
                     }
 
@@ -112,6 +101,26 @@ namespace MatchStats.ViewModels
                     PlayerTwoActions.First(x => x.Name == "DoubleFault").IsEnabled = false;
                 });
 
+            // Enable Other Actions once a serve is in
+            this.WhenAny(x => x.CurrMatch.MatchStats, x => x.Value.LastOrDefault())
+                .Where(x => x != null && (x.Reason == StatDescription.FirstServeIn || x.Reason == StatDescription.SecondServeIn))
+                .Subscribe(_ =>
+                {
+                    foreach (var action in PlayerOneActions.Where(x => x.Name != "DoubleFault").Concat(PlayerTwoActions.Where(x => x.Name != "DoubleFault")))
+                    {
+                        action.IsEnabled = true;
+                    }
+
+                    foreach (
+                        var action in
+                            PlayerOneActions.Where(x => x.Name == "DoubleFault")
+                                .Concat(PlayerTwoActions.Where(x => x.Name == "DoubleFault")))
+                    {
+                        action.IsEnabled = false;
+                    }
+
+                });
+
             // Disable other actions after a point is added for a player
             this.WhenAny(x => x.CurrMatch.MatchStats, x => x.Value.LastOrDefault())
                 .Where(x => x != null && x.PointWonLostOrNone != PointWonLostOrNone.NotAPoint)
@@ -121,6 +130,13 @@ namespace MatchStats.ViewModels
                     {
                         action.IsEnabled = false;
                     }
+
+                    foreach (var action  in PlayerTwoActions.Where(x => x.Name != "DoubleFault"))
+                    {
+                        action.IsEnabled = false;
+                    }
+
+
                 });
         }
 
