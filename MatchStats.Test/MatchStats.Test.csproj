@@ -126,7 +126,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ViewModels\FakeMatchStatsApi.cs" />
     <Compile Include="ViewModels\MatchesPlayedViewModelTests.cs" />
-    <Compile Include="ViewModels\MatchScoreViewModelTests.cs" />
+    <Compile Include="ViewModels\MatchScoreViewModelTests\ActionsViewModelTests.cs" />
+    <Compile Include="ViewModels\MatchScoreViewModelTests\MatchScoreViewModelTestHelper.cs" />
+    <Compile Include="ViewModels\MatchScoreViewModelTests\MatchScoreViewModelTests.cs" />
     <Compile Include="ViewModels\NewMatchUserControlViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>

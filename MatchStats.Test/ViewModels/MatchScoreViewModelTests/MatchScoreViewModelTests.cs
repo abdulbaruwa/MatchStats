@@ -8,7 +8,7 @@ using MatchStats.ViewModels;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using ReactiveUI;
 
-namespace MatchStats.Test.ViewModels
+namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
 {
     [TestClass]
     public class MatchScoreViewModelTests
@@ -17,7 +17,7 @@ namespace MatchStats.Test.ViewModels
         public void ShouldSaveGivenGameToListOfGames()
         {
             //Arrange
-            var blobCache = RegisterComponents();
+            var blobCache = MatchScoreViewModelTestHelper.RegisterComponents();
             var currentListOfMatches = new List<Match>();
             var newListOfMatchesAfterSave = new List<Match>();
 
@@ -27,7 +27,7 @@ namespace MatchStats.Test.ViewModels
                    //Ignore the exception that the list may not exist. 
                 });
 
-            var fixture = BuildAMatchToScore();
+            var fixture = MatchScoreViewModelTestHelper.BuildAMatchToScore();
 
             //Act => Send message with Match details
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);     
@@ -42,7 +42,7 @@ namespace MatchStats.Test.ViewModels
         public void ShouldSaveMatchInCurrentMatchEntity()
         {
             //Arrange
-            var blobCache = RegisterComponents();
+            var blobCache = MatchScoreViewModelTestHelper.RegisterComponents();
 
             var currentListOfMatches = new List<Match>();
             blobCache.GetObjectAsync<List<Match>>("MyMatches").Subscribe(currentListOfMatches.AddRange,
@@ -51,7 +51,7 @@ namespace MatchStats.Test.ViewModels
                     //Ignore the exception that the list my not exist. 
                 });
 
-            var fixture = BuildAMatchToScore();
+            var fixture = MatchScoreViewModelTestHelper.BuildAMatchToScore();
 
             //Act => 
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
@@ -65,8 +65,8 @@ namespace MatchStats.Test.ViewModels
         public void ShouldAddPointForOpponentOnDoubleFaultAction()
         {
             //Arrange
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var blobCache = MatchScoreViewModelTestHelper.RegisterComponents();
+            var fixture = MatchScoreViewModelTestHelper.BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
 
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
@@ -83,8 +83,8 @@ namespace MatchStats.Test.ViewModels
         public void ShouldAddPointForPlayerOneIfOpponentDoubleFaults()
         {
             //Arrange
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var blobCache = MatchScoreViewModelTestHelper.RegisterComponents();
+            var fixture = MatchScoreViewModelTestHelper.BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
 
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
@@ -102,8 +102,8 @@ namespace MatchStats.Test.ViewModels
         public void ShouldAddPointForPlayerOneForForeHandWinner()
         {
             //Arrange
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var blobCache = MatchScoreViewModelTestHelper.RegisterComponents();
+            var fixture = MatchScoreViewModelTestHelper.BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
 
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
@@ -128,8 +128,8 @@ namespace MatchStats.Test.ViewModels
             //(1)15, (2)30, (3)40, (4) 50 (5)
             // 
 
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var blobCache = MatchScoreViewModelTestHelper.RegisterComponents();
+            var fixture = MatchScoreViewModelTestHelper.BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
             //Act
@@ -150,8 +150,8 @@ namespace MatchStats.Test.ViewModels
         public void ShouldSetGameStatusAsDeuceAt4040Game()
         {
 
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var blobCache = MatchScoreViewModelTestHelper.RegisterComponents();
+            var fixture = MatchScoreViewModelTestHelper.BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
@@ -173,8 +173,8 @@ namespace MatchStats.Test.ViewModels
         public void ShouldSetGameStatusAsBreakPointIfAT3040Game()
         {
 
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var blobCache = MatchScoreViewModelTestHelper.RegisterComponents();
+            var fixture = MatchScoreViewModelTestHelper.BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
@@ -196,8 +196,8 @@ namespace MatchStats.Test.ViewModels
         public void ShouldSetGameStatusAsGamePointIfAT4030Game()
         {
 
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var blobCache = MatchScoreViewModelTestHelper.RegisterComponents();
+            var fixture = MatchScoreViewModelTestHelper.BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
@@ -219,8 +219,8 @@ namespace MatchStats.Test.ViewModels
         public void ShouldSetGameStatusAsGameIfAT5030Game()
         {
 
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var blobCache = MatchScoreViewModelTestHelper.RegisterComponents();
+            var fixture = MatchScoreViewModelTestHelper.BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
@@ -244,8 +244,8 @@ namespace MatchStats.Test.ViewModels
         public void ShouldSetGameStatusAsGameIfAt3050Game()
         {
 
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var blobCache = MatchScoreViewModelTestHelper.RegisterComponents();
+            var fixture = MatchScoreViewModelTestHelper.BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
@@ -268,8 +268,8 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldSetGameStatusAsAdvantageAt15UpAfterDeuce()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var blobCache = MatchScoreViewModelTestHelper.RegisterComponents();
+            var fixture = MatchScoreViewModelTestHelper.BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
@@ -294,8 +294,8 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldSetGameStatusAsGamePointAt4040SuddenDeathDeuce()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var blobCache = MatchScoreViewModelTestHelper.RegisterComponents();
+            var fixture = MatchScoreViewModelTestHelper.BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SelectedDeuceFormat = DeuceFormat.SuddenDeath;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
@@ -326,8 +326,8 @@ namespace MatchStats.Test.ViewModels
         public void ShouldSetIsCurrentGameStatusToFalseAndInitializeNewGameWhenIfAt3050Game()
         {
 
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var blobCache = MatchScoreViewModelTestHelper.RegisterComponents();
+            var fixture = MatchScoreViewModelTestHelper.BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
@@ -351,24 +351,24 @@ namespace MatchStats.Test.ViewModels
         public void ShouldStartNewSetWhenASetIsWon()
         {
 
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var blobCache = MatchScoreViewModelTestHelper.RegisterComponents();
+            var fixture = MatchScoreViewModelTestHelper.BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             //Act  --> PlayerOne wins 4 games to 1
-            AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
             //1-1
-            AddAGameForPlayerTwo(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
 
             //2-1
-            AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
 
             //3-1
-            AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
 
             //Set wont 4-1 to player one
-            AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
 
             //Assert
             Assert.IsNotNull(fixture.CurrMatch.Score.Sets.First().Winner, "Set Winner should not be Null");
@@ -379,31 +379,30 @@ namespace MatchStats.Test.ViewModels
         public void ShouldStartNewSetWhenASetIsWonForLongSetMatch()
         {
 
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.NewMatchControlViewModel.SelectedSetsFormat = SetsFormat.LongSetSix;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             //Act  --> PlayerOne wins 4 games to 1
-            AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
             //1-1
-            AddAGameForPlayerTwo(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
 
             //2-1
-            AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
 
             //3-1
-            AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
 
             //4-1
-            AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
 
             //5-1
-            AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
 
             //6-1
-            AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
 
             //Assert
             Assert.IsNotNull(fixture.CurrMatch.Score.Sets.First().Winner, "Set Winner should not be Null");
@@ -414,22 +413,20 @@ namespace MatchStats.Test.ViewModels
         public void ShouldStartTieBreakerifGamesAreEven()
         {
 
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
-            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
-            AddAGameForPlayerOne(fixture);
-            AddAGameForPlayerTwo(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
 
-            AddAGameForPlayerOne(fixture);
-            AddAGameForPlayerTwo(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
 
-            AddAGameForPlayerOne(fixture);
-            AddAGameForPlayerTwo(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
 
-            AddAGameForPlayerOne(fixture);
-            AddAGameForPlayerTwo(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
 
             Assert.IsNull(fixture.CurrMatch.Score.Sets.First().Winner, "Sets winner should be null");
             Assert.AreEqual(GameType.SevenPointer, fixture.CurrMatch.CurrentGame().GameType,"Game type should be a Seven Point Tiebreaker");
@@ -439,22 +436,20 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldScoreASevenPointTieBreakToSeven()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
-            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
-            AddAGameForPlayerOne(fixture);
-            AddAGameForPlayerTwo(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
 
-            AddAGameForPlayerOne(fixture);
-            AddAGameForPlayerTwo(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
 
-            AddAGameForPlayerOne(fixture);
-            AddAGameForPlayerTwo(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
 
-            AddAGameForPlayerOne(fixture);
-            AddAGameForPlayerTwo(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
 
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
@@ -475,22 +470,20 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldScoreASevenPointTieBreakToSevenAndSetWinnerWhenAnyPlayerGetsToSeven()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
-            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
-            AddAGameForPlayerOne(fixture);
-            AddAGameForPlayerTwo(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
 
-            AddAGameForPlayerOne(fixture);
-            AddAGameForPlayerTwo(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
 
-            AddAGameForPlayerOne(fixture);
-            AddAGameForPlayerTwo(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
 
-            AddAGameForPlayerOne(fixture);
-            AddAGameForPlayerTwo(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
 
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
@@ -510,14 +503,13 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldScoreThirdSetAsSinglePointersIfFinalSetFormatIsChampionShipTieBreak()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
-            AddASetForPlayer(fixture,true);
-            AddASetForPlayer(fixture,false);
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture,true);
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture,false);
 
             //Score is 1-1 in sets
             Assert.IsTrue(fixture.CurrMatch.Score.Sets.Count == 3);
@@ -527,14 +519,13 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldScoreADecidingTieBreakerAccordingly()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
-            AddASetForPlayer(fixture, true);
-            AddASetForPlayer(fixture, false);
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, false);
 
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
@@ -554,14 +545,13 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldScoreEndADecidingTieBreakerAfterSetPoints()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
-            AddASetForPlayer(fixture, true);
-            AddASetForPlayer(fixture, false);
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, false);
 
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
@@ -588,15 +578,14 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldScoreADecidingTieBreakerBeyoundFourPoints()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.NewMatchControlViewModel.SelectedDeuceFormat = DeuceFormat.SuddenDeath;
             fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
-            AddASetForPlayer(fixture, true);
-            AddASetForPlayer(fixture, false);
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, false);
 
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
@@ -613,14 +602,13 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldSetAMatchIsOverWhenAPlayerOneWinsBy2()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
-            AddASetForPlayer(fixture, true);
-            AddASetForPlayer(fixture, true);
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
 
             Assert.IsTrue(fixture.CurrMatch.Score.IsMatchOver,"MatchOver flag should be true");
             Assert.IsNotNull(fixture.CurrMatch.Score.Winner,"Winner should not be null");
@@ -630,20 +618,19 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldChangeServerAfterFirstServeOfTieBreaker()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
-            AddAGameForPlayerOne(fixture);
-            AddAGameForPlayerOne(fixture);
-            AddAGameForPlayerOne(fixture);
-            AddAGameForPlayerTwo(fixture);
-            AddAGameForPlayerTwo(fixture);
-            AddAGameForPlayerTwo(fixture);
-            AddAGameForPlayerTwo(fixture);
-            AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
 
             bool currentIsPlayerOne = fixture.CurrentServer.IsPlayerOne;
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
@@ -657,14 +644,13 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldChangeServerAfterFirstServeOfChampionShipTieBreake()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
-            AddASetForPlayer(fixture, false);
-            AddASetForPlayer(fixture, true);
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, false);
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
 
             bool currentIsPlayerOne = fixture.CurrentServer.IsPlayerOne;
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
@@ -678,14 +664,13 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldSetAMatchIsOverWhenAPlayerTwoWinsBy2()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
-            AddASetForPlayer(fixture, false);
-            AddASetForPlayer(fixture, false);
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, false);
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, false);
 
             Assert.IsTrue(fixture.CurrMatch.Score.IsMatchOver, "MatchOver flag should be true");
             Assert.IsNotNull(fixture.CurrMatch.Score.Winner, "Winner should not be null");
@@ -695,13 +680,12 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldSwitchCurrentServerAtTheEndOfAGame()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
-            AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
 
             Assert.AreEqual(fixture.CurrentServer.FullName, fixture.CurrMatch.PlayerOne.FullName, string.Format("The current server should be {0} not {1}", fixture.CurrMatch.PlayerOne.FullName, fixture.CurrMatch.PlayerTwo.FullName));
             Assert.IsTrue(fixture.PlayerOneIsServing);
@@ -710,8 +694,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldStoreDoubleFaultActionAsInMatchStatsList()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
@@ -724,8 +707,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldBeAbleToStoreAndRetrieveActions()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
@@ -740,8 +722,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void MatchStatShouldStoreGamePointStatWhenAtGamePoint()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
@@ -759,8 +740,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void MatchStatShouldStoreBreakPointStatWhenAtBreakPoint()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
@@ -778,9 +758,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldRecordServeInStatsAgainstPlayerServing()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
-            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             fixture.PlayerOneFirstServeInCommand.Execute(null);
@@ -795,9 +773,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void FirstServeInCommandShouldBeExcutableAfterAPointHasBeenScored()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
-            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             fixture.PlayerTwoFirstServeInCommand.Execute(null);
@@ -809,9 +785,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void FirstServeInCommandShouldNotBeExcutableJustAfterAServe()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
-            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             fixture.PlayerOneFirstServeInCommand.Execute(null);
@@ -822,9 +796,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void SecondServeInCommandShouldNotBeExcutableByDefault()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
-            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
             Assert.IsFalse(fixture.PlayerOneSecondServeInCommand.CanExecute(null));
@@ -833,9 +805,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void SecondServeInCommandShouldBeBeExcutableIfLastActionIsFirstServe()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
-            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
             fixture.PlayerOneFirstServeOutCommand.Execute(null);
@@ -846,9 +816,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void FirstServeInAndOutCommandsShouldNotBeExecutableIfCurrentServerIsNotSet()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
-            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
 
             Assert.IsFalse(fixture.PlayerOneFirstServeInCommand.CanExecute(null));
             Assert.IsFalse(fixture.PlayerOneFirstServeOutCommand.CanExecute(null));
@@ -858,9 +826,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void AtGamePointTheFirstServeInAndOutCommandsShouldBeExecutable()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
-            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
             fixture.PlayerOneFirstServeInCommand.Execute(null);
@@ -878,9 +844,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void FirstServeInCommandForPlayerTwoShouldBeExcutableAfterAPointHasBeenScoredAndPlayerTwoIsServing()
         {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
-            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             fixture.PlayerTwoSecondServeInCommand.Execute(null);
@@ -893,7 +857,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void FirstServeInAndOutForPlayerTwoShouldNotBeExecutableIfCurrentServerIsPlayerOne()
         {
-            var fixture = CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
 
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
@@ -905,7 +869,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void FirstServeInForPlayerTwoShouldAddMatchStatForPlayerTwo()
         {
-            var fixture = CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
             fixture.PlayerTwoFirstServeInCommand.Execute(null);
@@ -915,7 +879,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void FirstServeOutForPlayerTwoShouldMakeSecondServeExecutable()
         {
-            var fixture = CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             fixture.PlayerTwoFirsrtServeOutCommand.Execute(null);
@@ -926,7 +890,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldDisablePlayerOneDoubleFaultCommandWhenCurrentServerIsPlayerTwo()
         {
-            var fixture = CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
 
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
@@ -936,7 +900,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldDisablePlayerTwoDoubleFaultCommandWhenCurrentServerIsPlayerOne()
         {
-            var fixture = CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
 
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
@@ -946,7 +910,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod] 
         public void ShouldDisablePlayerTwoCommandOnStartUp()
         {
-            var fixture = CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             Assert.IsFalse(fixture.PlayerOneActions.Any(x => x.IsEnabled), "All Commands for Player Two should be disabled on start up");
             Assert.IsFalse(fixture.PlayerTwoActions.Any(x => x.IsEnabled), "All Commands for Player Two should be disabled on start up");
         }
@@ -954,7 +918,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldDisablePlayerOneDoubleFaultActionImmediatelyAfterPlayerOneHasDoubleFaulted()
         {
-            var fixture = CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
 
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
             fixture.PlayerOneFirstServeInCommand.Execute(null);
@@ -966,7 +930,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldDisablePlayerTwoDoubleFaultActionImmediatelyAfterPlayerTwoHasDoubleFaulted()
         {
-            var fixture = CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
 
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
             fixture.PlayerTwoFirsrtServeOutCommand.Execute(null);
@@ -979,7 +943,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldDisableAllActionsForPlayerOneAfterAPointIsScoredTillAfterAServeIsIn()
         {
-            var fixture = CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
             fixture.PlayerOneFirstServeInCommand.Execute(null);
@@ -991,7 +955,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShoudDisableAllActionsForPlayerTwoAfterAPointIsScoredTillAfterAServeIsIn()
         {
-            var fixture = CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
 
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
             fixture.PlayerTwoFirstServeInCommand.Execute(null);
@@ -1003,7 +967,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShoudDisableAllActionsForPlayerTwoAfterPointsAreScoredByBothPlayersTillAfterAServeIsIn()
         {
-            var fixture = CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
 
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
             fixture.PlayerTwoFirstServeInCommand.Execute(null);
@@ -1024,7 +988,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldEnableActionCommandsExceptDoubleFaultForBothPlayersOnFirstServeIn()
         {
-            var fixture = CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
             fixture.PlayerOneFirstServeInCommand.Execute(null);
@@ -1035,7 +999,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldEnableDisableDoubleFaultCommandWhenSecondServeIsIn()
         {
-            var fixture = CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
             fixture.PlayerOneFirstServeOutCommand.Execute(null);
@@ -1048,7 +1012,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldSetPlayerTwoCurrentScoreTo_Adv_IfTheScoreIsAdvantageToPlayerTwo()
         {
-            var fixture = CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             // Set score to 40-40
@@ -1081,7 +1045,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldSetScoreTo4040WhenPlayingNormalDeuceAndAdvantageHasBeenCancelledOut()
         {
-            var fixture = CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             // Set score to 40-40
@@ -1119,7 +1083,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldSetScoreTo4040WhenPlayingNormalDeuceAndAdvantageHasBeenCancelledOutAfterTwoDeuces()
         {
-            var fixture = CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             // Set score to 40-40
@@ -1172,7 +1136,7 @@ namespace MatchStats.Test.ViewModels
         [TestMethod]
         public void ShouldSetScoreTo4040WhenPlayingNormalDeuceAndAdvantageHasBeenCancelledOutAfterTwoDeucesAndPlayerOneIsServing()
         {
-            var fixture = CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             // Set score to 40-40
@@ -1222,74 +1186,7 @@ namespace MatchStats.Test.ViewModels
 
         }
 
-        private static MatchScoreViewModel CreateNewMatchFixture()
-        {
-            var blobCache = RegisterComponents();
-            var fixture = BuildAMatchToScore();
-            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
-            return fixture;
-        }
-
-        private void AddASetForPlayer(MatchScoreViewModel fixture, bool IsPlayerOne)
-        {
-            var sets = (int)fixture.CurrMatch.MatchFormat.SetsFormat;
-            for (int i = 0; i < sets; i++)
-            {
-                if (IsPlayerOne)
-                {
-                    AddAGameForPlayerOne(fixture);
-                }
-                else
-                {
-                    AddAGameForPlayerTwo(fixture);
-                }
-
-            }
-        }
-
-        private void AddAGameForPlayerOne(MatchScoreViewModel fixture)
-        {
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-        }        
-
-        private void AddAGameForPlayerTwo(MatchScoreViewModel fixture)
-        {
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-        }
-
-        private static TestBlobCache RegisterComponents()
-        {
-            var blobCache = new TestBlobCache();
-            RxApp.MutableResolver.Register(() => new MatchStatsApi(), typeof (IMatchStatsApi));
-            RxApp.MutableResolver.RegisterConstant(blobCache, typeof (IBlobCache), "UserAccount");
-            return blobCache;
-        }
-
-        private static MatchScoreViewModel BuildAMatchToScore()
-        {
-            var fixture = new MatchScoreViewModel();
-
-            fixture.NewMatchControlViewModel = new NewMatchControlViewModel();
-            fixture.NewMatchControlViewModel.PlayerOneFirstName = "William";
-            fixture.NewMatchControlViewModel.PlayerOneLastName = "Dof";
-            fixture.NewMatchControlViewModel.PlayerTwoFirstName = "Drake";
-            fixture.NewMatchControlViewModel.PlayerTwoLastName = "Dufus";
-            fixture.NewMatchControlViewModel.SelectedGrade = Grade.Grade3;
-            fixture.NewMatchControlViewModel.SelectedAgeGroup = AgeGroup.U14;
-            fixture.NewMatchControlViewModel.SelectedDeuceFormat = DeuceFormat.Normal;
-            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.Normal;
-            fixture.NewMatchControlViewModel.SelectedPlayerOneRating = Rating.FiveOne;
-            fixture.NewMatchControlViewModel.SelectedPlayerTwoRating = Rating.FiveOne;
-            fixture.NewMatchControlViewModel.SelectedSetsFormat = SetsFormat.ShortSetToFour;
-            fixture.NewMatchControlViewModel.TournamentName = "Sutton Open";
-            return fixture;
-        }
+       
 
         private Match BuildTestMatchObject(Guid matchGuid)
         {
