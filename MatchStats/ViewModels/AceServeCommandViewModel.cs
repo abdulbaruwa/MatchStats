@@ -10,7 +10,7 @@ namespace MatchStats.ViewModels
         public AceServeCommandViewModel(Player player = null)
         {
             Player = player ?? new Player();
-            Name = "Ace Serve";
+            Name = "AceServe";
             DisplayName = "Ace Serve";
             ActionCommand = new ReactiveCommand();
             ActionCommand.Subscribe(x => Execute());
