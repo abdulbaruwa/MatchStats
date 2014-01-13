@@ -863,7 +863,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
 
             Assert.IsFalse(fixture.PlayerTwoSecondServeInCommand.CanExecute(null));
             Assert.IsFalse(fixture.PlayerTwoFirstServeInCommand.CanExecute(null));
-            Assert.IsFalse(fixture.PlayerTwoFirsrtServeOutCommand.CanExecute(null));
+            Assert.IsFalse(fixture.PlayerTwoFirstServeOutCommand.CanExecute(null));
         }
 
         [TestMethod]
@@ -882,7 +882,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
-            fixture.PlayerTwoFirsrtServeOutCommand.Execute(null);
+            fixture.PlayerTwoFirstServeOutCommand.Execute(null);
 
             Assert.IsTrue(fixture.PlayerTwoSecondServeInCommand.CanExecute(null));
         }
@@ -933,7 +933,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
 
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
-            fixture.PlayerTwoFirsrtServeOutCommand.Execute(null);
+            fixture.PlayerTwoFirstServeOutCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
 
             Assert.IsFalse(fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").IsEnabled, "Double fault Command for Player One should be disabled immediately after it has been called");
