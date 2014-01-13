@@ -503,7 +503,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
         [TestMethod]
         public void ShouldScoreThirdSetAsSinglePointersIfFinalSetFormatIsChampionShipTieBreak()
         {
-            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateUnSavedMatchScoreViewModelFixture();
             fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
@@ -519,8 +519,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
         [TestMethod]
         public void ShouldScoreADecidingTieBreakerAccordingly()
         {
-            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
-            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture(FinalSetFormats.TenPointChampionShipTieBreak);
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
@@ -545,7 +544,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
         [TestMethod]
         public void ShouldScoreEndADecidingTieBreakerAfterSetPoints()
         {
-            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateUnSavedMatchScoreViewModelFixture();
             fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
@@ -578,7 +577,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
         [TestMethod]
         public void ShouldScoreADecidingTieBreakerBeyoundFourPoints()
         {
-            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateUnSavedMatchScoreViewModelFixture();
             fixture.NewMatchControlViewModel.SelectedDeuceFormat = DeuceFormat.SuddenDeath;
             fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
@@ -644,7 +643,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
         [TestMethod]
         public void ShouldChangeServerAfterFirstServeOfChampionShipTieBreake()
         {
-            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
+            var fixture = MatchScoreViewModelTestHelper.CreateUnSavedMatchScoreViewModelFixture();
             fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
@@ -654,6 +653,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
 
             bool currentIsPlayerOne = fixture.CurrentServer.IsPlayerOne;
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
             Assert.AreNotEqual(fixture.CurrentServer.IsPlayerOne, currentIsPlayerOne);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);

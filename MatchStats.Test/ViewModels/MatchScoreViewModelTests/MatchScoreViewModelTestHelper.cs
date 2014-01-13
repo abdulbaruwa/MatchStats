@@ -9,10 +9,24 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
 {
     public static class MatchScoreViewModelTestHelper
     {
-        public static MatchScoreViewModel CreateNewMatchFixture()
+        public static MatchScoreViewModel CreateUnSavedMatchScoreViewModelFixture()
         {
             var blobCache = RegisterComponents();
             var fixture = BuildAMatchToScore();
+
+            return fixture;
+        }
+        public static MatchScoreViewModel CreateNewMatchFixture()
+        {
+            var fixture = CreateUnSavedMatchScoreViewModelFixture();
+            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            return fixture;
+        }
+
+        public static MatchScoreViewModel CreateNewMatchFixture(FinalSetFormats finalSetFormat)
+        {
+            var fixture = CreateUnSavedMatchScoreViewModelFixture();
+            fixture.NewMatchControlViewModel.SelectedFinalSet = finalSetFormat;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             return fixture;
         }
@@ -36,6 +50,12 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
 
         public static void AddAGameForPlayerOne(MatchScoreViewModel fixture)
         {
+            //IReactiveCommand serveCommand = null;
+            //if (fixture.CurrentServer.IsPlayerOne)
+            //{
+            //    serveCommand = fixture.PlayerOneFirstServeInCommand;
+            //}
+
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
