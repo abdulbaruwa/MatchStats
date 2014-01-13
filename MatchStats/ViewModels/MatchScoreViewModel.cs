@@ -25,7 +25,7 @@ namespace MatchStats.ViewModels
         public IReactiveCommand PlayerOneFirstServeOutCommand { get; protected set; }
         public IReactiveCommand PlayerOneSecondServeInCommand { get; protected set; }
         public IReactiveCommand PlayerTwoFirstServeInCommand { get; protected set; }
-        public IReactiveCommand PlayerTwoFirsrtServeOutCommand { get; protected set; }
+        public IReactiveCommand PlayerTwoFirstServeOutCommand { get; protected set; }
         public IReactiveCommand PlayerTwoSecondServeInCommand { get; protected set; }
 
         private readonly IReactiveCommand addItemsCommand;
@@ -58,7 +58,6 @@ namespace MatchStats.ViewModels
 
             MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch").Subscribe(x =>
             {
-
                 CurrMatch = x;
                 ToggleActionsOffForBothPlayers();
             });
@@ -128,20 +127,36 @@ namespace MatchStats.ViewModels
                 .Where(x => x != null && (x.Reason == StatDescription.FirstServeIn || x.Reason == StatDescription.SecondServeIn))
                 .Subscribe(_ =>
                 {
-                    foreach (var action in PlayerOneActions.Where(x => x.Name != "DoubleFault").Concat(PlayerTwoActions.Where(x => x.Name != "DoubleFault")))
+                    foreach (var action in PlayerOneActions.Where(x => x.Name != "DoubleFault" && x.Name != "AceServe").Concat(PlayerTwoActions.Where(x => x.Name != "DoubleFault" && x.Name != "AceServe")))
                     {
                         action.IsEnabled = true;
                     }
 
                     foreach (
                         var action in
-                            PlayerOneActions.Where(x => x.Name == "DoubleFault")
-                                .Concat(PlayerTwoActions.Where(x => x.Name == "DoubleFault")))
+                            PlayerOneActions.Where(x => x.Name == "DoubleFault" && x.Name != "AceServe")
+                                .Concat(PlayerTwoActions.Where(x => x.Name == "DoubleFault" && x.Name != "AceServe")))
                     {
                         action.IsEnabled = false;
                     }
-
                 });
+
+            // If a serve is in Disable the ability to add An Ace Serve for player one
+            this.WhenAny(x => x.CurrMatch.MatchStats, x => x.Value.LastOrDefault())
+                .Where(x => x != null && x.Server.IsPlayerOne && (x.Reason == StatDescription.FirstServeIn || x.Reason == StatDescription.SecondServeIn))
+                .Subscribe(_ =>
+                {
+                    PlayerOneActions.First(x => x.Name == "AceServe").IsEnabled = false;
+                });
+
+            // If a serve is in Disable the ability to add An Ace Serve for player two
+            this.WhenAny(x => x.CurrMatch.MatchStats, x => x.Value.LastOrDefault())
+                .Where(x => x != null && (! x.Server.IsPlayerOne) && (x.Reason == StatDescription.FirstServeIn || x.Reason == StatDescription.SecondServeIn))
+                .Subscribe(_ =>
+                {
+                    PlayerTwoActions.First(x => x.Name == "AceServe").IsEnabled = false;
+                });
+
         }
 
         private void InitializeCurrentServerCommands()
@@ -151,6 +166,8 @@ namespace MatchStats.ViewModels
             {
                 CurrMatch.Score.CurrentServer = CurrMatch.PlayerOne;
                 CurrentServer = CurrMatch.PlayerOne;
+                PlayerOneActions.First(x => x.Name == "AceServe").IsEnabled = true;
+                PlayerTwoActions.First(x => x.Name == "AceServe").IsEnabled = false;
                 PlayerOneIsServing = true;
                 PlayerTwoIsServing = false;
                 SaveMatch(CurrMatch);
@@ -161,6 +178,8 @@ namespace MatchStats.ViewModels
             {
                 CurrMatch.Score.CurrentServer = CurrMatch.PlayerTwo;
                 CurrentServer = CurrMatch.PlayerTwo;
+                PlayerTwoActions.First(x => x.Name == "AceServe").IsEnabled = true;
+                PlayerOneActions.First(x => x.Name == "AceServe").IsEnabled = false;
                 PlayerTwoIsServing = true;
                 PlayerOneIsServing = false;
                 SaveMatch(CurrMatch);
@@ -277,8 +296,8 @@ namespace MatchStats.ViewModels
             PlayerTwoFirstServeInCommand.Subscribe(
                 _ => new FirstServeInCommandViewModel(CurrentServer).ActionCommand.Execute(null));
 
-            PlayerTwoFirsrtServeOutCommand = new ReactiveCommand(FirstServePending(false));
-            PlayerTwoFirsrtServeOutCommand.Subscribe(
+            PlayerTwoFirstServeOutCommand = new ReactiveCommand(FirstServePending(false));
+            PlayerTwoFirstServeOutCommand.Subscribe(
                 _ => new FirstServeOutCommandViewModel(CurrentServer).ActionCommand.Execute(null));
 
             PlayerTwoSecondServeInCommand = new ReactiveCommand(SecondServePending(false));
