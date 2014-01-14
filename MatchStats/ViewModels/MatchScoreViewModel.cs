@@ -27,6 +27,7 @@ namespace MatchStats.ViewModels
         public IReactiveCommand PlayerTwoFirstServeInCommand { get; protected set; }
         public IReactiveCommand PlayerTwoFirstServeOutCommand { get; protected set; }
         public IReactiveCommand PlayerTwoSecondServeInCommand { get; protected set; }
+        public IReactiveCommand UndoLastActionCommand { get; protected set; }
 
         private readonly IReactiveCommand addItemsCommand;
 
@@ -311,6 +312,9 @@ namespace MatchStats.ViewModels
             PlayerTwoSecondServeInCommand = new ReactiveCommand(SecondServePending(false));
             PlayerTwoSecondServeInCommand.Subscribe(
                 _ => new SecondServeInCommandViewModel(CurrentServer).ActionCommand.Execute(null));
+
+            UndoLastActionCommand = new ReactiveCommand();
+
         }
 
         private  IObservable<IGameActionViewModel> GetGameCommandsForPlayer(Player player)

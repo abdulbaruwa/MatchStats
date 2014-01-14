@@ -129,6 +129,7 @@
     <Compile Include="ViewModels\MatchScoreViewModelTests\ActionsViewModelTests.cs" />
     <Compile Include="ViewModels\MatchScoreViewModelTests\MatchScoreViewModelTestHelper.cs" />
     <Compile Include="ViewModels\MatchScoreViewModelTests\MatchScoreViewModelTests.cs" />
+    <Compile Include="ViewModels\MatchScoreViewModelTests\UndoActionsViewModel.cs" />
     <Compile Include="ViewModels\NewMatchUserControlViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
