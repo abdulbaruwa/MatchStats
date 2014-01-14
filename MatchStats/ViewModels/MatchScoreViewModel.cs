@@ -98,6 +98,8 @@ namespace MatchStats.ViewModels
                         {
                             PlayerOneActions.First(y => y.Name == "DoubleFault").IsEnabled = true;
                             PlayerTwoActions.First(y => y.Name == "DoubleFault").IsEnabled = false;
+                            PlayerOneActions.First(y => y.Name == "AceServe").IsEnabled = true;
+                            PlayerTwoActions.First(y => y.Name == "AceServe").IsEnabled = false;
                         }
                     }
 
@@ -107,6 +109,8 @@ namespace MatchStats.ViewModels
                         {
                             PlayerTwoActions.First(y => y.Name == "DoubleFault").IsEnabled = true;
                             PlayerOneActions.First(y => y.Name == "DoubleFault").IsEnabled = false;
+                            PlayerOneActions.First(y => y.Name == "AceServe").IsEnabled = false;
+                            PlayerTwoActions.First(y => y.Name == "AceServe").IsEnabled = true;
                         } 
                     }
                 });
@@ -161,7 +165,6 @@ namespace MatchStats.ViewModels
                 {
                     PlayerTwoActions.First(x => x.Name == "AceServe").IsEnabled = false;
                 });
-
         }
 
         private void InitializeCurrentServerCommands()
