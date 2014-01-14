@@ -77,6 +77,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.PlayerOneFirstServeOutCommand.Execute(null);
 
             Assert.IsTrue(fixture.PlayerOneActions.First(x => x.Name == "AceServe").IsEnabled);
+
         }
 
         [TestMethod]

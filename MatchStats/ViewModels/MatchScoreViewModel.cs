@@ -61,6 +61,11 @@ namespace MatchStats.ViewModels
                 CurrMatch = x;
                 ToggleActionsOffForBothPlayers();
             });
+            MessageBus.Current.Listen<Match>("AceServeForCurrentMatch").Subscribe(x =>
+            {
+                PlayerOneActions.First(y => y.Name == "AceServe"  && y.IsEnabled).IsEnabled = false;
+                PlayerTwoActions.First(y => y.Name == "AceServe"  && y.IsEnabled).IsEnabled = false;
+            });
             MessageBus.Current.Listen<Match>("NonPointUpdateForCurrentMatch").Subscribe(x =>
             {
                 CurrMatch = x;

@@ -993,7 +993,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
 
             fixture.PlayerOneFirstServeInCommand.Execute(null);
 
-            Assert.IsFalse(fixture.PlayerOneActions.Any(x => x.Name != "DoubleFault" && x.IsEnabled == false));
+            Assert.IsFalse(fixture.PlayerOneActions.Any(x => x.Name != "DoubleFault" && x.Name != "AceServe" && x.IsEnabled == false));
         }
 
         [TestMethod]
