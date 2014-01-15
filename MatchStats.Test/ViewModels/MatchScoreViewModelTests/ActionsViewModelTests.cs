@@ -1,4 +1,5 @@
 using System.Linq;
+using MatchStats.Model;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
 namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
@@ -54,6 +55,29 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.PlayerOneFirstServeOutCommand.Execute(null);
 
             Assert.IsTrue(fixture.PlayerOneActions.First(x => x.Name == "AceServe").IsEnabled);
+        }
+
+        [TestMethod]
+        public void ShouldEnableAceServeForPlayerOneAfterAnAceServePoint()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerOneActions.First(x => x.Name == "AceServe").ActionCommand.Execute(null);
+
+            Assert.IsTrue(fixture.PlayerOneActions.First(x => x.Name == "AceServe").IsEnabled);
+        }
+
+        [TestMethod]
+        public void ShouldAddPointForPlayerOneIfHeServesAnAce()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerOneActions.First(x => x.Name == "AceServe").ActionCommand.Execute(null);
+
+            Assert.AreEqual(1, fixture.CurrMatch.CurrentGame().PlayerOneScore);
+            Assert.AreEqual("15", fixture.CurrMatch.GetPlayerOneCurrentScore());
         }
 
         [TestMethod]
