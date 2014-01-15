@@ -1,4 +1,4 @@
-﻿namespace MatchStats.Model
+namespace MatchStats.Model
 {
     public class Player
     {
@@ -18,8 +18,15 @@
         public StatDescription Reason { get; set; }
         public PointWonLostOrNone PointWonLostOrNone { get; set; }
         public Player Player { get; set; }
+        public bool UndoPrevious
+        {
+            get
+            {
+                return Reason == StatDescription.BreakPoint || Reason == StatDescription.GamePoint ||
+                       Reason == StatDescription.GameOver;
+            }
+        }
     }
-
 
     public enum PointWonLostOrNone
     {
