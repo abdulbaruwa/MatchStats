@@ -62,11 +62,22 @@ namespace MatchStats.ViewModels
                 CurrMatch = x;
                 ToggleActionsOffForBothPlayers();
             });
+
             MessageBus.Current.Listen<Match>("AceServeForCurrentMatch").Subscribe(x =>
             {
-                PlayerOneActions.First(y => y.Name == "AceServe"  && y.IsEnabled).IsEnabled = false;
-                PlayerTwoActions.First(y => y.Name == "AceServe"  && y.IsEnabled).IsEnabled = false;
+                //Deal with match over scenario
+                if (CurrentServer.IsPlayerOne)
+                {
+                    PlayerOneActions.First(y => y.Name == "AceServe").IsEnabled = true;
+                    PlayerTwoActions.First(y => y.Name == "AceServe").IsEnabled = false;
+                }
+                else
+                {
+                    PlayerTwoActions.First(y => y.Name == "AceServe").IsEnabled = true;
+                    PlayerOneActions.First(y => y.Name == "AceServe").IsEnabled = false;
+                }
             });
+
             MessageBus.Current.Listen<Match>("NonPointUpdateForCurrentMatch").Subscribe(x =>
             {
                 CurrMatch = x;
@@ -314,18 +325,7 @@ namespace MatchStats.ViewModels
                 _ => new SecondServeInCommandViewModel(CurrentServer).ActionCommand.Execute(null));
 
             UndoLastActionCommand = new ReactiveCommand();
-            UndoLastActionCommand.Subscribe(_ => UndoLastAction());
-        }
-
-        private void UndoLastAction()
-        {
-            var continueUndo = true;
-            while (continueUndo)
-            {
-                if(CurrMatch.MatchStats.LastOrDefault() == null ) break;
-                continueUndo = CurrMatch.MatchStats.Last().UndoPrevious;
-                CurrMatch.MatchStats.RemoveAt(CurrMatch.MatchStats.Count - 1);
-            }
+            UndoLastActionCommand.Subscribe(_ => new UndoLastActionCommandViewModel().Execute(null));
         }
 
         private  IObservable<IGameActionViewModel> GetGameCommandsForPlayer(Player player)
