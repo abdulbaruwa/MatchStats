@@ -314,7 +314,24 @@ namespace MatchStats.ViewModels
                 _ => new SecondServeInCommandViewModel(CurrentServer).ActionCommand.Execute(null));
 
             UndoLastActionCommand = new ReactiveCommand();
+            UndoLastActionCommand.Subscribe(_ => UndoLastAction());
+        }
 
+        private void UndoLastAction()
+        {
+            var count = CurrMatch.MatchStats.Count;
+
+            int itemsToUndo = 1;
+            for (var i = count -1; i > 0; i--)
+            {
+                if (CurrMatch.MatchStats[i].UndoPrevious)
+                {
+                    itemsToUndo = itemsToUndo + 1;
+                }
+                break;
+            }
+
+            CurrMatch.MatchStats.RemoveAt(CurrMatch.MatchStats.Count - 1);
         }
 
         private  IObservable<IGameActionViewModel> GetGameCommandsForPlayer(Player player)
