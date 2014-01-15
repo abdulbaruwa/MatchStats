@@ -1,4 +1,4 @@
-﻿<Page
+<Page
     x:Class="MatchStats.Views.MatchScoreView"
     d:DataContext="{Binding MatchScoreViewModel, Source={d:DesignInstance Type=viewModels:ViewModelLocator, IsDesignTimeCreatable=True}}"
     
@@ -195,7 +195,7 @@
                             <Grid.RowDefinitions>
                                 <RowDefinition MaxHeight="60"/>
                                 <RowDefinition MaxHeight="60"/>
-                                <RowDefinition MaxHeight="80"/>
+                                <RowDefinition MaxHeight="120"/>
                             </Grid.RowDefinitions>
                             <Grid Name="ServeStats">
                                 <Grid.ColumnDefinitions>
@@ -223,13 +223,21 @@
                                 <Button Name="PlayerTwoFirstServeOut"  Grid.Column="3" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Grid.ColumnSpan="2" Margin="0.143,3,149,2">First Serve Out</Button>
                                 <Button Name="PlayerTwoSecondServeOut"  Grid.Column="4" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Margin="0.286,3,0,2">Second Serve Out</Button>
                             </Grid>
+                            
                             <Grid Grid.Row="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <ToggleButton Name="PlayerOneIsServing" Height="60" HorizontalAlignment="Stretch" >Player One Serving</ToggleButton>
-                                <ToggleButton Name="PlayerTwoIsServing" Grid.Column="1" Height="60" HorizontalAlignment="Stretch" >Player Two Serving</ToggleButton>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition></RowDefinition>
+                                </Grid.RowDefinitions>
+                                <ToggleButton Name="PlayerOneIsServing" Grid.Row="0" Height="60" HorizontalAlignment="Stretch" >Player One Serving</ToggleButton>
+                                <ToggleButton Name="PlayerTwoIsServing" Grid.Row="0" Grid.Column="1" Height="60" HorizontalAlignment="Stretch" >Player Two Serving</ToggleButton>
+                                <Grid Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch">
+                                    <Button Name="UndoLastActionCommand" HorizontalAlignment="Center" Height="60">Revese Last</Button>
+                                </Grid>
 
                             </Grid>
                             <!--<Grid Grid.Row="2">
