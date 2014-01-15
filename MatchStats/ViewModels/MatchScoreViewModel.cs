@@ -319,19 +319,13 @@ namespace MatchStats.ViewModels
 
         private void UndoLastAction()
         {
-            var count = CurrMatch.MatchStats.Count;
-
-            int itemsToUndo = 1;
-            for (var i = count -1; i > 0; i--)
+            var continueUndo = true;
+            while (continueUndo)
             {
-                if (CurrMatch.MatchStats[i].UndoPrevious)
-                {
-                    itemsToUndo = itemsToUndo + 1;
-                }
-                break;
+                if(CurrMatch.MatchStats.LastOrDefault() == null ) break;
+                continueUndo = CurrMatch.MatchStats.Last().UndoPrevious;
+                CurrMatch.MatchStats.RemoveAt(CurrMatch.MatchStats.Count - 1);
             }
-
-            CurrMatch.MatchStats.RemoveAt(CurrMatch.MatchStats.Count - 1);
         }
 
         private  IObservable<IGameActionViewModel> GetGameCommandsForPlayer(Player player)
