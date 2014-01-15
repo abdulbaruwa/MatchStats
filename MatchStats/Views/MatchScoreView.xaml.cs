@@ -37,6 +37,7 @@ namespace MatchStats.Views
             this.BindCommand(ViewModel, x => x.PlayerTwoFirstServeInCommand, x => x.PlayerTwoFirstServe);
             this.BindCommand(ViewModel, x => x.PlayerTwoFirstServeOutCommand, x => x.PlayerTwoFirstServeOut);
             this.BindCommand(ViewModel, x => x.PlayerTwoSecondServeInCommand, x => x.PlayerTwoSecondServe);
+            this.BindCommand(ViewModel, x => x.UndoLastActionCommand);
         }
 
         object IViewFor.ViewModel
