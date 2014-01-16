@@ -112,16 +112,14 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
         }
 
         [TestMethod]
-        public void ShouldChangeSetScoreToZeroIfWinningPointIsUndone()
+        public void ShouldChangeSetScoreIfWinningPointIsUndone()
         {
             var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
-            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
-
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true); 
             fixture.UndoLastActionCommand.Execute(null);
-
-            Assert.AreEqual("0", fixture.PlayerOneFirstSet);
+            Assert.AreEqual("3", fixture.PlayerOneFirstSet);
         }
     }
 }
