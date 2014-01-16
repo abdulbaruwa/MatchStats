@@ -17,7 +17,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
 
             fixture.PlayerOneFirstServeInCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-
+            
             //Act
             fixture.UndoLastActionCommand.Execute(null);
 
@@ -109,6 +109,19 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.UndoLastActionCommand.Execute(null);
 
             Assert.IsFalse(fixture.UndoLastActionCommand.CanExecute(null));
+        }
+
+        [TestMethod]
+        public void ShouldChangeSetScoreToZeroIfWinningPointIsUndone()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+
+            fixture.UndoLastActionCommand.Execute(null);
+
+            Assert.AreEqual("0", fixture.PlayerOneFirstSet);
         }
     }
 }

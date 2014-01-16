@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Windows.Input;
 using MatchStats.Model;
 using ReactiveUI;
@@ -36,13 +37,17 @@ namespace MatchStats.ViewModels
                 continueUndo = lastMatchStat.UndoPrevious;
                 if (lastMatchStat.PointWonLostOrNone != PointWonLostOrNone.NotAPoint)
                 {
-                    if (lastMatchStat.Player.IsPlayerOne) currentMatch.CurrentGame().PlayerOneScore--;
+                    if (lastMatchStat.Player.IsPlayerOne)currentMatch.CurrentGame().PlayerOneScore--;
                     if (! lastMatchStat.Player.IsPlayerOne) currentMatch.CurrentGame().PlayerTwoScore--;
 
                     if (currentMatch.CurrentGame().PlayerOneScore < 0 || currentMatch.CurrentGame().PlayerTwoScore < 0) //Less than zero will indicate we have should have undo unto previous game
                     {
                         var games = currentMatch.CurrentSet().Games.Count;
                         currentMatch.CurrentSet().Games.RemoveAt(games - 1);
+                        
+                        if(lastMatchStat.Player.IsPlayerOne) currentMatch.CurrentSet().Games.Last().PlayerOneScore --;
+                        if (! lastMatchStat.Player.IsPlayerOne) currentMatch.CurrentSet().Games.Last().PlayerTwoScore--;
+                        currentMatch.CurrentSet().Games.Last().IsCurrentGame = true;
                     }
                 }
                 currentMatch.MatchStats.RemoveAt(currentMatch.MatchStats.Count - 1);
