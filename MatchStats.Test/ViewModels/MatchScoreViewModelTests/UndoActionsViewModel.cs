@@ -76,5 +76,19 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
 
             Assert.AreEqual(1, fixture.CurrMatch.Score.Sets.First().Games.Count);
         }
+
+        [TestMethod]
+        public void ShouldEnableAceActionCommandWhenAPointIsUndo()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerOneActions.First(x => x.Name == "AceServe").ActionCommand.Execute(null);
+
+            fixture.UndoLastActionCommand.Execute(null);
+
+            Assert.IsTrue(fixture.PlayerOneActions.First(x => x.Name == "AceServe").IsEnabled);
+        }
+
     }
 }

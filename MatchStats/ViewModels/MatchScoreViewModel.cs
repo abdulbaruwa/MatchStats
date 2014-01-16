@@ -324,7 +324,7 @@ namespace MatchStats.ViewModels
             PlayerTwoSecondServeInCommand.Subscribe(
                 _ => new SecondServeInCommandViewModel(CurrentServer).ActionCommand.Execute(null));
 
-            UndoLastActionCommand = new ReactiveCommand();
+            UndoLastActionCommand = new ReactiveCommand(CanUndoAction());
             UndoLastActionCommand.Subscribe(_ => new UndoLastActionCommandViewModel().Execute(null));
         }
 
@@ -363,6 +363,18 @@ namespace MatchStats.ViewModels
         {
             HostScreen.Router.NavigateBack.Execute(null);
         }
+
+        private IObservable<bool> CanUndoAction()
+        {
+            return this.WhenAny(x => x.CurrMatch, x => ValidateForUndoCommand(x.Value));
+        }
+
+        private bool ValidateForUndoCommand(Match currentMatch)
+        {
+            if (currentMatch == null) return false;
+            return ! currentMatch.Score.IsMatchOver;
+        }
+
 
         /// <summary>
         /// Rule for First Server in
