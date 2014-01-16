@@ -949,7 +949,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.PlayerOneFirstServeInCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
-            Assert.IsFalse(fixture.PlayerOneActions.Any(x => x.Name != "DoubleFault" && x.IsEnabled), "Actions for Player one should be disabled till after a successful server by the current server");
+            Assert.IsFalse(fixture.PlayerOneActions.Any(x => x.Name != "DoubleFault" && x.Name != "AceServe" && x.IsEnabled), "Actions for Player one should be disabled till after a successful server by the current server");
         }
 
         [TestMethod]
@@ -961,7 +961,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.PlayerTwoFirstServeInCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
-            Assert.IsFalse(fixture.PlayerTwoActions.Any(x => x.Name != "DoubleFault" && x.IsEnabled), "Actions for Player two should be disabled till after a successful server by the current server");
+            Assert.IsFalse(fixture.PlayerTwoActions.Any(x => x.Name != "DoubleFault" && x.Name != "AceServe" && x.IsEnabled), "Actions for Player two should be disabled till after a successful server by the current server");
         }
 
         [TestMethod]
@@ -982,7 +982,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.PlayerTwoFirstServeInCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
-            Assert.IsFalse(fixture.PlayerTwoActions.Any(x => x.Name != "DoubleFault" && x.IsEnabled), "Actions for Player two should be disabled till after a successful server by the current server");
+            Assert.IsFalse(fixture.PlayerTwoActions.Any(x => x.Name != "DoubleFault" && x.Name != "AceServe" && x.IsEnabled), "Actions for Player two should be disabled till after a successful server by the current server");
         }
 
         [TestMethod]

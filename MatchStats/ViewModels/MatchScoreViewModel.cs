@@ -61,6 +61,7 @@ namespace MatchStats.ViewModels
             {
                 CurrMatch = x;
                 ToggleActionsOffForBothPlayers();
+
             });
 
             MessageBus.Current.Listen<Match>("AceServeForCurrentMatch").Subscribe(x =>
@@ -68,13 +69,11 @@ namespace MatchStats.ViewModels
                 //Deal with match over scenario
                 if (CurrentServer.IsPlayerOne)
                 {
-                    PlayerOneActions.First(y => y.Name == "AceServe").IsEnabled = true;
-                    PlayerTwoActions.First(y => y.Name == "AceServe").IsEnabled = false;
+                    EnableAceServeForPlayerOne();
                 }
                 else
                 {
-                    PlayerTwoActions.First(y => y.Name == "AceServe").IsEnabled = true;
-                    PlayerOneActions.First(y => y.Name == "AceServe").IsEnabled = false;
+                    EnableAceServeForPlayerTwo();
                 }
             });
 
@@ -86,15 +85,37 @@ namespace MatchStats.ViewModels
 
         private void ToggleActionsOffForBothPlayers()
         {
-            foreach (var action in PlayerOneActions.Where(x => x.Name != "DoubleFault"))
+            foreach (var action in PlayerOneActions.Where(x => x.Name != "DoubleFault" && x.Name != "AceServe"))
             {
                 action.IsEnabled = false;
             }
 
-            foreach (var action in PlayerTwoActions.Where(x => x.Name != "DoubleFault"))
+            foreach (var action in PlayerTwoActions.Where(x => x.Name != "DoubleFault" && x.Name != "AceServe"))
             {
                 action.IsEnabled = false;
             }
+
+            if (CurrentServer != null && CurrentServer.IsPlayerOne)
+            {
+                EnableAceServeForPlayerOne();
+            }
+
+            if (CurrentServer != null && ! CurrentServer.IsPlayerOne)
+            {
+                EnableAceServeForPlayerTwo();
+            }
+        }
+
+        private void EnableAceServeForPlayerOne()
+        {
+            PlayerOneActions.First(x => x.Name == "AceServe").IsEnabled = true;
+            PlayerTwoActions.First(x => x.Name == "AceServe").IsEnabled = false;
+        }
+
+        private void EnableAceServeForPlayerTwo()
+        {
+            PlayerOneActions.First(x => x.Name == "AceServe").IsEnabled = false;
+            PlayerTwoActions.First(x => x.Name == "AceServe").IsEnabled = true;
         }
 
         private void ActionCommandsEnableBindings()
@@ -110,8 +131,7 @@ namespace MatchStats.ViewModels
                         {
                             PlayerOneActions.First(y => y.Name == "DoubleFault").IsEnabled = true;
                             PlayerTwoActions.First(y => y.Name == "DoubleFault").IsEnabled = false;
-                            PlayerOneActions.First(y => y.Name == "AceServe").IsEnabled = true;
-                            PlayerTwoActions.First(y => y.Name == "AceServe").IsEnabled = false;
+                            EnableAceServeForPlayerOne();
                         }
                     }
 
@@ -121,8 +141,7 @@ namespace MatchStats.ViewModels
                         {
                             PlayerTwoActions.First(y => y.Name == "DoubleFault").IsEnabled = true;
                             PlayerOneActions.First(y => y.Name == "DoubleFault").IsEnabled = false;
-                            PlayerOneActions.First(y => y.Name == "AceServe").IsEnabled = false;
-                            PlayerTwoActions.First(y => y.Name == "AceServe").IsEnabled = true;
+                            EnableAceServeForPlayerTwo();
                         } 
                     }
                 });
@@ -186,8 +205,7 @@ namespace MatchStats.ViewModels
             {
                 CurrMatch.Score.CurrentServer = CurrMatch.PlayerOne;
                 CurrentServer = CurrMatch.PlayerOne;
-                PlayerOneActions.First(x => x.Name == "AceServe").IsEnabled = true;
-                PlayerTwoActions.First(x => x.Name == "AceServe").IsEnabled = false;
+                EnableAceServeForPlayerOne();
                 PlayerOneIsServing = true;
                 PlayerTwoIsServing = false;
                 SaveMatch(CurrMatch);
@@ -198,8 +216,7 @@ namespace MatchStats.ViewModels
             {
                 CurrMatch.Score.CurrentServer = CurrMatch.PlayerTwo;
                 CurrentServer = CurrMatch.PlayerTwo;
-                PlayerTwoActions.First(x => x.Name == "AceServe").IsEnabled = true;
-                PlayerOneActions.First(x => x.Name == "AceServe").IsEnabled = false;
+                EnableAceServeForPlayerTwo();
                 PlayerTwoIsServing = true;
                 PlayerOneIsServing = false;
                 SaveMatch(CurrMatch);
@@ -371,10 +388,10 @@ namespace MatchStats.ViewModels
 
         private bool ValidateForUndoCommand(Match currentMatch)
         {
-            if (currentMatch == null) return false;
+            if (currentMatch == null || currentMatch.Score.CurrentServer == null) return false;
+            if (currentMatch.MatchStats.Count == 0) return false;
             return ! currentMatch.Score.IsMatchOver;
         }
-
 
         /// <summary>
         /// Rule for First Server in

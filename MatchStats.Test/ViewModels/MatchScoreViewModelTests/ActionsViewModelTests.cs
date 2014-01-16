@@ -140,5 +140,20 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
 
             Assert.IsFalse(fixture.PlayerTwoActions.First(x => x.Name == "AceServe").IsEnabled);
         }
+
+        [TestMethod]
+        public void ShouldEnableAceActionCommandWhenPlayerOnSecondPointOrMoreOfAGame()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerTwoSecondServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoSecondServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            Assert.IsTrue(fixture.PlayerTwoActions.First(x => x.Name == "AceServe").IsEnabled);
+        }
     }
 }

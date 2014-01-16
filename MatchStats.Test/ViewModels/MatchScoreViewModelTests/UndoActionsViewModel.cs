@@ -78,7 +78,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
         }
 
         [TestMethod]
-        public void ShouldEnableAceActionCommandWhenAPointIsUndo()
+        public void ShouldEnableAceActionCommandWhenAPointIsUndone()
         {
             var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
@@ -88,7 +88,27 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.UndoLastActionCommand.Execute(null);
 
             Assert.IsTrue(fixture.PlayerOneActions.First(x => x.Name == "AceServe").IsEnabled);
+        }        
+        
+        [TestMethod]
+        public void ShouldDisableUndoCommandWhenCurrentServeIsNotSet()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
+
+            Assert.IsFalse(fixture.UndoLastActionCommand.CanExecute(null));
         }
 
+        [TestMethod]
+        public void ShouldDisableUndoCommandWhenThereIsNothingToUndo()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerOneActions.First(x => x.Name == "AceServe").ActionCommand.Execute(null);
+
+            fixture.UndoLastActionCommand.Execute(null);
+
+            Assert.IsFalse(fixture.UndoLastActionCommand.CanExecute(null));
+        }
     }
 }
