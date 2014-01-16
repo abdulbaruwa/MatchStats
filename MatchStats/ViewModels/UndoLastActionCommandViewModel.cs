@@ -44,16 +44,28 @@ namespace MatchStats.ViewModels
                     {
                         var games = currentMatch.CurrentSet().Games.Count;
                         currentMatch.CurrentSet().Games.RemoveAt(games - 1);
-                        
-                        if(lastMatchStat.Player.IsPlayerOne) currentMatch.CurrentSet().Games.Last().PlayerOneScore --;
+
+                        if (currentMatch.CurrentSet().Games.Count == 0)
+                        {
+                            // If an undo operation is for an action in a previous set, then set that set as the current set before reducing the score
+                            currentMatch.Score.Sets.RemoveAt(currentMatch.Score.Sets.Count - 1);
+                            var lastSet = currentMatch.Score.Sets.LastOrDefault();
+                            if (lastSet != null)
+                            {
+                                lastSet.IsCurrentSet = true;
+                            }
+                        }
+
+                        if (lastMatchStat.Player.IsPlayerOne)currentMatch.CurrentSet().Games.Last().PlayerOneScore --;
                         if (! lastMatchStat.Player.IsPlayerOne) currentMatch.CurrentSet().Games.Last().PlayerTwoScore--;
+
                         currentMatch.CurrentSet().Games.Last().IsCurrentGame = true;
+                        currentMatch.CurrentSet().Games.Last().Winner = null;
                     }
                 }
                 currentMatch.MatchStats.RemoveAt(currentMatch.MatchStats.Count - 1);
             }
 
-            currentMatch = matchStatsApi.ApplyGameRules(currentMatch);
             matchStatsApi.SaveMatch(currentMatch);
             MessageBus.Current.SendMessage(currentMatch, "PointUpdateForCurrentMatch");
         }
