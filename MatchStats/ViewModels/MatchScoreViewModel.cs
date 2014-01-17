@@ -321,7 +321,7 @@ namespace MatchStats.ViewModels
 
         private void InitializeServeCommands()
         {
-            PlayerOneFirstServeInCommand = new ReactiveCommand(FirstServePending(true));
+            PlayerOneFirstServeInCommand = new ReactiveCommand(FirstServeInCanExecute(true));
             PlayerOneFirstServeOutCommand = new ReactiveCommand(FirstServePending(true));
             PlayerOneSecondServeInCommand = new ReactiveCommand(SecondServePending(true));
 
@@ -329,7 +329,7 @@ namespace MatchStats.ViewModels
             PlayerOneFirstServeOutCommand.Subscribe(_ => new FirstServeOutCommandViewModel(null).ActionCommand.Execute(null));
             PlayerOneSecondServeInCommand.Subscribe(_ => new SecondServeInCommandViewModel(null).ActionCommand.Execute(null));
 
-            PlayerTwoFirstServeInCommand = new ReactiveCommand(FirstServePending(false));
+            PlayerTwoFirstServeInCommand = new ReactiveCommand(FirstServeInCanExecute(false));
             PlayerTwoFirstServeInCommand.Subscribe(
                 _ => new FirstServeInCommandViewModel(CurrentServer).ActionCommand.Execute(null));
 
@@ -404,20 +404,30 @@ namespace MatchStats.ViewModels
         {
             return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, (server, matchStats) => (
                         //The last action is not a first serve in for player with not further recorded point
-                        ValidateForServeInOrOut(matchStats.Value.LastOrDefault(), server.Value, isPlayerOne)
+                        ValidateForFirstServeInOrOut(matchStats.Value.LastOrDefault(), server.Value, isPlayerOne)
+                    ));
+        }
+        private IObservable<bool> FirstServeInCanExecute(bool isPlayerOne)
+        {
+            return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, (server, matchStats) => (
+                        //The last action is not a first serve in for player with not further recorded point
+                        ValidateForFirstServeInOrOut(matchStats.Value.LastOrDefault(), server.Value, isPlayerOne)
                     ));
         }
 
-        private bool ValidateForServeInOrOut(MatchStat matchStat, Player server,  bool isPlayerOne)
+        private bool ValidateForFirstServeInOrOut(MatchStat matchStat, Player server,  bool isPlayerOne)
         {
             if (server == null) return false;
             if (server.IsPlayerOne == isPlayerOne)
             {
                 if (matchStat == null) return true;
-                if (server.IsPlayerOne == isPlayerOne &&
-                    (matchStat.Reason == StatDescription.BreakPoint || matchStat.Reason == StatDescription.GamePoint ||
-                     matchStat.Reason == StatDescription.GameOver))
+                if (matchStat.Reason == StatDescription.FirstServeIn || matchStat.Reason == StatDescription.FirstServeOut) return false;
+                if (matchStat.Reason == StatDescription.BreakPoint || matchStat.Reason == StatDescription.GamePoint ||
+                    matchStat.Reason == StatDescription.GameOver || matchStat.Reason != StatDescription.FirstServeIn ||
+                    matchStat.Reason != StatDescription.FirstServeOut)
+                {
                     return true;
+                }
                 return server.IsPlayerOne == isPlayerOne && matchStat.PointWonLostOrNone != PointWonLostOrNone.NotAPoint;
             }
             return false;
