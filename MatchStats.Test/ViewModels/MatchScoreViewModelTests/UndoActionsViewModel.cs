@@ -121,5 +121,66 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.UndoLastActionCommand.Execute(null);
             Assert.AreEqual("3", fixture.PlayerOneFirstSet);
         }
+
+        [TestMethod]
+        public void ShouldChangeCurrentServerBackToPreviousServerIfWinningPointOfAGameIsUndone()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            //Current server should have changed here
+            Assert.IsTrue(! fixture.CurrentServer.IsPlayerOne); 
+
+            fixture.UndoLastActionCommand.Execute(null);
+            Assert.IsTrue(fixture.CurrentServer.IsPlayerOne);
+        }
+
+        [TestMethod]
+        public void ShouldChangeDisplayOfGameScoreForThePreviousGameIfTheWinningPointOfAGameIsUndone()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+
+            fixture.UndoLastActionCommand.Execute(null);
+
+            Assert.AreEqual("40", fixture.PlayerOneCurrentGame);
+        }
+
+        [TestMethod]
+        public void ShouldChangeDisplayOfGameScoreForThePreviousGameIfTheWinningPointIsOfAGameIsUndoneACoupleOfTimes()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+
+            // First undo
+            fixture.UndoLastActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.UndoLastActionCommand.Execute(null);
+
+            Assert.AreEqual("40", fixture.PlayerOneCurrentGame);
+
+        }
+
+        [TestMethod]
+        public void ShouldChangeGameStatusFromGameOverIfTheWinningPointOfAGameIsUndone()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+
+            fixture.UndoLastActionCommand.Execute(null);
+
+            Assert.AreEqual(Status.GamePoint, fixture.CurrMatch.CurrentGame().GameStatus.Status);
+        }
+
     }
 }
