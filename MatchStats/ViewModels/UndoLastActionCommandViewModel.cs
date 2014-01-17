@@ -69,13 +69,28 @@ namespace MatchStats.ViewModels
                         if (currentMatch.MatchStats.Count >= 2)
                         {
                             var status = currentMatch.MatchStats[currentMatch.MatchStats.Count - 2].Reason;
-                            if (status == StatDescription.BreakPoint)
+                            switch (status)
                             {
-                                currentMatch.CurrentSet().Games.Last().GameStatus.Status = Status.BreakPoint;
-                            }
-                            if (status == StatDescription.GamePoint)
-                            {
-                                currentMatch.CurrentSet().Games.Last().GameStatus.Status = Status.GamePoint;
+                                case StatDescription.BreakPoint:
+                                    currentMatch.CurrentSet().Games.Last().GameStatus.Status = Status.BreakPoint;
+                                    break;
+                                case StatDescription.GamePoint:
+                                    currentMatch.CurrentSet().Games.Last().GameStatus.Status = Status.GamePoint;
+                                    break;
+                                default:
+                                    bool isGamePoint;
+                                    if (currentMatch.Score.CurrentServer.IsPlayerOne)
+                                    {
+                                        isGamePoint = currentMatch.CurrentGame().PlayerOneScore > currentMatch.CurrentGame().PlayerTwoScore;
+
+                                    }
+                                    else
+                                    {
+                                        isGamePoint = currentMatch.CurrentGame().PlayerTwoScore > currentMatch.CurrentGame().PlayerOneScore;
+                                    }
+                                  
+                                    currentMatch.CurrentSet().Games.Last().GameStatus.Status =  isGamePoint ? Status.GamePoint : Status.BreakPoint;
+                                    break;
                             }
                         }
                     }
