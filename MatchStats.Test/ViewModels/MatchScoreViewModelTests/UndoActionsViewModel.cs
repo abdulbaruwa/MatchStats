@@ -166,7 +166,6 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.UndoLastActionCommand.Execute(null);
 
             Assert.AreEqual("40", fixture.PlayerOneCurrentGame);
-
         }
 
         [TestMethod]
@@ -182,5 +181,25 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             Assert.AreEqual(Status.GamePoint, fixture.CurrMatch.CurrentGame().GameStatus.Status);
         }
 
+
+        [TestMethod]
+        public void ShouldEnableFirstAndSecondServeCommandsAfterAnUndoAction()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.UndoLastActionCommand.Execute(null);
+
+            Assert.IsFalse(fixture.PlayerOneFirstServeInCommand.CanExecute(null));
+        }
     }
 }
