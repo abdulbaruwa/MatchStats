@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>akavache.sqlite3</id>
+    <version>3.2.0</version>
+    <title>Akavache.SQLite3</title>
+    <authors>GitHub</authors>
+    <owners>GitHub</owners>
+    <licenseUrl>https://raw.github.com/github/Akavache/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/github/Akavache</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A backend for Akavache based on SQLite3, particularly recommended on mobile platforms.</description>
+    <summary>A backend for Akavache based on SQLite3, particularly recommended on mobile platforms.</summary>
+    <copyright>Copyright GitHub© 2012</copyright>
+    <dependencies>
+      <dependency id="akavache" version="[3.2.0]" />
+    </dependencies>
+  </metadata>
+</package>
