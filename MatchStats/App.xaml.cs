@@ -1,6 +1,8 @@
-﻿using Windows.ApplicationModel.Activation;
+﻿using System.Diagnostics.Tracing;
+using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using MatchStats.Logging;
 using MatchStats.ViewModels;
 using ReactiveUI;
 using ReactiveUI.Mobile;
@@ -29,7 +31,17 @@ namespace MatchStats
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
+            //var eventSource = new MatchStatsEventSource();
 
+
+            EventListener verboseListener = new StorageFileEventListener("MyListenerVerbose1");
+            EventListener informationListener = new StorageFileEventListener("MyListenerInformation1");
+
+            verboseListener.EnableEvents(MatchStatsEventSource.Log, EventLevel.Verbose);
+            informationListener.EnableEvents(MatchStatsEventSource.Log, EventLevel.Informational);
+
+            ((ModernDependencyResolver)RxApp.DependencyResolver).RegisterConstant(MatchStatsEventSource.Log, typeof(MatchStatsEventSource));
+            ((ModernDependencyResolver)RxApp.DependencyResolver).Register(() => new MatchStatsLogger(), typeof(ILogger));
             ((ModernDependencyResolver)RxApp.DependencyResolver).Register(() => new AppBootstrapper(), typeof(IApplicationRootState));
 
             base.OnLaunched(e);

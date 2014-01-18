@@ -47,7 +47,7 @@ namespace MatchStats.ViewModels
         {
             BlobCache.ApplicationName = "MatchStats";
             RegiserResolver(testResolver, router);
- 
+            this.Log().Debug("MatchStat Bootstrapping");
             GetCredentials().Subscribe(
                 x =>
                 {
@@ -94,7 +94,7 @@ namespace MatchStats.ViewModels
                 Resolver.Register(() => new MatchScoreView(), typeof (IViewFor<MatchScoreViewModel>), "FullScreenLandscape");
                 Resolver.Register(() => new UserService(), typeof (IUserService));
 
-               
+
 
 #if DEBUG
                 var testBlobCache = new TestBlobCache();

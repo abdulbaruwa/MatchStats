@@ -40,7 +40,6 @@ namespace MatchStats.ViewModels
 
             RandomGuid = Guid.NewGuid();
             UrlPathSegment = "MatchScore";
-            
             ScorePoints = new ReactiveList<IGameActionViewModel>();
             HostScreen = screen ?? RxApp.DependencyResolver.GetService<IScreen>();
             NavToHomePageCommand = new ReactiveCommand();
