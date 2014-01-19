@@ -23,9 +23,7 @@ namespace MatchStats.ViewModels
             get { return _isEnabled; }
             set { this.RaiseAndSetIfChanged(ref _isEnabled, value); }
         }
-
         public IReactiveCommand ActionCommand { get; set; }
-
         public string Name { get; set; }
         public string DisplayName { get; set; }
         public Player Player { get; set; }

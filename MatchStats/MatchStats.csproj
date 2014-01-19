@@ -118,6 +118,7 @@
     <Compile Include="Model\IEnumerableMixins.cs" />
     <Compile Include="Model\IntMixins.cs" />
     <Compile Include="Model\MatchMixins.cs" />
+    <Compile Include="ViewModels\BackHandWinnerCommandViewModel.cs" />
     <Compile Include="ViewModels\DoubleFaultCommandViewModel.cs" />
     <Compile Include="ViewModels\AceServeCommandViewModel.cs" />
     <Compile Include="ViewModels\FirstServeInCommandViewModel.cs" />

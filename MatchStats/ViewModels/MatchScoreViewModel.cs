@@ -351,6 +351,14 @@ namespace MatchStats.ViewModels
                 new AceServeCommandViewModel(player),
                 new DoubleFaultCommandViewModel(player),
                 new ForeHandWinnerCommandViewModel(player),
+                new VolleyWinnerCommandViewModel(player),
+                new BackHandWinnerCommandViewModel(player),
+                new UnforcedBackhandErrorCommandViewModel(player),
+                new UnforcedForehandErrorCommandViewModel(player),
+                new UnforcedVolleyErrorCommandViewModel(player),
+                new ForcedErrorCommandViewModel(player),
+                new DropShotWinnerCommandViewModel(player),
+                new OverHeadWinnerCommandViewModel(player)
             };
 
             return listOfActions.ToObservable();

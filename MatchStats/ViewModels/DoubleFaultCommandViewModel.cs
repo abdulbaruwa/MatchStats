@@ -5,6 +5,41 @@ using ReactiveUI;
 
 namespace MatchStats.ViewModels
 {
+    public class UnforcedForehandErrorCommandViewModel : DoubleFaultCommandViewModel
+    {
+        public UnforcedForehandErrorCommandViewModel(Player player = null) : base(player)
+        {
+            Name = "UnforcedForehandError";
+            DisplayName = "Unforced Backhand Error";
+        }
+    }
+
+    public class UnforcedBackhandErrorCommandViewModel : DoubleFaultCommandViewModel
+    {
+        public UnforcedBackhandErrorCommandViewModel(Player player = null) : base(player)
+        {
+            Name = "UnforcedBackhandError";
+            DisplayName = "Unforced Backhand Error";
+        }
+    }
+
+    public class UnforcedVolleyErrorCommandViewModel : DoubleFaultCommandViewModel
+    {
+        public UnforcedVolleyErrorCommandViewModel(Player player = null) : base(player)
+        {
+            Name = "UnforcedVolleyError";
+            DisplayName = "Unforced Volley Error";
+        }
+    }
+    public class ForcedErrorCommandViewModel : DoubleFaultCommandViewModel
+    {
+        public ForcedErrorCommandViewModel(Player player = null) : base(player)
+        {
+            Name = "ForcedError";
+            DisplayName = "Forced Error";
+        }
+    }
+
     public class DoubleFaultCommandViewModel : ReactiveObject, IGameActionViewModel
     {
         public DoubleFaultCommandViewModel(Player player = null)
