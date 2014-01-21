@@ -37,6 +37,20 @@ namespace MatchStats.ViewModels
                 var matchStatsViewModel = new MatchStatsViewModel();
                 matchStatsViewModel.TotalPointsWonByPlayerOne = "112";
                 matchStatsViewModel.TotalPointsWonByPlayerTwo = "98";
+
+                matchStatsViewModel.PlayerOneFullName = "Rafael Nadal";
+                matchStatsViewModel.PlayerTwoFullName = "Kiran Nishikori";
+                matchStatsViewModel.PlayerOneSetOneScore = "7";
+                matchStatsViewModel.PlayerOneSetOneTiebreakScore = "7";
+                matchStatsViewModel.PlayerOneSetTwoScore = "7";
+                matchStatsViewModel.PlayerOneSetThreeScore = "6";
+
+                matchStatsViewModel.PlayerTwoSetOneScore = "6";
+                matchStatsViewModel.PlayerTwoSetOneTiebreakScore = "3";
+
+                matchStatsViewModel.PlayerTwoSetTwoScore = "5";
+                matchStatsViewModel.PlayerTwoSetThreeScore = "4";
+
                 matchStatsViewModel.Stats = new List<Stat>();
                 matchStatsViewModel.Stats.Add(new Stat() {StatName = "Aces", ForMatchP1 = "18", ForMatchP2 = "1", ForFirstSetP1 = "9", ForFirstSetP2 = "2", ForSecondSetP1 = "6", ForSecondSetP2 = "4", ForThirdSetP1 = "2", ForThirdSetP2 = "0", IndexWithinParentCollection = 0});
                 matchStatsViewModel.Stats.Add(new Stat() {StatName = "1st Server %", ForMatchP1 = "70%", ForMatchP2 = "65%", ForFirstSetP1 = "77%", ForFirstSetP2 = "62%", ForSecondSetP1 = "66%", ForSecondSetP2 = "60%", ForThirdSetP1 = "64%", ForThirdSetP2 = "81%", IndexWithinParentCollection = 1});
