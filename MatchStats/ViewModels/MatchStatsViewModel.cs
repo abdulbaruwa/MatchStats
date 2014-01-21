@@ -32,6 +32,24 @@ namespace MatchStats.ViewModels
 
         public string TotalPointsWonByPlayerOne { get; set; }
         public string TotalPointsWonByPlayerTwo { get; set; }
+
+        public string PlayerOneFullName { get; set; }
+        public string PlayerTwoFullName { get; set; }
+
+        public string PlayerOneSetOneScore { get; set; }
+        public string PlayerOneSetTwoScore { get; set; }
+        public string PlayerOneSetThreeScore { get; set; }
+
+        public string PlayerTwoSetOneScore { get; set; }
+        public string PlayerTwoSetTwoScore { get; set; }
+        public string PlayerTwoSetThreeScore { get; set; }
+
+        public string PlayerOneSetOneTiebreakScore { get; set; }
+        public string PlayerOneSetTwoTiebreakScore { get; set; }
+        public string PlayerOneSetThreeTiebreakScore { get; set; }
+        public string PlayerTwoSetOneTiebreakScore { get; set; }
+        public string PlayerTwoSetTwoTiebreakScore { get; set; }
+        public string PlayerTwoSetThreeTiebreakScore { get; set; }
     }
 
     public class Stat
