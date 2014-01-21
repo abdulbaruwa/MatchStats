@@ -70,7 +70,7 @@
                                 <TextBlock Name="PlayerTwoTotalPointsWon" Grid.Column="2" Text="{Binding TotalPointsWonByPlayerTwo}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Grid>
                         </Grid>
-                        
+
                     </Grid>
                     <Grid Name="TotalPointsWonGrid" Grid.Row="1">
                         <!--Tota Points earned by both players will be displayed in this grid-->
@@ -79,7 +79,7 @@
 
                 <Grid Grid.Row="1" Name="Stats">
                     <ListView Name="StatsListView" IsItemClickEnabled="false" HorizontalContentAlignment="Stretch" SelectionMode="None" ItemsSource="{Binding Stats}" >
-                       <ListView.Header>
+                        <ListView.Header>
                             <Grid>
                                 <Grid.Background>
                                     <SolidColorBrush Color="Teal"/>
@@ -89,17 +89,17 @@
                                     <ColumnDefinition Width="200"/>
                                     <ColumnDefinition Width="200"/>
                                     <ColumnDefinition Width="200"/>
-                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition MinWidth="200"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="40"/>
                                 </Grid.RowDefinitions>
-                                <TextBlock Grid.Column="1" Text="Match"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Padding="10" VerticalAlignment="Center" Margin="10,0,0,3"/>
-                                <TextBlock Grid.Column="2" Text="Set 1"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Padding="10" VerticalAlignment="Center" Margin="10,0,0,3"/>
-                                <TextBlock Grid.Column="3" Text="Set 2"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Padding="10" VerticalAlignment="Center" Margin="10,0,0,3"/>
-                                <TextBlock Grid.Column="4" Text="Set 3"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Padding="10" VerticalAlignment="Center" Margin="10,0,0,3"/>
+                                <TextBlock Grid.Column="1" Text="Match"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Padding="0,10,0,0" VerticalAlignment="Center" Margin="63,-1,45,1" Height="40" Width="61"/>
+                                <TextBlock Grid.Column="2" Text="Set 1"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Padding="0,10,0,0" VerticalAlignment="Center" Margin="80,-1,70,1" Height="40" Width="50"/>
+                                <TextBlock Grid.Column="3" Text="Set 2"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Padding="0,10,0,0" VerticalAlignment="Center" Margin="79,-1,69,1" Height="40" Width="52"/>
+                                <TextBlock Grid.Column="4" Text="Set 3"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Padding="0,10,0,0" VerticalAlignment="Center" Margin="179-1,69,1" Height="40" Width="52"/>
                             </Grid>
-                       </ListView.Header> 
+                        </ListView.Header>
 
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -109,16 +109,16 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <Border RenderTransformOrigin="0.5,0.5"  BorderThickness="2" BorderBrush="WhiteSmoke" Margin="0,-7">
-                                    <Grid>
+                                    <Grid Margin="0,0,0,0">
                                         <Grid.Background>
-                                                <SolidColorBrush Color="{Binding IndexWithinParentCollection, Mode=OneWay,Converter={StaticResource AltnateBackgroundConverter}}"/>
+                                            <SolidColorBrush Color="{Binding IndexWithinParentCollection, Mode=OneWay,Converter={StaticResource AltnateBackgroundConverter}}"/>
                                         </Grid.Background>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="300"/>
                                             <ColumnDefinition Width="200"/>
                                             <ColumnDefinition Width="200"/>
                                             <ColumnDefinition Width="200"/>
-                                            <ColumnDefinition Width="200"/>
+                                            <ColumnDefinition Width="900" />
                                         </Grid.ColumnDefinitions>
                                         <Grid.RowDefinitions>
                                             <RowDefinition Height="50"/>
@@ -159,7 +159,7 @@
                                                 <TextBlock Grid.Column="1" Text="{Binding ForSecondSetP2 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
                                             </Grid>
                                         </Border>
-                                        <Border Grid.Column="4" BorderThickness="1"  BorderBrush="DarkGray" Margin="5,2,5,2">
+                                        <Border Width="200" HorizontalAlignment="Left" Grid.Column="4" BorderThickness="1"  BorderBrush="DarkGray" Margin="5,2,5,2">
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition/>
@@ -177,7 +177,7 @@
                 </Grid>
             </Grid>
 
-           
+
             <!--<Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
