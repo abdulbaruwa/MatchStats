@@ -15,6 +15,16 @@
     mc:Ignorable="d">
     <Page.Resources>
         <common:AlternateBackgroundConverter x:Key="AltnateBackgroundConverter" />
+        <Style x:Key ="PlayerNameUnderImageTextStye" TargetType="TextBlock" BasedOn="{StaticResource TitleTextStyle}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
+        <Style x:Key ="PlainTextStye" TargetType="TextBlock" BasedOn="{StaticResource TitleTextStyle}">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
     </Page.Resources>
 
     <Grid>
@@ -98,9 +108,15 @@
                                     <TextBlock Name="PlayerOneSetThreeTiebreakScoreTxtbox" Grid.Column="1" FontSize="7" Margin="-5,10,0,0" Grid.Row="0"  Text="{Binding PlayerOneSetThreeTiebreakScore}" />
                                 </Grid>
                                 
-                                <TextBlock Name="PlayerOneFullNameTxtbox" Grid.Column="0" Text="{Binding PlayerOneFullName}" VerticalAlignment="Center" HorizontalAlignment="Center"
+                                <TextBlock Name="PlayerOneFullNameTxtbox" Grid.Column="0" Grid.Row="0" Text="{Binding PlayerOneFullName}" VerticalAlignment="Center" HorizontalAlignment="Center"
                                            Style="{StaticResource TitleTextStyle}"/>
 
+                                <TextBlock Grid.Column="0" Grid.Row="2" Text="Match Duration" Style="{StaticResource PlainTextStye}"/>
+                                <TextBlock Name="FirstSetDurationTxtbox" Grid.Column="1" Grid.Row="2" Text="{Binding FirstSetDuration}" Style="{StaticResource PlainTextStye}"/>
+                                <TextBlock Name="SecondSetDurationTxtbox" Grid.Column="2" Grid.Row="2" Text="{Binding SecondSetDuration}"  Style="{StaticResource PlainTextStye}"/>
+                                <TextBlock Name="ThirdSetDurationTxtbox" Grid.Column="3" Grid.Row="2" Text="{Binding ThirdSetDuration}"  Style="{StaticResource PlainTextStye}"/>
+
+                                
                                 <Grid Grid.Column="1" Grid.Row="1">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
@@ -136,10 +152,10 @@
                                         <RowDefinition/>
                                         <RowDefinition/>
                                     </Grid.RowDefinitions>
+                                
                                     <TextBlock Name="PlayerTwoSetThreeScoreTxtbox" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="10,0,0,0" Text="{Binding PlayerTwoSetThreeScore}" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource TitleTextStyle}"/>
                                     <TextBlock Name="PlayerTwoSetThreeTiebreakScoreTxtbox" Grid.Column="1" FontSize="7" Margin="-5,10,0,0" Grid.Row="0"  Text="{Binding PlayerTwoSetThreeTiebreakScore}" />
                                 </Grid>
-
                                 <TextBlock Name="PlayerTwoFullNameTxtbox" Grid.Column="0" Grid.Row="1" Text="{Binding PlayerTwoFullName}" Style="{StaticResource TitleTextStyle}"  VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
                             </Grid>
@@ -160,14 +176,18 @@
                                 <RowDefinition/>
                                 <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
+                            <Rectangle Grid.Row="0" Stroke="CadetBlue" StrokeThickness="10" Width="160" ></Rectangle>
                             <Image Source="ms-appx:///Assets/male_silhouette.png"></Image>
+                            <TextBlock Name="PlayerOneNameUnderImage" Grid.Row="1" Text="{Binding PlayerOneFullName}" Style="{StaticResource PlayerNameUnderImageTextStye}"/>
                         </Grid>
                         <Grid Grid.Column="2">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
-                            <Image Source="ms-appx:///Assets/male_silhouette.png"></Image>
+                            <Rectangle Grid.Row="0" Stroke="Goldenrod" StrokeThickness="10" Width="160" ></Rectangle>
+                            <Image Source="ms-appx:///Assets/male_silhouette.png" Width="160"></Image>
+                            <TextBlock Name="PlayerTwoNameUnderImage" Grid.Row="1" Text="{Binding PlayerTwoFullName}" Style="{StaticResource PlayerNameUnderImageTextStye}"/>
                         </Grid>
 
         

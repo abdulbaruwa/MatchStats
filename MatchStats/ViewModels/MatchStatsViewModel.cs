@@ -50,6 +50,10 @@ namespace MatchStats.ViewModels
         public string PlayerTwoSetOneTiebreakScore { get; set; }
         public string PlayerTwoSetTwoTiebreakScore { get; set; }
         public string PlayerTwoSetThreeTiebreakScore { get; set; }
+
+        public string FirstSetDuration { get; set; }
+        public string SecondSetDuration { get; set; }
+        public string ThirdSetDuration { get; set; }
     }
 
     public class Stat
