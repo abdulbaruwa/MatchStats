@@ -239,6 +239,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\reactiveui-core.5.4.0\lib\Portable-Net45+WinRT45+WP8\ReactiveUI.dll</HintPath>
     </Reference>
+    <Reference Include="ReactiveUI.Events">
+      <HintPath>..\packages\reactiveui-events.5.99.2-beta\lib\winrt45\ReactiveUI.Events.dll</HintPath>
+    </Reference>
     <Reference Include="ReactiveUI.Mobile">
       <HintPath>..\Libs\ReactiveUI.Mobile.dll</HintPath>
     </Reference>

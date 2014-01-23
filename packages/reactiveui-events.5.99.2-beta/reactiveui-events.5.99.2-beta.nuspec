@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>reactiveui-events</id>
+    <version>5.99.2-beta</version>
+    <authors>Paul Betts</authors>
+    <owners>Paul Betts</owners>
+    <licenseUrl>http://opensource.org/licenses/ms-pl.html</licenseUrl>
+    <projectUrl>http://www.reactiveui.net/</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>ReactiveUI.Events adds Observable-based events to UI controls and other appropriate places.</description>
+    <language>en-us</language>
+    <dependencies>
+      <group>
+        <dependency id="Rx-Main" version="2.2.2" />
+      </group>
+      <group targetFramework="Windows0.0">
+        <dependency id="Rx-WindowStoreApps" version="2.2.2" />
+      </group>
+    </dependencies>
+  </metadata>
+</package>

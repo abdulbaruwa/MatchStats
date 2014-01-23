@@ -99,7 +99,16 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _showNewMatchPopup, value); }
         }
 
+        [DataMember]
+        private object _selectedMatchStat;
+        public object SelectedMatchStat
+        {
+            get { return _selectedMatchStat; }
+            set { this.RaiseAndSetIfChanged(ref _selectedMatchStat, value); }
+        }
+
         private NewMatchControlViewModel _newMatchControlViewModel;
+
         public NewMatchControlViewModel NewMatchControlViewModel
         {
             get { return _newMatchControlViewModel; }
@@ -109,7 +118,7 @@ namespace MatchStats.ViewModels
         public IReactiveCommand AddMatch { get; set; }
         public string UrlPathSegment { get; private set; }
         public IScreen HostScreen { get; private set; }
-        
+
         private void ShowOrAddMatchPopUp()
         {
             var matchScoreVm =RxApp.DependencyResolver.GetService<MatchScoreViewModel>();

@@ -90,7 +90,7 @@
             Padding="116,145,40,46"
             SelectionMode="None"
             IsSwipeEnabled="false"
-            IsItemClickEnabled="True"
+            IsItemClickEnabled="true"
             ItemsSource="{Binding MyMatchStats}" Grid.ColumnSpan="2">
             <GridView.ItemTemplate>
                 <DataTemplate>
