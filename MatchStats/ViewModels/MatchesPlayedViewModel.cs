@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive.Linq;
 using System.Runtime.Serialization;
 using Akavache;
 using MatchStats.Model;
@@ -32,6 +33,10 @@ namespace MatchStats.ViewModels
             loginMethods.SaveCredentials(Token);
             RxApp.MutableResolver.GetService<ISecureBlobCache>().GetObjectAsync<string>("Token")
                 .Subscribe(x => CredentialAuthenticated = true);
+
+            this.WhenAny(vm => vm.SelectedMatchStat, x => x.Value)
+                .Where(x => x != null && x is MyMatchStats)
+                .Select(x => (MyMatchStats)x).Subscribe(ShowMatchStatForMatch);
 
             MyMatchStats = new ReactiveList<MyMatchStats>();
             var matchStatsApi = RxApp.MutableResolver.GetService<IMatchStatsApi>();
@@ -124,7 +129,14 @@ namespace MatchStats.ViewModels
             var matchScoreVm =RxApp.DependencyResolver.GetService<MatchScoreViewModel>();
             matchScoreVm.ShowHideMatchPopup = true;
 
-            HostScreen.Router.Navigate.Execute(matchScoreVm);// new MatchScoreViewModel(HostScreen));
+            HostScreen.Router.Navigate.Execute(matchScoreVm);
+        }
+
+        private void ShowMatchStatForMatch(MyMatchStats matchStat)
+        {
+            var matchStatsViewModel = RxApp.DependencyResolver.GetService<MatchStatsViewModel>();
+            HostScreen.Router.Navigate.Execute(matchStatsViewModel);
+
         }
     }
 }

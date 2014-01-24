@@ -10,7 +10,6 @@ namespace MatchStats.Views
         public MatchStatsView()
         {
             this.InitializeComponent();
-
         }
 
         object IViewFor.ViewModel
