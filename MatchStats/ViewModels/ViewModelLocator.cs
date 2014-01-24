@@ -84,7 +84,7 @@ namespace MatchStats.ViewModels
             {
                 var defaultPlayer = new Player() { FirstName = "Ademola", Rating = "7.2", SurName = "Baruwa" };
                 var homepageVm = new MatchesPlayedViewModel(new AppBootstrapper());
-                homepageVm.MyMatchStats = new ReactiveList<MyMatchStats>();
+                homepageVm.MyMatchStats = new ReactiveList<Match>();
                 homepageVm.MyMatchStats.AddRange(new DummyDataBuilder().BuildMatchStatsForDesignTimeView()); 
                 homepageVm.DefaultPlayer = defaultPlayer;
                 return homepageVm;
