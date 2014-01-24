@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
 using Akavache;
@@ -11,7 +11,7 @@ namespace MatchStats.ViewModels
     {
         IReactiveCommand AddMatch { get; set; }
 
-        ReactiveList<MyMatchStats> MyMatchStats { get; set; }
+        ReactiveList<Match> MyMatchStats { get; set; }
         NewMatchControlViewModel NewMatchControlViewModel { get; set; }
         bool CredentialAuthenticated { get; set; }
         Player DefaultPlayer { get; set; }
@@ -35,10 +35,10 @@ namespace MatchStats.ViewModels
                 .Subscribe(x => CredentialAuthenticated = true);
 
             this.WhenAny(vm => vm.SelectedMatchStat, x => x.Value)
-                .Where(x => x != null && x is MyMatchStats)
-                .Select(x => (MyMatchStats)x).Subscribe(ShowMatchStatForMatch);
+                .Where(x => x != null && x is Match)
+                .Select(x => (Match)x).Subscribe(ShowMatchStatForMatch);
 
-            MyMatchStats = new ReactiveList<MyMatchStats>();
+            MyMatchStats = new ReactiveList<Match>();
             var matchStatsApi = RxApp.MutableResolver.GetService<IMatchStatsApi>();
 
             var obser = matchStatsApi.FetchMatchStats();
@@ -65,8 +65,8 @@ namespace MatchStats.ViewModels
         }
         
         [DataMember]
-        private ReactiveList<MyMatchStats> _myMatchStats;
-        public ReactiveList<MyMatchStats> MyMatchStats
+        private ReactiveList<Match> _myMatchStats;
+        public ReactiveList<Match> MyMatchStats
         {
             get { return _myMatchStats; }
             set { this.RaiseAndSetIfChanged(ref _myMatchStats, value); }
@@ -132,11 +132,10 @@ namespace MatchStats.ViewModels
             HostScreen.Router.Navigate.Execute(matchScoreVm);
         }
 
-        private void ShowMatchStatForMatch(MyMatchStats matchStat)
+        private void ShowMatchStatForMatch(Match matchStat)
         {
             var matchStatsViewModel = RxApp.DependencyResolver.GetService<MatchStatsViewModel>();
             HostScreen.Router.Navigate.Execute(matchStatsViewModel);
-
         }
     }
 }
