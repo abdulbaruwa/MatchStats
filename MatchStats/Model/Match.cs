@@ -1,6 +1,6 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using ReactiveUI;
+using System.Linq;
 
 namespace MatchStats.Model
 {
@@ -11,8 +11,6 @@ namespace MatchStats.Model
         {
             MatchStats = new List<MatchStat>();
         }
-        //There is a duplication between this Entity and 'MyMatchStats'. Going forward I plan to use this one and depricate 'MyMatchStats' 
-        //so will need to bring more properties into this as and when needed to support scoring and match history.
         public Guid MatchGuid { get; set; }
         public DateTime MatchTime { get; set; }
         public Player PlayerOne { get; set; }
@@ -21,5 +19,15 @@ namespace MatchStats.Model
         public MatchFormat MatchFormat { get; set; }
         public Score Score { get; set; }
         public List<MatchStat> MatchStats { get; set; }
+
+        public int Duration
+        {
+            get
+            {
+                if (Score == null) return 0;
+                return Score.Sets.Sum(x => x.DurationInMinutes);
+            }
+
+        }
     }
 }
