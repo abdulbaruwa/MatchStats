@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Reactive;
 using System.Reactive.Linq;
@@ -11,11 +11,6 @@ namespace MatchStats.Test.ViewModels
 {
     public class FakeMatchStatsApi : IMatchStatsApi
     {
-        public void SaveMatchStats(IEnumerable<MyMatchStats> matchStats)
-        {
-            
-        }
-
         public void SaveMatchStats(List<MyMatchStats> matchStats)
         {
             throw new NotImplementedException();
@@ -26,12 +21,12 @@ namespace MatchStats.Test.ViewModels
             throw new NotImplementedException();
         }
 
-        IObservable<List<MyMatchStats>> IMatchStatsApi.FetchMatchStats()
+        IObservable<List<Match>> IMatchStatsApi.FetchMatchStats()
         {
-            var outputList = new List<MyMatchStats>();
+            var outputList = new List<Match>();
             outputList.AddRange(new DummyDataBuilder().BuildMatchStatsForDesignTimeView());
             //create Cold stream observable from output list. We need the whole list as an observable out put not the items in the list
-            IObservable<List<MyMatchStats>> observable = Observable.Create<List<MyMatchStats>>(o =>
+            IObservable<List<Match>> observable = Observable.Create<List<Match>>(o =>
             {
                 o.OnNext(outputList);
                 o.OnCompleted();
@@ -56,9 +51,14 @@ namespace MatchStats.Test.ViewModels
             throw new NotImplementedException();
         }
 
-        public IObservable<MyMatchStats> FetchMatchStats()
+        public void SaveMatchStats(List<Match> matchStats)
         {
-            var outputList = new ReactiveList<MyMatchStats>();
+            throw new NotImplementedException();
+        }
+
+        public IObservable<Match> FetchMatchStats()
+        {
+            var outputList = new ReactiveList<Match>();
             outputList.AddRange(new DummyDataBuilder().BuildMatchStatsForDesignTimeView());
             return outputList.ToObservable();
         }
