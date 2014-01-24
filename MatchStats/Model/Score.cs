@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+using System;
+using System.Collections.Generic;
 
 namespace MatchStats.Model
 {
@@ -28,5 +29,20 @@ namespace MatchStats.Model
         public List<Game> Games { get; set; }
         public bool IsCurrentSet { get; set; }
         public Player Winner { get; set; }
+        public DateTime? StartTime { get; set; }
+        public DateTime? EndTime { get; set; }
+
+        public int DurationInMinutes
+        {
+            get
+            {
+                if (StartTime.HasValue && EndTime.HasValue)
+                {
+                    return EndTime.Value.Subtract(StartTime.Value).Minutes;
+                }
+                return 0;
+            }
+        }
+
     }
 }
