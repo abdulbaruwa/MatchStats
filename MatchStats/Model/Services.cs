@@ -1,11 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Windows.Media.Effects;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.System.UserProfile;
@@ -13,19 +12,17 @@ using Windows.UI.Xaml.Media.Imaging;
 using Akavache;
 using MatchStats.Enums;
 using ReactiveUI;
-using MatchStats.Model;
-using WinRTXamlToolkit.Imaging;
 
 namespace MatchStats.Model
 {
     public interface IMatchStatsApi
     {
-        void SaveMatchStats(List<MyMatchStats> matchStats);
         IObservable<Unit> SaveMatch(Match match);
-        IObservable<List<MyMatchStats>> FetchMatchStats();
+        IObservable<List<Match>> FetchMatchStats();
         IObservable<Match> ExecuteActionCommand(ICommand command);
         IObservable<Match> GetCurrentMatch();
         Match ApplyGameRules(Match currentMatch);
+        void SaveMatchStats(List<Match> matchStats);
     }
 
     public class MatchStatsApi : IMatchStatsApi
@@ -39,7 +36,7 @@ namespace MatchStats.Model
             undoCommands = new Stack<ICommand>();
         }
 
-        public void SaveMatchStats(List<MyMatchStats> matchStats)
+        public void SaveMatchStats(List<Match> matchStats)
         {
             _blobCache.InsertObject("MyMatchStats", matchStats);
             IEnumerable<string> test = _blobCache.GetAllKeys();
@@ -67,11 +64,17 @@ namespace MatchStats.Model
                     .Concat(_blobCache.InsertObject("CurrentMatch", match));
         }
 
-        public IObservable<List<MyMatchStats>> FetchMatchStats()
+        public IObservable<List<Match>> FetchMatchStats()
         {
-            IObservable<List<MyMatchStats>> observableRes = _blobCache.GetObjectAsync<List<MyMatchStats>>("MyMatchStats");
-            return observableRes;
+            IObservable<List<Match>> observableRes = _blobCache.GetObjectAsync<List<Match>>("MyMatchStats");
+              return observableRes;
         }
+
+        //public IObservable<List<MyMatchStats>> FetchMatchStats()
+        //{
+        //    IObservable<List<MyMatchStats>> observableRes = _blobCache.GetObjectAsync<List<MyMatchStats>>("MyMatchStats");
+        //    return observableRes;
+        //}
 
         public IObservable<Match> ExecuteActionCommand(ICommand command)
         {
