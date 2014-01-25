@@ -1,4 +1,3 @@
-using System.Linq;
 using Windows.UI.Xaml;
 using MatchStats.ViewModels;
 using ReactiveUI;
@@ -10,6 +9,15 @@ namespace MatchStats.Views
         public MatchStatsView()
         {
             this.InitializeComponent();
+            this.Bind(ViewModel, x => x.PlayerOneFullName, x => x.PlayerOneFullNameTxtbox.Text);
+            this.Bind(ViewModel, x => x.PlayerTwoFullName, x => x.PlayerTwoFullNameTxtbox.Text);
+            this.Bind(ViewModel, x => x.FirstSetDuration, x => x.FirstSetDurationTxtbox.Text);
+            //this.Bind(ViewModel, x => x.SecondSetDuration, x => x.SecondSetDurationTxtbox.Text);
+            //this.Bind(ViewModel, x => x.ThirdSetDuration, x => x.ThirdSetDurationTxtbox.Text);
+            //this.Bind(ViewModel, x => x.TotalPointsWonByPlayerOne, x => x.PlayerOneTotalPointsWon.Text);
+            //this.Bind(ViewModel, x => x.TotalPointsWonByPlayerTwo, x => x.PlayerTwoTotalPointsWon.Text);
+
+            
         }
 
         object IViewFor.ViewModel
@@ -19,7 +27,7 @@ namespace MatchStats.Views
         }
 
         public static readonly DependencyProperty ViewModelProperty =
-            DependencyProperty.Register("ViewModel", typeof (MatchScoreViewModel), typeof (MatchScoreView), new PropertyMetadata(null));
+            DependencyProperty.Register("ViewModel", typeof(MatchStatsViewModel), typeof(MatchStatsView), new PropertyMetadata(null));
 
         public MatchStatsViewModel ViewModel
         {

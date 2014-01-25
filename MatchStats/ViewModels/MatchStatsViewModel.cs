@@ -1,6 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reactive.Linq;
 using System.Runtime.Serialization;
+using MatchStats.Model;
 using ReactiveUI;
 
 namespace MatchStats.ViewModels
@@ -14,6 +17,21 @@ namespace MatchStats.ViewModels
             UrlPathSegment = "MatchScore";
             HostScreen = screen ?? RxApp.DependencyResolver.GetService<IScreen>();
 
+            InitializeFields();
+        }
+
+        private void InitializeFields()
+        {
+            this.WhenAny(x => x.CurrentMatch, x => x.Value)
+                .Where(x => x != null)
+                .Subscribe(_ => UpdateFields());
+        }
+
+        private void UpdateFields()
+        {
+            PlayerOneFullName = CurrentMatch.PlayerOne.FullName;
+            PlayerTwoFullName = CurrentMatch.PlayerTwo.FullName;
+            FirstSetDuration = CurrentMatch.Score.Sets.First().DurationInMinutes.ToString() + "mins";
         }
 
         [DataMember]
@@ -22,6 +40,14 @@ namespace MatchStats.ViewModels
         {
             get { return _RandomGuid; }
             set { this.RaiseAndSetIfChanged(ref _RandomGuid, value); }
+        }
+
+        [DataMember]
+        private Match _currentMatch;
+        public Match CurrentMatch
+        {
+            get { return _currentMatch; }
+            set { this.RaiseAndSetIfChanged(ref _currentMatch, value); }
         }
 
         public List<Stat> Stats { get; set; }

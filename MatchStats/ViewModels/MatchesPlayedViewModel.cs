@@ -135,6 +135,7 @@ namespace MatchStats.ViewModels
         private void ShowMatchStatForMatch(Match matchStat)
         {
             var matchStatsViewModel = RxApp.DependencyResolver.GetService<MatchStatsViewModel>();
+            matchStatsViewModel.CurrentMatch = matchStat;
             HostScreen.Router.Navigate.Execute(matchStatsViewModel);
         }
     }
