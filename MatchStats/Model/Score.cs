@@ -1,5 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using WinRTXamlToolkit.Tools;
 
 namespace MatchStats.Model
 {
@@ -15,6 +18,28 @@ namespace MatchStats.Model
         public bool IsMatchOver { get; set; }
         public Player Winner { get; set; }
         public Status Status { get; set; }
+
+        public string DisplayScore
+        {
+            get
+            {
+                var score = new StringBuilder();
+                Sets.ForEach(x =>
+                {
+                    var playerOne = x.Games.Count(y => y.Winner != null && y.Winner.IsPlayerOne);
+                    var playerTwo = x.Games.Count(y => y.Winner != null && ! y.Winner.IsPlayerOne);
+                    var space = score.Length > 1 ? " " : "";
+                    if (Winner.IsPlayerOne)
+                    {
+                        score.Append(space + playerOne.ToString() + "-" + playerTwo.ToString());
+                    }
+                    else
+                        score.Append(space + playerTwo.ToString() + "-" + playerOne.ToString());
+
+                });
+                return score.ToString();
+            }
+        }
     }
 
     public class Set
@@ -28,7 +53,6 @@ namespace MatchStats.Model
         public Player Winner { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
-
         public int DurationInMinutes
         {
             get

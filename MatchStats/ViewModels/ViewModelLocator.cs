@@ -8,7 +8,6 @@ namespace MatchStats.ViewModels
 
     public class ViewModelLocator
     {
-        private MyMatchStats _myMatchStats;
         private Player _defaultPlayer;
         public ViewModelLocator()
         {

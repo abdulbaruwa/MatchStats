@@ -1,26 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
-using Windows.System.Threading;
 using MatchStats.Enums;
 using MatchStats.Model;
-using ReactiveUI;
 
 namespace MatchStats.DesignTimeStuff
 {
     public class MatchBuilder
     {
-        public MatchBuilder(Player playerOne, Player playerTwo)
+        public MatchBuilder()
         {
             _match = new Match();
-            _match.PlayerOne = playerOne;
-            _match.PlayerTwo = playerTwo;
+            _match.Score = new Score();
             _match.MatchGuid = Guid.NewGuid();
+            _playerOne = new Player();
+            _playerTwo = new Player();
         }
 
         private Match _match;
         private Tournament _tournament;
+        private Player _playerOne;
+        private Player _playerTwo;
+        private bool _matchWinnerIsPlayerOne;
+
         public Match Build()
         {
+            _match.Score.Winner = _matchWinnerIsPlayerOne ? _playerOne : _playerTwo;
+            _match.Tournament = _tournament;
+            _match.PlayerOne = _playerOne;
+            _match.PlayerTwo = _playerTwo;
             return _match;
         }
 
@@ -68,7 +75,7 @@ namespace MatchStats.DesignTimeStuff
                 GameType = GameType.Normal,
                 PlayerOneScore = 4,
                 PlayerTwoScore = 2,
-                Winner = _match.PlayerTwo
+                Winner = _playerTwo
             };
         }
 
@@ -79,26 +86,79 @@ namespace MatchStats.DesignTimeStuff
                 GameType = GameType.Normal,
                 PlayerOneScore = 4,
                 PlayerTwoScore = 2,
-                Winner = _match.PlayerOne
+                Winner = _playerOne
             };
         }
 
+        public MatchBuilder WithMatchWinnerIsPlayerOne(bool isPlayerOne)
+        {
+            _matchWinnerIsPlayerOne = isPlayerOne;
+            return this;
+
+        }
+        public MatchBuilder WithPlayer(string firstName, string surname, bool isPlayerOne, string rating)
+        {
+            var player = new Player()
+            {
+                FirstName = firstName,
+                SurName = surname,
+                IsPlayerOne = isPlayerOne,
+                Rating = rating
+            };
+
+            if (isPlayerOne)
+                _playerOne = player;
+            else
+            {
+                _playerTwo = player;
+            }
+
+            return this;
+        }
     }
     public class DummyDataBuilder
     {
         public IEnumerable<Match> BuildMatchStatsForDesignTimeView()
         {
-            var playerOne = new Player() {FirstName = "Ademola", SurName = "Adedayo", IsPlayerOne = true, Rating = "7.2"};
-            var playerTwo = new Player() {FirstName = "Luke", SurName = "Nadal", IsPlayerOne = true, Rating = "7.2"};
-
-            new MatchBuilder(playerOne, playerTwo).WithSetForPlayerOne()
+            var matchStats = new List<Match>();
+            matchStats.Add(new MatchBuilder()
+                .WithTournamentNameAndGrade("Sutton Open", Grade.Grade4)
+                .WithPlayer("Ademola","Adekola",true,"7.2")
+                .WithPlayer("Chris","Cole",false,"7.2")
                 .WithSetForPlayerTwo()
                 .WithSetForPlayerOne()
+                .WithSetForPlayerOne()
+                .WithMatchWinnerIsPlayerOne(true)
+                .Build());
+            
+            matchStats.Add(new MatchBuilder()
                 .WithTournamentNameAndGrade("Sutton Open", Grade.Grade4)
-                .Build();
+                .WithPlayer("Ademola","Adekola",true,"7.2")
+                .WithPlayer("Benjamin","Cole",false,"7.2")
+                .WithSetForPlayerTwo()
+                .WithSetForPlayerOne()
+                .WithSetForPlayerOne()
+                .WithMatchWinnerIsPlayerOne(true)
 
-            var matchStats = new List<Match>();
-            ~Here 
+                .Build());
+            
+            matchStats.Add(new MatchBuilder()
+                .WithTournamentNameAndGrade("Sutton Open", Grade.Grade4)
+                .WithPlayer("Bola","Smith",true,"7.2")
+                .WithPlayer("Ademola","Adekola",false,"7.2")
+                .WithSetForPlayerTwo()
+                .WithSetForPlayerTwo()
+                .Build());
+
+            matchStats.Add(new MatchBuilder()
+                .WithTournamentNameAndGrade("Surrey Close", Grade.Grade4)
+                .WithPlayer("Ademola","Adekola",true,"7.2")
+                .WithPlayer("Smith","Michael",false,"7.2")
+                .WithSetForPlayerOne()
+                .WithSetForPlayerOne()
+                .WithMatchWinnerIsPlayerOne(true)
+                .Build());
+
             return matchStats;
         }
     }

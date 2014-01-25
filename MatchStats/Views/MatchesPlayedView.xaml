@@ -13,6 +13,7 @@
 
     <Page.Resources>
         <common:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
+        <common:DateDisplayConverter x:Key="DateToStringConverver" />
         <common:BooleanToVisibilityInverseConverter x:Key="BoolToVisibilityInverseConverter" />
 
         <Style x:Key="TitleTextBlockStyleRight" TargetType="TextBlock" BasedOn="{StaticResource BaseTextBlockStyle}">
@@ -119,7 +120,7 @@
                                 <TextBlock Text="&#xE170;" FontFamily="Segoe UI Symbol" Margin="2,10,2,0" HorizontalAlignment="Center"/>
                             </Grid>
 
-                            <TextBlock Text="{Binding MatchScore}"
+                            <TextBlock Text="{Binding Score.DisplayScore}"
                                  Grid.Column="2"
                                  Foreground="{ThemeResource ListViewItemOverlayForegroundThemeBrush}"
                                  Style="{StaticResource TitleTextBlockStyleRight}" />
@@ -149,7 +150,7 @@
                                  Foreground="{ThemeResource ListViewItemOverlayForegroundThemeBrush}"
                                  Style="{StaticResource TitleTextBlockStyleLeft}"  />
 
-                            <TextBlock Text="{Binding DisplayDate}"
+                            <TextBlock Text="{Binding Tournament.StartDate, Converter={StaticResource DateToStringConverver}}"
                                  Grid.Row="1"      
                                  Foreground="{ThemeResource ListViewItemOverlayForegroundThemeBrush}"
                                  Style="{StaticResource TitleTextBlockStyleRight}" TextWrapping="NoWrap" FontSize="16" />
@@ -158,7 +159,7 @@
                                  Grid.Row="2"      
                                  Foreground="{ThemeResource ListViewItemOverlayForegroundThemeBrush}"
                                  Style="{StaticResource TitleTextBlockStyleLeft}" FontFamily="Global User Interface" />
-                            <TextBlock Text="{Binding TournamentName}"
+                            <TextBlock Text="{Binding Tournament.TournamentName}"
                                  Grid.Row="3"
                                  Foreground="{ThemeResource ListViewItemOverlayForegroundThemeBrush}"
                                  Style="{StaticResource TitleTextBlockStyleRight}"  />

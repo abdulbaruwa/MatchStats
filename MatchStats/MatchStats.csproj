@@ -109,6 +109,7 @@
     <Compile Include="Common\BooleanNegationConverter.cs" />
     <Compile Include="Common\BooleanToVisibilityConverter.cs" />
     <Compile Include="Common\BooleanToWinLoseImageConverter.cs" />
+    <Compile Include="Common\DateDisplayConverter.cs" />
     <Compile Include="Common\EnumHelper.cs" />
     <Compile Include="Common\RichTextColumns.cs" />
     <Compile Include="Common\EnumDescriptionConverter.cs" />
@@ -141,7 +142,6 @@
     </Compile>
     <Compile Include="DesignTimeStuff\DummyDataBuilder.cs" />
     <Compile Include="Enums\EnumTypes.cs" />
-    <Compile Include="Model\MyMatchStats.cs" />
     <Compile Include="Model\Match.cs" />
     <Compile Include="ViewModels\AppBootstrapper.cs" />
     <Compile Include="MainPage.xaml.cs">

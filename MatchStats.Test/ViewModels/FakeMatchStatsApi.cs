@@ -11,11 +11,6 @@ namespace MatchStats.Test.ViewModels
 {
     public class FakeMatchStatsApi : IMatchStatsApi
     {
-        public void SaveMatchStats(List<MyMatchStats> matchStats)
-        {
-            throw new NotImplementedException();
-        }
-
         public IObservable<Unit> SaveMatch(Match match)
         {
             throw new NotImplementedException();

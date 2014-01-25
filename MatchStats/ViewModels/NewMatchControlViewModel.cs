@@ -32,7 +32,6 @@ namespace MatchStats.ViewModels
             var match = new Match(){MatchGuid = Guid.NewGuid(), MatchTime = DateTime.Now};
             match.Score = new Score()
             {
-                GameOne = new Game()
             };
 
             match.Score.Sets.Add(new Set(){IsCurrentSet = true});
@@ -57,7 +56,7 @@ namespace MatchStats.ViewModels
                 tournament.TournamentName = TournamentName;
                 if (SelectedGrade != null)
                 {
-                    tournament.TournamentGrade = SelectedGrade.ToString();
+                    tournament.Grade = (Grade)SelectedGrade;
                 }
             }
 
