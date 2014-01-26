@@ -21,6 +21,7 @@ namespace MatchStats.DesignTimeStuff
         private Player _playerOne;
         private Player _playerTwo;
         private bool _matchWinnerIsPlayerOne;
+        private FinalSetFormats _finalSetFormat;
 
         public Match Build()
         {
@@ -28,6 +29,7 @@ namespace MatchStats.DesignTimeStuff
             _match.Tournament = _tournament;
             _match.PlayerOne = _playerOne;
             _match.PlayerTwo = _playerTwo;
+            _match.MatchFormat = new MatchFormat() {FinalSetType = _finalSetFormat};
             return _match;
         }
 
@@ -41,6 +43,12 @@ namespace MatchStats.DesignTimeStuff
             set.Games.Add(GameForPlayerOne());
             set.Winner = _match.PlayerOne;
             _match.Score.Sets.Add(set);
+            return this;
+        }
+
+        public MatchBuilder WithFinalSetMatchFormat(FinalSetFormats finalSetFormat)
+        {
+            _finalSetFormat = finalSetFormat;
             return this;
         }
 

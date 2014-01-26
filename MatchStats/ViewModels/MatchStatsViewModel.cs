@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
+using MatchStats.Enums;
 using MatchStats.Model;
 using ReactiveUI;
+using WinRTXamlToolkit.Tools;
 
 namespace MatchStats.ViewModels
 {
@@ -31,7 +33,60 @@ namespace MatchStats.ViewModels
         {
             PlayerOneFullName = CurrentMatch.PlayerOne.FullName;
             PlayerTwoFullName = CurrentMatch.PlayerTwo.FullName;
-            FirstSetDuration = CurrentMatch.Score.Sets.First().DurationInMinutes.ToString() + "mins";
+            if (CurrentMatch.Score.Sets.FirstOrDefault() != null)
+                FirstSetDuration = CurrentMatch.Score.Sets.FirstOrDefault().DurationInMinutes + "mins";
+            if (CurrentMatch.Score.Sets.SecondOrDefault() != null)
+                SecondSetDuration = CurrentMatch.Score.Sets.SecondOrDefault().DurationInMinutes + "mins";
+            if (CurrentMatch.Score.Sets.ThirdOrDefault() != null)
+                ThirdSetDuration = CurrentMatch.Score.Sets.ThirdOrDefault().DurationInMinutes + "mins";
+
+            if (CurrentMatch.Score.Sets.FirstOrDefault() != null)
+            {
+                var playerOneScore = CurrentMatch.Score.Sets.First().Games.Count(x => x.Winner.FullName == PlayerOneFullName);
+                var playerTwoScore = CurrentMatch.Score.Sets.First().Games.Count(x => x.Winner.FullName == PlayerTwoFullName);
+                PlayerOneSetOneScore = playerOneScore.ToString();
+                PlayerTwoSetOneScore = playerTwoScore.ToString();
+                if (playerOneScore.DiffValueWith(playerTwoScore) == 1)
+                {
+                    //A tiebreaker was played
+                    PlayerOneSetOneTiebreakScore = CurrentMatch.Score.Sets.First().Games.Last().PlayerOneScore.ToString();
+                    PlayerTwoSetOneTiebreakScore = CurrentMatch.Score.Sets.First().Games.Last().PlayerTwoScore.ToString();
+                }
+            }
+
+            if (CurrentMatch.Score.Sets.SecondOrDefault() != null)
+            {
+                var playerOneScore = CurrentMatch.Score.Sets.SecondOrDefault().Games.Count(x => x.Winner.FullName == PlayerOneFullName);
+                var playerTwoScore = CurrentMatch.Score.Sets.SecondOrDefault().Games.Count(x => x.Winner.FullName == PlayerTwoFullName);
+                PlayerOneSetTwoScore = playerOneScore.ToString();
+                PlayerTwoSetTwoScore = playerTwoScore.ToString();
+                if (playerOneScore.DiffValueWith(playerTwoScore) == 1)
+                {
+                    //A tiebreaker was played
+                    PlayerOneSetTwoTiebreakScore = CurrentMatch.Score.Sets.SecondOrDefault().Games.Last().PlayerOneScore.ToString();
+                    PlayerTwoSetTwoTiebreakScore = CurrentMatch.Score.Sets.SecondOrDefault().Games.Last().PlayerTwoScore.ToString();
+                }
+            }
+
+            if (CurrentMatch.Score.Sets.ThirdOrDefault() != null)
+            {
+                var playerOneScore = CurrentMatch.Score.Sets.ThirdOrDefault().Games.Count(x => x.Winner.FullName == PlayerOneFullName);
+                var playerTwoScore = CurrentMatch.Score.Sets.ThirdOrDefault().Games.Count(x => x.Winner.FullName == PlayerTwoFullName);
+                PlayerOneSetThreeScore = playerOneScore.ToString();
+                PlayerTwoSetThreeScore = playerTwoScore.ToString();
+
+                if (CurrentMatch.MatchFormat.FinalSetType == FinalSetFormats.Normal && (playerOneScore.DiffValueWith(playerTwoScore) == 1))
+                {
+                    //Finanal set was a normal set and a normal tiebreaker was played
+                    PlayerOneSetTwoTiebreakScore = CurrentMatch.Score.Sets.ThirdOrDefault().Games.Last().PlayerOneScore.ToString();
+                    PlayerTwoSetTwoTiebreakScore = CurrentMatch.Score.Sets.ThirdOrDefault().Games.Last().PlayerTwoScore.ToString();
+                }
+            }
+
+            TotalPointsWonByPlayerOne = CurrentMatch.Score.Sets.Sum(x => x.Games.Sum(y => y.PlayerOneScore)).ToString();
+            TotalPointsWonByPlayerTwo = CurrentMatch.Score.Sets.Sum(x => x.Games.Sum(y => y.PlayerTwoScore)).ToString();
+
+
         }
 
         [DataMember]

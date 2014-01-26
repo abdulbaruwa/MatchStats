@@ -40,6 +40,7 @@ namespace MatchStats.Model
                 return score.ToString();
             }
         }
+
     }
 
     public class Set
