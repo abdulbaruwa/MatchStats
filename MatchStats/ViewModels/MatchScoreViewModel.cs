@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
+using Akavache;
 using MatchStats.Common;
 using MatchStats.Model;
 using ReactiveUI;
@@ -370,6 +371,7 @@ namespace MatchStats.ViewModels
             if (match == null) return;
             CurrMatch = match;
             SaveMatch(match);
+
             PlayerOneActions.Clear();
                 
             GetGameCommandsForPlayer(match.PlayerOne).Subscribe(x => PlayerOneActions.Add(x));

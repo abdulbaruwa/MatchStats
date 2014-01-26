@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Linq;
 using System.Reactive.Threading.Tasks;
 using System.Runtime.Serialization;
 using Akavache;
 using MatchStats.Controls;
-using MatchStats.DesignTimeStuff;
 using MatchStats.Model;
 using MatchStats.Views;
 using ReactiveUI;
@@ -46,6 +44,7 @@ namespace MatchStats.ViewModels
         public AppBootstrapper(IMutableDependencyResolver testResolver = null, IRoutingState router = null)
         {
             BlobCache.ApplicationName = "MatchStats";
+
             RegiserResolver(testResolver, router);
             this.Log().Debug("MatchStat Bootstrapping");
             GetCredentials().Subscribe(
@@ -97,19 +96,6 @@ namespace MatchStats.ViewModels
                 Resolver.Register(() => new MatchStatsViewModel(), typeof(MatchStatsViewModel));
                 Resolver.Register(() => new MatchStatsView(), typeof(IViewFor<MatchStatsViewModel>));
 
-
-#if DEBUG
-                var testBlobCache = new TestBlobCache();
-                Resolver.RegisterConstant(testBlobCache, typeof (IBlobCache), "LOCALMACHINE");
-                Resolver.RegisterConstant(testBlobCache, typeof (IBlobCache), "UserAccount");
-                Resolver.RegisterConstant(testBlobCache, typeof (ISecureBlobCache));
-                var matchStatsApi = Resolver.GetService<IMatchStatsApi>();
-                matchStatsApi.SaveMatchStats(new DummyDataBuilder().BuildMatchStatsForDesignTimeView().ToList());
-#else
-                resolver.RegisterConstant(BlobCache.Secure, typeof(ISecureBlobCache));
-                resolver.RegisterConstant(BlobCache.LocalMachine, typeof(IBlobCache));
-                resolver.RegisterConstant(BlobCache.UserAccount, typeof(IBlobCache));
-#endif
                 Resolver.RegisterConstant(this, typeof(AppBootstrapper));
                 Resolver.RegisterConstant(new MainPage(), typeof (IViewFor), "InitialPage");
             }

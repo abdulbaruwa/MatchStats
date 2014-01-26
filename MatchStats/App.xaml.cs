@@ -1,8 +1,12 @@
 ﻿using System.Diagnostics.Tracing;
+using System.Linq;
 using Windows.ApplicationModel.Activation;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Akavache;
+using MatchStats.DesignTimeStuff;
 using MatchStats.Logging;
+using MatchStats.Model;
 using MatchStats.ViewModels;
 using ReactiveUI;
 using ReactiveUI.Mobile;
@@ -31,14 +35,30 @@ namespace MatchStats
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-            //var eventSource = new MatchStatsEventSource();
-
-
             EventListener verboseListener = new StorageFileEventListener("MyListenerVerbose1");
             EventListener informationListener = new StorageFileEventListener("MyListenerInformation1");
 
             verboseListener.EnableEvents(MatchStatsEventSource.Log, EventLevel.Verbose);
             informationListener.EnableEvents(MatchStatsEventSource.Log, EventLevel.Informational);
+
+            BlobCache.ApplicationName = "MatchStats";
+
+#if DEBUG
+            // TODO Doing this to enable testing of the SQLITE Akavach otherwise falling to TestBlobCache which is in memory 
+            //var testBlobCache = new TestBlobCache();
+            //RxApp.MutableResolver.RegisterConstant(testBlobCache, typeof(IBlobCache), "LOCALMACHINE");
+            //RxApp.MutableResolver.RegisterConstant(testBlobCache, typeof(IBlobCache), "UserAccount");
+            //RxApp.MutableResolver.RegisterConstant(testBlobCache, typeof(ISecureBlobCache));
+
+            RxApp.MutableResolver.RegisterConstant(BlobCache.Secure, typeof(ISecureBlobCache));
+            RxApp.MutableResolver.RegisterConstant(BlobCache.LocalMachine, typeof(IBlobCache));
+            RxApp.MutableResolver.RegisterConstant(BlobCache.UserAccount, typeof(IBlobCache));
+
+#else
+            RxApp.MutableResolver.RegisterConstant(BlobCache.Secure, typeof(ISecureBlobCache));
+            RxApp.MutableResolver.RegisterConstant(BlobCache.LocalMachine, typeof(IBlobCache));
+            RxApp.MutableResolver.RegisterConstant(BlobCache.UserAccount, typeof(IBlobCache));
+#endif
 
             ((ModernDependencyResolver)RxApp.DependencyResolver).RegisterConstant(MatchStatsEventSource.Log, typeof(MatchStatsEventSource));
             ((ModernDependencyResolver)RxApp.DependencyResolver).Register(() => new MatchStatsLogger(), typeof(ILogger));

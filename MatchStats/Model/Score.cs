@@ -29,12 +29,15 @@ namespace MatchStats.Model
                     var playerOne = x.Games.Count(y => y.Winner != null && y.Winner.IsPlayerOne);
                     var playerTwo = x.Games.Count(y => y.Winner != null && ! y.Winner.IsPlayerOne);
                     var space = score.Length > 1 ? " " : "";
-                    if (Winner.IsPlayerOne)
+                    if (Winner != null)
                     {
-                        score.Append(space + playerOne.ToString() + "-" + playerTwo.ToString());
+                        if (Winner.IsPlayerOne)
+                        {
+                            score.Append(space + playerOne.ToString() + "-" + playerTwo.ToString());
+                        }
+                        else
+                            score.Append(space + playerTwo.ToString() + "-" + playerOne.ToString());
                     }
-                    else
-                        score.Append(space + playerTwo.ToString() + "-" + playerOne.ToString());
 
                 });
                 return score.ToString();

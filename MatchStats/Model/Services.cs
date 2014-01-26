@@ -58,9 +58,10 @@ namespace MatchStats.Model
                 existingMatches.Remove(existingMatch);
             }
             existingMatches.Add(match);
-
+            var newVals = new List<Match>(existingMatches);
             return
-                _blobCache.InsertObject("MyMatches", existingMatches)
+
+                _blobCache.InsertObject("MyMatches", newVals)
                     .Concat(_blobCache.InsertObject("CurrentMatch", match));
         }
 
@@ -69,12 +70,6 @@ namespace MatchStats.Model
             IObservable<List<Match>> observableRes = _blobCache.GetObjectAsync<List<Match>>("MyMatchStats");
               return observableRes;
         }
-
-        //public IObservable<List<MyMatchStats>> FetchMatchStats()
-        //{
-        //    IObservable<List<MyMatchStats>> observableRes = _blobCache.GetObjectAsync<List<MyMatchStats>>("MyMatchStats");
-        //    return observableRes;
-        //}
 
         public IObservable<Match> ExecuteActionCommand(ICommand command)
         {
