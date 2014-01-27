@@ -42,44 +42,44 @@ namespace MatchStats.ViewModels
         public void Execute()
         {
             //Update currentMatch for this command
-            Match currentMatch = null;
             var matchStatsApi = RxApp.DependencyResolver.GetService<IMatchStatsApi>();
             //Can this be passed in when the command is called?
-            matchStatsApi.GetCurrentMatch().Subscribe(x => currentMatch = x);
-
-            Game currentGame = null;
-            var currentSet = currentMatch.Score.Sets.FirstOrDefault(x => x.IsCurrentSet);
-            if (currentSet != null)
+            matchStatsApi.GetCurrentMatch().Subscribe(currentMatch =>
             {
-                currentGame = currentSet.Games.FirstOrDefault(x => x.IsCurrentGame);
-            }
-
-            var matchStat = new MatchStat
-            {
-                PointWonLostOrNone = PointWonLostOrNone.PointWon,
-                Reason = DetermineIfFirstOrSecondServeAce(currentMatch),
-                Server = currentMatch.Score.CurrentServer
-            };
-
-            if (currentGame != null)
-            {
-                if (Player.IsPlayerOne)
+                Game currentGame = null;
+                var currentSet = currentMatch.Score.Sets.FirstOrDefault(x => x.IsCurrentSet);
+                if (currentSet != null)
                 {
-                    matchStat.Player = currentMatch.PlayerOne;
-                    currentGame.PlayerOneScore += 1;
+                    currentGame = currentSet.Games.FirstOrDefault(x => x.IsCurrentGame);
                 }
-                else
-                {
-                    matchStat.Player = currentMatch.PlayerTwo;
-                    currentGame.PlayerTwoScore += 1;
-                }
-            }
 
-            currentMatch.MatchStats.Add(matchStat);
-            currentMatch = matchStatsApi.ApplyGameRules(currentMatch);
-            matchStatsApi.SaveMatch(currentMatch);
-            MessageBus.Current.SendMessage(currentMatch, "PointUpdateForCurrentMatch");
-            MessageBus.Current.SendMessage(currentMatch, "AceServeForCurrentMatch");
+                var matchStat = new MatchStat
+                {
+                    PointWonLostOrNone = PointWonLostOrNone.PointWon,
+                    Reason = DetermineIfFirstOrSecondServeAce(currentMatch),
+                    Server = currentMatch.Score.CurrentServer
+                };
+
+                if (currentGame != null)
+                {
+                    if (Player.IsPlayerOne)
+                    {
+                        matchStat.Player = currentMatch.PlayerOne;
+                        currentGame.PlayerOneScore += 1;
+                    }
+                    else
+                    {
+                        matchStat.Player = currentMatch.PlayerTwo;
+                        currentGame.PlayerTwoScore += 1;
+                    }
+                }
+
+                currentMatch.MatchStats.Add(matchStat);
+                currentMatch = matchStatsApi.ApplyGameRules(currentMatch);
+                matchStatsApi.SaveMatch(currentMatch);
+                MessageBus.Current.SendMessage(currentMatch, "PointUpdateForCurrentMatch");
+                MessageBus.Current.SendMessage(currentMatch, "AceServeForCurrentMatch");
+            });
         }
     }
 }

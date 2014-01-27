@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Windows.Input;
 using MatchStats.Model;
 using ReactiveUI;

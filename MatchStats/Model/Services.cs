@@ -46,7 +46,7 @@ namespace MatchStats.Model
         {
             //Get match and add to it.
             var existingMatches = new List<Match>();
-            IObservable<List<Match>> observable = _blobCache.GetObjectAsync<List<Match>>("MyMatches");
+            IObservable<List<Match>> observable = _blobCache.GetObjectAsync<List<Match>>("MyMatchStats");
             observable.Subscribe(existingMatches.AddRange,
                 ex =>
                 {
@@ -61,7 +61,7 @@ namespace MatchStats.Model
             var newVals = new List<Match>(existingMatches);
             return
 
-                _blobCache.InsertObject("MyMatches", newVals)
+                _blobCache.InsertObject("MyMatchStats", newVals)
                     .Concat(_blobCache.InsertObject("CurrentMatch", match));
         }
 

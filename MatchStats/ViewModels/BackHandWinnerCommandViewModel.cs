@@ -1,7 +1,4 @@
-using System;
-using System.Linq;
 using MatchStats.Model;
-using ReactiveUI;
 
 namespace MatchStats.ViewModels
 {

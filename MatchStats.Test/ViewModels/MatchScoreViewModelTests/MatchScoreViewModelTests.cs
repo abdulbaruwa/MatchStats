@@ -21,7 +21,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             var currentListOfMatches = new List<Match>();
             var newListOfMatchesAfterSave = new List<Match>();
 
-            blobCache.GetObjectAsync<List<Match>>("MyMatches").Subscribe(currentListOfMatches.AddRange,
+            blobCache.GetObjectAsync<List<Match>>("MyMatchStats").Subscribe(currentListOfMatches.AddRange,
                 ex =>
                 {
                    //Ignore the exception that the list may not exist. 
@@ -33,7 +33,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);     
 
             //Assert => it has been saved
-            blobCache.GetObjectAsync<List<Match>>("MyMatches").Subscribe(newListOfMatchesAfterSave.AddRange,
+            blobCache.GetObjectAsync<List<Match>>("MyMatchStats").Subscribe(newListOfMatchesAfterSave.AddRange,
                 ex => {/**Ignore any exceptions**/});
             Assert.IsTrue((currentListOfMatches.Count + 1) == newListOfMatchesAfterSave.Count);
         }
@@ -45,7 +45,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             var blobCache = MatchScoreViewModelTestHelper.RegisterComponents();
 
             var currentListOfMatches = new List<Match>();
-            blobCache.GetObjectAsync<List<Match>>("MyMatches").Subscribe(currentListOfMatches.AddRange,
+            blobCache.GetObjectAsync<List<Match>>("MyMatchStats").Subscribe(currentListOfMatches.AddRange,
                 ex =>
                 {
                     //Ignore the exception that the list my not exist. 
