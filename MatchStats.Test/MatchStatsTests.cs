@@ -1,7 +1,13 @@
 using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Json;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using MatchStats.Model;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Newtonsoft.Json;
 
@@ -16,12 +22,12 @@ namespace MatchStats.Test
             var storageFile = await Windows.Storage.StorageFile.GetFileFromPathAsync(path);
             var buffer = await FileIO.ReadBufferAsync(storageFile);
 
-            string ret = "";
+            var ret = default(dynamic);
             using (var datareader = DataReader.FromBuffer(buffer))
             {
                 ret = datareader.ReadString(buffer.Length);
             }
-            var result = JsonConvert.DeserializeObject(ret);
+            ret = JsonConvert.DeserializeObject(ret);
 
         }
     }
