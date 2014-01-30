@@ -24,6 +24,7 @@ namespace MatchStats.DesignTimeStuff
         public PlayerBuilder IsPlayerOne(bool isPlayerOne)
         {
             _isPlayerOne = isPlayerOne;
+            return this;
         }
         public PlayerBuilder WithRating(string rating)
         {

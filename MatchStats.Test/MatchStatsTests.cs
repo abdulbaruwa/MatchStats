@@ -19,7 +19,8 @@ namespace MatchStats.Test
         [TestMethod]
         public async Task ShouldCalculatePercentageFirstServesInForPlayerOne()
         {
-            var matchStats = await SerializeMatchStatsFromJsonData();
+            var matchs = await SerializeMatchStatsFromJsonData();
+
             var matchstat = new MatchStat();
             var player1 = new PlayerBuilder().WithFirstNameSecondName("Ade", "Wilson").IsPlayerOne(true).Build();
             var player2 = new PlayerBuilder().WithFirstNameSecondName("Luke", "Watson").IsPlayerOne(true).Build();
@@ -46,10 +47,15 @@ namespace MatchStats.Test
             matchStatsList.Add(new MatchStat() { Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.FirstServeOut });
             matchStatsList.Add(new MatchStat() { Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.SecondServeIn });
 
-            var match = new Match {MatchStats = matchStatsList, PlayerOne = player1, PlayerTwo = player2};
+            //var match = new Match {MatchStats = matchStatsList, PlayerOne = player1, PlayerTwo = player2};
+            var match = matchs.FirstOrDefault();
+            match.MatchStats.Clear();
+            match.MatchStats.AddRange(matchStatsList);
             var fixture = new MatchStatsViewModel();
             fixture.CurrentMatch = match;
-
+            Assert.IsNotNull(fixture.Stats);
+            Assert.IsTrue(fixture.Stats.Count > 0);
+//            Assert.AreEqual(fixture.Stats.Where(x => x == "First Serve %"));
         }
 
         

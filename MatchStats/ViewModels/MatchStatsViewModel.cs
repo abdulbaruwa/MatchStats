@@ -18,7 +18,7 @@ namespace MatchStats.ViewModels
             RandomGuid = Guid.NewGuid();
             UrlPathSegment = "MatchScore";
             HostScreen = screen ?? RxApp.DependencyResolver.GetService<IScreen>();
-
+            Stats = new List<Stat>();
             InitializeFields();
         }
 
@@ -29,7 +29,7 @@ namespace MatchStats.ViewModels
                 .Subscribe(_ =>
                 {
                     UpdateFields();
-                    AddFirstServePercentageStats();
+                   // AddFirstServePercentageStats();
                 });
         }
 
@@ -144,20 +144,27 @@ namespace MatchStats.ViewModels
         private void AddFirstServePercentageStats()
         {
             var firstServes = this.CurrentMatch.MatchStats.Where(x => x.Reason == StatDescription.FirstServeIn
-                && x.Reason == StatDescription.FirstServeOut && x.Reason == StatDescription.FirstServeAce && x.Player.IsPlayerOne).ToList();
-            var firstServesIn = firstServes.Where(x => x.Reason == StatDescription.FirstServeAce && x.Reason == StatDescription.FirstServeIn).ToList();
-            var percentageFirstServer = firstServesIn.Count() / firstServes.Count() * 100;
+                || x.Reason == StatDescription.FirstServeOut || x.Reason == StatDescription.FirstServeAce && x.Player.IsPlayerOne).ToList();
+            var firstServesIn = firstServes.Where(x => x.Reason == StatDescription.FirstServeAce || x.Reason == StatDescription.FirstServeIn).ToList();
+            var percentageFirstServer =
+                (int) Math.Round(((double) firstServesIn.Count())/((double) firstServes.Count())*100);
 
             var firstServesP2 = this.CurrentMatch.MatchStats.Where(x => x.Reason == StatDescription.FirstServeIn
-                && x.Reason == StatDescription.FirstServeOut && x.Reason == StatDescription.FirstServeAce && x.Player.IsPlayerOne == false).ToList();
-            var firstServesInP2 = firstServes.Where(x => x.Reason == StatDescription.FirstServeAce && x.Reason == StatDescription.FirstServeIn).ToList();
-            var percentageFirstServerP2 = firstServesInP2.Count() / firstServesP2.Count() * 100;
+                || x.Reason == StatDescription.FirstServeOut || x.Reason == StatDescription.FirstServeAce && (x.Player.IsPlayerOne == false)).ToList();
+            var firstServesInP2 = firstServes.Where(x => x.Reason == StatDescription.FirstServeAce || x.Reason == StatDescription.FirstServeIn).ToList();
+            var  percentageFirstServerP2 = (int) Math.Round(((double)firstServesInP2.Count()) / ((double)firstServesP2.Count()) * 100);
 
             var firstServe = Stats.FirstOrDefault(x => x.StatName == "First Serve %");
 
             if (firstServe == null)
             {
                 Stats.Add(new Stat(){StatName = "First Serve %", ForMatchP1 = percentageFirstServer + "%", ForMatchP2 = percentageFirstServerP2 + "%"});
+            }
+            else
+            {
+                firstServe.StatName = "First Serve %";
+                firstServe.ForMatchP1 = percentageFirstServer + "%";
+                firstServe.ForMatchP2 = percentageFirstServerP2 + "%";
             }
         }
     }
