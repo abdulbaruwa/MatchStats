@@ -6,6 +6,7 @@ using System.Xml.Linq;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using MatchStats.Model;
+using MatchStats.ViewModels;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
@@ -45,6 +46,11 @@ namespace MatchStats.Test
             matchStatsList.Add(new MatchStat() { Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.SecondServeIn });
 
             var match = new Match {MatchStats = matchStatsList};
+            var fixture = new MatchStatsViewModel();
+            fixture.CurrentMatch = match;
+
+            var aceStat = fixture.Stats.FirstOrDefault(x => x.StatName == "First Serve %");
+            Assert.IsNotNull(aceStat);
             
             var firstServes = matchStatsList.Where(x => x.Reason == StatDescription.FirstServeIn
                 && x.Reason == StatDescription.FirstServeOut && x.Reason == StatDescription.FirstServeAce).ToList();
@@ -53,6 +59,8 @@ namespace MatchStats.Test
 
 
         }
+
+        
 
         private static async Task<List<Match>> SerializeMatchStatsFromJsonData()
         {
