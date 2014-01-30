@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using Windows.Storage;
 using Windows.Storage.Streams;
+using MatchStats.DesignTimeStuff;
 using MatchStats.Model;
 using MatchStats.ViewModels;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
@@ -20,8 +21,8 @@ namespace MatchStats.Test
         {
             var matchStats = await SerializeMatchStatsFromJsonData();
             var matchstat = new MatchStat();
-            var player1 = new Player();
-            var player2 = new Player();
+            var player1 = new PlayerBuilder().WithFirstNameSecondName("Ade", "Wilson").IsPlayerOne(true).Build();
+            var player2 = new PlayerBuilder().WithFirstNameSecondName("Luke", "Watson").IsPlayerOne(true).Build();
             var matchStatsList = new List<MatchStat>();
             //15-0
             matchStatsList.Add(new MatchStat(){Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.FirstServeIn});
@@ -45,18 +46,9 @@ namespace MatchStats.Test
             matchStatsList.Add(new MatchStat() { Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.FirstServeOut });
             matchStatsList.Add(new MatchStat() { Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.SecondServeIn });
 
-            var match = new Match {MatchStats = matchStatsList};
+            var match = new Match {MatchStats = matchStatsList, PlayerOne = player1, PlayerTwo = player2};
             var fixture = new MatchStatsViewModel();
             fixture.CurrentMatch = match;
-
-            var aceStat = fixture.Stats.FirstOrDefault(x => x.StatName == "First Serve %");
-            Assert.IsNotNull(aceStat);
-            
-            var firstServes = matchStatsList.Where(x => x.Reason == StatDescription.FirstServeIn
-                && x.Reason == StatDescription.FirstServeOut && x.Reason == StatDescription.FirstServeAce).ToList();
-            var firstServesIn = firstServes.Where(x => x.Reason == StatDescription.FirstServeAce && x.Reason == StatDescription.FirstServeIn).ToList();
-            var percentageFirstServer = firstServesIn.Count()/firstServes.Count()*100;
-
 
         }
 

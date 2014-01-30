@@ -1,10 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
+using Windows.ApplicationModel.Background;
 using MatchStats.Enums;
 using MatchStats.Model;
 
 namespace MatchStats.DesignTimeStuff
 {
+    public class PlayerBuilder
+    {
+        private Player _player;
+        private string _firstName = "firstname";
+        private string _surnameName = "surname";
+        private string _rating = "10.1";
+        private bool _isPlayerOne;
+
+        public PlayerBuilder WithFirstNameSecondName(string firstname, string surname)
+        {
+            _firstName = firstname;
+            _surnameName = surname;
+            return this;
+        }
+
+        public PlayerBuilder IsPlayerOne(bool isPlayerOne)
+        {
+            _isPlayerOne = isPlayerOne;
+        }
+        public PlayerBuilder WithRating(string rating)
+        {
+            _rating = rating;
+            return this;
+        }
+
+        public Player Build()
+        {
+            _player = new Player()
+            {
+                FirstName = _firstName,
+                SurName = _surnameName,
+                IsPlayerOne = _isPlayerOne,
+                Rating = _rating
+            };
+            return _player;
+        }
+    }
     public class MatchBuilder
     {
         public MatchBuilder()
@@ -169,5 +207,7 @@ namespace MatchStats.DesignTimeStuff
 
             return matchStats;
         }
+
+
     }
 }

@@ -26,10 +26,15 @@ namespace MatchStats.ViewModels
         {
             this.WhenAny(x => x.CurrentMatch, x => x.Value)
                 .Where(x => x != null)
-                .Subscribe(_ => UpdateFields());
+                .Subscribe(_ =>
+                {
+                    UpdateFields();
+                    AddFirstServePercentageStats();
+                });
         }
 
         private void UpdateFields()
+
         {
             PlayerOneFullName = CurrentMatch.PlayerOne.FullName;
             PlayerTwoFullName = CurrentMatch.PlayerTwo.FullName;
