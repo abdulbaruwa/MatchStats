@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace MatchStats.Model
 {
@@ -8,6 +9,7 @@ namespace MatchStats.Model
         {
             GameStatus = new GameStatus();
             GameType = GameType.Normal;
+            GameId = Guid.NewGuid();
         }
 
         public Player Winner { get; set; }
@@ -16,6 +18,7 @@ namespace MatchStats.Model
         public bool IsCurrentGame { get; set; }
         public GameStatus GameStatus { get; set; }
         public GameType GameType { get; set; }
+        public Guid GameId { get; set; }
     }
 
     public class GameStatus
