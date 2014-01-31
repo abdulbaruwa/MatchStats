@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 using MatchStats.Model;
 using ReactiveUI;
@@ -44,7 +44,9 @@ namespace MatchStats.ViewModels
                 {
                     PointWonLostOrNone = PointWonLostOrNone.PointWon,
                     Reason = StatDescription.ForeHandWinner,
-                    Server = currentMatch.Score.CurrentServer
+                    Server = currentMatch.Score.CurrentServer,
+                    GameId = currentMatch.CurrentGame().GameId,
+                    SetId = currentMatch.CurrentSet().SetId
                 };
 
                 if (currentGame != null)
