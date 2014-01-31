@@ -1,3 +1,5 @@
+using System;
+
 namespace MatchStats.Model
 {
     public class Player
@@ -26,6 +28,9 @@ namespace MatchStats.Model
                        Reason == StatDescription.GameOver;
             }
         }
+
+        public Guid GameId { get; set; }
+        public Guid SetId { get; set; }
     }
 
     public enum PointWonLostOrNone
