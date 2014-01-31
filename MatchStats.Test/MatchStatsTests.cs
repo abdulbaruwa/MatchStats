@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Xml.Linq;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using MatchStats.DesignTimeStuff;
@@ -17,7 +16,7 @@ namespace MatchStats.Test
     [TestClass] public class MatchStatsTests 
     {
         [TestMethod]
-        public async Task ShouldCalculatePercentageFirstServesInForPlayerOne()
+        public async Task ShouldCalculatePercentageFirstServesInAndDoubleFaultsForPlayerOne()
         {
             var matchs = await SerializeMatchStatsFromJsonData();
 
@@ -56,6 +55,11 @@ namespace MatchStats.Test
             Assert.IsNotNull(fixture.Stats);
             Assert.IsTrue(fixture.Stats.Count > 0);
             Assert.AreEqual("62%", fixture.Stats.First(x => x.StatNameType == StatName.FirstServePercentage).ForMatchP1);
+            Assert.IsNotNull(fixture.Stats.FirstOrDefault(x => x.StatNameType == StatName.DoubleFaults));
+            Assert.AreEqual("1", fixture.Stats.First(x => x.StatNameType == StatName.DoubleFaults).ForMatchP1);
+            Assert.AreEqual("0", fixture.Stats.First(x => x.StatNameType == StatName.DoubleFaults).ForMatchP2);
+            Assert.AreEqual("1", fixture.Stats.First(x => x.StatNameType == StatName.DoubleFaults).ForFirstSetP1);
+            Assert.AreEqual("0", fixture.Stats.First(x => x.StatNameType == StatName.DoubleFaults).ForFirstSetP2);
         }
         
 
