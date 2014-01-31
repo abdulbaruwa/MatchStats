@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using MatchStats.Model;
 using ReactiveUI;
 
@@ -33,7 +33,9 @@ namespace MatchStats.ViewModels
                     PointWonLostOrNone = PointWonLostOrNone.NotAPoint,
                     Reason = StatDescription.FirstServeOut,
                     Server = currentMatch.Score.CurrentServer,
-                    Player = currentMatch.Score.CurrentServer
+                    Player = currentMatch.Score.CurrentServer,
+                    GameId = currentMatch.CurrentGame().GameId,
+                    SetId = currentMatch.CurrentSet().SetId
                 };
 
                 currentMatch.MatchStats.Add(matchStat);
