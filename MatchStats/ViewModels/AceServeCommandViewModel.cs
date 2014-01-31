@@ -57,7 +57,9 @@ namespace MatchStats.ViewModels
                 {
                     PointWonLostOrNone = PointWonLostOrNone.PointWon,
                     Reason = DetermineIfFirstOrSecondServeAce(currentMatch),
-                    Server = currentMatch.Score.CurrentServer
+                    Server = currentMatch.Score.CurrentServer,
+                    GameId = currentMatch.CurrentGame().GameId,
+                    SetId = currentMatch.CurrentSet().SetId
                 };
 
                 if (currentGame != null)
