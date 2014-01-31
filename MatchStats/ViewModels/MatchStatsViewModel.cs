@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
@@ -29,7 +30,7 @@ namespace MatchStats.ViewModels
                 .Subscribe(_ =>
                 {
                     UpdateFields();
-                   // AddFirstServePercentageStats();
+                    AddFirstServePercentageStats();
                 });
         }
 
@@ -154,23 +155,26 @@ namespace MatchStats.ViewModels
             var firstServesInP2 = firstServes.Where(x => x.Reason == StatDescription.FirstServeAce || x.Reason == StatDescription.FirstServeIn).ToList();
             var  percentageFirstServerP2 = (int) Math.Round(((double)firstServesInP2.Count()) / ((double)firstServesP2.Count()) * 100);
 
-            var firstServe = Stats.FirstOrDefault(x => x.StatName == "First Serve %");
+            var firstServe = Stats.FirstOrDefault(x => x.StatNameType == StatName.FirstServePercentage);
 
             if (firstServe == null)
             {
-                Stats.Add(new Stat(){StatName = "First Serve %", ForMatchP1 = percentageFirstServer + "%", ForMatchP2 = percentageFirstServerP2 + "%"});
+                Stats.Add(new Stat(){StatName = "First Serve %", StatNameType = StatName.FirstServePercentage,  ForMatchP1 = percentageFirstServer + "%", ForMatchP2 = percentageFirstServerP2 + "%"});
             }
             else
             {
                 firstServe.StatName = "First Serve %";
+                firstServe.StatNameType = StatName.FirstServePercentage;
                 firstServe.ForMatchP1 = percentageFirstServer + "%";
                 firstServe.ForMatchP2 = percentageFirstServerP2 + "%";
             }
         }
+
     }
 
     public class Stat
     {
+        public StatName StatNameType { get;set; }
         public string StatName { get; set; }
         public string ForMatchP1 { get; set; }
         public string ForFirstSetP1 { get; set; }

@@ -55,9 +55,8 @@ namespace MatchStats.Test
             fixture.CurrentMatch = match;
             Assert.IsNotNull(fixture.Stats);
             Assert.IsTrue(fixture.Stats.Count > 0);
-//            Assert.AreEqual(fixture.Stats.Where(x => x == "First Serve %"));
+            Assert.AreEqual("62%", fixture.Stats.First(x => x.StatNameType == StatName.FirstServePercentage).ForMatchP1);
         }
-
         
 
         private static async Task<List<Match>> SerializeMatchStatsFromJsonData()

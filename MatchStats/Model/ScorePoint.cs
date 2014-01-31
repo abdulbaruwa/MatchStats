@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using ReactiveUI;
 
 namespace MatchStats.Model
@@ -137,6 +138,31 @@ namespace MatchStats.Model
         FirstServeAce,
         SecondServeAce
     }
+
+    public enum StatName
+    {
+        [Display(Name = "1st Serve %")]
+        FirstServePercentage,
+
+        [Display(Name = "Aces")]
+        Aces,
+
+        [Display(Name = "Double Faults")]
+        DoubleFaults,
+
+        [Display(Name = "Win % for 1st Serve")]
+        WinPercentForFirstServe,
+
+        [Display(Name = "Win % for 2nd Serve")]
+        WinPercentForSecondServe,
+
+        [Display(Name = "Winners")]
+        Winners,
+
+        [Display(Name = "Unforced Errors")]
+        UnforcedErrors
+    }
+
 
     public enum NonScoreActionReason
     {
