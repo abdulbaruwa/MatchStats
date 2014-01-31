@@ -183,7 +183,7 @@ namespace MatchStats.ViewModels
         }
 
     }
-
+ 
     public class Stat
     {
         public StatName StatNameType { get;set; }
