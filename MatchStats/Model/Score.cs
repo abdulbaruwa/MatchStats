@@ -51,12 +51,15 @@ namespace MatchStats.Model
         public Set()
         {
             Games = new List<Game>();
+            SetId = Guid.NewGuid();
         }
+
         public List<Game> Games { get; set; }
         public bool IsCurrentSet { get; set; }
         public Player Winner { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
+        public Guid SetId { get; set; }
         public int DurationInMinutes
         {
             get
