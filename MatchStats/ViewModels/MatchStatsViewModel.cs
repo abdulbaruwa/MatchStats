@@ -31,6 +31,7 @@ namespace MatchStats.ViewModels
                 {
                     UpdateFields();
                     AddFirstServePercentageStats();
+                    AddDoubleFaultStats();
                 });
         }
 
@@ -142,10 +143,21 @@ namespace MatchStats.ViewModels
         public string SecondSetDuration { get; set; }
         public string ThirdSetDuration { get; set; }
 
+
+        private void AddDoubleFaultStats()
+        {
+
+            var doubleFaultsP1 = this.CurrentMatch.MatchStats.Count(x => x.Reason == StatDescription.DoubleFault && x.Player.IsPlayerOne);
+            var doubleFaultsP2 = this.CurrentMatch.MatchStats.Count(x => x.Reason == StatDescription.DoubleFault && (!x.Player.IsPlayerOne));
+
+            Stats.Add(new Stat(){ForMatchP1 = doubleFaultsP1.ToString(), ForMatchP2 = doubleFaultsP2.ToString(), StatNameType = StatName.DoubleFaults});
+        }
+
         private void AddFirstServePercentageStats()
         {
             var firstServes = this.CurrentMatch.MatchStats.Where(x => x.Reason == StatDescription.FirstServeIn
                 || x.Reason == StatDescription.FirstServeOut || x.Reason == StatDescription.FirstServeAce && x.Player.IsPlayerOne).ToList();
+
             var firstServesIn = firstServes.Where(x => x.Reason == StatDescription.FirstServeAce || x.Reason == StatDescription.FirstServeIn).ToList();
             var percentageFirstServer =
                 (int) Math.Round(((double) firstServesIn.Count())/((double) firstServes.Count())*100);
