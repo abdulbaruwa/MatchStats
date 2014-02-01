@@ -51,7 +51,7 @@ namespace MatchStats.Model
         public Set()
         {
             Games = new List<Game>();
-            SetId = Guid.NewGuid();
+            SetId = Guid.NewGuid().ToString();
         }
 
         public List<Game> Games { get; set; }
@@ -59,7 +59,7 @@ namespace MatchStats.Model
         public Player Winner { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
-        public Guid SetId { get; set; }
+        public string SetId { get; set; }
         public int DurationInMinutes
         {
             get

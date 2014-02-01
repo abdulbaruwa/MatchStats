@@ -1,0 +1,4187 @@
+{
+  "Value": [
+    {
+      "MatchGuid": "Ujhh3t4m9UuN8WTglmt0YQ==",
+      "MatchTime": "2014-02-01T06:22:07.465+00:00",
+      "PlayerOne": {
+        "FirstName": "Phillip",
+        "SurName": "Senderos",
+        "FullName": "Phillip Senderos",
+        "Rating": "ThreeTwo",
+        "IsPlayerOne": true
+      },
+      "PlayerTwo": {
+        "FirstName": "Tai",
+        "SurName": "Chukuma",
+        "FullName": "Tai Chukuma",
+        "Rating": "ThreeTwo",
+        "IsPlayerOne": false
+      },
+      "Tournament": {
+        "TournamentName": "French Close",
+        "Grade": 0,
+        "StartDate": "0001-01-01T00:00:00+00:00",
+        "Endate": "0001-01-01T00:00:00+00:00"
+      },
+      "MatchFormat": {
+        "Sets": 0,
+        "SetsFormat": 4,
+        "FinalSetType": 0,
+        "DeuceFormat": 0
+      },
+      "Score": {
+        "Sets": [
+          {
+            "Games": [
+              {
+                "Winner": {
+                  "FirstName": "Phillip",
+                  "SurName": "Senderos",
+                  "FullName": "Phillip Senderos",
+                  "Rating": "ThreeTwo",
+                  "IsPlayerOne": true
+                },
+                "PlayerOneScore": 4,
+                "PlayerTwoScore": 2,
+                "IsCurrentGame": false,
+                "GameStatus": {
+                  "Player": {
+                    "FirstName": "Phillip",
+                    "SurName": "Senderos",
+                    "FullName": "Phillip Senderos",
+                    "Rating": "ThreeTwo",
+                    "IsPlayerOne": true
+                  },
+                  "Status": 4
+                },
+                "GameType": 0,
+                "GameId": "Du2RQlWjH0WsOq6YrM1bTw=="
+              },
+              {
+                "Winner": {
+                  "FirstName": "Tai",
+                  "SurName": "Chukuma",
+                  "FullName": "Tai Chukuma",
+                  "Rating": "ThreeTwo",
+                  "IsPlayerOne": false
+                },
+                "PlayerOneScore": 1,
+                "PlayerTwoScore": 4,
+                "IsCurrentGame": false,
+                "GameStatus": {
+                  "Player": {
+                    "FirstName": "Tai",
+                    "SurName": "Chukuma",
+                    "FullName": "Tai Chukuma",
+                    "Rating": "ThreeTwo",
+                    "IsPlayerOne": false
+                  },
+                  "Status": 4
+                },
+                "GameType": 0,
+                "GameId": "1srhik+6x0yiaJoC3qeSiQ=="
+              },
+              {
+                "Winner": {
+                  "FirstName": "Phillip",
+                  "SurName": "Senderos",
+                  "FullName": "Phillip Senderos",
+                  "Rating": "ThreeTwo",
+                  "IsPlayerOne": true
+                },
+                "PlayerOneScore": 4,
+                "PlayerTwoScore": 1,
+                "IsCurrentGame": false,
+                "GameStatus": {
+                  "Player": {
+                    "FirstName": "Phillip",
+                    "SurName": "Senderos",
+                    "FullName": "Phillip Senderos",
+                    "Rating": "ThreeTwo",
+                    "IsPlayerOne": true
+                  },
+                  "Status": 4
+                },
+                "GameType": 0,
+                "GameId": "Sv0gKfafh0KSz6oZysJLNg=="
+              },
+              {
+                "Winner": {
+                  "FirstName": "Tai",
+                  "SurName": "Chukuma",
+                  "FullName": "Tai Chukuma",
+                  "Rating": "ThreeTwo",
+                  "IsPlayerOne": false
+                },
+                "PlayerOneScore": 2,
+                "PlayerTwoScore": 4,
+                "IsCurrentGame": false,
+                "GameStatus": {
+                  "Player": {
+                    "FirstName": "Tai",
+                    "SurName": "Chukuma",
+                    "FullName": "Tai Chukuma",
+                    "Rating": "ThreeTwo",
+                    "IsPlayerOne": false
+                  },
+                  "Status": 4
+                },
+                "GameType": 0,
+                "GameId": "BNEuGHoGO0m+H5NL+6X29g=="
+              },
+              {
+                "Winner": {
+                  "FirstName": "Tai",
+                  "SurName": "Chukuma",
+                  "FullName": "Tai Chukuma",
+                  "Rating": "ThreeTwo",
+                  "IsPlayerOne": false
+                },
+                "PlayerOneScore": 2,
+                "PlayerTwoScore": 4,
+                "IsCurrentGame": false,
+                "GameStatus": {
+                  "Player": {
+                    "FirstName": "Tai",
+                    "SurName": "Chukuma",
+                    "FullName": "Tai Chukuma",
+                    "Rating": "ThreeTwo",
+                    "IsPlayerOne": false
+                  },
+                  "Status": 4
+                },
+                "GameType": 0,
+                "GameId": "zw2hkjAsFEOmY6m5GVP4yg=="
+              },
+              {
+                "Winner": {
+                  "FirstName": "Tai",
+                  "SurName": "Chukuma",
+                  "FullName": "Tai Chukuma",
+                  "Rating": "ThreeTwo",
+                  "IsPlayerOne": false
+                },
+                "PlayerOneScore": 1,
+                "PlayerTwoScore": 4,
+                "IsCurrentGame": false,
+                "GameStatus": {
+                  "Player": {
+                    "FirstName": "Tai",
+                    "SurName": "Chukuma",
+                    "FullName": "Tai Chukuma",
+                    "Rating": "ThreeTwo",
+                    "IsPlayerOne": false
+                  },
+                  "Status": 4
+                },
+                "GameType": 0,
+                "GameId": "lrv/Au0V9UGKtP/xejp/lA=="
+              }
+            ],
+            "IsCurrentSet": false,
+            "Winner": {
+              "FirstName": "Tai",
+              "SurName": "Chukuma",
+              "FullName": "Tai Chukuma",
+              "Rating": "ThreeTwo",
+              "IsPlayerOne": false
+            },
+            "StartTime": null,
+            "EndTime": null,
+            "SetId": "YgSnu3at5UqZClPj6Ng5PA==",
+            "DurationInMinutes": 0
+          },
+          {
+            "Games": [
+              {
+                "Winner": {
+                  "FirstName": "Phillip",
+                  "SurName": "Senderos",
+                  "FullName": "Phillip Senderos",
+                  "Rating": "ThreeTwo",
+                  "IsPlayerOne": true
+                },
+                "PlayerOneScore": 4,
+                "PlayerTwoScore": 1,
+                "IsCurrentGame": false,
+                "GameStatus": {
+                  "Player": {
+                    "FirstName": "Phillip",
+                    "SurName": "Senderos",
+                    "FullName": "Phillip Senderos",
+                    "Rating": "ThreeTwo",
+                    "IsPlayerOne": true
+                  },
+                  "Status": 4
+                },
+                "GameType": 0,
+                "GameId": "WIbs4Gw+XkO8yKmanPvC5w=="
+              },
+              {
+                "Winner": {
+                  "FirstName": "Tai",
+                  "SurName": "Chukuma",
+                  "FullName": "Tai Chukuma",
+                  "Rating": "ThreeTwo",
+                  "IsPlayerOne": false
+                },
+                "PlayerOneScore": 1,
+                "PlayerTwoScore": 4,
+                "IsCurrentGame": false,
+                "GameStatus": {
+                  "Player": {
+                    "FirstName": "Tai",
+                    "SurName": "Chukuma",
+                    "FullName": "Tai Chukuma",
+                    "Rating": "ThreeTwo",
+                    "IsPlayerOne": false
+                  },
+                  "Status": 4
+                },
+                "GameType": 0,
+                "GameId": "Bh2KLy5tIky67fGokIbobQ=="
+              },
+              {
+                "Winner": {
+                  "FirstName": "Phillip",
+                  "SurName": "Senderos",
+                  "FullName": "Phillip Senderos",
+                  "Rating": "ThreeTwo",
+                  "IsPlayerOne": true
+                },
+                "PlayerOneScore": 4,
+                "PlayerTwoScore": 1,
+                "IsCurrentGame": false,
+                "GameStatus": {
+                  "Player": {
+                    "FirstName": "Phillip",
+                    "SurName": "Senderos",
+                    "FullName": "Phillip Senderos",
+                    "Rating": "ThreeTwo",
+                    "IsPlayerOne": true
+                  },
+                  "Status": 4
+                },
+                "GameType": 0,
+                "GameId": "79pXhIRDO0CoOKPe7cQ64Q=="
+              },
+              {
+                "Winner": {
+                  "FirstName": "Phillip",
+                  "SurName": "Senderos",
+                  "FullName": "Phillip Senderos",
+                  "Rating": "ThreeTwo",
+                  "IsPlayerOne": true
+                },
+                "PlayerOneScore": 5,
+                "PlayerTwoScore": 3,
+                "IsCurrentGame": false,
+                "GameStatus": {
+                  "Player": {
+                    "FirstName": "Phillip",
+                    "SurName": "Senderos",
+                    "FullName": "Phillip Senderos",
+                    "Rating": "ThreeTwo",
+                    "IsPlayerOne": true
+                  },
+                  "Status": 4
+                },
+                "GameType": 0,
+                "GameId": "u7+vThhVJ02eOzFT9R/B/Q=="
+              },
+              {
+                "Winner": {
+                  "FirstName": "Phillip",
+                  "SurName": "Senderos",
+                  "FullName": "Phillip Senderos",
+                  "Rating": "ThreeTwo",
+                  "IsPlayerOne": true
+                },
+                "PlayerOneScore": 4,
+                "PlayerTwoScore": 0,
+                "IsCurrentGame": false,
+                "GameStatus": {
+                  "Player": {
+                    "FirstName": "Phillip",
+                    "SurName": "Senderos",
+                    "FullName": "Phillip Senderos",
+                    "Rating": "ThreeTwo",
+                    "IsPlayerOne": true
+                  },
+                  "Status": 4
+                },
+                "GameType": 0,
+                "GameId": "59Mv9+Qj+EaDqGyRYyQX/A=="
+              }
+            ],
+            "IsCurrentSet": false,
+            "Winner": {
+              "FirstName": "Phillip",
+              "SurName": "Senderos",
+              "FullName": "Phillip Senderos",
+              "Rating": "ThreeTwo",
+              "IsPlayerOne": true
+            },
+            "StartTime": null,
+            "EndTime": null,
+            "SetId": "H26UzSPOAk6M+MJpAPYR0g==",
+            "DurationInMinutes": 0
+          },
+          {
+            "Games": [
+              {
+                "Winner": {
+                  "FirstName": "Tai",
+                  "SurName": "Chukuma",
+                  "FullName": "Tai Chukuma",
+                  "Rating": "ThreeTwo",
+                  "IsPlayerOne": false
+                },
+                "PlayerOneScore": 0,
+                "PlayerTwoScore": 4,
+                "IsCurrentGame": false,
+                "GameStatus": {
+                  "Player": {
+                    "FirstName": "Tai",
+                    "SurName": "Chukuma",
+                    "FullName": "Tai Chukuma",
+                    "Rating": "ThreeTwo",
+                    "IsPlayerOne": false
+                  },
+                  "Status": 4
+                },
+                "GameType": 0,
+                "GameId": "5ixbCRjPjUq7IRXeWcnSIA=="
+              },
+              {
+                "Winner": {
+                  "FirstName": "Phillip",
+                  "SurName": "Senderos",
+                  "FullName": "Phillip Senderos",
+                  "Rating": "ThreeTwo",
+                  "IsPlayerOne": true
+                },
+                "PlayerOneScore": 4,
+                "PlayerTwoScore": 0,
+                "IsCurrentGame": false,
+                "GameStatus": {
+                  "Player": {
+                    "FirstName": "Phillip",
+                    "SurName": "Senderos",
+                    "FullName": "Phillip Senderos",
+                    "Rating": "ThreeTwo",
+                    "IsPlayerOne": true
+                  },
+                  "Status": 4
+                },
+                "GameType": 0,
+                "GameId": "mFYTFS+EHEqj185adSAsAQ=="
+              },
+              {
+                "Winner": {
+                  "FirstName": "Tai",
+                  "SurName": "Chukuma",
+                  "FullName": "Tai Chukuma",
+                  "Rating": "ThreeTwo",
+                  "IsPlayerOne": false
+                },
+                "PlayerOneScore": 1,
+                "PlayerTwoScore": 4,
+                "IsCurrentGame": false,
+                "GameStatus": {
+                  "Player": {
+                    "FirstName": "Tai",
+                    "SurName": "Chukuma",
+                    "FullName": "Tai Chukuma",
+                    "Rating": "ThreeTwo",
+                    "IsPlayerOne": false
+                  },
+                  "Status": 4
+                },
+                "GameType": 0,
+                "GameId": "BCTcsVGWdU+7H3mGrWYg8g=="
+              },
+              {
+                "Winner": {
+                  "FirstName": "Tai",
+                  "SurName": "Chukuma",
+                  "FullName": "Tai Chukuma",
+                  "Rating": "ThreeTwo",
+                  "IsPlayerOne": false
+                },
+                "PlayerOneScore": 2,
+                "PlayerTwoScore": 4,
+                "IsCurrentGame": false,
+                "GameStatus": {
+                  "Player": {
+                    "FirstName": "Tai",
+                    "SurName": "Chukuma",
+                    "FullName": "Tai Chukuma",
+                    "Rating": "ThreeTwo",
+                    "IsPlayerOne": false
+                  },
+                  "Status": 4
+                },
+                "GameType": 0,
+                "GameId": "dIgCOJCcxUywkZp0ClCoBA=="
+              },
+              {
+                "Winner": {
+                  "FirstName": "Tai",
+                  "SurName": "Chukuma",
+                  "FullName": "Tai Chukuma",
+                  "Rating": "ThreeTwo",
+                  "IsPlayerOne": false
+                },
+                "PlayerOneScore": 0,
+                "PlayerTwoScore": 4,
+                "IsCurrentGame": false,
+                "GameStatus": {
+                  "Player": {
+                    "FirstName": "Tai",
+                    "SurName": "Chukuma",
+                    "FullName": "Tai Chukuma",
+                    "Rating": "ThreeTwo",
+                    "IsPlayerOne": false
+                  },
+                  "Status": 4
+                },
+                "GameType": 0,
+                "GameId": "mbhc/VzyQEai3xAbBjEwMQ=="
+              }
+            ],
+            "IsCurrentSet": false,
+            "Winner": {
+              "FirstName": "Tai",
+              "SurName": "Chukuma",
+              "FullName": "Tai Chukuma",
+              "Rating": "ThreeTwo",
+              "IsPlayerOne": false
+            },
+            "StartTime": null,
+            "EndTime": null,
+            "SetId": "+womyUd56UCuq3vIxyY36g==",
+            "DurationInMinutes": 0
+          },
+          {
+            "Games": [
+              {
+                "Winner": null,
+                "PlayerOneScore": 0,
+                "PlayerTwoScore": 0,
+                "IsCurrentGame": true,
+                "GameStatus": {
+                  "Player": null,
+                  "Status": 0
+                },
+                "GameType": 0,
+                "GameId": "QTNZ4KVRH0SZtoKUUuA2Bg=="
+              }
+            ],
+            "IsCurrentSet": true,
+            "Winner": null,
+            "StartTime": null,
+            "EndTime": null,
+            "SetId": "SNAUD+4ZBEWY3rBdLzkGbg==",
+            "DurationInMinutes": 0
+          }
+        ],
+        "CurrentServer": {
+          "FirstName": "Phillip",
+          "SurName": "Senderos",
+          "FullName": "Phillip Senderos",
+          "Rating": "ThreeTwo",
+          "IsPlayerOne": true
+        },
+        "IsMatchOver": true,
+        "Winner": {
+          "FirstName": "Tai",
+          "SurName": "Chukuma",
+          "FullName": "Tai Chukuma",
+          "Rating": "ThreeTwo",
+          "IsPlayerOne": false
+        },
+        "Status": 0,
+        "DisplayScore": "4-2 1-4 4-1 0-0"
+      },
+      "MatchStats": [
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "Du2RQlWjH0WsOq6YrM1bTw==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "Du2RQlWjH0WsOq6YrM1bTw==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "Du2RQlWjH0WsOq6YrM1bTw==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 12,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "Du2RQlWjH0WsOq6YrM1bTw==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "Du2RQlWjH0WsOq6YrM1bTw==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "Du2RQlWjH0WsOq6YrM1bTw==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 10,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "Du2RQlWjH0WsOq6YrM1bTw==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 11,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "Du2RQlWjH0WsOq6YrM1bTw==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "Du2RQlWjH0WsOq6YrM1bTw==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "Du2RQlWjH0WsOq6YrM1bTw==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "Du2RQlWjH0WsOq6YrM1bTw==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "1srhik+6x0yiaJoC3qeSiQ==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "1srhik+6x0yiaJoC3qeSiQ==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "1srhik+6x0yiaJoC3qeSiQ==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "1srhik+6x0yiaJoC3qeSiQ==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 10,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "1srhik+6x0yiaJoC3qeSiQ==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 12,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "1srhik+6x0yiaJoC3qeSiQ==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "1srhik+6x0yiaJoC3qeSiQ==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "Sv0gKfafh0KSz6oZysJLNg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "Sv0gKfafh0KSz6oZysJLNg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 10,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "Sv0gKfafh0KSz6oZysJLNg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 11,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "Sv0gKfafh0KSz6oZysJLNg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "Sv0gKfafh0KSz6oZysJLNg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "Sv0gKfafh0KSz6oZysJLNg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "Sv0gKfafh0KSz6oZysJLNg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "Sv0gKfafh0KSz6oZysJLNg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "Sv0gKfafh0KSz6oZysJLNg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "Sv0gKfafh0KSz6oZysJLNg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "BNEuGHoGO0m+H5NL+6X29g==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "BNEuGHoGO0m+H5NL+6X29g==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "BNEuGHoGO0m+H5NL+6X29g==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 10,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "BNEuGHoGO0m+H5NL+6X29g==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 11,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "BNEuGHoGO0m+H5NL+6X29g==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 12,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "BNEuGHoGO0m+H5NL+6X29g==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "BNEuGHoGO0m+H5NL+6X29g==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "BNEuGHoGO0m+H5NL+6X29g==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 10,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "BNEuGHoGO0m+H5NL+6X29g==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 11,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "BNEuGHoGO0m+H5NL+6X29g==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "BNEuGHoGO0m+H5NL+6X29g==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "BNEuGHoGO0m+H5NL+6X29g==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "BNEuGHoGO0m+H5NL+6X29g==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "zw2hkjAsFEOmY6m5GVP4yg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "zw2hkjAsFEOmY6m5GVP4yg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "zw2hkjAsFEOmY6m5GVP4yg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 12,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "zw2hkjAsFEOmY6m5GVP4yg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "zw2hkjAsFEOmY6m5GVP4yg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "zw2hkjAsFEOmY6m5GVP4yg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "zw2hkjAsFEOmY6m5GVP4yg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 10,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "zw2hkjAsFEOmY6m5GVP4yg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 11,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "zw2hkjAsFEOmY6m5GVP4yg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "zw2hkjAsFEOmY6m5GVP4yg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 14,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 10,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "zw2hkjAsFEOmY6m5GVP4yg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 11,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "zw2hkjAsFEOmY6m5GVP4yg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "zw2hkjAsFEOmY6m5GVP4yg==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "lrv/Au0V9UGKtP/xejp/lA==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "lrv/Au0V9UGKtP/xejp/lA==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "lrv/Au0V9UGKtP/xejp/lA==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "lrv/Au0V9UGKtP/xejp/lA==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "lrv/Au0V9UGKtP/xejp/lA==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "lrv/Au0V9UGKtP/xejp/lA==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "lrv/Au0V9UGKtP/xejp/lA==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 12,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "lrv/Au0V9UGKtP/xejp/lA==",
+          "SetId": "YgSnu3at5UqZClPj6Ng5PA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "WIbs4Gw+XkO8yKmanPvC5w==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "WIbs4Gw+XkO8yKmanPvC5w==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "WIbs4Gw+XkO8yKmanPvC5w==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "WIbs4Gw+XkO8yKmanPvC5w==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "WIbs4Gw+XkO8yKmanPvC5w==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "WIbs4Gw+XkO8yKmanPvC5w==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "WIbs4Gw+XkO8yKmanPvC5w==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "WIbs4Gw+XkO8yKmanPvC5w==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "WIbs4Gw+XkO8yKmanPvC5w==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "Bh2KLy5tIky67fGokIbobQ==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "Bh2KLy5tIky67fGokIbobQ==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "Bh2KLy5tIky67fGokIbobQ==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "Bh2KLy5tIky67fGokIbobQ==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "Bh2KLy5tIky67fGokIbobQ==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "Bh2KLy5tIky67fGokIbobQ==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "Bh2KLy5tIky67fGokIbobQ==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "79pXhIRDO0CoOKPe7cQ64Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "79pXhIRDO0CoOKPe7cQ64Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "79pXhIRDO0CoOKPe7cQ64Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 10,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "79pXhIRDO0CoOKPe7cQ64Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 11,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "79pXhIRDO0CoOKPe7cQ64Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "79pXhIRDO0CoOKPe7cQ64Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "79pXhIRDO0CoOKPe7cQ64Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "79pXhIRDO0CoOKPe7cQ64Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 10,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "79pXhIRDO0CoOKPe7cQ64Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 11,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "79pXhIRDO0CoOKPe7cQ64Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "79pXhIRDO0CoOKPe7cQ64Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "u7+vThhVJ02eOzFT9R/B/Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "u7+vThhVJ02eOzFT9R/B/Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 10,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "u7+vThhVJ02eOzFT9R/B/Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 11,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "u7+vThhVJ02eOzFT9R/B/Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "u7+vThhVJ02eOzFT9R/B/Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 10,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "u7+vThhVJ02eOzFT9R/B/Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 12,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "u7+vThhVJ02eOzFT9R/B/Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 10,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "u7+vThhVJ02eOzFT9R/B/Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 12,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "u7+vThhVJ02eOzFT9R/B/Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 14,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "u7+vThhVJ02eOzFT9R/B/Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "u7+vThhVJ02eOzFT9R/B/Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 14,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "u7+vThhVJ02eOzFT9R/B/Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "u7+vThhVJ02eOzFT9R/B/Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "u7+vThhVJ02eOzFT9R/B/Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "u7+vThhVJ02eOzFT9R/B/Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "u7+vThhVJ02eOzFT9R/B/Q==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "59Mv9+Qj+EaDqGyRYyQX/A==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "59Mv9+Qj+EaDqGyRYyQX/A==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "59Mv9+Qj+EaDqGyRYyQX/A==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "59Mv9+Qj+EaDqGyRYyQX/A==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "59Mv9+Qj+EaDqGyRYyQX/A==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "59Mv9+Qj+EaDqGyRYyQX/A==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 10,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "59Mv9+Qj+EaDqGyRYyQX/A==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 11,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "59Mv9+Qj+EaDqGyRYyQX/A==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "59Mv9+Qj+EaDqGyRYyQX/A==",
+          "SetId": "H26UzSPOAk6M+MJpAPYR0g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "5ixbCRjPjUq7IRXeWcnSIA==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "5ixbCRjPjUq7IRXeWcnSIA==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "5ixbCRjPjUq7IRXeWcnSIA==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "5ixbCRjPjUq7IRXeWcnSIA==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "5ixbCRjPjUq7IRXeWcnSIA==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "mFYTFS+EHEqj185adSAsAQ==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "mFYTFS+EHEqj185adSAsAQ==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "mFYTFS+EHEqj185adSAsAQ==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "mFYTFS+EHEqj185adSAsAQ==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "BCTcsVGWdU+7H3mGrWYg8g==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "BCTcsVGWdU+7H3mGrWYg8g==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "BCTcsVGWdU+7H3mGrWYg8g==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "BCTcsVGWdU+7H3mGrWYg8g==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "BCTcsVGWdU+7H3mGrWYg8g==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 10,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "BCTcsVGWdU+7H3mGrWYg8g==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 12,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "BCTcsVGWdU+7H3mGrWYg8g==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "BCTcsVGWdU+7H3mGrWYg8g==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "BCTcsVGWdU+7H3mGrWYg8g==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "dIgCOJCcxUywkZp0ClCoBA==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 10,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "dIgCOJCcxUywkZp0ClCoBA==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 12,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "dIgCOJCcxUywkZp0ClCoBA==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "dIgCOJCcxUywkZp0ClCoBA==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "dIgCOJCcxUywkZp0ClCoBA==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "dIgCOJCcxUywkZp0ClCoBA==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "dIgCOJCcxUywkZp0ClCoBA==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "dIgCOJCcxUywkZp0ClCoBA==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "dIgCOJCcxUywkZp0ClCoBA==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 14,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "UndoPrevious": false,
+          "GameId": "dIgCOJCcxUywkZp0ClCoBA==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Phillip",
+            "SurName": "Senderos",
+            "FullName": "Phillip Senderos",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": true
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "dIgCOJCcxUywkZp0ClCoBA==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 9,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "mbhc/VzyQEai3xAbBjEwMQ==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 0,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "mbhc/VzyQEai3xAbBjEwMQ==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "mbhc/VzyQEai3xAbBjEwMQ==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 10,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "mbhc/VzyQEai3xAbBjEwMQ==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 11,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "mbhc/VzyQEai3xAbBjEwMQ==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 12,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "mbhc/VzyQEai3xAbBjEwMQ==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 13,
+          "PointWonLostOrNone": 0,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": true,
+          "GameId": "AAAAAAAAAAAAAAAAAAAAAA==",
+          "SetId": "AAAAAAAAAAAAAAAAAAAAAA=="
+        },
+        {
+          "Server": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "Reason": 16,
+          "PointWonLostOrNone": 1,
+          "Player": {
+            "FirstName": "Tai",
+            "SurName": "Chukuma",
+            "FullName": "Tai Chukuma",
+            "Rating": "ThreeTwo",
+            "IsPlayerOne": false
+          },
+          "UndoPrevious": false,
+          "GameId": "mbhc/VzyQEai3xAbBjEwMQ==",
+          "SetId": "+womyUd56UCuq3vIxyY36g=="
+        }
+      ],
+      "Duration": 0
+    }
+  ]
+}

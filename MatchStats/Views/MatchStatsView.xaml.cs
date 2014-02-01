@@ -24,6 +24,7 @@ namespace MatchStats.Views
             this.Bind(ViewModel, x => x.PlayerTwoSetThreeScore, x => x.PlayerTwoSetThreeScoreTxtbox.Text);
             this.Bind(ViewModel, x => x.TotalPointsWonByPlayerOne, x => x.PlayerOneTotalPointsWon.Text);
             this.Bind(ViewModel, x => x.TotalPointsWonByPlayerTwo, x => x.PlayerTwoTotalPointsWon.Text);
+            this.Bind(ViewModel, x => x.Stats, x => x.StatsListView.ItemsSource);
         }
 
         object IViewFor.ViewModel

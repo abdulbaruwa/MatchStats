@@ -23,31 +23,33 @@ namespace MatchStats.Test
             var matchstat = new MatchStat();
             var player1 = new PlayerBuilder().WithFirstNameSecondName("Ade", "Wilson").IsPlayerOne(true).Build();
             var player2 = new PlayerBuilder().WithFirstNameSecondName("Luke", "Watson").IsPlayerOne(true).Build();
+            var setId = matchs.First().Score.Sets.First().SetId;
             var matchStatsList = new List<MatchStat>();
             //15-0
-            matchStatsList.Add(new MatchStat(){Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.FirstServeIn});
+            matchStatsList.Add(new MatchStat(){Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.FirstServeIn, SetId = setId});
 
             //15-15
-            matchStatsList.Add(new MatchStat(){Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.FirstServeOut});
-            matchStatsList.Add(new MatchStat(){Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.SecondServeIn});
+            matchStatsList.Add(new MatchStat(){Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.FirstServeOut, SetId = setId});
+            matchStatsList.Add(new MatchStat() { Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.SecondServeIn, SetId = setId });
 
             //30-15
-            matchStatsList.Add(new MatchStat(){Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.FirstServeIn});
+            matchStatsList.Add(new MatchStat() { Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.FirstServeIn, SetId = setId });
             //30-30
-            matchStatsList.Add(new MatchStat(){Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.FirstServeIn});
+            matchStatsList.Add(new MatchStat() { Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.FirstServeIn, SetId = setId });
             //40-30
-            matchStatsList.Add(new MatchStat(){Player = player1, PointWonLostOrNone = PointWonLostOrNone.PointWon, Reason = StatDescription.FirstServeAce});
+            matchStatsList.Add(new MatchStat() { Player = player1, PointWonLostOrNone = PointWonLostOrNone.PointWon, Reason = StatDescription.FirstServeAce, SetId = setId });
             //40-40
-            matchStatsList.Add(new MatchStat() { Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.FirstServeOut });
-            matchStatsList.Add(new MatchStat() { Player = player1, PointWonLostOrNone = PointWonLostOrNone.PointLost, Reason = StatDescription.DoubleFault });
+            matchStatsList.Add(new MatchStat() { Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.FirstServeOut, SetId = setId });
+            matchStatsList.Add(new MatchStat() { Player = player1, PointWonLostOrNone = PointWonLostOrNone.PointLost, Reason = StatDescription.DoubleFault, SetId = setId });
             //Adv
-            matchStatsList.Add(new MatchStat() { Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.FirstServeIn });
+            matchStatsList.Add(new MatchStat() { Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.FirstServeIn, SetId = setId });
             //Game
-            matchStatsList.Add(new MatchStat() { Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.FirstServeOut });
-            matchStatsList.Add(new MatchStat() { Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.SecondServeIn });
+            matchStatsList.Add(new MatchStat() { Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.FirstServeOut, SetId = setId });
+            matchStatsList.Add(new MatchStat() { Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.SecondServeIn, SetId = setId });
 
             //var match = new Match {MatchStats = matchStatsList, PlayerOne = player1, PlayerTwo = player2};
             var match = matchs.FirstOrDefault();
+
             match.MatchStats.Clear();
             match.MatchStats.AddRange(matchStatsList);
             var fixture = new MatchStatsViewModel();

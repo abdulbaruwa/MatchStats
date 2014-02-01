@@ -29,8 +29,8 @@ namespace MatchStats.Model
             }
         }
 
-        public Guid GameId { get; set; }
-        public Guid SetId { get; set; }
+        public string GameId { get; set; }
+        public string SetId { get; set; }
     }
 
     public enum PointWonLostOrNone

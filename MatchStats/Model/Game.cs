@@ -9,7 +9,7 @@ namespace MatchStats.Model
         {
             GameStatus = new GameStatus();
             GameType = GameType.Normal;
-            GameId = Guid.NewGuid();
+            GameId = Guid.NewGuid().ToString();
         }
 
         public Player Winner { get; set; }
@@ -18,7 +18,7 @@ namespace MatchStats.Model
         public bool IsCurrentGame { get; set; }
         public GameStatus GameStatus { get; set; }
         public GameType GameType { get; set; }
-        public Guid GameId { get; set; }
+        public string GameId { get; set; }
     }
 
     public class GameStatus
