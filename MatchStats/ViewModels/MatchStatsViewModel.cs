@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
+using MatchStats.Common;
 using MatchStats.Enums;
 using MatchStats.Model;
 using ReactiveUI;
@@ -207,7 +208,6 @@ namespace MatchStats.ViewModels
             {
                 Stats.Add(new Stat()
                 {
-                    StatName = "First Serve %",
                     StatNameType = StatName.FirstServePercentage,
                     ForMatchP1 = percentageFirstServer + "%",
                     ForMatchP2 = percentageFirstServerP2 + "%",
@@ -221,7 +221,6 @@ namespace MatchStats.ViewModels
             }
             else
             {
-                firstServe.StatName = "First Serve %";
                 firstServe.StatNameType = StatName.FirstServePercentage;
                 firstServe.ForMatchP1 = percentageFirstServer + "%";
                 firstServe.ForMatchP2 = percentageFirstServerP2 + "%";
@@ -269,7 +268,9 @@ namespace MatchStats.ViewModels
     public class Stat
     {
         public StatName StatNameType { get;set; }
-        public string StatName { get; set; }
+        public string StatName {
+            get { return StatNameType.GetAttribute<DisplayAttribute>().Name; }
+        }
         public string ForMatchP1 { get; set; }
         public string ForFirstSetP1 { get; set; }
         public string ForSecondSetP1 { get; set; }
