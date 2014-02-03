@@ -498,6 +498,11 @@ namespace MatchStats.Model
                 if (currentMatch.Score.CurrentServer.IsPlayerOne)
                 {
                     SetGameStatusForPlayer(currentMatch.PlayerOne, currentGame, Status.GamePoint);
+                    currentMatch.MatchStats.Last().MatchSituations.Add(new MatchSituation()
+                    {
+                        GameId = currentGame.GameId, MatchSituationType = MatchSituationType.GamePoint
+                        ,Player = currentMatch.PlayerOne, SetId = currentMatch.CurrentSet().SetId, Id = Guid.NewGuid().ToString()  
+                    });
                     currentMatch.MatchStats.Add(new MatchStat()
                     {
                         Player = currentMatch.PlayerOne,
@@ -571,13 +576,18 @@ namespace MatchStats.Model
                 }
 
                 SetGameStatusForPlayer(currentMatch.PlayerTwo, currentGame, Status.GamePoint);
-                currentMatch.MatchStats.Add(new MatchStat()
-                {
-                    Player = currentMatch.PlayerTwo,
-                    PointWonLostOrNone = PointWonLostOrNone.NotAPoint,
-                    Reason = StatDescription.GamePoint,
-                    Server = currentMatch.Score.CurrentServer
-                });
+                currentMatch.MatchStats.Last().MatchSituations.Add(new MatchSituation()
+                    {GameId = currentGame.GameId, MatchSituationType = MatchSituationType.GamePoint, 
+                        Player = currentMatch.PlayerTwo, 
+                        SetId = currentMatch.CurrentSet().SetId,
+                        Id = Guid.NewGuid().ToString()});
+                //currentMatch.MatchStats.Add(new MatchStat()
+                //{
+                //    Player = currentMatch.PlayerTwo,
+                //    PointWonLostOrNone = PointWonLostOrNone.NotAPoint,
+                //    Reason = StatDescription.GamePoint,
+                //    Server = currentMatch.Score.CurrentServer
+                //});
                 return true;
             }
             return true;

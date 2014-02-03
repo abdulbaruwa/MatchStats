@@ -43,6 +43,7 @@ namespace MatchStats.Model
         public Player Player { get; set; }
         public string GameId { get; set; }
         public string SetId { get; set; }
+        public string Id { get; set; }
     }
 
     public enum  MatchSituationType

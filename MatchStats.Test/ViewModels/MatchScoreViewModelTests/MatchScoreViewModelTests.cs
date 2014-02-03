@@ -11,7 +11,7 @@ using ReactiveUI;
 namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
 {
     [TestClass]
-    public class MatchScoreViewModelTests
+    public  class MatchScoreViewModelTests
     {
         [TestMethod]
         public void ShouldSaveGivenGameToListOfGames()
