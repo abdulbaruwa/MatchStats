@@ -365,6 +365,16 @@ namespace MatchStats.Model
                         Status = Status.GameOver,
                         Player = currentMatch.PlayerOne
                     };
+
+                    currentMatch.MatchStats.Last().MatchSituations.Add(new MatchSituation()
+                    {
+                        GameId = currentGame.GameId,
+                        Id = Guid.NewGuid().ToString(),
+                        MatchSituationType = currentMatch.Score.CurrentServer.IsPlayerOne ? MatchSituationType.GamePointWon : MatchSituationType.BreakPointWon,
+                        Player = currentMatch.PlayerOne,
+                        SetId = currentMatch.CurrentSet().SetId
+                    });
+
                     return true;
                 }
                 if (currentGame.PlayerTwoScore >= 7)
@@ -375,6 +385,14 @@ namespace MatchStats.Model
                         Status = Status.GameOver,
                         Player = currentMatch.PlayerTwo
                     };
+                    currentMatch.MatchStats.Last().MatchSituations.Add(new MatchSituation()
+                    {
+                        GameId = currentGame.GameId,
+                        Id = Guid.NewGuid().ToString(),
+                        MatchSituationType = currentMatch.Score.CurrentServer.IsPlayerOne == false ? MatchSituationType.GamePointWon : MatchSituationType.BreakPointWon,
+                        Player = currentMatch.PlayerTwo,
+                        SetId = currentMatch.CurrentSet().SetId
+                    });
                     return true;
                 }
             }
@@ -383,6 +401,7 @@ namespace MatchStats.Model
 
         private static bool CheckGameOverRule(Match currentMatch, ref Game currentGame)
         {
+            //Player player;
             if (currentGame.GameType == GameType.Normal)
             {
                 if (currentGame.PlayerOneScore > currentGame.PlayerTwoScore)
@@ -393,6 +412,14 @@ namespace MatchStats.Model
                     {
                         currentGame.Winner = currentMatch.PlayerOne;
                         SetPlayerOneAsWinnerOfGame(currentMatch, currentGame);
+                        currentMatch.MatchStats.Last().MatchSituations.Add(new MatchSituation()
+                        {
+                            GameId = currentGame.GameId,
+                            Id = Guid.NewGuid().ToString(),
+                            MatchSituationType = currentMatch.Score.CurrentServer.IsPlayerOne ? MatchSituationType.GamePointWon : MatchSituationType.BreakPointWon,
+                            Player = currentMatch.PlayerOne,
+                            SetId = currentMatch.CurrentSet().SetId
+                        });
                         return true;
                     }
                 }
@@ -404,6 +431,14 @@ namespace MatchStats.Model
                     {
                         currentGame.Winner = currentMatch.PlayerTwo;
                         SetPlayerTwoAsWinnerOfGame(currentMatch, currentGame);
+                        currentMatch.MatchStats.Last().MatchSituations.Add(new MatchSituation()
+                        {
+                            GameId = currentGame.GameId,
+                            Id = Guid.NewGuid().ToString(),
+                            MatchSituationType = currentMatch.Score.CurrentServer.IsPlayerOne == false ? MatchSituationType.GamePointWon : MatchSituationType.BreakPointWon,
+                            Player = currentMatch.PlayerTwo,
+                            SetId = currentMatch.CurrentSet().SetId
+                        });
                         return true;
                     }
                 }
@@ -469,11 +504,29 @@ namespace MatchStats.Model
                 {
                     //Advantage to playerOne
                     SetGameStatusForPlayer(currentMatch.PlayerOne, currentGame, Status.Advantage);
+                    currentMatch.MatchStats.Last().MatchSituations.Add(new MatchSituation()
+                    {
+                        GameId = currentGame.GameId,
+                        MatchSituationType = MatchSituationType.GamePoint,
+                        Player = currentMatch.PlayerOne,
+                        SetId = currentMatch.CurrentSet().SetId,
+                        Id = Guid.NewGuid().ToString()
+                    });
+
                     return true;
                 }
                 if (currentGame.PlayerTwoScore == currentGame.PlayerOneScore + 1)
                 {
                     //Advantage to PlayerTwo
+                    currentMatch.MatchStats.Last().MatchSituations.Add(new MatchSituation()
+                    {
+                        GameId = currentGame.GameId,
+                        MatchSituationType = MatchSituationType.GamePoint,
+                        Player = currentMatch.PlayerTwo,
+                        SetId = currentMatch.CurrentSet().SetId,
+                        Id = Guid.NewGuid().ToString()
+                    });
+
                     SetGameStatusForPlayer(currentMatch.PlayerTwo, currentGame, Status.Advantage);
                     return true;
                 }
@@ -503,21 +556,25 @@ namespace MatchStats.Model
                         GameId = currentGame.GameId, MatchSituationType = MatchSituationType.GamePoint
                         ,Player = currentMatch.PlayerOne, SetId = currentMatch.CurrentSet().SetId, Id = Guid.NewGuid().ToString()  
                     });
-                    currentMatch.MatchStats.Add(new MatchStat()
-                    {
-                        Player = currentMatch.PlayerOne,
-                        PointWonLostOrNone = PointWonLostOrNone.NotAPoint,
-                        Reason = StatDescription.GamePoint,
-                        Server = currentMatch.Score.CurrentServer
-                    });
+                    //currentMatch.MatchStats.Add(new MatchStat()
+                    //{
+                    //    Player = currentMatch.PlayerOne,
+                    //    PointWonLostOrNone = PointWonLostOrNone.NotAPoint,
+                    //    Reason = StatDescription.GamePoint,
+                    //    Server = currentMatch.Score.CurrentServer
+                    //});
                     return true;
                 }
                 else
                 {
                     SetGameStatusForPlayer(currentMatch.PlayerTwo, currentGame, Status.BreakPoint);
-                    currentMatch.MatchStats.Add(new MatchStat()
+                    currentMatch.MatchStats.Last().MatchSituations.Add(new MatchSituation()
                     {
-                        Player = currentMatch.PlayerTwo, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.BreakPoint, Server = currentMatch.Score.CurrentServer
+                        GameId = currentGame.GameId,
+                        MatchSituationType = MatchSituationType.BreakPoint,
+                        Player = currentMatch.PlayerTwo,
+                        SetId = currentMatch.CurrentSet().SetId,
+                        Id = Guid.NewGuid().ToString()
                     });
                     return true;
                 }
@@ -565,12 +622,13 @@ namespace MatchStats.Model
                 if (currentMatch.Score.CurrentServer.IsPlayerOne)
                 {
                     SetGameStatusForPlayer(currentMatch.PlayerTwo, currentGame, Status.BreakPoint);
-                    currentMatch.MatchStats.Add(new MatchStat()
+                    currentMatch.MatchStats.Last().MatchSituations.Add(new MatchSituation()
                     {
+                        GameId = currentGame.GameId,
+                        MatchSituationType = MatchSituationType.BreakPoint,
                         Player = currentMatch.PlayerTwo,
-                        PointWonLostOrNone = PointWonLostOrNone.NotAPoint,
-                        Reason = StatDescription.BreakPoint,
-                        Server = currentMatch.Score.CurrentServer
+                        SetId = currentMatch.CurrentSet().SetId,
+                        Id = Guid.NewGuid().ToString()
                     });
                     return true;
                 }
