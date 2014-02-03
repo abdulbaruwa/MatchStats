@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using MatchStats.Model;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
@@ -43,7 +43,6 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             Assert.IsTrue(fixture.CurrMatch.MatchStats.LastOrDefault().MatchSituations.Count > 0);
             Assert.AreEqual(MatchSituationType.BreakPoint, fixture.CurrMatch.MatchStats.Last().MatchSituations.Last().MatchSituationType);
         }
-
          
         [TestMethod]
         public void ShouldAddGamePointWonSituationToMatchStatOnGamePointWon()
@@ -87,6 +86,36 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
         }
 
 
-        
+        [TestMethod]
+        public void ShouldAddMatchPointSituationToMatchStatOnMatchPoint()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
+
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+
+            fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeOutCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeOutCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeOutCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
+
+            Assert.IsNotNull(fixture.CurrMatch.MatchStats.LastOrDefault());
+            Assert.IsTrue(fixture.CurrMatch.MatchStats.LastOrDefault().MatchSituations.Count > 0);
+
+            Assert.AreEqual(MatchSituationType.MatchPoint, fixture.CurrMatch.MatchStats.Last().MatchSituations.Last().MatchSituationType);
+
+        }
+
+
     }
 }

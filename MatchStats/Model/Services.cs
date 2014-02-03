@@ -139,6 +139,11 @@ namespace MatchStats.Model
             }
         }
 
+        private bool ChechIsMatchPoint(Match currentMatch)
+        {
+            //  TODO : 
+            return false;
+        }
 
         private bool CheckMatchIsOverRule(Match currentMatch)
         {
@@ -155,6 +160,13 @@ namespace MatchStats.Model
                 {
                     currentMatch.Score.Winner = winner.WinnerIsPlayerOne ? currentMatch.PlayerOne : currentMatch.PlayerTwo;
                     currentMatch.Score.IsMatchOver = true;
+                    currentMatch.MatchStats.Last().MatchSituations.Add(new MatchSituation()
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        GameId = currentMatch.CurrentGame().GameId,
+                        Player = currentMatch.Score.Winner,
+                        SetId = currentMatch.CurrentSet().SetId
+                    });
                 }
             }
             return false;
@@ -556,13 +568,6 @@ namespace MatchStats.Model
                         GameId = currentGame.GameId, MatchSituationType = MatchSituationType.GamePoint
                         ,Player = currentMatch.PlayerOne, SetId = currentMatch.CurrentSet().SetId, Id = Guid.NewGuid().ToString()  
                     });
-                    //currentMatch.MatchStats.Add(new MatchStat()
-                    //{
-                    //    Player = currentMatch.PlayerOne,
-                    //    PointWonLostOrNone = PointWonLostOrNone.NotAPoint,
-                    //    Reason = StatDescription.GamePoint,
-                    //    Server = currentMatch.Score.CurrentServer
-                    //});
                     return true;
                 }
                 else
@@ -639,13 +644,6 @@ namespace MatchStats.Model
                         Player = currentMatch.PlayerTwo, 
                         SetId = currentMatch.CurrentSet().SetId,
                         Id = Guid.NewGuid().ToString()});
-                //currentMatch.MatchStats.Add(new MatchStat()
-                //{
-                //    Player = currentMatch.PlayerTwo,
-                //    PointWonLostOrNone = PointWonLostOrNone.NotAPoint,
-                //    Reason = StatDescription.GamePoint,
-                //    Server = currentMatch.Score.CurrentServer
-                //});
                 return true;
             }
             return true;
