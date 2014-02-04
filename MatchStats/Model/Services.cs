@@ -120,6 +120,8 @@ namespace MatchStats.Model
             //Is game over 
             CheckGameIsOverAndInitializeNewGameIfNeedBe(currentMatch);
 
+            ChechIsMatchPoint(currentMatch);
+
             //Is Set Over
             CheckSetIsOverAndInitializeNewSetIfNeedBe(currentMatch);
 
@@ -141,6 +143,99 @@ namespace MatchStats.Model
 
         private bool ChechIsMatchPoint(Match currentMatch)
         {
+            var gamesCount = (int)currentMatch.MatchFormat.SetsFormat;
+            if (currentMatch.Score.Sets.Any(x => x.Winner == null)) return false;
+            if (currentMatch.Score.Sets.Any())
+            {
+                var groupedSetWiners = (from n in currentMatch.Score.Sets
+                    group n by n.Winner.IsPlayerOne
+                    into setWinners
+                    select new {WinnerIsPlayerOne = setWinners.Key, setCount = setWinners.Count()}).ToList();
+
+                var currentSetGames = currentMatch.CurrentSet().Games;
+                if (currentSetGames.Any(x => x.Winner == null)) return false;
+                if (currentSetGames.Any())
+                {
+                    var groupedWinner = (from n in currentSetGames
+                        group n by n.Winner.IsPlayerOne
+                        into winloss
+                        select new {WinnerIsPlayerOne = winloss.Key, gameCount = winloss.Count()}).ToList();
+
+                    //Get games won by each player
+                    var playerOneGamesCount = 0;
+                    if (groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne) != null)
+                        playerOneGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne).gameCount;
+                    var playerTwoGamesCount = 0;
+                    if (groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne == false) != null)
+                        playerTwoGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne == false).gameCount;
+
+                    var winner = groupedSetWiners.FirstOrDefault(x => x.setCount == 1);
+                    var currentGame = currentMatch.CurrentGame();
+                    if (groupedSetWiners.Count(x => x.setCount == 1) == 2)
+                    {
+                        //Both players have won a set
+                        //Check in the current set any player is one game away and is on set point
+                        //PlayerOneGamesCount
+                        if (playerOneGamesCount >= gamesCount - 1 || playerTwoGamesCount >= gamesCount - 1)
+                        {
+                            if (playerOneGamesCount.DiffValueWith(playerTwoGamesCount) >= 1) //Lead by a game and on poossibly the last game
+                            {
+                                var leaderIsPlayerOne = playerOneGamesCount > playerTwoGamesCount;
+                                var lastSituation = currentMatch.MatchStats.Last().MatchSituations.LastOrDefault();
+                                if(lastSituation != null)
+                                {
+                                    if ((lastSituation.MatchSituationType == MatchSituationType.GamePoint || lastSituation.MatchSituationType == MatchSituationType.BreakPoint)
+                                                && lastSituation.Player.IsPlayerOne == leaderIsPlayerOne)
+                                    {
+                                        currentMatch.MatchStats.Last().MatchSituations.Add(new MatchSituation()
+                                        {
+                                            GameId = currentGame.GameId,
+                                            Id = Guid.NewGuid().ToString(),
+                                            MatchSituationType = MatchSituationType.MatchPoint,
+                                            Player = leaderIsPlayerOne ? currentMatch.PlayerOne : currentMatch.PlayerTwo,
+                                            SetId = currentMatch.CurrentSet().SetId
+                                        });
+                                    }
+                                }
+
+                            }
+                        }
+                    }
+                    else if (groupedSetWiners.FirstOrDefault(x => x.setCount == 1) != null)
+                    {
+                        //One player has won a set; 
+                        //Check in the current set if the player is one game away and is on set point
+                        var setWinner = groupedSetWiners.FirstOrDefault(x => x.setCount == 1).WinnerIsPlayerOne;
+                        //var setWinner.WinnerIsPlayerOne
+                        if (playerOneGamesCount >= gamesCount - 1 || playerTwoGamesCount >= gamesCount - 1)
+                        {
+                            if (playerOneGamesCount.DiffValueWith(playerTwoGamesCount) >= 1) //Lead by a game and on poossibly the last game
+                            {
+                                var lastSituation = currentMatch.MatchStats.Last().MatchSituations.LastOrDefault();
+                                if (lastSituation != null)
+                                {
+                                    if ((lastSituation.MatchSituationType == MatchSituationType.GamePoint || lastSituation.MatchSituationType == MatchSituationType.BreakPoint)
+                                                && lastSituation.Player.IsPlayerOne == setWinner)
+                                    {
+                                        currentMatch.MatchStats.Last().MatchSituations.Add(new MatchSituation()
+                                        {
+                                            GameId = currentGame.GameId,
+                                            Id = Guid.NewGuid().ToString(),
+                                            MatchSituationType = MatchSituationType.MatchPoint,
+                                            Player = setWinner ? currentMatch.PlayerOne : currentMatch.PlayerTwo,
+                                            SetId = currentMatch.CurrentSet().SetId
+                                        });
+                                    }
+                                }
+
+                            }
+                        }
+
+                    }
+                }
+
+        }
+
             //  TODO : 
             return false;
         }
@@ -201,7 +296,6 @@ namespace MatchStats.Model
 
                     //Has that player won the set
                     if (playerOneGamesCount.DiffValueWith(playerTwoGamesCount) >= 2)
-
                     {
                         var playerOneIsWinner = playerOneGamesCount > playerTwoGamesCount;
                         currentMatch.CurrentSet().Winner = playerOneIsWinner
