@@ -144,19 +144,19 @@ namespace MatchStats.Model
         private bool ChechIsMatchPoint(Match currentMatch)
         {
             var gamesCount = (int)currentMatch.MatchFormat.SetsFormat;
-            if (currentMatch.Score.Sets.Any(x => x.Winner == null)) return false;
             if (currentMatch.Score.Sets.Any())
             {
                 var groupedSetWiners = (from n in currentMatch.Score.Sets
+                    where n.Winner != null
                     group n by n.Winner.IsPlayerOne
                     into setWinners
                     select new {WinnerIsPlayerOne = setWinners.Key, setCount = setWinners.Count()}).ToList();
 
                 var currentSetGames = currentMatch.CurrentSet().Games;
-                if (currentSetGames.Any(x => x.Winner == null)) return false;
                 if (currentSetGames.Any())
                 {
                     var groupedWinner = (from n in currentSetGames
+                        where n.Winner != null
                         group n by n.Winner.IsPlayerOne
                         into winloss
                         select new {WinnerIsPlayerOne = winloss.Key, gameCount = winloss.Count()}).ToList();
@@ -214,8 +214,9 @@ namespace MatchStats.Model
                                 var lastSituation = currentMatch.MatchStats.Last().MatchSituations.LastOrDefault();
                                 if (lastSituation != null)
                                 {
-                                    if ((lastSituation.MatchSituationType == MatchSituationType.GamePoint || lastSituation.MatchSituationType == MatchSituationType.BreakPoint)
-                                                && lastSituation.Player.IsPlayerOne == setWinner)
+                                    //TODO Abdul here
+                                    if ((lastSituation.MatchSituationType == MatchSituationType.GamePoint && lastSituation.Player.IsPlayerOne == setWinner)
+                                        || (lastSituation.MatchSituationType == MatchSituationType.GamePoint && lastSituation.MatchSituationType == MatchSituationType.BreakPoint))
                                     {
                                         currentMatch.MatchStats.Last().MatchSituations.Add(new MatchSituation()
                                         {

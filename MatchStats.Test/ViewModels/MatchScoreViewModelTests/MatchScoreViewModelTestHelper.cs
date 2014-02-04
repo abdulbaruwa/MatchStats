@@ -50,12 +50,6 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
 
         public static void AddAGameForPlayerOne(MatchScoreViewModel fixture)
         {
-            //IReactiveCommand serveCommand = null;
-            //if (fixture.CurrentServer.IsPlayerOne)
-            //{
-            //    serveCommand = fixture.PlayerOneFirstServeInCommand;
-            //}
-
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);

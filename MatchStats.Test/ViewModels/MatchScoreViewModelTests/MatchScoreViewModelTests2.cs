@@ -97,6 +97,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
             MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
             MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            fixture.CurrMatch.Score.Sets.First().Winner = fixture.CurrMatch.PlayerOne;
 
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
