@@ -120,7 +120,7 @@ namespace MatchStats.Model
             //Is game over 
             CheckGameIsOverAndInitializeNewGameIfNeedBe(currentMatch);
 
-            ChechIsMatchPoint(currentMatch);
+            CheckIsMatchPoint(currentMatch);
 
             //Is Set Over
             CheckSetIsOverAndInitializeNewSetIfNeedBe(currentMatch);
@@ -141,7 +141,7 @@ namespace MatchStats.Model
             }
         }
 
-        private bool ChechIsMatchPoint(Match currentMatch)
+        private bool CheckIsMatchPoint(Match currentMatch)
         {
             var gamesCount = (int)currentMatch.MatchFormat.SetsFormat;
             if (currentMatch.Score.Sets.Any())
@@ -169,15 +169,39 @@ namespace MatchStats.Model
                     if (groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne == false) != null)
                         playerTwoGamesCount = groupedWinner.FirstOrDefault(x => x.WinnerIsPlayerOne == false).gameCount;
 
-                    var winner = groupedSetWiners.FirstOrDefault(x => x.setCount == 1);
                     var currentGame = currentMatch.CurrentGame();
                     if (groupedSetWiners.Count(x => x.setCount == 1) == 2)
                     {
                         //Both players have won a set
                         //Check in the current set any player is one game away and is on set point
-                        //TODO Here Abdul
-                        var finalSets = (int)currentMatch.MatchFormat.SetsFormat;
-                        if (playerOneGamesCount >= gamesCount - 1 || playerTwoGamesCount >= gamesCount - 1)
+                        if (currentMatch.MatchFormat.FinalSetType == FinalSetFormats.TenPointChampionShipTieBreak)
+                        {
+                            var championShipTieBreakerPoints = (int)currentMatch.CurrentGame().GameType;
+                            //Note it could be 9-9, in which case we add MatchPointSituation for both players.
+                            if (currentGame.PlayerOneScore == championShipTieBreakerPoints - 1)
+                            {
+                                currentMatch.MatchStats.Last().MatchSituations.Add(new MatchSituation()
+                                {
+                                    GameId = currentGame.GameId,
+                                    Id = Guid.NewGuid().ToString(),
+                                    MatchSituationType = MatchSituationType.MatchPoint,
+                                    Player = currentMatch.PlayerOne,
+                                    SetId = currentMatch.CurrentSet().SetId
+                                });
+                            }
+                            if (currentGame.PlayerTwoScore == championShipTieBreakerPoints - 1)
+                            {
+                                currentMatch.MatchStats.Last().MatchSituations.Add(new MatchSituation()
+                                {
+                                    GameId = currentGame.GameId,
+                                    Id = Guid.NewGuid().ToString(),
+                                    MatchSituationType = MatchSituationType.MatchPoint,
+                                    Player = currentMatch.PlayerTwo,
+                                    SetId = currentMatch.CurrentSet().SetId
+                                });
+                            }
+                        }
+                        else if (playerOneGamesCount >= gamesCount - 1 || playerTwoGamesCount >= gamesCount - 1)
                         {
                             if (playerOneGamesCount.DiffValueWith(playerTwoGamesCount) >= 1) //Lead by a game and on poossibly the last game
                             {
