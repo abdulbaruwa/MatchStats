@@ -118,7 +118,6 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
 
         }
 
-
         [TestMethod]
         public void ShouldAddMatchPointSituationToMatchStatOnMatchPointWithWinningPlayerServingForTheMatch()
         {
@@ -149,12 +148,10 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             Assert.AreEqual(MatchSituationType.MatchPoint, fixture.CurrMatch.MatchStats.Last().MatchSituations.Last().MatchSituationType);
         }
 
-
         [TestMethod]
         public void ShouldAddMatchPointSituationToMatchStatOnMatchPointWithBothScoreInSetsAtOneAllAndPlayerOneServingForTheMatch()
         {
-            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
-            fixture.NewMatchControlViewModel.FinalSetFormat = FinalSetFormats.TenPointChampionShipTieBreak;
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture(FinalSetFormats.TenPointChampionShipTieBreak);
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
@@ -197,6 +194,55 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             Assert.IsTrue(fixture.CurrMatch.MatchStats.LastOrDefault().MatchSituations.Count > 0);
 
             Assert.AreEqual(MatchSituationType.MatchPoint, fixture.CurrMatch.MatchStats.Last().MatchSituations.Last().MatchSituationType);
+        }
+
+        [TestMethod]
+        public void ShouldAddMatchPointSituationToMatchStatOnMatchPointWithBothScoreInSetsAtOneAllAndPlayerTwoServingForTheMatch()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture(FinalSetFormats.TenPointChampionShipTieBreak);
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
+            fixture.CurrMatch.Score.Sets.First().Winner = fixture.CurrMatch.PlayerOne;
+
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, false);
+            fixture.CurrMatch.Score.Sets.SecondOrDefault().Winner = fixture.CurrMatch.PlayerTwo;
+
+            fixture.CurrMatch.CurrentGame().GameType = GameType.TenPointer;
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            Assert.IsNotNull(fixture.CurrMatch.MatchStats.LastOrDefault());
+            Assert.IsTrue(fixture.CurrMatch.MatchStats.LastOrDefault().MatchSituations.Count > 0);
+
+            Assert.AreEqual(MatchSituationType.MatchPoint, fixture.CurrMatch.MatchStats.Last().MatchSituations.Last().MatchSituationType);
+            Assert.AreEqual(false, fixture.CurrMatch.MatchStats.Last().MatchSituations.Last().Player.IsPlayerOne);
         }
 
     }
