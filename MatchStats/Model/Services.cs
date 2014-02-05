@@ -216,7 +216,7 @@ namespace MatchStats.Model
                                 {
                                     //TODO Abdul here
                                     if ((lastSituation.MatchSituationType == MatchSituationType.GamePoint && lastSituation.Player.IsPlayerOne == setWinner)
-                                        || (lastSituation.MatchSituationType == MatchSituationType.GamePoint && lastSituation.MatchSituationType == MatchSituationType.BreakPoint))
+                                        || (lastSituation.MatchSituationType == MatchSituationType.BreakPoint && currentMatch.Score.CurrentServer.IsPlayerOne != setWinner))
                                     {
                                         currentMatch.MatchStats.Last().MatchSituations.Add(new MatchSituation()
                                         {
