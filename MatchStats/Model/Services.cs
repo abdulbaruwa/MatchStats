@@ -175,7 +175,8 @@ namespace MatchStats.Model
                     {
                         //Both players have won a set
                         //Check in the current set any player is one game away and is on set point
-                        //PlayerOneGamesCount
+                        //TODO Here Abdul
+                        var finalSets = (int)currentMatch.MatchFormat.SetsFormat;
                         if (playerOneGamesCount >= gamesCount - 1 || playerTwoGamesCount >= gamesCount - 1)
                         {
                             if (playerOneGamesCount.DiffValueWith(playerTwoGamesCount) >= 1) //Lead by a game and on poossibly the last game

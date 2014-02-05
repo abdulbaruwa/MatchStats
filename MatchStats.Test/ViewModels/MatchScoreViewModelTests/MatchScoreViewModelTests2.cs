@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using MatchStats.Enums;
 using MatchStats.Model;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 
@@ -153,19 +154,37 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
         public void ShouldAddMatchPointSituationToMatchStatOnMatchPointWithBothScoreInSetsAtOneAllAndPlayerOneServingForTheMatch()
         {
             var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
-
+            fixture.NewMatchControlViewModel.FinalSetFormat = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
-            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, false);
-            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
-            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
-            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
             fixture.CurrMatch.Score.Sets.First().Winner = fixture.CurrMatch.PlayerOne;
 
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, false);
+            fixture.CurrMatch.Score.Sets.SecondOrDefault().Winner = fixture.CurrMatch.PlayerTwo;
+
+            fixture.CurrMatch.CurrentGame().GameType = GameType.TenPointer;
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
             fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
             fixture.PlayerOneFirstServeInCommand.Execute(null);
