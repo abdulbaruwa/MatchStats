@@ -181,8 +181,8 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.PlayerOneFirstServeInCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
-
-
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
             Assert.IsNotNull(fixture.CurrMatch.MatchStats.LastOrDefault());
             Assert.IsTrue(fixture.CurrMatch.MatchStats.LastOrDefault().MatchSituations.Count > 0);
