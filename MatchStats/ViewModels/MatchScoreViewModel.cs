@@ -120,7 +120,7 @@ namespace MatchStats.ViewModels
 
         private void ActionCommandsEnableBindings()
         {
-            this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.Score.IsMatchOver,
+            this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.IsMatchOver,
                 (server, isMatchOver) => server.Value != null && isMatchOver.Value == false)
                 .Subscribe(x =>
                 {
@@ -203,7 +203,7 @@ namespace MatchStats.ViewModels
             SetPlayerOneAsCurrentServerCommand = new ReactiveCommand();
             SetPlayerOneAsCurrentServerCommand.Subscribe(_ =>
             {
-                CurrMatch.Score.CurrentServer = CurrMatch.PlayerOne;
+                CurrMatch.CurrentServer = CurrMatch.PlayerOne;
                 CurrentServer = CurrMatch.PlayerOne;
                 EnableAceServeForPlayerOne();
                 PlayerOneIsServing = true;
@@ -214,7 +214,7 @@ namespace MatchStats.ViewModels
             SetPlayerTwoAsCurrentServerCommand = new ReactiveCommand();
             SetPlayerTwoAsCurrentServerCommand.Subscribe(_ =>
             {
-                CurrMatch.Score.CurrentServer = CurrMatch.PlayerTwo;
+                CurrMatch.CurrentServer = CurrMatch.PlayerTwo;
                 CurrentServer = CurrMatch.PlayerTwo;
                 EnableAceServeForPlayerTwo();
                 PlayerTwoIsServing = true;
@@ -236,7 +236,7 @@ namespace MatchStats.ViewModels
                 .Where(x => x == false)
                 .Select(x => this.NewMatchControlViewModel.SavedMatch).Subscribe(x => StartMatch(x));
 
-            _playerOneFirstSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
+            _playerOneFirstSet = this.WhenAny(x => x.CurrMatch, x => x.Value)
                 .Where(x => x.Sets.FirstOrDefault() != null)
                 .Select(x =>
                         x.Sets.First()
@@ -244,7 +244,7 @@ namespace MatchStats.ViewModels
                             .ToString())
                 .ToProperty(this, x => x.PlayerOneFirstSet, "");
 
-            _playerTwoFirstSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
+            _playerTwoFirstSet = this.WhenAny(x => x.CurrMatch, x => x.Value)
                 .Where(x => x.Sets.FirstOrDefault() != null)
                 .Select(x =>
                         x.Sets.First()
@@ -252,7 +252,7 @@ namespace MatchStats.ViewModels
                             .ToString())
                 .ToProperty(this, x => x.PlayerTwoFirstSet, "");
 
-            _playerOneSecondSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
+            _playerOneSecondSet = this.WhenAny(x => x.CurrMatch, x => x.Value)
                 .Where(x => x.Sets.SecondOrDefault() != null)
                 .Select(x =>
                         x.Sets.SecondOrDefault()
@@ -260,7 +260,7 @@ namespace MatchStats.ViewModels
                             .ToString())
                 .ToProperty(this, x => x.PlayerOneSecondSet, "");
 
-            _playerTwoSecondSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
+            _playerTwoSecondSet = this.WhenAny(x => x.CurrMatch, x => x.Value)
                 .Where(x => x.Sets.SecondOrDefault() != null)
                 .Select(x =>
                         x.Sets.SecondOrDefault()
@@ -268,7 +268,7 @@ namespace MatchStats.ViewModels
                             .ToString())
                 .ToProperty(this, x => x.PlayerTwoSecondSet, "");
 
-            _playerOneThirdSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
+            _playerOneThirdSet = this.WhenAny(x => x.CurrMatch, x => x.Value)
                 .Where(x => x.Sets.ThirdOrDefault() != null)
                 .Select(x =>
                         x.Sets.ThirdOrDefault()
@@ -276,7 +276,7 @@ namespace MatchStats.ViewModels
                             .ToString())
                 .ToProperty(this, x => x.PlayerOneThirdSet, "");
 
-            _playerTwoThirdSet = this.WhenAny(x => x.CurrMatch.Score, x => x.Value)
+            _playerTwoThirdSet = this.WhenAny(x => x.CurrMatch, x => x.Value)
                 .Where(x => x.Sets.ThirdOrDefault() != null) //TODO: Need to 
                 .Select(x =>
                         x.Sets.ThirdOrDefault()
@@ -294,12 +294,12 @@ namespace MatchStats.ViewModels
                 .Select(x => x.GetPlayerTwoCurrentScore())
                 .ToProperty(this, x => x.PlayerTwoCurrentGame, "");
 
-            _matchStatus = this.WhenAny(x => x.CurrMatch.Score.Status, x => x.Value)
+            _matchStatus = this.WhenAny(x => x.CurrMatch.Status, x =>x.Value)
                 .Select(x => x.GetAttribute<DisplayAttribute>().Name)
                 .ToProperty(this, x => x.MatchStatus, "");
 
 
-            this.WhenAny(x => x.CurrMatch.Score.CurrentServer, x => x.Value)
+            this.WhenAny(x => x.CurrMatch.CurrentServer, x => x.Value)
                 .Where(x => x != null)
                 .Select(x => x)
                 .Subscribe(x =>
@@ -397,9 +397,9 @@ namespace MatchStats.ViewModels
 
         private bool ValidateForUndoCommand(Match currentMatch)
         {
-            if (currentMatch == null || currentMatch.Score.CurrentServer == null) return false;
+            if (currentMatch == null || currentMatch.CurrentServer == null) return false;
             if (currentMatch.MatchStats.Count == 0) return false;
-            return ! currentMatch.Score.IsMatchOver;
+            return ! currentMatch.IsMatchOver;
         }
 
         /// <summary>

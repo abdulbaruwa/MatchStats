@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace MatchStats.Model
@@ -9,6 +10,7 @@ namespace MatchStats.Model
         {
             GameStatus = new GameStatus();
             GameType = GameType.Normal;
+            Points = new List<Point>();
             GameId = Guid.NewGuid().ToString();
         }
 
@@ -18,7 +20,28 @@ namespace MatchStats.Model
         public bool IsCurrentGame { get; set; }
         public GameStatus GameStatus { get; set; }
         public GameType GameType { get; set; }
+        public List<Point> Points { get; set; }
         public string GameId { get; set; }
+        public MatchSituation LastMatchSituation { get; set; }
+    }
+
+    public class Point
+    {
+
+        public Player Server { get; set; }
+        public Player Player { get; set; }
+        public PointReason PointReason { get; set; }
+        public MatchSituation MatchSituationBefore { get; set; } 
+        public MatchSituation MatchSituationAfter { get; set; }
+        public List<Serve> Serves { get; set; } 
+
+    }
+
+    public class Serve
+    {
+        public Player Server { get; set; }
+        public bool IsFirstServe{get; set;}
+        public bool ServeIsIn { get; set; }
     }
 
     public class GameStatus

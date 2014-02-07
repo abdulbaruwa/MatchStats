@@ -41,58 +41,58 @@ namespace MatchStats.ViewModels
         {
             PlayerOneFullName = CurrentMatch.PlayerOne.FullName;
             PlayerTwoFullName = CurrentMatch.PlayerTwo.FullName;
-            if (CurrentMatch.Score.Sets.FirstOrDefault() != null)
-                FirstSetDuration = CurrentMatch.Score.Sets.FirstOrDefault().DurationInMinutes + "mins";
-            if (CurrentMatch.Score.Sets.SecondOrDefault() != null)
-                SecondSetDuration = CurrentMatch.Score.Sets.SecondOrDefault().DurationInMinutes + "mins";
-            if (CurrentMatch.Score.Sets.ThirdOrDefault() != null)
-                ThirdSetDuration = CurrentMatch.Score.Sets.ThirdOrDefault().DurationInMinutes + "mins";
+            if (CurrentMatch.Sets.FirstOrDefault() != null)
+                FirstSetDuration = CurrentMatch.Sets.FirstOrDefault().DurationInMinutes + "mins";
+            if (CurrentMatch.Sets.SecondOrDefault() != null)
+                SecondSetDuration = CurrentMatch.Sets.SecondOrDefault().DurationInMinutes + "mins";
+            if (CurrentMatch.Sets.ThirdOrDefault() != null)
+                ThirdSetDuration = CurrentMatch.Sets.ThirdOrDefault().DurationInMinutes + "mins";
 
-            if (CurrentMatch.Score.Sets.FirstOrDefault() != null)
+            if (CurrentMatch.Sets.FirstOrDefault() != null)
             {
-                var playerOneScore = CurrentMatch.Score.Sets.First().Games.Count(x => x.Winner.FullName == PlayerOneFullName);
-                var playerTwoScore = CurrentMatch.Score.Sets.First().Games.Count(x => x.Winner.FullName == PlayerTwoFullName);
+                var playerOneScore = CurrentMatch.Sets.First().Games.Count(x => x.Winner.FullName == PlayerOneFullName);
+                var playerTwoScore = CurrentMatch.Sets.First().Games.Count(x => x.Winner.FullName == PlayerTwoFullName);
                 PlayerOneSetOneScore = playerOneScore.ToString();
                 PlayerTwoSetOneScore = playerTwoScore.ToString();
                 if (playerOneScore.DiffValueWith(playerTwoScore) == 1)
                 {
                     //A tiebreaker was played
-                    PlayerOneSetOneTiebreakScore = CurrentMatch.Score.Sets.First().Games.Last().PlayerOneScore.ToString();
-                    PlayerTwoSetOneTiebreakScore = CurrentMatch.Score.Sets.First().Games.Last().PlayerTwoScore.ToString();
+                    PlayerOneSetOneTiebreakScore = CurrentMatch.Sets.First().Games.Last().PlayerOneScore.ToString();
+                    PlayerTwoSetOneTiebreakScore = CurrentMatch.Sets.First().Games.Last().PlayerTwoScore.ToString();
                 }
             }
 
-            if (CurrentMatch.Score.Sets.SecondOrDefault() != null)
+            if (CurrentMatch.Sets.SecondOrDefault() != null)
             {
-                var playerOneScore = CurrentMatch.Score.Sets.SecondOrDefault().Games.Count(x => x.Winner.FullName == PlayerOneFullName);
-                var playerTwoScore = CurrentMatch.Score.Sets.SecondOrDefault().Games.Count(x => x.Winner.FullName == PlayerTwoFullName);
+                var playerOneScore = CurrentMatch.Sets.SecondOrDefault().Games.Count(x => x.Winner.FullName == PlayerOneFullName);
+                var playerTwoScore = CurrentMatch.Sets.SecondOrDefault().Games.Count(x => x.Winner.FullName == PlayerTwoFullName);
                 PlayerOneSetTwoScore = playerOneScore.ToString();
                 PlayerTwoSetTwoScore = playerTwoScore.ToString();
                 if (playerOneScore.DiffValueWith(playerTwoScore) == 1)
                 {
                     //A tiebreaker was played
-                    PlayerOneSetTwoTiebreakScore = CurrentMatch.Score.Sets.SecondOrDefault().Games.Last().PlayerOneScore.ToString();
-                    PlayerTwoSetTwoTiebreakScore = CurrentMatch.Score.Sets.SecondOrDefault().Games.Last().PlayerTwoScore.ToString();
+                    PlayerOneSetTwoTiebreakScore = CurrentMatch.Sets.SecondOrDefault().Games.Last().PlayerOneScore.ToString();
+                    PlayerTwoSetTwoTiebreakScore = CurrentMatch.Sets.SecondOrDefault().Games.Last().PlayerTwoScore.ToString();
                 }
             }
 
-            if (CurrentMatch.Score.Sets.ThirdOrDefault() != null)
+            if (CurrentMatch.Sets.ThirdOrDefault() != null)
             {
-                var playerOneScore = CurrentMatch.Score.Sets.ThirdOrDefault().Games.Count(x => x.Winner.FullName == PlayerOneFullName);
-                var playerTwoScore = CurrentMatch.Score.Sets.ThirdOrDefault().Games.Count(x => x.Winner.FullName == PlayerTwoFullName);
+                var playerOneScore = CurrentMatch.Sets.ThirdOrDefault().Games.Count(x => x.Winner.FullName == PlayerOneFullName);
+                var playerTwoScore = CurrentMatch.Sets.ThirdOrDefault().Games.Count(x => x.Winner.FullName == PlayerTwoFullName);
                 PlayerOneSetThreeScore = playerOneScore.ToString();
                 PlayerTwoSetThreeScore = playerTwoScore.ToString();
 
                 if (CurrentMatch.MatchFormat.FinalSetType == FinalSetFormats.Normal && (playerOneScore.DiffValueWith(playerTwoScore) == 1))
                 {
                     //Finanal set was a normal set and a normal tiebreaker was played
-                    PlayerOneSetTwoTiebreakScore = CurrentMatch.Score.Sets.ThirdOrDefault().Games.Last().PlayerOneScore.ToString();
-                    PlayerTwoSetTwoTiebreakScore = CurrentMatch.Score.Sets.ThirdOrDefault().Games.Last().PlayerTwoScore.ToString();
+                    PlayerOneSetTwoTiebreakScore = CurrentMatch.Sets.ThirdOrDefault().Games.Last().PlayerOneScore.ToString();
+                    PlayerTwoSetTwoTiebreakScore = CurrentMatch.Sets.ThirdOrDefault().Games.Last().PlayerTwoScore.ToString();
                 }
             }
 
-            TotalPointsWonByPlayerOne = CurrentMatch.Score.Sets.Sum(x => x.Games.Sum(y => y.PlayerOneScore)).ToString();
-            TotalPointsWonByPlayerTwo = CurrentMatch.Score.Sets.Sum(x => x.Games.Sum(y => y.PlayerTwoScore)).ToString();
+            TotalPointsWonByPlayerOne = CurrentMatch.Sets.Sum(x => x.Games.Sum(y => y.PlayerOneScore)).ToString();
+            TotalPointsWonByPlayerTwo = CurrentMatch.Sets.Sum(x => x.Games.Sum(y => y.PlayerTwoScore)).ToString();
 
 
         }
@@ -151,15 +151,15 @@ namespace MatchStats.ViewModels
             var doubleFaultsP1 = this.CurrentMatch.MatchStats.Count(x => x.Reason == StatDescription.DoubleFault && x.Player.IsPlayerOne);
             var doubleFaultsP2 = this.CurrentMatch.MatchStats.Count(x => x.Reason == StatDescription.DoubleFault && (!x.Player.IsPlayerOne));
 
-            var set1 = this.CurrentMatch.Score.Sets.FirstOrDefault();
+            var set1 = this.CurrentMatch.Sets.FirstOrDefault();
             var playerOneSet1DoubleFaults = GetDoubleFaults(true, set1);
             var playerTwoSet1DoubleFaults = GetDoubleFaults(false, set1);
 
-            var set2 = this.CurrentMatch.Score.Sets.SecondOrDefault();
+            var set2 = this.CurrentMatch.Sets.SecondOrDefault();
             var playerOneSet2DoubleFaults = GetDoubleFaults(true, set2);
             var playerTwoSet2DoubleFaults = GetDoubleFaults(false, set2); 
 
-            var set3 = this.CurrentMatch.Score.Sets.ThirdOrDefault();
+            var set3 = this.CurrentMatch.Sets.ThirdOrDefault();
             var playerOneSet3DoubleFaults = GetDoubleFaults(true, set3);
             var playerTwoSet3DoubleFaults = GetDoubleFaults(false, set3);
 
@@ -235,19 +235,19 @@ namespace MatchStats.ViewModels
 
         private string GetPlayerOneThirdServePercentate(bool isPlayerOne)
         {
-            var firstSetId = CurrentMatch.Score.Sets.ThirdOrDefault();
+            var firstSetId = CurrentMatch.Sets.ThirdOrDefault();
             return firstSetId == null ? string.Empty : GetPlayerFirstServePercentate(isPlayerOne, firstSetId.SetId);
         }
 
         private string GetPlayerOneSecondServePercentate(bool isPlayerOne)
         {
-            var firstSetId = CurrentMatch.Score.Sets.SecondOrDefault();
+            var firstSetId = CurrentMatch.Sets.SecondOrDefault();
             return firstSetId == null ? string.Empty : GetPlayerFirstServePercentate(isPlayerOne, firstSetId.SetId);
         }
 
         private string GetPlayerOneFirstServePercentate(bool b)
         {
-            var firstSetId = CurrentMatch.Score.Sets.FirstOrDefault();
+            var firstSetId = CurrentMatch.Sets.FirstOrDefault();
             return firstSetId == null ? string.Empty : GetPlayerFirstServePercentate(b, firstSetId.SetId);
         }
 

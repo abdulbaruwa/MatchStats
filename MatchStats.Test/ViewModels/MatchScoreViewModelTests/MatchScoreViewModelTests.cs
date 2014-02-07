@@ -371,8 +371,8 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
 
             //Assert
-            Assert.IsNotNull(fixture.CurrMatch.Score.Sets.First().Winner, "Set Winner should not be Null");
-            Assert.AreEqual(fixture.CurrMatch.Score.Sets.First().Winner.FullName, fixture.CurrMatch.PlayerOne.FullName, "The Second game should be the current game");
+            Assert.IsNotNull(fixture.CurrMatch.Sets.First().Winner, "Set Winner should not be Null");
+            Assert.AreEqual(fixture.CurrMatch.Sets.First().Winner.FullName, fixture.CurrMatch.PlayerOne.FullName, "The Second game should be the current game");
         }
 
         [TestMethod]
@@ -405,8 +405,8 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
 
             //Assert
-            Assert.IsNotNull(fixture.CurrMatch.Score.Sets.First().Winner, "Set Winner should not be Null");
-            Assert.AreEqual(fixture.CurrMatch.Score.Sets.First().Winner.FullName, fixture.CurrMatch.PlayerOne.FullName, "The Second game should be the current game");
+            Assert.IsNotNull(fixture.CurrMatch.Sets.First().Winner, "Set Winner should not be Null");
+            Assert.AreEqual(fixture.CurrMatch.Sets.First().Winner.FullName, fixture.CurrMatch.PlayerOne.FullName, "The Second game should be the current game");
         }
 
         [TestMethod]
@@ -428,7 +428,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
             MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
 
-            Assert.IsNull(fixture.CurrMatch.Score.Sets.First().Winner, "Sets winner should be null");
+            Assert.IsNull(fixture.CurrMatch.Sets.First().Winner, "Sets winner should be null");
             Assert.AreEqual(GameType.SevenPointer, fixture.CurrMatch.CurrentGame().GameType,"Game type should be a Seven Point Tiebreaker");
 
         }
@@ -460,8 +460,8 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
-            Assert.AreEqual(1, fixture.CurrMatch.Score.Sets.Count, "Should still be on the first set");
-            Assert.IsNull(fixture.CurrMatch.Score.Sets.First().Winner, "Sets winner should be null at 5-2 in a Seven Point Tie Breaker game");
+            Assert.AreEqual(1, fixture.CurrMatch.Sets.Count, "Should still be on the first set");
+            Assert.IsNull(fixture.CurrMatch.Sets.First().Winner, "Sets winner should be null at 5-2 in a Seven Point Tie Breaker game");
             Assert.IsNotNull(fixture.CurrMatch.CurrentGame(), "The current game should be a Tie Breaker game ");
             Assert.AreEqual(5, fixture.CurrMatch.CurrentGame().PlayerOneScore, "Player one score should be 5");
             Assert.IsNull(fixture.CurrMatch.CurrentGame().Winner, "The current game should not have a winner");
@@ -496,8 +496,8 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
-            Assert.IsNotNull(fixture.CurrMatch.Score.Sets.First().Winner, "Sets winner should not be null at 7-2 in a Seven Point Tie Breaker game");
-            Assert.AreEqual(2, fixture.CurrMatch.Score.Sets.Count, "Should still be on the first set");
+            Assert.IsNotNull(fixture.CurrMatch.Sets.First().Winner, "Sets winner should not be null at 7-2 in a Seven Point Tie Breaker game");
+            Assert.AreEqual(2, fixture.CurrMatch.Sets.Count, "Should still be on the first set");
         }
 
         [TestMethod]
@@ -512,7 +512,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture,false);
 
             //Score is 1-1 in sets
-            Assert.IsTrue(fixture.CurrMatch.Score.Sets.Count == 3);
+            Assert.IsTrue(fixture.CurrMatch.Sets.Count == 3);
             Assert.IsTrue(fixture.CurrMatch.CurrentGame().GameType == GameType.TenPointer, "");
         }
 
@@ -570,8 +570,8 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.Count == 1,  string.Format("The TieBreaker set should only have 1 game, but has {0}",fixture.CurrMatch.CurrentSet().Games.Count));
             Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.First().PlayerTwoScore == 10);
             Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.First().PlayerOneScore == 3);
-            Assert.IsTrue(fixture.CurrMatch.Score.IsMatchOver, "Game should be flagged as over");
-            Assert.IsNotNull(fixture.CurrMatch.Score.Winner, "Winning player should not be null");
+            Assert.IsTrue(fixture.CurrMatch.IsMatchOver, "Game should be flagged as over");
+            Assert.IsNotNull(fixture.CurrMatch.Winner, "Winning player should not be null");
         }
 
         [TestMethod]
@@ -609,9 +609,9 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
 
-            Assert.IsTrue(fixture.CurrMatch.Score.IsMatchOver,"MatchOver flag should be true");
-            Assert.IsNotNull(fixture.CurrMatch.Score.Winner,"Winner should not be null");
-            Assert.IsTrue(fixture.CurrMatch.Score.Winner.IsPlayerOne, "Match winner should be player one but it is not");
+            Assert.IsTrue(fixture.CurrMatch.IsMatchOver,"MatchOver flag should be true");
+            Assert.IsNotNull(fixture.CurrMatch.Winner,"Winner should not be null");
+            Assert.IsTrue(fixture.CurrMatch.Winner.IsPlayerOne, "Match winner should be player one but it is not");
         }
 
         [TestMethod]
@@ -672,9 +672,9 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, false);
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, false);
 
-            Assert.IsTrue(fixture.CurrMatch.Score.IsMatchOver, "MatchOver flag should be true");
-            Assert.IsNotNull(fixture.CurrMatch.Score.Winner, "Winner should not be null");
-            Assert.IsFalse(fixture.CurrMatch.Score.Winner.IsPlayerOne, "Match winner should be player two but it is not");
+            Assert.IsTrue(fixture.CurrMatch.IsMatchOver, "MatchOver flag should be true");
+            Assert.IsNotNull(fixture.CurrMatch.Winner, "Winner should not be null");
+            Assert.IsFalse(fixture.CurrMatch.Winner.IsPlayerOne, "Match winner should be player two but it is not");
         }
 
         [TestMethod]
@@ -765,8 +765,8 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
 
             Assert.IsNotNull(fixture.CurrMatch.MatchStats.FirstOrDefault(), "Match stats should have one element in it");
             Assert.IsTrue(fixture.CurrMatch.MatchStats.First().Reason == StatDescription.FirstServeIn);
-            Assert.AreEqual(fixture.CurrMatch.MatchStats.First().Player.FullName, fixture.CurrMatch.Score.CurrentServer.FullName);
-            Assert.AreEqual(fixture.CurrMatch.MatchStats.First().Server.FullName, fixture.CurrMatch.Score.CurrentServer.FullName);
+            Assert.AreEqual(fixture.CurrMatch.MatchStats.First().Player.FullName, fixture.CurrMatch.CurrentServer.FullName);
+            Assert.AreEqual(fixture.CurrMatch.MatchStats.First().Server.FullName, fixture.CurrMatch.CurrentServer.FullName);
             Assert.AreEqual(fixture.CurrMatch.MatchStats.First().PointWonLostOrNone, PointWonLostOrNone.NotAPoint);
         }
 

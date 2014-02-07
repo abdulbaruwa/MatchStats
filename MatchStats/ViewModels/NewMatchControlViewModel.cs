@@ -30,12 +30,9 @@ namespace MatchStats.ViewModels
         private void SaveCommandImplementation()
         {
             var match = new Match(){MatchGuid = Guid.NewGuid(), MatchTime = DateTime.Now};
-            match.Score = new Score()
-            {
-            };
 
-            match.Score.Sets.Add(new Set(){IsCurrentSet = true});
-            match.Score.Sets.First().Games.Add(new Game(){IsCurrentGame = true});
+            match.Sets.Add(new Set(){IsCurrentSet = true});
+            match.Sets.First().Games.Add(new Game(){IsCurrentGame = true});
 
             match.MatchFormat = new MatchFormat()
             {

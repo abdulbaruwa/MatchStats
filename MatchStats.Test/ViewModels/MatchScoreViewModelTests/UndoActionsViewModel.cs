@@ -74,7 +74,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
 
             fixture.UndoLastActionCommand.Execute(null);
 
-            Assert.AreEqual(1, fixture.CurrMatch.Score.Sets.First().Games.Count);
+            Assert.AreEqual(1, fixture.CurrMatch.Sets.First().Games.Count);
         }
 
         [TestMethod]

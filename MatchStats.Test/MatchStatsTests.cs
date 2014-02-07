@@ -23,7 +23,7 @@ namespace MatchStats.Test
             var matchstat = new MatchStat();
             var player1 = new PlayerBuilder().WithFirstNameSecondName("Ade", "Wilson").IsPlayerOne(true).Build();
             var player2 = new PlayerBuilder().WithFirstNameSecondName("Luke", "Watson").IsPlayerOne(true).Build();
-            var setId = matchs.First().Score.Sets.First().SetId;
+            var setId = matchs.First().Sets.First().SetId;
             var matchStatsList = new List<MatchStat>();
             //15-0
             matchStatsList.Add(new MatchStat(){Player = player1, PointWonLostOrNone = PointWonLostOrNone.NotAPoint, Reason = StatDescription.FirstServeIn, SetId = setId});

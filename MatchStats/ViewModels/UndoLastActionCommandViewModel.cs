@@ -22,7 +22,7 @@ namespace MatchStats.ViewModels
             matchStatsApi.GetCurrentMatch().Subscribe(x => currentMatch = x);
 
             Game currentGame = null;
-            var currentSet = currentMatch.Score.Sets.FirstOrDefault(x => x.IsCurrentSet);
+            var currentSet = currentMatch.Sets.FirstOrDefault(x => x.IsCurrentSet);
             if (currentSet != null)
             {
                 currentGame = currentSet.Games.FirstOrDefault(x => x.IsCurrentGame);
@@ -47,8 +47,8 @@ namespace MatchStats.ViewModels
                         if (currentMatch.CurrentSet().Games.Count == 0)
                         {
                             // If an undo operation is for an action in a previous set, then set that set as the current set before reducing the score
-                            currentMatch.Score.Sets.RemoveAt(currentMatch.Score.Sets.Count - 1);
-                            var lastSet = currentMatch.Score.Sets.LastOrDefault();
+                            currentMatch.Sets.RemoveAt(currentMatch.Sets.Count - 1);
+                            var lastSet = currentMatch.Sets.LastOrDefault();
                             if (lastSet != null)
                             {
                                 lastSet.IsCurrentSet = true;
@@ -59,7 +59,7 @@ namespace MatchStats.ViewModels
                         if (! lastMatchStat.Player.IsPlayerOne) currentMatch.CurrentSet().Games.Last().PlayerTwoScore--;
 
                         //Switch players serving
-                        currentMatch.Score.CurrentServer = currentMatch.Score.CurrentServer.IsPlayerOne ? currentMatch.PlayerTwo : currentMatch.PlayerOne;
+                        currentMatch.CurrentServer = currentMatch.CurrentServer.IsPlayerOne ? currentMatch.PlayerTwo : currentMatch.PlayerOne;
                         currentMatch.CurrentSet().Games.Last().IsCurrentGame = true;
                         currentMatch.CurrentSet().Games.Last().Winner = null;
 
@@ -78,7 +78,7 @@ namespace MatchStats.ViewModels
                                     break;
                                 default:
                                     bool isGamePoint;
-                                    if (currentMatch.Score.CurrentServer.IsPlayerOne)
+                                    if (currentMatch.CurrentServer.IsPlayerOne)
                                     {
                                         isGamePoint = currentMatch.CurrentGame().PlayerOneScore > currentMatch.CurrentGame().PlayerTwoScore;
 

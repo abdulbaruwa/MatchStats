@@ -33,7 +33,7 @@ namespace MatchStats.ViewModels
         {
             var lastStat = currentMatch.MatchStats.LastOrDefault();
             if (lastStat != null && lastStat.Reason == StatDescription.FirstServeOut &&
-                lastStat.Server.FullName == currentMatch.Score.CurrentServer.FullName)
+                lastStat.Server.FullName == currentMatch.CurrentServer.FullName)
             {
                 return StatDescription.SecondServeAce;
             }
@@ -47,7 +47,7 @@ namespace MatchStats.ViewModels
             matchStatsApi.GetCurrentMatch().Subscribe(currentMatch =>
             {
                 Game currentGame = null;
-                var currentSet = currentMatch.Score.Sets.FirstOrDefault(x => x.IsCurrentSet);
+                var currentSet = currentMatch.Sets.FirstOrDefault(x => x.IsCurrentSet);
                 if (currentSet != null)
                 {
                     currentGame = currentSet.Games.FirstOrDefault(x => x.IsCurrentGame);
@@ -57,7 +57,7 @@ namespace MatchStats.ViewModels
                 {
                     PointWonLostOrNone = PointWonLostOrNone.PointWon,
                     Reason = DetermineIfFirstOrSecondServeAce(currentMatch),
-                    Server = currentMatch.Score.CurrentServer,
+                    Server = currentMatch.CurrentServer,
                     GameId = currentMatch.CurrentGame().GameId,
                     SetId = currentMatch.CurrentSet().SetId
                 };

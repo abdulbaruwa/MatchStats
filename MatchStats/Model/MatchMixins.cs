@@ -17,7 +17,7 @@ namespace MatchStats.Model
 
         public static Set CurrentSet(this Match This)
         {
-            var currentSet = This.Score.Sets.FirstOrDefault(x => x.IsCurrentSet);
+            var currentSet = This.Sets.FirstOrDefault(x => x.IsCurrentSet);
             if (currentSet == null) return null;
             return currentSet;
         }
@@ -109,7 +109,7 @@ namespace MatchStats.Model
             if(gameNumber < 1 || gameNumber > (int)This.MatchFormat.SetsFormat) throw new ArgumentException("Game number request is not valid for the selected Match Set Format");
             if(setNumber < 1) throw new ArgumentException("Sets number cannot be less than 1");
             if(setNumber > 3) throw new ArgumentException("Sets number cannot be more than 5");
-            foreach (var set in This.Score.Sets)
+            foreach (var set in This.Sets)
             {
                 if (setCounter == setNumber)
                 {

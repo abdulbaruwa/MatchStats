@@ -6,45 +6,45 @@ using WinRTXamlToolkit.Tools;
 
 namespace MatchStats.Model
 {
-    public class Score
-    {
-        public Score()
-        {
-            Sets = new List<Set>();
-        }
+    //public class Score
+    //{
+    //    public Score()
+    //    {
+    //        Sets = new List<Set>();
+    //    }
 
-        public List<Set> Sets { get; set; }
-        public Player CurrentServer { get; set; }
-        public bool IsMatchOver { get; set; }
-        public Player Winner { get; set; }
-        public Status Status { get; set; }
+    //    public List<Set> Sets { get; set; }
+    //    public Player CurrentServer { get; set; }
+    //    public bool IsMatchOver { get; set; }
+    //    public Player Winner { get; set; }
+    //    public Status Status { get; set; }
 
-        public string DisplayScore
-        {
-            get
-            {
-                var score = new StringBuilder();
-                Sets.ForEach(x =>
-                {
-                    var playerOne = x.Games.Count(y => y.Winner != null && y.Winner.IsPlayerOne);
-                    var playerTwo = x.Games.Count(y => y.Winner != null && ! y.Winner.IsPlayerOne);
-                    var space = score.Length > 1 ? " " : "";
-                    if (Winner != null)
-                    {
-                        if (Winner.IsPlayerOne)
-                        {
-                            score.Append(space + playerOne.ToString() + "-" + playerTwo.ToString());
-                        }
-                        else
-                            score.Append(space + playerTwo.ToString() + "-" + playerOne.ToString());
-                    }
+    //    public string DisplayScore
+    //    {
+    //        get
+    //        {
+    //            var score = new StringBuilder();
+    //            Sets.ForEach(x =>
+    //            {
+    //                var playerOne = x.Games.Count(y => y.Winner != null && y.Winner.IsPlayerOne);
+    //                var playerTwo = x.Games.Count(y => y.Winner != null && ! y.Winner.IsPlayerOne);
+    //                var space = score.Length > 1 ? " " : "";
+    //                if (Winner != null)
+    //                {
+    //                    if (Winner.IsPlayerOne)
+    //                    {
+    //                        score.Append(space + playerOne.ToString() + "-" + playerTwo.ToString());
+    //                    }
+    //                    else
+    //                        score.Append(space + playerTwo.ToString() + "-" + playerOne.ToString());
+    //                }
 
-                });
-                return score.ToString();
-            }
-        }
+    //            });
+    //            return score.ToString();
+    //        }
+    //    }
 
-    }
+    //}
 
     public class Set
     {

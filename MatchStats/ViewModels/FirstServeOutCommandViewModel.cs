@@ -27,13 +27,13 @@ namespace MatchStats.ViewModels
             matchStatsApi.GetCurrentMatch().Subscribe(currentMatch =>
             {
 
-                Player = Player ?? currentMatch.Score.CurrentServer;
+                Player = Player ?? currentMatch.CurrentServer;
                 var matchStat = new MatchStat
                 {
                     PointWonLostOrNone = PointWonLostOrNone.NotAPoint,
                     Reason = StatDescription.FirstServeOut,
-                    Server = currentMatch.Score.CurrentServer,
-                    Player = currentMatch.Score.CurrentServer,
+                    Server = currentMatch.CurrentServer,
+                    Player = currentMatch.CurrentServer,
                     GameId = currentMatch.CurrentGame().GameId,
                     SetId = currentMatch.CurrentSet().SetId
                 };

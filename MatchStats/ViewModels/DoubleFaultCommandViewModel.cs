@@ -73,7 +73,7 @@ namespace MatchStats.ViewModels
             {
 
                 Game currentGame = null;
-                var currentSet = currentMatch.Score.Sets.FirstOrDefault(x => x.IsCurrentSet);
+                var currentSet = currentMatch.Sets.FirstOrDefault(x => x.IsCurrentSet);
                 if (currentSet != null)
                 {
                     currentGame = currentSet.Games.FirstOrDefault(x => x.IsCurrentGame);
@@ -83,7 +83,7 @@ namespace MatchStats.ViewModels
                 {
                     PointWonLostOrNone = PointWonLostOrNone.PointWon,
                     Reason = StatDescription.DoubleFault,
-                    Server = currentMatch.Score.CurrentServer,
+                    Server = currentMatch.CurrentServer,
                     GameId = currentMatch.CurrentGame().GameId,
                     SetId = currentMatch.CurrentSet().SetId
                 };

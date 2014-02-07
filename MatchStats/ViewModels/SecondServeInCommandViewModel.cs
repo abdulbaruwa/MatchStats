@@ -27,13 +27,13 @@ namespace MatchStats.ViewModels
             //Can this be passed in when the command is called?
             matchStatsApi.GetCurrentMatch().Subscribe(currentMatch =>
             {
-                Player = Player ?? currentMatch.Score.CurrentServer;
+                Player = Player ?? currentMatch.CurrentServer;
                 var matchStat = new MatchStat
                 {
                     PointWonLostOrNone = PointWonLostOrNone.NotAPoint,
                     Reason = StatDescription.SecondServeIn,
-                    Server = currentMatch.Score.CurrentServer,
-                    Player = currentMatch.Score.CurrentServer,
+                    Server = currentMatch.CurrentServer,
+                    Player = currentMatch.CurrentServer,
                     GameId = currentMatch.CurrentGame().GameId,
                     SetId = currentMatch.CurrentSet().SetId
                 };

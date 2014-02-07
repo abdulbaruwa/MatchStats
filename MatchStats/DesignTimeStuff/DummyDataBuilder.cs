@@ -49,7 +49,6 @@ namespace MatchStats.DesignTimeStuff
         public MatchBuilder()
         {
             _match = new Match();
-            _match.Score = new Score();
             _match.MatchGuid = Guid.NewGuid();
             _playerOne = new Player();
             _playerTwo = new Player();
@@ -64,7 +63,7 @@ namespace MatchStats.DesignTimeStuff
 
         public Match Build()
         {
-            _match.Score.Winner = _matchWinnerIsPlayerOne ? _playerOne : _playerTwo;
+            _match.Winner = _matchWinnerIsPlayerOne ? _playerOne : _playerTwo;
             _match.Tournament = _tournament;
             _match.PlayerOne = _playerOne;
             _match.PlayerTwo = _playerTwo;
@@ -81,7 +80,7 @@ namespace MatchStats.DesignTimeStuff
             set.Games.Add(GameForPlayerOne());
             set.Games.Add(GameForPlayerOne());
             set.Winner = _match.PlayerOne;
-            _match.Score.Sets.Add(set);
+            _match.Sets.Add(set);
             return this;
         }
 
@@ -101,7 +100,7 @@ namespace MatchStats.DesignTimeStuff
             set.Games.Add(GameForPlayerTwo());
             set.Games.Add(GameForPlayerTwo());
             set.Winner = _match.PlayerTwo;
-            _match.Score.Sets.Add(set);
+            _match.Sets.Add(set);
             return this;
         }
 
