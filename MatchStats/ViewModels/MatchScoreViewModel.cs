@@ -237,7 +237,7 @@ namespace MatchStats.ViewModels
                 .Select(x => this.NewMatchControlViewModel.SavedMatch).Subscribe(x => StartMatch(x));
 
             _playerOneFirstSet = this.WhenAny(x => x.CurrMatch, x => x.Value)
-                .Where(x => x.Sets.FirstOrDefault() != null)
+                .Where(x => x != null && x.Sets.FirstOrDefault() != null)
                 .Select(x =>
                         x.Sets.First()
                             .Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerOne.FullName)
@@ -245,7 +245,7 @@ namespace MatchStats.ViewModels
                 .ToProperty(this, x => x.PlayerOneFirstSet, "");
 
             _playerTwoFirstSet = this.WhenAny(x => x.CurrMatch, x => x.Value)
-                .Where(x => x.Sets.FirstOrDefault() != null)
+                .Where(x => x != null && x.Sets.FirstOrDefault() != null)
                 .Select(x =>
                         x.Sets.First()
                             .Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName)
@@ -253,7 +253,7 @@ namespace MatchStats.ViewModels
                 .ToProperty(this, x => x.PlayerTwoFirstSet, "");
 
             _playerOneSecondSet = this.WhenAny(x => x.CurrMatch, x => x.Value)
-                .Where(x => x.Sets.SecondOrDefault() != null)
+                .Where(x => x != null && x.Sets.SecondOrDefault() != null)
                 .Select(x =>
                         x.Sets.SecondOrDefault()
                             .Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerOne.FullName)
@@ -261,7 +261,7 @@ namespace MatchStats.ViewModels
                 .ToProperty(this, x => x.PlayerOneSecondSet, "");
 
             _playerTwoSecondSet = this.WhenAny(x => x.CurrMatch, x => x.Value)
-                .Where(x => x.Sets.SecondOrDefault() != null)
+                .Where(x => x != null && x.Sets.SecondOrDefault() != null)
                 .Select(x =>
                         x.Sets.SecondOrDefault()
                             .Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName)
@@ -269,7 +269,7 @@ namespace MatchStats.ViewModels
                 .ToProperty(this, x => x.PlayerTwoSecondSet, "");
 
             _playerOneThirdSet = this.WhenAny(x => x.CurrMatch, x => x.Value)
-                .Where(x => x.Sets.ThirdOrDefault() != null)
+                .Where(x => x != null && x.Sets.ThirdOrDefault() != null)
                 .Select(x =>
                         x.Sets.ThirdOrDefault()
                             .Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerOne.FullName)
@@ -277,7 +277,7 @@ namespace MatchStats.ViewModels
                 .ToProperty(this, x => x.PlayerOneThirdSet, "");
 
             _playerTwoThirdSet = this.WhenAny(x => x.CurrMatch, x => x.Value)
-                .Where(x => x.Sets.ThirdOrDefault() != null) //TODO: Need to 
+                .Where(x => x != null && x.Sets.ThirdOrDefault() != null) //TODO: Need to 
                 .Select(x =>
                         x.Sets.ThirdOrDefault()
                             .Games.Count(y => y.Winner != null && y.Winner.FullName == CurrMatch.PlayerTwo.FullName)
@@ -294,7 +294,7 @@ namespace MatchStats.ViewModels
                 .Select(x => x.GetPlayerTwoCurrentScore())
                 .ToProperty(this, x => x.PlayerTwoCurrentGame, "");
 
-            _matchStatus = this.WhenAny(x => x.CurrMatch.Status, x =>x.Value)
+            _matchStatus = this.WhenAny(x => x.CurrMatch.Status, x => x.Value)
                 .Select(x => x.GetAttribute<DisplayAttribute>().Name)
                 .ToProperty(this, x => x.MatchStatus, "");
 

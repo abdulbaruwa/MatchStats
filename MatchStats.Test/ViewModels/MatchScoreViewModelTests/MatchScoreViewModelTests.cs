@@ -733,7 +733,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
             Assert.IsNotNull(fixture.CurrMatch.MatchStats.FirstOrDefault(x => x.Reason == StatDescription.DoubleFault), "Match stats should have one element in it");
-            Assert.AreEqual(5, fixture.CurrMatch.MatchStats.Count, "There should be two elements in the MatchStats list");
+            Assert.AreEqual(4, fixture.CurrMatch.MatchStats.Count, "There should be two elements in the MatchStats list");
             Assert.IsNotNull(fixture.CurrMatch.MatchStats.Last().Reason == StatDescription.GamePoint);
         }
 
@@ -751,7 +751,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
             Assert.IsNotNull(fixture.CurrMatch.MatchStats.FirstOrDefault(x => x.Reason == StatDescription.DoubleFault), "Match stats should have one element in it");
-            Assert.AreEqual(5, fixture.CurrMatch.MatchStats.Count, "There should be two elements in the MatchStats list");
+            Assert.AreEqual(4, fixture.CurrMatch.MatchStats.Count, "There should be two elements in the MatchStats list");
             Assert.IsNotNull(fixture.CurrMatch.MatchStats.Last().Reason == StatDescription.BreakPoint);
         }
 
