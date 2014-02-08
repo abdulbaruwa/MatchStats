@@ -44,7 +44,6 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
                 {
                     AddAGameForPlayerTwo(fixture);
                 }
-
             }
         }
 

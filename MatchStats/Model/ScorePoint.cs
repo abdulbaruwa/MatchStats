@@ -15,27 +15,6 @@ namespace MatchStats.Model
         IReactiveCommand ActionCommand { get; set; }
     }
 
-    //public abstract class GameActionViewModel : ReactiveObject, IGameActionViewModel
-    //{
-    //    public string Name { get; set; }
-    //    public string DisplayName { get; set; }
-    //    public Player Player { get; set; }
-    //    public bool IsEnabled { get; set; }
-    //    public abstract void Execute();
-
-    //    public IReactiveCommand ActionCommand { get; set; }
-    //}
-        //    ForeHandWinner, >>>
-        //BackHandWinner,
-        //VolleyWinner,
-        //DropShotWinner,
-        //OverheadWinner,
-        //UnforcedForehandError,
-        //UnforcedBackhadError,
-        //UnforcedVolleyError,
-        //ForcedError
-         //DoubleFault
-
     public class ScoreGamePointActionViewModel : ReactiveObject, IGameActionViewModel
     {
         public PointReason PointReason { get; set; }

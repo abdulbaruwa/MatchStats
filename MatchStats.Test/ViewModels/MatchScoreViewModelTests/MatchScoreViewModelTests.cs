@@ -601,9 +601,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
         [TestMethod]
         public void ShouldSetAMatchIsOverWhenAPlayerOneWinsBy2()
         {
-            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
-            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
-            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture(FinalSetFormats.TenPointChampionShipTieBreak);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
