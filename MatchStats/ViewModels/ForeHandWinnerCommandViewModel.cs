@@ -63,6 +63,8 @@ namespace MatchStats.ViewModels
                     }
                 }
 
+                currentMatch.CurrentGame().Points.Last().PointReason = PointReason.ForeHandWinner;
+                currentMatch.CurrentGame().Points.Last().Player = Player.IsPlayerOne ? currentMatch.PlayerOne : currentMatch.PlayerTwo;
                 currentMatch.MatchStats.Add(matchStat);
                 currentMatch = matchStatsApi.ApplyGameRules(currentMatch);
                 matchStatsApi.SaveMatch(currentMatch);

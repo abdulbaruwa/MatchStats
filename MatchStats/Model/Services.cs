@@ -284,9 +284,10 @@ namespace MatchStats.Model
                     currentMatch.MatchStats.Last().MatchSituations.Add(new MatchSituation()
                     {
                         Id = Guid.NewGuid().ToString(),
-                        GameId = currentMatch.CurrentGame().GameId,
+                        GameId = currentMatch.Sets.Last().Games.Last().GameId,
                         Player = currentMatch.Winner,
-                        SetId = currentMatch.CurrentSet().SetId
+                        SetId = currentMatch.Sets.Last().SetId,
+                        MatchSituationType = MatchSituationType.MatchPointWon
                     });
                 }
             }
@@ -683,11 +684,18 @@ namespace MatchStats.Model
                 if (currentMatch.CurrentServer.IsPlayerOne)
                 {
                     SetGameStatusForPlayer(currentMatch.PlayerOne, currentGame, Status.GamePoint);
-                    currentMatch.MatchStats.Last().MatchSituations.Add(new MatchSituation()
+                    var matchSituation = new MatchSituation()
                     {
-                        GameId = currentGame.GameId, MatchSituationType = MatchSituationType.GamePoint
-                        ,Player = currentMatch.PlayerOne, SetId = currentMatch.CurrentSet().SetId, Id = Guid.NewGuid().ToString()  
-                    });
+                        GameId = currentGame.GameId,
+                        MatchSituationType = MatchSituationType.GamePoint,
+                        Player = currentMatch.PlayerOne,
+                        SetId = currentMatch.CurrentSet().SetId,
+                        Id = Guid.NewGuid().ToString()
+                    };
+                    currentMatch.MatchStats.Last().MatchSituations.Add(matchSituation);
+                    
+
+
                     return true;
                 }
                 else

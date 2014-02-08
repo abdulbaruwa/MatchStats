@@ -85,7 +85,10 @@ namespace MatchStats.Model
         UnforcedForehandError,
         UnforcedBackhadError,
         UnforcedVolleyError,
-        ForcedError
+        ForcedError,
+        DoubleFault,
+        SecondServeAce,
+        FirstServeAce
     }
 
     public enum PointLossReason

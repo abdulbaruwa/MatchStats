@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using MatchStats.Model;
 using ReactiveUI;
 
@@ -37,6 +38,14 @@ namespace MatchStats.ViewModels
                     GameId = currentMatch.CurrentGame().GameId,
                     SetId = currentMatch.CurrentSet().SetId
                 };
+
+                currentMatch.CurrentGame().Points.Last()
+                    .Serves.Add(new Serve()
+                    {
+                        IsFirstServe = false,
+                        ServeIsIn = true,
+                        Server = currentMatch.CurrentServer
+                    });
 
                 currentMatch.MatchStats.Add(matchStat);
                 matchStatsApi.SaveMatch(currentMatch);

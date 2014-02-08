@@ -27,6 +27,10 @@ namespace MatchStats.Model
 
     public class Point
     {
+        public Point()
+        {
+            Serves = new List<Serve>();
+        }
 
         public Player Server { get; set; }
         public Player Player { get; set; }

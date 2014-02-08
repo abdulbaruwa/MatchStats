@@ -38,6 +38,14 @@ namespace MatchStats.ViewModels
                     SetId = currentMatch.CurrentSet().SetId
                 };
 
+                var point = new Point()
+                {
+                    MatchSituationBefore = currentMatch.CurrentGame().LastMatchSituation,
+                    Server = currentMatch.CurrentServer
+                };
+                point.Serves.Add(new Serve() { IsFirstServe = true, ServeIsIn = false, Server = currentMatch.CurrentServer });
+                currentMatch.CurrentGame().Points.Add(point);
+
                 currentMatch.MatchStats.Add(matchStat);
                 matchStatsApi.SaveMatch(currentMatch);
                 MessageBus.Current.SendMessage(currentMatch, "NonPointUpdateForCurrentMatch");

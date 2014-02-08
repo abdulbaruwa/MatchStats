@@ -10,7 +10,8 @@ namespace MatchStats.ViewModels
         public UnforcedForehandErrorCommandViewModel(Player player = null) : base(player)
         {
             Name = "UnforcedForehandError";
-            DisplayName = "Unforced Backhand Error";
+            DisplayName = "Unforced Forehand Error";
+            PointReason = PointReason.UnforcedForehandError;
         }
     }
 
@@ -20,6 +21,7 @@ namespace MatchStats.ViewModels
         {
             Name = "UnforcedBackhandError";
             DisplayName = "Unforced Backhand Error";
+            PointReason = PointReason.UnforcedBackhadError;
         }
     }
 
@@ -29,6 +31,7 @@ namespace MatchStats.ViewModels
         {
             Name = "UnforcedVolleyError";
             DisplayName = "Unforced Volley Error";
+            PointReason = PointReason.UnforcedVolleyError;
         }
     }
     public class ForcedErrorCommandViewModel : DoubleFaultCommandViewModel
@@ -37,6 +40,7 @@ namespace MatchStats.ViewModels
         {
             Name = "ForcedError";
             DisplayName = "Forced Error";
+            PointReason = PointReason.ForcedError;
         }
     }
 
@@ -49,6 +53,7 @@ namespace MatchStats.ViewModels
             DisplayName = "Double Fault";
             ActionCommand = new ReactiveCommand();
             ActionCommand.Subscribe(x => Execute());
+            PointReason = PointReason.DoubleFault;
         }
 
         private bool _isEnabled;
@@ -102,12 +107,24 @@ namespace MatchStats.ViewModels
                     }
                 }
 
+                currentMatch.CurrentGame().Points.Last().PointReason = this.PointReason;
+                currentMatch.CurrentGame().Points.Last().Player = Player.IsPlayerOne ? currentMatch.PlayerTwo : currentMatch.PlayerOne;
+                currentMatch.CurrentGame().Points.Last()
+                    .Serves.Add(new Serve()
+                    {
+                        IsFirstServe = false,
+                        ServeIsIn = false,
+                        Server = currentMatch.CurrentServer
+                    });
+
                 currentMatch.MatchStats.Add(matchStat);
                 currentMatch = matchStatsApi.ApplyGameRules(currentMatch);
                 matchStatsApi.SaveMatch(currentMatch);
                 MessageBus.Current.SendMessage(currentMatch, "PointUpdateForCurrentMatch");
             });
         }
+
+        public PointReason PointReason { get; protected set; }
     }
 
 }

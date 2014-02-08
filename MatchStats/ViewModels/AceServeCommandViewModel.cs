@@ -7,6 +7,8 @@ namespace MatchStats.ViewModels
 {
     public class AceServeCommandViewModel : ReactiveObject, IGameActionViewModel
     {
+        private bool _isEnabled;
+
         public AceServeCommandViewModel(Player player = null)
         {
             Player = player ?? new Player();
@@ -16,8 +18,7 @@ namespace MatchStats.ViewModels
             ActionCommand.Subscribe(x => Execute());
         }
 
-        private bool _isEnabled;
-        public new bool IsEnabled
+        public bool IsEnabled
         {
             get { return _isEnabled; }
             set { this.RaiseAndSetIfChanged(ref _isEnabled, value); }
@@ -25,20 +26,10 @@ namespace MatchStats.ViewModels
 
         public IReactiveCommand ActionCommand { get; set; }
 
-        public string Name { get; set;} 
+        public string Name { get; set; }
         public string DisplayName { get; set; }
         public Player Player { get; set; }
 
-        private StatDescription DetermineIfFirstOrSecondServeAce(Match currentMatch)
-        {
-            var lastStat = currentMatch.MatchStats.LastOrDefault();
-            if (lastStat != null && lastStat.Reason == StatDescription.FirstServeOut &&
-                lastStat.Server.FullName == currentMatch.CurrentServer.FullName)
-            {
-                return StatDescription.SecondServeAce;
-            }
-            return StatDescription.FirstServeAce;
-        }
         public void Execute()
         {
             //Update currentMatch for this command
@@ -47,7 +38,7 @@ namespace MatchStats.ViewModels
             matchStatsApi.GetCurrentMatch().Subscribe(currentMatch =>
             {
                 Game currentGame = null;
-                var currentSet = currentMatch.Sets.FirstOrDefault(x => x.IsCurrentSet);
+                Set currentSet = currentMatch.Sets.FirstOrDefault(x => x.IsCurrentSet);
                 if (currentSet != null)
                 {
                     currentGame = currentSet.Games.FirstOrDefault(x => x.IsCurrentGame);
@@ -76,12 +67,65 @@ namespace MatchStats.ViewModels
                     }
                 }
 
+                if (IsFirstServe(currentMatch))
+                {
+                    var point = new Point
+                    {
+                        MatchSituationBefore = currentMatch.CurrentGame().LastMatchSituation,
+                        Server = currentMatch.CurrentServer,
+                        Player = Player.IsPlayerOne ? currentMatch.PlayerOne : currentMatch.PlayerTwo,
+                        PointReason =  PointReason.FirstServeAce
+                    };
+
+                    point.Serves.Add(new Serve
+                    {
+                        IsFirstServe = IsFirstServe(currentMatch),
+                        ServeIsIn = true,
+                        Server = currentMatch.CurrentServer
+                    });
+                    currentMatch.CurrentGame().Points.Add(point);
+                }
+                else
+                {
+                    currentMatch.CurrentGame().Points.Last().PointReason = PointReason.SecondServeAce;
+                    currentMatch.CurrentGame().Points.Last().Player = Player.IsPlayerOne ? currentMatch.PlayerOne : currentMatch.PlayerTwo;
+                    currentMatch.CurrentGame().Points.Last().Serves.Add(new Serve
+                    {
+                        IsFirstServe = false,
+                        ServeIsIn = true,
+                        Server = currentMatch.CurrentServer
+                    });
+
+                }
+
                 currentMatch.MatchStats.Add(matchStat);
                 currentMatch = matchStatsApi.ApplyGameRules(currentMatch);
                 matchStatsApi.SaveMatch(currentMatch);
                 MessageBus.Current.SendMessage(currentMatch, "PointUpdateForCurrentMatch");
                 MessageBus.Current.SendMessage(currentMatch, "AceServeForCurrentMatch");
             });
+        }
+
+        private StatDescription DetermineIfFirstOrSecondServeAce(Match currentMatch)
+        {
+            MatchStat lastStat = currentMatch.MatchStats.LastOrDefault();
+            if (lastStat != null && lastStat.Reason == StatDescription.FirstServeOut &&
+                lastStat.Server.FullName == currentMatch.CurrentServer.FullName)
+            {
+                return StatDescription.SecondServeAce;
+            }
+            return StatDescription.FirstServeAce;
+        }
+
+        private bool IsFirstServe(Match currentMatch)
+        {
+            MatchStat lastStat = currentMatch.MatchStats.LastOrDefault();
+            if (lastStat != null && lastStat.Reason == StatDescription.FirstServeOut &&
+                lastStat.Server.FullName == currentMatch.CurrentServer.FullName)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

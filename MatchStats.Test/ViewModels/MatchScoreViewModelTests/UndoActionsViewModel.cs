@@ -40,7 +40,8 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.PlayerOneFirstServeInCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
-            Assert.IsTrue(fixture.CurrMatch.MatchStats.Last().Reason == StatDescription.GamePoint);
+            Assert.IsNotNull(fixture.CurrMatch.CurrentGame().Points.LastOrDefault());
+            Assert.AreEqual(MatchSituationType.GamePoint, fixture.CurrMatch.CurrentGame().Points.Last().MatchSituationAfter.MatchSituationType);
 
             fixture.UndoLastActionCommand.Execute(null);
             
