@@ -125,7 +125,10 @@ namespace MatchStats.Model
             //Is Set Over
             CheckSetIsOverAndInitializeNewSetIfNeedBe(currentMatch);
 
+           // currentGame.LastMatchSituation = currentMatch.MatchStats.Last().MatchSituations.Last();
+
             return currentMatch;
+
         }
 
         private void CheckAndSwitchCurrentServerOnChampionShipTieBreakPoints(Match currentMatch, ref Game currentGame)
