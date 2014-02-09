@@ -147,9 +147,11 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
+            fixture.PlayerTwoFirstServeOutCommand.Execute(null);
             fixture.PlayerTwoSecondServeInCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
+            fixture.PlayerTwoFirstServeOutCommand.Execute(null);
             fixture.PlayerTwoSecondServeInCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
