@@ -91,7 +91,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             //Act
-            PlayerFirstServeOutAndDoubleFault(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServeOutAndDoubleFault(fixture, false);
 
             //Assert
             Assert.IsTrue(fixture.CurrMatch.CurrentGame().PlayerTwoScore.Equals(0), "Wrongly updated the score for player");
@@ -110,7 +110,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
             //Act
-            PlayerOneFirstServedAndForehandWinner(fixture);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
 
             //Assert
             Assert.IsTrue(fixture.CurrMatch.CurrentGame().PlayerOneScore.Equals(1), "Point not added for action");
@@ -710,11 +710,8 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
-            fixture.PlayerOneFirstServeOutCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
-            fixture.PlayerOneFirstServeInCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-
+            MatchScoreViewModelTestHelper.PlayerFirstServeOutAndDoubleFault(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
             Assert.IsNotNull(fixture.CurrMatch.MatchStats.FirstOrDefault(x => x.Reason == StatDescription.DoubleFault), "Match stats should have one element in it");
             Assert.AreEqual(2, fixture.CurrMatch.MatchStats.Count, "There should be two elements in the MatchStats list");
         }
@@ -727,13 +724,13 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
-            PlayerFirstServeOutAndDoubleFault(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServeOutAndDoubleFault(fixture, true);
 
-            PlayerOneFirstServedAndForehandWinner(fixture);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
 
-            PlayerOneFirstServedAndForehandWinner(fixture);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
 
-            PlayerOneFirstServedAndForehandWinner(fixture);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
 
 
             Assert.IsNotNull(fixture.CurrMatch.MatchStats.FirstOrDefault(x => x.Reason == StatDescription.DoubleFault), "Match stats should have one element in it");
@@ -741,25 +738,6 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             Assert.IsNotNull(fixture.CurrMatch.MatchStats.Last().Reason == StatDescription.GamePoint);
         }
 
-        private static void PlayerOneFirstServedAndForehandWinner(MatchScoreViewModel fixture)
-        {
-            fixture.PlayerOneFirstServeInCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-        }
-
-        private static void PlayerFirstServeOutAndDoubleFault(MatchScoreViewModel fixture, bool isPlayerOne)
-        {
-            if (isPlayerOne)
-            {
-                fixture.PlayerOneFirstServeOutCommand.Execute(null);
-                fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
-            }
-            else
-            {
-                fixture.PlayerTwoFirstServeOutCommand.Execute(null);
-                fixture.PlayerTwoActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
-            }
-        }
 
 
         [TestMethod]
@@ -773,9 +751,9 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.PlayerOneFirstServeOutCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
 
-            PlayerOneFirstServedAndForehandWinner(fixture);
-            PlayerOneFirstServedAndForehandWinner(fixture);
-            PlayerOneFirstServedAndForehandWinner(fixture);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
 
             Assert.IsNotNull(fixture.CurrMatch.MatchStats.FirstOrDefault(x => x.Reason == StatDescription.DoubleFault), "Match stats should have one element in it");
             Assert.AreEqual(8, fixture.CurrMatch.MatchStats.Count);

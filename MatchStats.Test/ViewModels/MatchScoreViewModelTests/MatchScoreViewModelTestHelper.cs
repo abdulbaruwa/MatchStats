@@ -47,21 +47,52 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             }
         }
 
+
         public static void AddAGameForPlayerOne(MatchScoreViewModel fixture)
         {
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            PlayerFirstServedAndForehandWinner(fixture, true);
+            PlayerFirstServedAndForehandWinner(fixture, true);
+            PlayerFirstServedAndForehandWinner(fixture, true);
+            PlayerFirstServedAndForehandWinner(fixture, true);
         }
 
         public static void AddAGameForPlayerTwo(MatchScoreViewModel fixture)
         {
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            PlayerFirstServedAndForehandWinner(fixture, false);
+            PlayerFirstServedAndForehandWinner(fixture, false);
+            PlayerFirstServedAndForehandWinner(fixture, false);
+            PlayerFirstServedAndForehandWinner(fixture, false);
         }
+
+        public static void PlayerFirstServedAndForehandWinner(MatchScoreViewModel fixture, bool isPlayerOne)
+        {
+            if (isPlayerOne)
+            {
+                fixture.PlayerOneFirstServeInCommand.Execute(null);
+                fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            }
+            else
+            {
+                fixture.PlayerTwoFirstServeInCommand.Execute(null);
+                fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            }
+        }
+
+        public static void PlayerFirstServeOutAndDoubleFault(MatchScoreViewModel fixture, bool isPlayerOne)
+        {
+            if (isPlayerOne)
+            {
+                fixture.PlayerOneFirstServeOutCommand.Execute(null);
+                fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
+            }
+            else
+            {
+                fixture.PlayerTwoFirstServeOutCommand.Execute(null);
+                fixture.PlayerTwoActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
+            }
+        }
+
 
         public static TestBlobCache RegisterComponents()
         {
@@ -89,6 +120,6 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.NewMatchControlViewModel.SelectedSetsFormat = SetsFormat.ShortSetToFour;
             fixture.NewMatchControlViewModel.TournamentName = "Sutton Open";
             return fixture;
-        } 
+        }
     }
 }
