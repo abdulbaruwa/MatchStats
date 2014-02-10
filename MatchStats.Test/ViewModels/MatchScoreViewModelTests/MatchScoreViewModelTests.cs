@@ -133,14 +133,15 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             var fixture = MatchScoreViewModelTestHelper.BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
-            //Act
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            //Act
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
 
             //Assert
             Assert.IsNotNull(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).Winner, "Failed to flag game with a valid winner");
@@ -157,13 +158,13 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
             //Act
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
 
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
 
             //Assert
             Assert.IsNull(fixture.CurrMatch.CurrentGame().Winner, "Game is flagged as won when it should be Deuce");
@@ -180,12 +181,12 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             //Act
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
 
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
 
             //Assert
             Assert.IsNull(fixture.CurrMatch.CurrentGame().Winner, "Game is flagged as won when it should be Deuce");
@@ -201,14 +202,15 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             var fixture = MatchScoreViewModelTestHelper.BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
+           
 
             //Act
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
 
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
 
             //Assert
             Assert.IsNull(fixture.CurrMatch.CurrentGame().Winner, "Game is flagged as won when it should not be");
@@ -219,20 +221,19 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
         [TestMethod]
         public void ShouldSetGameStatusAsGameIfAT5030Game()
         {
-
             var blobCache = MatchScoreViewModelTestHelper.RegisterComponents();
             var fixture = MatchScoreViewModelTestHelper.BuildAMatchToScore();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             //Act
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
 
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
 
             //Assert
             Assert.IsNotNull(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).Winner, "Game Winner should not be Null");
@@ -251,13 +252,13 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             //Act  --> Score is 30-50
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
 
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
 
             //Assert
             Assert.IsNotNull(fixture.CurrMatch.GetGameForKnownSetAndGame(1,1).Winner, "Game Winner should not be Null");
@@ -275,13 +276,13 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             //Act  --> Score is 40-40
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
 
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
 
             //Act --> Score is Advantage to PlayerTwo
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
@@ -302,13 +303,13 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             //Act  --> Score is 50-50
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
 
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
 
             //Assert --> at Deuce for Sudden Death Deuce format it should be Game Point for any player
             Assert.AreEqual(fixture.CurrMatch.CurrentGame().GameStatus.Status, Status.GamePoint, "Should be Game Point");
@@ -333,13 +334,13 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
             //Act  --> Score is 30-50
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
 
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
 
             //Assert
             Assert.IsNull(fixture.CurrMatch.CurrentGame().Winner, "Game Winner should be Null");
@@ -452,14 +453,14 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
             MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
 
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
 
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
 
             Assert.AreEqual(1, fixture.CurrMatch.Sets.Count, "Should still be on the first set");
             Assert.IsNull(fixture.CurrMatch.Sets.First().Winner, "Sets winner should be null at 5-2 in a Seven Point Tie Breaker game");
@@ -486,16 +487,16 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
             MatchScoreViewModelTestHelper.AddAGameForPlayerTwo(fixture);
 
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
 
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
 
             Assert.IsNotNull(fixture.CurrMatch.Sets.First().Winner, "Sets winner should not be null at 7-2 in a Seven Point Tie Breaker game");
             Assert.AreEqual(2, fixture.CurrMatch.Sets.Count, "Should still be on the first set");
@@ -527,15 +528,16 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, false);
 
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
 
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
 
             Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.Count == 1, "The TieBreaker set should only have one game");
             Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.First().PlayerTwoScore == 6);
@@ -553,26 +555,45 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, false);
 
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
             fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
-            Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.Count == 1,  string.Format("The TieBreaker set should only have 1 game, but has {0}",fixture.CurrMatch.CurrentSet().Games.Count));
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.Count == 1, string.Format("The TieBreaker set should only have 1 game, but has {0}", fixture.CurrMatch.CurrentSet().Games.Count));
             Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.First().PlayerTwoScore == 10);
             Assert.IsTrue(fixture.CurrMatch.CurrentSet().Games.First().PlayerOneScore == 3);
             Assert.IsTrue(fixture.CurrMatch.IsMatchOver, "Game should be flagged as over");
             Assert.IsNotNull(fixture.CurrMatch.Winner, "Winning player should not be null");
+
         }
 
         [TestMethod]
@@ -587,13 +608,23 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, false);
 
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
 
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
             fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
 
             Assert.AreEqual(fixture.CurrMatch.CurrentGame().PlayerTwoScore, 5, string.Format("Game score should be 4 but it is {0}", fixture.CurrMatch.CurrentGame().PlayerTwoScore));
@@ -616,9 +647,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
         [TestMethod]
         public void ShouldChangeServerAfterFirstServeOfTieBreaker()
         {
-            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
-            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
-            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture(FinalSetFormats.TenPointChampionShipTieBreak);
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
             MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
@@ -631,10 +660,11 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
 
             bool currentIsPlayerOne = fixture.CurrentServer.IsPlayerOne;
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            Assert.AreNotEqual(fixture.CurrentServer.IsPlayerOne, currentIsPlayerOne); 
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, currentIsPlayerOne);
+
+            Assert.AreNotEqual(fixture.CurrentServer.IsPlayerOne, currentIsPlayerOne);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
             currentIsPlayerOne = fixture.CurrentServer.IsPlayerOne;
             Assert.AreEqual(fixture.CurrentServer.IsPlayerOne, currentIsPlayerOne); 
         }
@@ -651,11 +681,11 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
 
             bool currentIsPlayerOne = fixture.CurrentServer.IsPlayerOne;
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture,currentIsPlayerOne);
 
             Assert.AreNotEqual(fixture.CurrentServer.IsPlayerOne, currentIsPlayerOne);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
-            fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, currentIsPlayerOne);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, currentIsPlayerOne);
             currentIsPlayerOne = fixture.CurrentServer.IsPlayerOne;
             Assert.AreEqual(fixture.CurrentServer.IsPlayerOne, currentIsPlayerOne);
         }
@@ -693,13 +723,10 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
         [TestMethod]
         public void ShouldStoreDoubleFaultActionAsInMatchStatsList()
         {
-            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture();
-            fixture.NewMatchControlViewModel.SelectedFinalSet = FinalSetFormats.TenPointChampionShipTieBreak;
-            fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture(FinalSetFormats.TenPointChampionShipTieBreak);
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
-            fixture.PlayerOneActions.First(x => x.Name == "DoubleFault").ActionCommand.Execute(null);
-            
+            MatchScoreViewModelTestHelper.PlayerFirstServeOutAndDoubleFault(fixture, true);
             Assert.IsNotNull(fixture.CurrMatch.MatchStats.FirstOrDefault(x => x.Reason == StatDescription.DoubleFault), "Match stats should have one element in it");
         }
 
@@ -713,7 +740,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             MatchScoreViewModelTestHelper.PlayerFirstServeOutAndDoubleFault(fixture, true);
             MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
             Assert.IsNotNull(fixture.CurrMatch.MatchStats.FirstOrDefault(x => x.Reason == StatDescription.DoubleFault), "Match stats should have one element in it");
-            Assert.AreEqual(2, fixture.CurrMatch.MatchStats.Count, "There should be two elements in the MatchStats list");
+            Assert.AreEqual(4, fixture.CurrMatch.MatchStats.Count, "There should be two elements in the MatchStats list");
         }
  
         [TestMethod]
