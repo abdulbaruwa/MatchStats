@@ -42,10 +42,13 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
 
             Assert.IsNotNull(fixture.CurrMatch.CurrentGame().Points.LastOrDefault());
             Assert.AreEqual(MatchSituationType.GamePoint, fixture.CurrMatch.CurrentGame().Points.Last().MatchSituationAfter.MatchSituationType);
+            Assert.AreEqual(3, fixture.CurrMatch.CurrentGame().Points.Count);
 
             fixture.UndoLastActionCommand.Execute(null);
             
             Assert.AreEqual(StatDescription.FirstServeIn, fixture.CurrMatch.MatchStats.Last().Reason);
+            Assert.AreEqual(2, fixture.CurrMatch.CurrentGame().Points.Count);
+            Assert.IsNull(fixture.CurrMatch.CurrentGame().Points.Last().MatchSituationAfter.MatchSituationType);
         }
 
         [TestMethod]
