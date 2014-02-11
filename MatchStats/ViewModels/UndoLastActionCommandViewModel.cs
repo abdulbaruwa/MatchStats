@@ -64,18 +64,16 @@ namespace MatchStats.ViewModels
 
                         if (lastMatchStat.Player.IsPlayerOne)currentMatch.CurrentSet().Games.Last().PlayerOneScore --;
                         if (! lastMatchStat.Player.IsPlayerOne) currentMatch.CurrentSet().Games.Last().PlayerTwoScore--;
-                        var game  = currentMatch.CurrentGame();
-                        if (game.Points.Count > 0)
+                        var current  = currentMatch.CurrentGame();
+                        if (current.Points.Count > 0)
                         {
-                            game.Points.RemoveAt(game.Points.Count - 1);
+                            current.Points.RemoveAt(game.Points.Count - 1);
                         }
-
 
                         //Switch players serving
                         currentMatch.CurrentServer = currentMatch.CurrentServer.IsPlayerOne ? currentMatch.PlayerTwo : currentMatch.PlayerOne;
                         currentMatch.CurrentSet().Games.Last().IsCurrentGame = true;
                         currentMatch.CurrentSet().Games.Last().Winner = null;
-
 
                         //The status will be the current MatchStat.
                         if (currentMatch.MatchStats.Count >= 2)
@@ -94,7 +92,6 @@ namespace MatchStats.ViewModels
                                     if (currentMatch.CurrentServer.IsPlayerOne)
                                     {
                                         isGamePoint = currentMatch.CurrentGame().PlayerOneScore > currentMatch.CurrentGame().PlayerTwoScore;
-
                                     }
                                     else
                                     {
