@@ -36,8 +36,15 @@ namespace MatchStats.ViewModels
                 continueUndo = lastMatchStat.UndoPrevious;
                 if (lastMatchStat.PointWonLostOrNone != PointWonLostOrNone.NotAPoint)
                 {
-                    if (lastMatchStat.Player.IsPlayerOne)currentMatch.CurrentGame().PlayerOneScore--;
+                    if (lastMatchStat.Player.IsPlayerOne) currentMatch.CurrentGame().PlayerOneScore--;
                     if (! lastMatchStat.Player.IsPlayerOne) currentMatch.CurrentGame().PlayerTwoScore--;
+
+                    var game = currentMatch.CurrentGame();
+                    if (game.Points.Count > 0)
+                    {
+                        //Remove only if the current game has points to remove - other wise it will be dealt with in the next 'If' statement below.
+                        game.Points.RemoveAt(game.Points.Count - 1);
+                    }
 
                     if (currentMatch.CurrentGame().PlayerOneScore < 0 || currentMatch.CurrentGame().PlayerTwoScore < 0) //Less than zero will indicate we have should have undo unto previous game
                     {
@@ -57,6 +64,12 @@ namespace MatchStats.ViewModels
 
                         if (lastMatchStat.Player.IsPlayerOne)currentMatch.CurrentSet().Games.Last().PlayerOneScore --;
                         if (! lastMatchStat.Player.IsPlayerOne) currentMatch.CurrentSet().Games.Last().PlayerTwoScore--;
+                        var game  = currentMatch.CurrentGame();
+                        if (game.Points.Count > 0)
+                        {
+                            game.Points.RemoveAt(game.Points.Count - 1);
+                        }
+
 
                         //Switch players serving
                         currentMatch.CurrentServer = currentMatch.CurrentServer.IsPlayerOne ? currentMatch.PlayerTwo : currentMatch.PlayerOne;
