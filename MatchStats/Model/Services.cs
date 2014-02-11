@@ -130,7 +130,7 @@ namespace MatchStats.Model
             if (latestMatchSituation != null && latestMatchSituation.MatchSituations.Count > 0)
             {
                 currentGame.LastMatchSituation = currentMatch.MatchStats.Last(x => x.MatchSituations.Count > 0).MatchSituations.Last();
-                if(currentGame.LastMatchSituation != null)  currentMatch.CurrentGame().Points.Last().MatchSituationAfter = currentGame.LastMatchSituation;
+                if (currentGame.LastMatchSituation != null ) currentGame.Points.Last().MatchSituationAfter = currentGame.LastMatchSituation;
             }
 
             return currentMatch;
