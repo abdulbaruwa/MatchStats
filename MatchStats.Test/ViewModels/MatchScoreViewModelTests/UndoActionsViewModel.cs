@@ -48,7 +48,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             
             Assert.AreEqual(StatDescription.FirstServeIn, fixture.CurrMatch.MatchStats.Last().Reason);
             Assert.AreEqual(2, fixture.CurrMatch.CurrentGame().Points.Count);
-            Assert.IsNull(fixture.CurrMatch.CurrentGame().Points.Last().MatchSituationAfter.MatchSituationType);
+            Assert.IsNull(fixture.CurrMatch.CurrentGame().Points.Last().MatchSituationAfter);
         }
 
         [TestMethod]

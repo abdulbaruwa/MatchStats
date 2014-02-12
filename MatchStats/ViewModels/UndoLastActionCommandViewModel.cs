@@ -64,10 +64,10 @@ namespace MatchStats.ViewModels
 
                         if (lastMatchStat.Player.IsPlayerOne)currentMatch.CurrentSet().Games.Last().PlayerOneScore --;
                         if (! lastMatchStat.Player.IsPlayerOne) currentMatch.CurrentSet().Games.Last().PlayerTwoScore--;
-                        var current  = currentMatch.CurrentGame();
+                        var current = currentMatch.CurrentSet().Games.Last();
                         if (current.Points.Count > 0)
                         {
-                            current.Points.RemoveAt(game.Points.Count - 1);
+                            current.Points.RemoveAt(current.Points.Count - 1);
                         }
 
                         //Switch players serving
