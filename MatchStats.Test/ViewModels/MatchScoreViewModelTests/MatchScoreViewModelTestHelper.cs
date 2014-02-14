@@ -81,6 +81,23 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             }
         }
 
+        public static void PlayerSecondServeInAndWonPoint(MatchScoreViewModel fixture, bool isPlayerOne)
+        {
+            if (isPlayerOne)
+            {
+                fixture.PlayerOneFirstServeOutCommand.Execute(null);
+                fixture.PlayerOneSecondServeInCommand.Execute(null);
+                fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            }
+            else
+            {
+                fixture.PlayerTwoFirstServeOutCommand.Execute(null);
+                fixture.PlayerTwoSecondServeInCommand.Execute(null);
+                fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            }
+        }
+
         public static void PlayerFirstServedAndForehandWinner(MatchScoreViewModel fixture, bool isPlayerOne)
         {
             if (isPlayerOne)

@@ -43,9 +43,9 @@ namespace MatchStats.ViewModels
         {
             var set1 = this.CurrentMatch.Sets.FirstOrDefault();
             if (set1 != null) Set1 = set1.SetId;
-            var set2 = this.CurrentMatch.Sets.FirstOrDefault();
+            var set2 = this.CurrentMatch.Sets.SecondOrDefault();
             if (set2 != null) Set2 = set2.SetId;
-            var set3 = this.CurrentMatch.Sets.FirstOrDefault();
+            var set3 = this.CurrentMatch.Sets.ThirdOrDefault();
             if (set3 != null) Set3 = set3.SetId;
 
             PlayerOneFullName = CurrentMatch.PlayerOne.FullName;
@@ -197,9 +197,33 @@ namespace MatchStats.ViewModels
                                select p).ToList();
             }
 
-            var pointsWonOnfirstServe =
-                firstServes.Count(x => x.Server.IsPlayerOne == isPlayerOne && x.Player.IsPlayerOne == isPlayerOne);
+            var pointsWonOnfirstServe = firstServes.Count(x => x.Server.IsPlayerOne == isPlayerOne && x.Player.IsPlayerOne == isPlayerOne);
+            var winPercentageOnFirstServe = (int)Math.Round(((double)pointsWonOnfirstServe / (double)firstServes.Count) * 100);
 
+            return winPercentageOnFirstServe + "%";
+        }
+
+        private string GetSecondServeWinPercentageFor(bool isPlayerOne, string set = null)
+        {
+            List<Point> firstServes;
+            if (string.IsNullOrEmpty(set))
+            {
+                firstServes = (from s in CurrentMatch.Sets
+                               from g in s.Games
+                               from p in g.Points
+                               where p.Serves.Any(x => x.ServeIsIn && x.IsFirstServe == false)
+                               select p).ToList();
+            }
+            else
+            {
+                firstServes = (from s in CurrentMatch.Sets
+                               from g in s.Games
+                               from p in g.Points
+                               where p.Serves.Any(x => x.ServeIsIn && x.IsFirstServe == false && s.SetId == set)
+                               select p).ToList();
+            }
+
+            var pointsWonOnfirstServe = firstServes.Count(x => x.Server.IsPlayerOne == isPlayerOne && x.Player.IsPlayerOne == isPlayerOne);
             var winPercentageOnFirstServe = (int)Math.Round(((double)pointsWonOnfirstServe / (double)firstServes.Count) * 100);
 
             return winPercentageOnFirstServe + "%";

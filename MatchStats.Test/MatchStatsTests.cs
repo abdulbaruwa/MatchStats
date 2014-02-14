@@ -55,7 +55,41 @@ namespace MatchStats.Test
             var fixtureStats = new MatchStatsViewModel();
             fixtureStats.CurrentMatch = fixture.CurrMatch;
             Assert.AreEqual("50%", fixtureStats.Stats.First(x => x.StatNameType == StatName.WinPercentForFirstServe).ForMatchP1);
+        }
 
+        [TestMethod]
+        public void ShouldCalculateWinPercentForFirstServeForPlayerOneIFirstSet()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture(FinalSetFormats.TenPointChampionShipTieBreak);
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
+            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, false);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+
+            var fixtureStats = new MatchStatsViewModel();
+            fixtureStats.CurrentMatch = fixture.CurrMatch;
+            Assert.AreEqual("50%", fixtureStats.Stats.First(x => x.StatNameType == StatName.WinPercentForFirstServe).ForFirstSetP1);
+            Assert.AreEqual("50%", fixtureStats.Stats.First(x => x.StatNameType == StatName.WinPercentForFirstServe).ForSecondSetP2);
+        }
+
+
+        [TestMethod]
+        public void ShouldCalculateWinPercentForSecondServeForPlayerOne()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture(FinalSetFormats.TenPointChampionShipTieBreak);
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            MatchScoreViewModelTestHelper.PlayerSecondServeInAndLostPoint(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerSecondServeInAndLostPoint(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerSecondServeInAndWonPoint(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerSecondServeInAndWonPoint(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerSecondServeInAndWonPoint(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerSecondServeInAndWonPoint(fixture, true);
+
+            var fixtureStats = new MatchStatsViewModel();
+            fixtureStats.CurrentMatch = fixture.CurrMatch;
+            Assert.AreEqual("67%", fixtureStats.Stats.First(x => x.StatNameType == StatName.WinPercentForSecondServe).ForMatchP1);
         }
 
 
