@@ -64,6 +64,23 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             PlayerFirstServedAndForehandWinner(fixture, false);
         }
 
+        public static void PlayerSecondServeInAndLostPoint(MatchScoreViewModel fixture, bool isPlayerOne)
+        {
+            if (isPlayerOne)
+            {
+                fixture.PlayerOneFirstServeOutCommand.Execute(null);
+                fixture.PlayerOneSecondServeInCommand.Execute(null);
+                fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            }
+            else
+            {
+                fixture.PlayerTwoFirstServeOutCommand.Execute(null);
+                fixture.PlayerTwoSecondServeInCommand.Execute(null);
+                fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            }
+        }
+
         public static void PlayerFirstServedAndForehandWinner(MatchScoreViewModel fixture, bool isPlayerOne)
         {
             if (isPlayerOne)
@@ -78,6 +95,22 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
 
             }
         }
+
+        public static void PlayerFirstServeInAndLostPoint(MatchScoreViewModel fixture, bool isPlayerOne)
+        {
+            if (isPlayerOne)
+            {
+                fixture.PlayerOneFirstServeInCommand.Execute(null);
+                fixture.PlayerTwoActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+            }
+            else
+            {
+                fixture.PlayerTwoFirstServeInCommand.Execute(null);
+                fixture.PlayerOneActions.First(x => x.Name == "ForeHandWinner").ActionCommand.Execute(null);
+
+            }
+        }
+
 
         public static void PlayerFirstServeOutAndDoubleFault(MatchScoreViewModel fixture, bool isPlayerOne)
         {
