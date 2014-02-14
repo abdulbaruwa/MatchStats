@@ -34,12 +34,20 @@ namespace MatchStats.ViewModels
                     UpdateFields();
                     AddFirstServePercentageStats();
                     AddDoubleFaultStats();
+                    AddWinPercentateOnFirstServe();
                 });
         }
 
         private void UpdateFields()
 
         {
+            var set1 = this.CurrentMatch.Sets.FirstOrDefault();
+            if (set1 != null) Set1 = set1.SetId;
+            var set2 = this.CurrentMatch.Sets.FirstOrDefault();
+            if (set2 != null) Set2 = set2.SetId;
+            var set3 = this.CurrentMatch.Sets.FirstOrDefault();
+            if (set3 != null) Set3 = set3.SetId;
+
             PlayerOneFullName = CurrentMatch.PlayerOne.FullName;
             PlayerTwoFullName = CurrentMatch.PlayerTwo.FullName;
             if (CurrentMatch.Sets.FirstOrDefault() != null)
@@ -51,8 +59,8 @@ namespace MatchStats.ViewModels
 
             if (CurrentMatch.Sets.FirstOrDefault() != null)
             {
-                var playerOneScore = CurrentMatch.Sets.First().Games.Count(x => x.Winner.FullName == PlayerOneFullName);
-                var playerTwoScore = CurrentMatch.Sets.First().Games.Count(x => x.Winner.FullName == PlayerTwoFullName);
+                var playerOneScore = CurrentMatch.Sets.First().Games.Count(x => x.Winner != null && x.Winner.FullName == PlayerOneFullName);
+                var playerTwoScore = CurrentMatch.Sets.First().Games.Count(x => x.Winner != null && x.Winner.FullName == PlayerTwoFullName);
                 PlayerOneSetOneScore = playerOneScore.ToString();
                 PlayerTwoSetOneScore = playerTwoScore.ToString();
                 if (playerOneScore.DiffValueWith(playerTwoScore) == 1)
@@ -65,8 +73,8 @@ namespace MatchStats.ViewModels
 
             if (CurrentMatch.Sets.SecondOrDefault() != null)
             {
-                var playerOneScore = CurrentMatch.Sets.SecondOrDefault().Games.Count(x => x.Winner.FullName == PlayerOneFullName);
-                var playerTwoScore = CurrentMatch.Sets.SecondOrDefault().Games.Count(x => x.Winner.FullName == PlayerTwoFullName);
+                var playerOneScore = CurrentMatch.Sets.SecondOrDefault().Games.Count(x => x.Winner != null && x.Winner.FullName == PlayerOneFullName);
+                var playerTwoScore = CurrentMatch.Sets.SecondOrDefault().Games.Count(x => x.Winner != null && x.Winner.FullName == PlayerTwoFullName);
                 PlayerOneSetTwoScore = playerOneScore.ToString();
                 PlayerTwoSetTwoScore = playerTwoScore.ToString();
                 if (playerOneScore.DiffValueWith(playerTwoScore) == 1)
@@ -79,8 +87,8 @@ namespace MatchStats.ViewModels
 
             if (CurrentMatch.Sets.ThirdOrDefault() != null)
             {
-                var playerOneScore = CurrentMatch.Sets.ThirdOrDefault().Games.Count(x => x.Winner.FullName == PlayerOneFullName);
-                var playerTwoScore = CurrentMatch.Sets.ThirdOrDefault().Games.Count(x => x.Winner.FullName == PlayerTwoFullName);
+                var playerOneScore = CurrentMatch.Sets.ThirdOrDefault().Games.Count(x => x.Winner != null && x.Winner.FullName == PlayerOneFullName);
+                var playerTwoScore = CurrentMatch.Sets.ThirdOrDefault().Games.Count(x => x.Winner != null && x.Winner.FullName == PlayerTwoFullName);
                 PlayerOneSetThreeScore = playerOneScore.ToString();
                 PlayerTwoSetThreeScore = playerTwoScore.ToString();
 
@@ -114,6 +122,10 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _currentMatch, value); }
         }
 
+        private string Set1 { get; set; }
+        private string Set2 { get; set; }
+        private string Set3 { get; set; }
+
         public List<Stat> Stats { get; set; }
         public int IndexWithinParentCollection { get; set; }
 
@@ -146,11 +158,65 @@ namespace MatchStats.ViewModels
         public string ThirdSetDuration { get; set; }
 
 
+        private void AddWinPercentateOnFirstServe()
+        {
+            var pointsPercWonOnFirstServePlayerOne = GetFirstServeWinPercentageFor(true);
+            var pointsPercWonOnFirstServePlayerTwo = GetFirstServeWinPercentageFor(false);
+            Stats.Add(new Stat()
+            {
+                ForMatchP1 = pointsPercWonOnFirstServePlayerOne,
+                ForMatchP2 = pointsPercWonOnFirstServePlayerTwo,
+                StatNameType = StatName.WinPercentForFirstServe,
+                ForFirstSetP1 = string.IsNullOrEmpty(Set1) ? "" : GetFirstServeWinPercentageFor(true, Set1),
+                ForFirstSetP2 = string.IsNullOrEmpty(Set1) ? "" : GetFirstServeWinPercentageFor(false, Set1),
+                ForSecondSetP1 = string.IsNullOrEmpty(Set2) ? "" : GetFirstServeWinPercentageFor(true, Set2),
+                ForSecondSetP2 = string.IsNullOrEmpty(Set2) ? "" : GetFirstServeWinPercentageFor(false, Set2),
+                ForThirdSetP1 = string.IsNullOrEmpty(Set3) ? "" : GetFirstServeWinPercentageFor(true, Set3),
+                ForThirdSetP2 = string.IsNullOrEmpty(Set3) ? "" : GetFirstServeWinPercentageFor(false, Set3),
+            });
+        }
+
+        private string GetFirstServeWinPercentageFor(bool isPlayerOne, string set = null)
+        {
+            List<Point> firstServes;
+            if (string.IsNullOrEmpty(set))
+            {
+                firstServes = (from s in CurrentMatch.Sets
+                               from g in s.Games
+                               from p in g.Points
+                               where p.Serves.Any(x => x.ServeIsIn)
+                               select p).ToList();
+
+            }
+            else
+            {
+                firstServes = (from s in CurrentMatch.Sets
+                               from g in s.Games
+                               from p in g.Points
+                               where p.Serves.Any(x => x.ServeIsIn && s.SetId == set)
+                               select p).ToList();
+            }
+
+            var pointsWonOnfirstServe =
+                firstServes.Count(x => x.Server.IsPlayerOne == isPlayerOne && x.Player.IsPlayerOne == isPlayerOne);
+
+            var winPercentageOnFirstServe = (int)Math.Round(((double)pointsWonOnfirstServe / (double)firstServes.Count) * 100);
+
+            return winPercentageOnFirstServe + "%";
+        }
+
         private void AddDoubleFaultStats()
         {
 
-            var doubleFaultsP1 = this.CurrentMatch.MatchStats.Count(x => x.Reason == StatDescription.DoubleFault && x.Player.IsPlayerOne);
-            var doubleFaultsP2 = this.CurrentMatch.MatchStats.Count(x => x.Reason == StatDescription.DoubleFault && (!x.Player.IsPlayerOne));
+            var secondServes = (from s in CurrentMatch.Sets
+                               from g in s.Games
+                               from p in g.Points
+                               from sr in p.Serves
+                               where sr.IsFirstServe == false && sr.ServeIsIn == false
+                               select sr).ToList();
+
+            var doubleFaultsP1 = secondServes.Count(x => x.Server.IsPlayerOne);
+            var doubleFaultsP2 = secondServes.Count(x => x.Server.IsPlayerOne == false);
 
             var set1 = this.CurrentMatch.Sets.FirstOrDefault();
             var playerOneSet1DoubleFaults = GetDoubleFaults(true, set1);
@@ -179,7 +245,12 @@ namespace MatchStats.ViewModels
         private string GetDoubleFaults(bool isPlayerOne, Set set)
         {
             if (set == null) return string.Empty;
-            return this.CurrentMatch.MatchStats.Count(x => x.Reason == StatDescription.DoubleFault && x.Player.IsPlayerOne == isPlayerOne && x.SetId == set.SetId).ToString();
+            return (from s in CurrentMatch.Sets
+                                from g in s.Games
+                                from p in g.Points
+                                from sr in p.Serves
+                                where sr.IsFirstServe == false && sr.ServeIsIn == false && s.SetId == set.SetId && sr.Server.IsPlayerOne == isPlayerOne
+                                select sr).Count().ToString();
         }
 
         private void AddFirstServePercentageStats()
