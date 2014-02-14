@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
+using Windows.Devices.Sensors;
 using MatchStats.Common;
 using MatchStats.Enums;
 using MatchStats.Model;
@@ -183,19 +184,22 @@ namespace MatchStats.ViewModels
 
         private void AddFirstServePercentageStats()
         {
-            var firstServes = this.CurrentMatch.MatchStats.Where(x => (x.Reason == StatDescription.FirstServeIn || x.Reason == StatDescription.FirstServeOut || x.Reason == StatDescription.FirstServeAce) && x.Player.IsPlayerOne).ToList();
+            var firstServes = (from s in CurrentMatch.Sets
+                              from g in s.Games
+                              from p in g.Points
+                              from sr in p.Serves
+                              where sr.IsFirstServe
+                              select sr).ToList();
 
-            var firstServesInForPlayerOne = firstServes.Where(x => x.Reason == StatDescription.FirstServeAce || x.Reason == StatDescription.FirstServeIn).ToList();
-            var percentageFirstServer = (int)Math.Round(((double)firstServesInForPlayerOne.Count()) / ((double)firstServes.Count()) * 100);
+            var playerOneFirstServesIn = firstServes.Where(x => x.ServeIsIn && x.Server.IsPlayerOne);
+            var percentageFirstServer = (int)Math.Round(((double)playerOneFirstServesIn.Count()) / ((double)firstServes.Count(x => x.Server.IsPlayerOne)) * 100);
 
-            var firstServesP2 = this.CurrentMatch.MatchStats.Where(x => (x.Reason == StatDescription.FirstServeIn || x.Reason == StatDescription.FirstServeOut || x.Reason == StatDescription.FirstServeAce) && (x.Player.IsPlayerOne == false)).ToList();
-
-            var firstServesInForPlayerTwo = firstServesP2.Where(x => x.Reason == StatDescription.FirstServeAce || x.Reason == StatDescription.FirstServeIn).ToList();
-            var percentageFirstServerP2 = (int)Math.Round(((double)firstServesInForPlayerTwo.Count()) / ((double)firstServesP2.Count()) * 100);
+            var firstServesP2 = firstServes.Where(x => x.ServeIsIn && x.Server.IsPlayerOne == false);
+            var percentageFirstServerP2 = (int)Math.Round(firstServesP2.Count() / ((double)firstServes.Count(x => x.Server.IsPlayerOne == false)) * 100);
 
             var firstServe = Stats.FirstOrDefault(x => x.StatNameType == StatName.FirstServePercentage);
             
-            var playerOneFirstServeSet1Percentage =  GetPlayerOneFirstServePercentate(true);
+            var playerOneFirstServeSet1Percentage = GetPlayerOneFirstServePercentate(true);
             var playerTwoFirstServeSet1Percentage = GetPlayerOneFirstServePercentate(false);            
             
             var playerOneServeSet2Percentage =  GetPlayerOneSecondServePercentate(true);
@@ -253,10 +257,15 @@ namespace MatchStats.ViewModels
 
         private string GetPlayerFirstServePercentate(bool isPlayerOne, string firstSetId)
         {
-            var firstServes = this.CurrentMatch.MatchStats.Where(x => 
-                                    (x.Reason == StatDescription.FirstServeIn || x.Reason == StatDescription.FirstServeOut || x.Reason == StatDescription.FirstServeAce) && (x.Player.IsPlayerOne == isPlayerOne) && (x.SetId == firstSetId)).ToList();
+            var firstServes = (from s in CurrentMatch.Sets
+                               from g in s.Games
+                               from p in g.Points
+                               from sr in p.Serves
+                               where sr.IsFirstServe && s.SetId == firstSetId && sr.Server.IsPlayerOne == isPlayerOne
+                               select sr).ToList();
 
-            var servesIn = firstServes.Where(x => x.Reason == StatDescription.FirstServeAce || x.Reason == StatDescription.FirstServeIn).ToList();
+            var servesIn = firstServes.Where(x => x.ServeIsIn).ToList();
+            
             var percentageFirstServer = (int)Math.Round(((double)servesIn.Count()) / ((double)firstServes.Count()) * 100);
 
             return percentageFirstServer + "%";

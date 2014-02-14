@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using MatchStats.DesignTimeStuff;
+using MatchStats.Enums;
 using MatchStats.Model;
+using MatchStats.Test.ViewModels.MatchScoreViewModelTests;
 using MatchStats.ViewModels;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using Newtonsoft.Json;
@@ -15,6 +17,33 @@ namespace MatchStats.Test
 {
     [TestClass] public class MatchStatsTests 
     {
+        [TestMethod]
+        public void ShouldCalculateFirstServePercentageForPlayerOne()
+        {
+            var fixture =  MatchScoreViewModelTestHelper.CreateNewMatchFixture(FinalSetFormats.TenPointChampionShipTieBreak);
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            MatchScoreViewModelTestHelper.PlayerFirstServeOutAndDoubleFault(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServeOutAndDoubleFault(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+
+            var fixtureStats = new MatchStatsViewModel();
+            fixtureStats.CurrentMatch = fixture.CurrMatch;
+            Assert.AreEqual("62%", fixtureStats.Stats.First(x => x.StatNameType == StatName.FirstServePercentage).ForMatchP1);
+
+
+            var firstServes = from s in fixture.CurrMatch.Sets
+                from g in s.Games
+                from p in g.Points
+                from sr in p.Serves
+                where sr.IsFirstServe
+                select sr;
+
+        }
+
         [TestMethod]
         public async Task ShouldCalculatePercentageFirstServesInAndDoubleFaultsForPlayerOne()
         {
