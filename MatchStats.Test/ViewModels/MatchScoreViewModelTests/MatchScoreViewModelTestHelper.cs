@@ -128,7 +128,6 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             }
         }
 
-
         public static void PlayerFirstServeOutAndDoubleFault(MatchScoreViewModel fixture, bool isPlayerOne)
         {
             if (isPlayerOne)
@@ -143,6 +142,20 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             }
         }
 
+        public static void PlayerFirstServeInAndUnforcedError(MatchScoreViewModel fixture, bool isPlayerOne)
+        {
+            if (isPlayerOne)
+            {
+                fixture.PlayerOneFirstServeInCommand.Execute(null);
+                fixture.PlayerOneActions.First(x => x.Name == "UnforcedForehandError").ActionCommand.Execute(null);
+            }
+            else
+            {
+                fixture.PlayerTwoFirstServeInCommand.Execute(null);
+                fixture.PlayerTwoActions.First(x => x.Name == "UnforcedForehandError").ActionCommand.Execute(null);
+
+            }
+        }
 
         public static TestBlobCache RegisterComponents()
         {

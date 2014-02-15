@@ -35,6 +35,9 @@ namespace MatchStats.ViewModels
                     AddFirstServePercentageStats();
                     AddDoubleFaultStats();
                     AddWinPercentateOnFirstServe();
+                    AddWinPercentateOnSecondServer();
+                    AddWinners();
+                    AddUnforcedErrors();
                 });
         }
 
@@ -157,6 +160,7 @@ namespace MatchStats.ViewModels
         public string SecondSetDuration { get; set; }
         public string ThirdSetDuration { get; set; }
 
+        public delegate void ActionDelegate(bool isPlayerOne, string set = null);
 
         private void AddWinPercentateOnFirstServe()
         {
@@ -176,6 +180,60 @@ namespace MatchStats.ViewModels
             });
         }
 
+        private void AddWinPercentateOnSecondServer()
+        {
+            var pointsPercWonOnFirstServePlayerOne = GetSecondServeWinPercentageFor(true);
+            var pointsPercWonOnFirstServePlayerTwo = GetSecondServeWinPercentageFor(false);
+            Stats.Add(new Stat()
+            {
+                ForMatchP1 = pointsPercWonOnFirstServePlayerOne,
+                ForMatchP2 = pointsPercWonOnFirstServePlayerTwo,
+                StatNameType = StatName.WinPercentForSecondServe,
+                ForFirstSetP1 = string.IsNullOrEmpty(Set1) ? "" : GetSecondServeWinPercentageFor(true, Set1),
+                ForFirstSetP2 = string.IsNullOrEmpty(Set1) ? "" : GetSecondServeWinPercentageFor(false, Set1),
+                ForSecondSetP1 = string.IsNullOrEmpty(Set2) ? "" : GetSecondServeWinPercentageFor(true, Set2),
+                ForSecondSetP2 = string.IsNullOrEmpty(Set2) ? "" : GetSecondServeWinPercentageFor(false, Set2),
+                ForThirdSetP1 = string.IsNullOrEmpty(Set3) ? "" : GetSecondServeWinPercentageFor(true, Set3),
+                ForThirdSetP2 = string.IsNullOrEmpty(Set3) ? "" : GetSecondServeWinPercentageFor(false, Set3),
+            });
+        }
+
+        private void AddWinners()
+        {
+            var pointsPercWonOnFirstServePlayerOne = GetWinnersFor(true);
+            var pointsPercWonOnFirstServePlayerTwo = GetWinnersFor(false);
+            Stats.Add(new Stat()
+            {
+                ForMatchP1 = pointsPercWonOnFirstServePlayerOne,
+                ForMatchP2 = pointsPercWonOnFirstServePlayerTwo,
+                StatNameType = StatName.Winners,
+                ForFirstSetP1 = string.IsNullOrEmpty(Set1) ? "" : GetWinnersFor(true, Set1),
+                ForFirstSetP2 = string.IsNullOrEmpty(Set1) ? "" : GetWinnersFor(false, Set1),
+                ForSecondSetP1 = string.IsNullOrEmpty(Set2) ? "" : GetWinnersFor(true, Set2),
+                ForSecondSetP2 = string.IsNullOrEmpty(Set2) ? "" : GetWinnersFor(false, Set2),
+                ForThirdSetP1 = string.IsNullOrEmpty(Set3) ? "" : GetWinnersFor(true, Set3),
+                ForThirdSetP2 = string.IsNullOrEmpty(Set3) ? "" : GetWinnersFor(false, Set3),
+            });
+        }
+
+        private void AddUnforcedErrors()
+        {
+            var pointsPercWonOnFirstServePlayerOne = GetUnforcedErrorsFor(true);
+            var pointsPercWonOnFirstServePlayerTwo = GetUnforcedErrorsFor(false);
+            Stats.Add(new Stat()
+            {
+                ForMatchP1 = pointsPercWonOnFirstServePlayerOne,
+                ForMatchP2 = pointsPercWonOnFirstServePlayerTwo,
+                StatNameType = StatName.UnforcedErrors,
+                ForFirstSetP1 = string.IsNullOrEmpty(Set1) ? "" : GetUnforcedErrorsFor(true, Set1),
+                ForFirstSetP2 = string.IsNullOrEmpty(Set1) ? "" : GetUnforcedErrorsFor(false, Set1),
+                ForSecondSetP1 = string.IsNullOrEmpty(Set2) ? "" : GetUnforcedErrorsFor(true, Set2),
+                ForSecondSetP2 = string.IsNullOrEmpty(Set2) ? "" : GetUnforcedErrorsFor(false, Set2),
+                ForThirdSetP1 = string.IsNullOrEmpty(Set3) ? "" : GetUnforcedErrorsFor(true, Set3),
+                ForThirdSetP2 = string.IsNullOrEmpty(Set3) ? "" : GetUnforcedErrorsFor(false, Set3),
+            });
+        }
+
         private string GetFirstServeWinPercentageFor(bool isPlayerOne, string set = null)
         {
             List<Point> firstServes;
@@ -184,7 +242,7 @@ namespace MatchStats.ViewModels
                 firstServes = (from s in CurrentMatch.Sets
                                from g in s.Games
                                from p in g.Points
-                               where p.Serves.Any(x => x.ServeIsIn)
+                               where p.Serves.Any(x => x.ServeIsIn && x.IsFirstServe)
                                select p).ToList();
 
             }
@@ -193,7 +251,7 @@ namespace MatchStats.ViewModels
                 firstServes = (from s in CurrentMatch.Sets
                                from g in s.Games
                                from p in g.Points
-                               where p.Serves.Any(x => x.ServeIsIn && s.SetId == set)
+                               where p.Serves.Any(x => x.ServeIsIn && x.IsFirstServe && s.SetId == set)
                                select p).ToList();
             }
 
@@ -205,10 +263,10 @@ namespace MatchStats.ViewModels
 
         private string GetSecondServeWinPercentageFor(bool isPlayerOne, string set = null)
         {
-            List<Point> firstServes;
+            List<Point> secondserves;
             if (string.IsNullOrEmpty(set))
             {
-                firstServes = (from s in CurrentMatch.Sets
+                secondserves = (from s in CurrentMatch.Sets
                                from g in s.Games
                                from p in g.Points
                                where p.Serves.Any(x => x.ServeIsIn && x.IsFirstServe == false)
@@ -216,17 +274,80 @@ namespace MatchStats.ViewModels
             }
             else
             {
-                firstServes = (from s in CurrentMatch.Sets
+                secondserves = (from s in CurrentMatch.Sets
                                from g in s.Games
                                from p in g.Points
                                where p.Serves.Any(x => x.ServeIsIn && x.IsFirstServe == false && s.SetId == set)
                                select p).ToList();
             }
 
-            var pointsWonOnfirstServe = firstServes.Count(x => x.Server.IsPlayerOne == isPlayerOne && x.Player.IsPlayerOne == isPlayerOne);
-            var winPercentageOnFirstServe = (int)Math.Round(((double)pointsWonOnfirstServe / (double)firstServes.Count) * 100);
+            var pointsWonOnfirstServe = secondserves.Count(x => x.Server.IsPlayerOne == isPlayerOne && x.Player.IsPlayerOne == isPlayerOne);
+            var winPercentageOnFirstServe = (int)Math.Round(((double)pointsWonOnfirstServe / (double)secondserves.Count) * 100);
 
             return winPercentageOnFirstServe + "%";
+        }
+
+        private string GetWinnersFor(bool isPlayerOne, string set = null)
+        {
+            List<Point> winners;
+            var pointReasons = new List<PointReason>()
+            {
+                PointReason.BackHandWinner,
+                PointReason.ForeHandWinner,
+                PointReason.OverheadWinner,
+                PointReason.VolleyWinner
+            };
+
+            if (string.IsNullOrEmpty(set))
+            {
+                winners = (from s in CurrentMatch.Sets
+                               from g in s.Games
+                               from p in g.Points
+                               where pointReasons.Any(x => x == p.PointReason)
+                               select p).ToList();
+
+            }
+            else
+            {
+                winners = (from s in CurrentMatch.Sets
+                               from g in s.Games
+                               from p in g.Points
+                                where pointReasons.Any(x => x == p.PointReason) && s.SetId == set
+                               select p).ToList();
+            }
+
+            return winners.Count(x => x.Player.IsPlayerOne == isPlayerOne).ToString();
+        }
+
+        private string GetUnforcedErrorsFor(bool isPlayerOne, string set = null)
+        {
+            List<Point> winners;
+            var pointReasons = new List<PointReason>()
+            {
+                PointReason.UnforcedBackhadError ,
+                PointReason.UnforcedForehandError,
+                PointReason.UnforcedVolleyError
+            };
+
+            if (string.IsNullOrEmpty(set))
+            {
+                winners = (from s in CurrentMatch.Sets
+                           from g in s.Games
+                           from p in g.Points
+                           where pointReasons.Any(x => x == p.PointReason)
+                           select p).ToList();
+
+            }
+            else
+            {
+                winners = (from s in CurrentMatch.Sets
+                           from g in s.Games
+                           from p in g.Points
+                           where pointReasons.Any(x => x == p.PointReason) && s.SetId == set
+                           select p).ToList();
+            }
+
+            return winners.Count(x => x.Player.IsPlayerOne != isPlayerOne).ToString();
         }
 
         private void AddDoubleFaultStats()
