@@ -38,6 +38,7 @@ namespace MatchStats.ViewModels
                     AddWinPercentateOnSecondServer();
                     AddWinners();
                     AddUnforcedErrors();
+                    AddforcedErrors();
                 });
         }
 
@@ -234,6 +235,24 @@ namespace MatchStats.ViewModels
             });
         }
 
+        private void AddforcedErrors()
+        {
+            var pointsPercWonOnFirstServePlayerOne = GetforcedErrorsFor(true);
+            var pointsPercWonOnFirstServePlayerTwo = GetforcedErrorsFor(false);
+            Stats.Add(new Stat()
+            {
+                ForMatchP1 = pointsPercWonOnFirstServePlayerOne,
+                ForMatchP2 = pointsPercWonOnFirstServePlayerTwo,
+                StatNameType = StatName.ForcedErrors,
+                ForFirstSetP1 = string.IsNullOrEmpty(Set1) ? "" : GetforcedErrorsFor(true, Set1),
+                ForFirstSetP2 = string.IsNullOrEmpty(Set1) ? "" : GetforcedErrorsFor(false, Set1),
+                ForSecondSetP1 = string.IsNullOrEmpty(Set2) ? "" : GetforcedErrorsFor(true, Set2),
+                ForSecondSetP2 = string.IsNullOrEmpty(Set2) ? "" : GetforcedErrorsFor(false, Set2),
+                ForThirdSetP1 = string.IsNullOrEmpty(Set3) ? "" : GetforcedErrorsFor(true, Set3),
+                ForThirdSetP2 = string.IsNullOrEmpty(Set3) ? "" : GetforcedErrorsFor(false, Set3),
+            });
+        }
+
         private string GetFirstServeWinPercentageFor(bool isPlayerOne, string set = null)
         {
             List<Point> firstServes;
@@ -327,6 +346,35 @@ namespace MatchStats.ViewModels
                 PointReason.UnforcedBackhadError ,
                 PointReason.UnforcedForehandError,
                 PointReason.UnforcedVolleyError
+            };
+
+            if (string.IsNullOrEmpty(set))
+            {
+                winners = (from s in CurrentMatch.Sets
+                           from g in s.Games
+                           from p in g.Points
+                           where pointReasons.Any(x => x == p.PointReason)
+                           select p).ToList();
+
+            }
+            else
+            {
+                winners = (from s in CurrentMatch.Sets
+                           from g in s.Games
+                           from p in g.Points
+                           where pointReasons.Any(x => x == p.PointReason) && s.SetId == set
+                           select p).ToList();
+            }
+
+            return winners.Count(x => x.Player.IsPlayerOne != isPlayerOne).ToString();
+        }
+
+        private string GetforcedErrorsFor(bool isPlayerOne, string set = null)
+        {
+            List<Point> winners;
+            var pointReasons = new List<PointReason>()
+            {
+                PointReason.ForcedError 
             };
 
             if (string.IsNullOrEmpty(set))

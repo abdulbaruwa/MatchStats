@@ -155,6 +155,21 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
                 fixture.PlayerTwoActions.First(x => x.Name == "UnforcedForehandError").ActionCommand.Execute(null);
 
             }
+        }        
+        
+        public static void PlayerFirstServeInAndForcedError(MatchScoreViewModel fixture, bool isPlayerOne)
+        {
+            if (isPlayerOne)
+            {
+                fixture.PlayerOneFirstServeInCommand.Execute(null);
+                fixture.PlayerOneActions.First(x => x.Name == "ForcedError").ActionCommand.Execute(null);
+            }
+            else
+            {
+                fixture.PlayerTwoFirstServeInCommand.Execute(null);
+                fixture.PlayerTwoActions.First(x => x.Name == "ForcedError").ActionCommand.Execute(null);
+
+            }
         }
 
         public static TestBlobCache RegisterComponents()

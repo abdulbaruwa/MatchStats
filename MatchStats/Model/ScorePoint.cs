@@ -142,7 +142,10 @@ namespace MatchStats.Model
         Winners,
 
         [Display(Name = "Unforced Errors")]
-        UnforcedErrors
+        UnforcedErrors,
+
+        [Display(Name = "Forced Errors")]
+        ForcedErrors
     }
 
 

@@ -259,15 +259,83 @@ namespace MatchStats.Test
             Assert.AreEqual("3", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedErrors).ForMatchP2);
         }
 
+        [TestMethod]
+        public void ShouldCalculateForcedErrors()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture(FinalSetFormats.TenPointChampionShipTieBreak);
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+            MatchScoreViewModelTestHelper.PlayerFirstServeInAndForcedError(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServeInAndForcedError(fixture, true);
 
-        //Abdul TODO
-        [TestMethod, Ignore]
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+
+            MatchScoreViewModelTestHelper.PlayerFirstServeInAndForcedError(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServeInAndForcedError(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServeInAndForcedError(fixture, false);
+
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+
+            var fixtureStats = new MatchStatsViewModel();
+            fixtureStats.CurrentMatch = fixture.CurrMatch;
+            Assert.AreEqual("2", fixtureStats.Stats.First(x => x.StatNameType == StatName.ForcedErrors).ForMatchP1);
+            Assert.AreEqual("3", fixtureStats.Stats.First(x => x.StatNameType == StatName.ForcedErrors).ForMatchP2);
+        }
+
+        [TestMethod]
         public void ShouldCalculateUnforcedErrorsForOtherSets()
         {
             var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture(FinalSetFormats.TenPointChampionShipTieBreak);
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
-            MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, false);
+
+            //2 unforced errors for player 1
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServeInAndUnforcedError(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServeInAndUnforcedError(fixture, true);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
+
+            //2 unforced errors for player 2
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServeInAndUnforcedError(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServeInAndUnforcedError(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+
+            //2 unforced errors for player 2
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServeInAndUnforcedError(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServeInAndUnforcedError(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+
+            //2 unforced errors for player 2
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServeInAndUnforcedError(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServeInAndUnforcedError(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+
+            //2 unforced errors for player 2
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServeInAndUnforcedError(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServeInAndUnforcedError(fixture, false);
+            MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, false);
+
 
             MatchScoreViewModelTestHelper.PlayerFirstServedAndForehandWinner(fixture, true);
 
@@ -303,17 +371,17 @@ namespace MatchStats.Test
 
             var fixtureStats = new MatchStatsViewModel();
             fixtureStats.CurrentMatch = fixture.CurrMatch;
-            Assert.AreEqual("5", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedErrors).ForMatchP1);
-            Assert.AreEqual("2", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedErrors).ForMatchP2);       
+            Assert.AreEqual("4", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedErrors).ForMatchP1);
+            Assert.AreEqual("13", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedErrors).ForMatchP2);       
             
-            Assert.AreEqual("2", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedErrors).ForFirstSetP1);
-            Assert.AreEqual("3", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedErrors).ForFirstSetP2);
+            Assert.AreEqual("0", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedErrors).ForFirstSetP1);
+            Assert.AreEqual("0", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedErrors).ForFirstSetP2);
 
-            Assert.AreEqual("3", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedErrors).ForSecondSetP1);
-            Assert.AreEqual("3", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedErrors).ForSecondSetP2);
+            Assert.AreEqual("2", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedErrors).ForSecondSetP1);
+            Assert.AreEqual("8", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedErrors).ForSecondSetP2);
 
-            Assert.AreEqual("3", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedErrors).ForThirdSetP1);
-            Assert.AreEqual("3", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedErrors).ForThirdSetP2);
+            Assert.AreEqual("2", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedErrors).ForThirdSetP1);
+            Assert.AreEqual("5", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedErrors).ForThirdSetP2);
         }
         private static async Task<List<Match>> SerializeMatchStatsFromJsonData()
         {
