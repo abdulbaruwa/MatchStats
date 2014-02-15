@@ -1,5 +1,6 @@
 using Windows.UI.Xaml;
 using MatchStats.ViewModels;
+
 using ReactiveUI;
 
 namespace MatchStats.Views
@@ -24,6 +25,7 @@ namespace MatchStats.Views
             this.Bind(ViewModel, x => x.PlayerTwoSetThreeScore, x => x.PlayerTwoSetThreeScoreTxtbox.Text);
             this.Bind(ViewModel, x => x.TotalPointsWonByPlayerOne, x => x.PlayerOneTotalPointsWon.Text);
             this.Bind(ViewModel, x => x.TotalPointsWonByPlayerTwo, x => x.PlayerTwoTotalPointsWon.Text);
+            this.OneWayBind(ViewModel, x => x.HostScreen.Router.NavigateBack, x => x.BackButton.Command);
             this.Bind(ViewModel, x => x.Stats, x => x.StatsListView.ItemsSource);
         }
 
