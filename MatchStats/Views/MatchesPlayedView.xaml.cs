@@ -14,7 +14,12 @@ namespace MatchStats.Views
             this.BindCommand(ViewModel, x => x.AddMatch);
             this.Bind(ViewModel, x => x.MyMatchStats, x => x.itemGridView.ItemsSource);
             this.Bind(ViewModel, x => x.ShowNewMatchPopup, x => x.AddMatchDialog.IsOpen);
-            itemGridView.Events().ItemClick.Subscribe(x => ViewModel.SelectedMatchStat = x.ClickedItem);
+            itemGridView.Events().ItemClick.Subscribe(x =>
+            {
+                //Having to first set to null otherwise RxUI's  WhenAny never fires if the item passed is the same as the last
+                ViewModel.SelectedMatchStat = null;
+                ViewModel.SelectedMatchStat = x.ClickedItem;
+            });
         }
 
         object IViewFor.ViewModel
