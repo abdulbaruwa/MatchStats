@@ -275,7 +275,7 @@ namespace MatchStats.ViewModels
             }
 
             var pointsWonOnfirstServe = firstServes.Count(x => x.Server.IsPlayerOne == isPlayerOne && x.Player.IsPlayerOne == isPlayerOne);
-            var winPercentageOnFirstServe = (int)Math.Round(((double)pointsWonOnfirstServe / (double)firstServes.Count) * 100);
+            var winPercentageOnFirstServe = pointsWonOnfirstServe == 0 ? 0 : (int)Math.Round(((double)pointsWonOnfirstServe / (double)firstServes.Count) * 100);
 
             return winPercentageOnFirstServe + "%";
         }
@@ -301,7 +301,7 @@ namespace MatchStats.ViewModels
             }
 
             var pointsWonOnfirstServe = secondserves.Count(x => x.Server.IsPlayerOne == isPlayerOne && x.Player.IsPlayerOne == isPlayerOne);
-            var winPercentageOnFirstServe = (int)Math.Round(((double)pointsWonOnfirstServe / (double)secondserves.Count) * 100);
+            var winPercentageOnFirstServe = pointsWonOnfirstServe == 0 ? 0: (int)Math.Round(((double)pointsWonOnfirstServe / (double)secondserves.Count) * 100);
 
             return winPercentageOnFirstServe + "%";
         }
@@ -530,7 +530,7 @@ namespace MatchStats.ViewModels
 
             var servesIn = firstServes.Where(x => x.ServeIsIn).ToList();
             
-            var percentageFirstServer = (int)Math.Round(((double)servesIn.Count()) / ((double)firstServes.Count()) * 100);
+            var percentageFirstServer = servesIn.Count == 0 ? 0: (int)Math.Round(((double)servesIn.Count()) / ((double)firstServes.Count()) * 100);
 
             return percentageFirstServer + "%";
         }
