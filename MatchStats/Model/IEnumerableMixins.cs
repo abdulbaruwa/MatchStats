@@ -30,7 +30,6 @@ namespace MatchStats.Model
                 if (count == 2)
                 {
                     return item;
-                    break;
                 }
                 count = count + 1;
             }

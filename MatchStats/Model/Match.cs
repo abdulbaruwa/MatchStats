@@ -63,5 +63,14 @@ namespace MatchStats.Model
             }
 
         }
+
+        public bool DefaultPlayerWon
+        {
+            get
+            {
+                if (Winner == null) return false;
+                return Winner.IsPlayerOne;
+            }
+        }
     }
 }

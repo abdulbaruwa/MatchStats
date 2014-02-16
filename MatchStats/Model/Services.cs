@@ -5,6 +5,7 @@ using System.Reactive;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Xml.Linq;
 using Windows.Storage;
 using Windows.Storage.Streams;
 using Windows.System.UserProfile;
@@ -17,7 +18,7 @@ namespace MatchStats.Model
 {
     public interface IMatchStatsApi
     {
-        IObservable<Unit> SaveMatch(Match match);
+        void SaveMatch(Match match);
         IObservable<List<Match>> FetchMatchStats();
         IObservable<Match> ExecuteActionCommand(ICommand command);
         IObservable<Match> GetCurrentMatch();
@@ -42,28 +43,43 @@ namespace MatchStats.Model
             IEnumerable<string> test = _blobCache.GetAllKeys();
         }
 
-        public IObservable<Unit> SaveMatch(Match match)
+        public async void SaveMatch(Match match)
         {
-            //Get match and add to it.
             var existingMatches = new List<Match>();
-            IObservable<List<Match>> observable = _blobCache.GetObjectAsync<List<Match>>("MyMatchStats");
-            observable.Subscribe(existingMatches.AddRange,
-                ex =>
-                {
-                    /**log exceptions, the exception could be due to missing key**/
-                });
+            var observable = await _blobCache.GetObjectAsync<List<Match>>("MyMatchStats");
             Match existingMatch = existingMatches.FirstOrDefault(x => x.MatchGuid == match.MatchGuid);
             if (existingMatch != null)
             {
                 existingMatches.Remove(existingMatch);
             }
+
             existingMatches.Add(match);
             var newVals = new List<Match>(existingMatches);
-            return
-
-                _blobCache.InsertObject("MyMatchStats", newVals)
-                    .Concat(_blobCache.InsertObject("CurrentMatch", match));
+            await _blobCache.InsertObject("MyMatchStats", newVals).Concat(_blobCache.InsertObject("CurrentMatch", match)); 
         }
+
+        //public IObservable<Unit> SaveMatch(Match match)
+        //{
+        //    //Get match and add to it.
+        //    var existingMatches = new List<Match>();
+        //    IObservable<List<Match>> observable =  _blobCache.GetObjectAsync<List<Match>>("MyMatchStats");
+
+        //    observable.Subscribe(existingMatches.AddRange,
+        //        ex =>
+        //        {
+        //            /**log exceptions, the exception could be due to missing key**/
+        //        });
+
+        //    Match existingMatch = existingMatches.FirstOrDefault(x => x.MatchGuid == match.MatchGuid);
+        //    if (existingMatch != null)
+        //    {
+        //        existingMatches.Remove(existingMatch);
+        //    }
+
+        //    existingMatches.Add(match);
+        //    var newVals = new List<Match>(existingMatches);
+        //    return _blobCache.InsertObject("MyMatchStats", newVals).Concat(_blobCache.InsertObject("CurrentMatch", match)); 
+        //}
 
         public IObservable<List<Match>> FetchMatchStats()
         {

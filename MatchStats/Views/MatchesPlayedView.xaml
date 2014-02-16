@@ -7,7 +7,6 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:common="using:MatchStats.Common"
     xmlns:viewModels="using:MatchStats.ViewModels"
-    xmlns:controls="using:MatchStats.Controls"
     xmlns:controls1="using:Callisto.Controls"
     mc:Ignorable="d">
 
@@ -53,7 +52,7 @@
 
     <Page.BottomAppBar>
         <AppBar HorizontalContentAlignment="Right">
-            <Button Name="AddMatch" Style="{StaticResource AddAppBarButtonStyle}" AutomationProperties.Name="Add Match" />
+            <Button x:Name="AddMatch" Style="{StaticResource AddAppBarButtonStyle}" AutomationProperties.Name="Add Match" />
         </AppBar>
     </Page.BottomAppBar>
 
@@ -109,9 +108,9 @@
                             </Grid.ColumnDefinitions>
 
 
-                            <TextBlock Text="{Binding WonLoss}"
+                            <!--<TextBlock Text="{Binding WonLoss}"
                                  Foreground="{ThemeResource ListViewItemOverlayForegroundThemeBrush}"
-                                 Style="{StaticResource TitleTextBlockStyleLeft}"  />
+                                 Style="{StaticResource TitleTextBlockStyleLeft}"  />-->
 
                             <Grid Grid.Column="1" Visibility="{Binding DefaultPlayerWon, Converter={StaticResource BoolToVisibilityInverseConverter}}">
                                 <TextBlock Text="&#xE11D;" FontFamily="Segoe UI Symbol" Margin="2,10,2,0" HorizontalAlignment="Center"/>
@@ -120,7 +119,7 @@
                                 <TextBlock Text="&#xE170;" FontFamily="Segoe UI Symbol" Margin="2,10,2,0" HorizontalAlignment="Center"/>
                             </Grid>
 
-                            <TextBlock Text="{Binding Score.DisplayScore}"
+                            <TextBlock Text="{Binding DisplayScore}"
                                  Grid.Column="2"
                                  Foreground="{ThemeResource ListViewItemOverlayForegroundThemeBrush}"
                                  Style="{StaticResource TitleTextBlockStyleRight}" />
