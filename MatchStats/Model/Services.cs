@@ -46,7 +46,8 @@ namespace MatchStats.Model
         public async void SaveMatch(Match match)
         {
             var existingMatches = new List<Match>();
-            var observable = await _blobCache.GetObjectAsync<List<Match>>("MyMatchStats");
+            var matchesFromStorage = await _blobCache.GetObjectAsync<List<Match>>("MyMatchStats");
+            existingMatches.AddRange(matchesFromStorage); 
             Match existingMatch = existingMatches.FirstOrDefault(x => x.MatchGuid == match.MatchGuid);
             if (existingMatch != null)
             {
