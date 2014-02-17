@@ -27,7 +27,7 @@
             </Border>
         </Popup>
 
-        <Grid Style="{StaticResource LayoutRootStyle}" Margin="0,-52,0,52">
+        <Grid Style="{StaticResource LayoutRootStyle}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
                 <RowDefinition Height="*" />
@@ -84,7 +84,7 @@
                         <RowDefinition/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <TextBlock Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center"  HorizontalAlignment="Center" FontWeight="SemiBold" Style="{StaticResource GroupHeaderTextStyle}">Sutton Summer Open - G3</TextBlock>
+                    <TextBlock Name="TournamentName" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center"  HorizontalAlignment="Center" FontWeight="SemiBold" Style="{StaticResource GroupHeaderTextStyle}"/>
                     <TextBlock Name="PlayerNames" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource GroupHeaderTextStyle}" Margin="163,5,137,-5"/>
                     <TextBlock Name="MatchStatus" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource GroupHeaderTextStyle}"/>
                 </Grid>
@@ -260,7 +260,7 @@
                 <ItemsControl Name="PlayerTwoCommands" ItemsSource="{Binding ScorePoints}" Grid.Column="2" Grid.Row="1" >
                     <ItemsControl.ItemsPanel>
                         <ItemsPanelTemplate>
-                            <controls:UniformGrid/>
+                            <controls:UniformGrid Columns="3"/>
                         </ItemsPanelTemplate>
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
@@ -273,8 +273,8 @@
                                     Command="{Binding ActionCommand}"
                                     Style="{StaticResource ActionButtonStyle}">
                                     <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="{Binding Name}"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="{StaticResource  DiamondUnderbarGlyph}" HorizontalAlignment="Center" FontFamily="Segoe UI Symbol"  Style="{StaticResource GroupHeaderTextStyle}"/>
+                                        <TextBlock Text="{Binding DisplayNameTop}"  Style="{StaticResource SubtitleTextStyle}" TextWrapping="NoWrap" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="{Binding DisplayNameBottom}"  Style="{StaticResource SubtitleTextStyle}" TextWrapping="NoWrap" HorizontalAlignment="Center"/>
                                     </StackPanel>
                                 </Button>
                             </Border>
