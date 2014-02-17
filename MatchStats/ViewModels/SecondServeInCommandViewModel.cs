@@ -11,13 +11,15 @@ namespace MatchStats.ViewModels
         {
             Player = player;
             Name = "SecondServeIn";
-            DisplayName = "Second Serve In";
+            DisplayNameTop = "2nd Serve";
+            DisplayNameBottom = "Serve In";
             ActionCommand = new ReactiveCommand();
             ActionCommand.Subscribe(x => Execute());
         }
 
         public string Name { get; set; }
-        public string DisplayName { get; set; }
+        public string DisplayNameTop { get; set; }
+        public string DisplayNameBottom { get; set; }
         public Player Player { get; set; }
 
         public void Execute()

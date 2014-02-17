@@ -8,7 +8,8 @@ namespace MatchStats.Model
     public interface IGameActionViewModel
     {
         string Name { get; set; }
-        string DisplayName { get; set; }
+        string DisplayNameTop { get; set; }
+        string DisplayNameBottom { get; set; }
         Player Player { get; set; }
         void Execute();
         bool IsEnabled { get; set; }
@@ -22,24 +23,8 @@ namespace MatchStats.Model
 
 
         public string Name { get; set; }
-        public string DisplayName { get; set; }
-        public Player Player { get; set; }
-
-        public void Execute()
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool IsEnabled { get; set; }
-        public IReactiveCommand ActionCommand { get; set; }
-    }
-
-    public class NonScoreGameActionViewModel : ReactiveObject, IGameActionViewModel
-    {
-        public NonScoreActionReason NonScoreActionReason { get; set; }
-
-        public string Name { get; set; }
-        public string DisplayName { get; set; }
+        public string DisplayNameTop { get; set; }
+        public string DisplayNameBottom { get; set; }
         public Player Player { get; set; }
 
         public void Execute()
@@ -54,7 +39,8 @@ namespace MatchStats.Model
     public class ScorePoint : IGameActionViewModel
     {
         public string Name { get; set; }
-        public string DisplayName { get; set; }
+        public string DisplayNameTop { get; set; }
+        public string DisplayNameBottom { get; set; }
         public PointReason PointReason { get; set; }
         public Player Player { get; set; }
         public void Execute()
@@ -66,13 +52,22 @@ namespace MatchStats.Model
 
         public IReactiveCommand ActionCommand { get; set; }
     }
-
-    public class ScorPoint
+    public class NonScoreGameActionViewModel : ReactiveObject, IGameActionViewModel
     {
+        public NonScoreActionReason NonScoreActionReason { get; set; }
+
         public string Name { get; set; }
-        public string DisplayName { get; set; }
-        public bool IsForcedError { get; set; }
+        public string DisplayNameTop { get; set; }
+        public string DisplayNameBottom { get; set; }
         public Player Player { get; set; }
+
+        public void Execute()
+        {
+            throw new NotImplementedException();
+        }
+
+        public bool IsEnabled { get; set; }
+        public IReactiveCommand ActionCommand { get; set; }
     }
 
     public enum PointReason
@@ -160,24 +155,5 @@ namespace MatchStats.Model
     {
         public Player Player { get; set; }
         public bool Won { get; set; }
-    }
-
-    public class GameScoreEngine
-    {
-        private IList<BreakPoint> _breakPoints;
-        private IList<ScorePoint> _playerOnePoints;
-        private IList<ScorePoint> _playerTwoPoints;
-
-        public GameScoreEngine()
-        {
-            _breakPoints = new List<BreakPoint>();
-            _playerOnePoints = new List<ScorePoint>();
-            _playerTwoPoints = new List<ScorePoint>();
-        }
-
-        public void PointScored(ScorePoint scorePoint)
-        {
-            //if(ScorePoint.Player)
-        }
     }
 }

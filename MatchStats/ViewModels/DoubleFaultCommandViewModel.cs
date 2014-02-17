@@ -10,7 +10,8 @@ namespace MatchStats.ViewModels
         public UnforcedForehandErrorCommandViewModel(Player player = null) : base(player)
         {
             Name = "UnforcedForehandError";
-            DisplayName = "Unforced Forehand Error";
+            DisplayNameTop = "Unforced";
+            DisplayNameBottom = "Forehand Error";
             PointReason = PointReason.UnforcedForehandError;
         }
     }
@@ -20,7 +21,8 @@ namespace MatchStats.ViewModels
         public UnforcedBackhandErrorCommandViewModel(Player player = null) : base(player)
         {
             Name = "UnforcedBackhandError";
-            DisplayName = "Unforced Backhand Error";
+            DisplayNameTop = "Unforced";
+            DisplayNameBottom = "Backhand Error";
             PointReason = PointReason.UnforcedBackhadError;
         }
     }
@@ -30,7 +32,8 @@ namespace MatchStats.ViewModels
         public UnforcedVolleyErrorCommandViewModel(Player player = null) : base(player)
         {
             Name = "UnforcedVolleyError";
-            DisplayName = "Unforced Volley Error";
+            DisplayNameTop = "Unforced";
+            DisplayNameBottom = "Volley";
             PointReason = PointReason.UnforcedVolleyError;
         }
     }
@@ -39,7 +42,8 @@ namespace MatchStats.ViewModels
         public ForcedErrorCommandViewModel(Player player = null) : base(player)
         {
             Name = "ForcedError";
-            DisplayName = "Forced Error";
+            DisplayNameTop = "Forced";
+            DisplayNameBottom = "Error";
             PointReason = PointReason.ForcedError;
         }
     }
@@ -50,7 +54,8 @@ namespace MatchStats.ViewModels
         {
             Player = player ?? new Player();
             Name = "DoubleFault";
-            DisplayName = "Double Fault";
+            DisplayNameTop = "Double";
+            DisplayNameBottom = "Fault";
             ActionCommand = new ReactiveCommand();
             ActionCommand.Subscribe(x => Execute());
             PointReason = PointReason.DoubleFault;
@@ -66,7 +71,8 @@ namespace MatchStats.ViewModels
         public IReactiveCommand ActionCommand { get; set; }
 
         public string Name { get; set; }
-        public string DisplayName { get; set; }
+        public string DisplayNameTop { get; set; }
+        public string DisplayNameBottom { get; set; }
         public Player Player { get; set; }
 
         public void Execute()

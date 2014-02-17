@@ -8,7 +8,8 @@ namespace MatchStats.ViewModels
         public VolleyWinnerCommandViewModel(Player player = null) : base(player)
         {
             Name = "VolleyWinner";
-            DisplayName = "Volley Winner";
+            DisplayNameTop = "Volley";
+            DisplayNameBottom = "Winner";
         }
     }
 
@@ -17,7 +18,8 @@ namespace MatchStats.ViewModels
         public DropShotWinnerCommandViewModel(Player player = null) : base(player)
         {
             Name = "DropShotWinner";
-            DisplayName = "Drop Shot Winner";
+            DisplayNameTop = "Drop Shot";
+            DisplayNameBottom = "Winner";
         }
     }
 
@@ -26,7 +28,8 @@ namespace MatchStats.ViewModels
         public OverHeadWinnerCommandViewModel(Player player = null) : base(player)
         {
             Name = "OverheadWinner";
-            DisplayName = "Over Head Winner";
+            DisplayNameTop = "Over Head";
+            DisplayNameBottom = "Winner";
         }
     }
 
@@ -35,7 +38,8 @@ namespace MatchStats.ViewModels
         public BackHandWinnerCommandViewModel(Player player = null): base(player)
         {
             Name = "BackHandWinner";
-            DisplayName = "Back Hand Winner";
+            DisplayNameTop = "Backhand";
+            DisplayNameBottom = "Winner";
         }
     }
 }

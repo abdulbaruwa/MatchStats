@@ -27,7 +27,7 @@
             </Border>
         </Popup>
 
-        <Grid Style="{StaticResource LayoutRootStyle}">
+        <Grid Style="{StaticResource LayoutRootStyle}" Margin="0,-52,0,52">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
                 <RowDefinition Height="*" />
@@ -35,7 +35,7 @@
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="600" />
+                    <ColumnDefinition Width="550" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -44,34 +44,36 @@
                     <RowDefinition Height="41*"/>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                    <TextBlock Style="{StaticResource GroupHeaderTextStyle}">Player One</TextBlock>
-                </Grid>
-                <ItemsControl Name="PlayerOneCommands" ItemsSource="{Binding ScorePoints}" Grid.Column="0" Grid.Row="1">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <controls:UniformGrid/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border RenderTransformOrigin="0.5,0.5" BorderThickness="2" BorderBrush="WhiteSmoke" Margin="3">
-                                <Button
+                    <ItemsControl Name="PlayerOneCommands" ItemsSource="{Binding ScorePoints}" Grid.Row="1" Grid.Column="0">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <controls:UniformGrid Columns="3"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border RenderTransformOrigin="0.5,0.5" BorderThickness="2" BorderBrush="WhiteSmoke" Margin="3">
+                                    <Button
                                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                                     AutomationProperties.Name="Group Title"
                                     IsEnabled="{Binding IsEnabled}"
                                     Command="{Binding ActionCommand}"
                                     Style="{StaticResource ActionButtonStyle}"      
                                 >
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="{Binding Name}"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
-                            </Border>
-                        </DataTemplate>
+                                        <StackPanel Orientation="Vertical">
+                                            <TextBlock Text="{Binding DisplayNameTop}"  Style="{StaticResource SubtitleTextStyle}" TextWrapping="NoWrap" HorizontalAlignment="Center"/>
+                                            <TextBlock Text="{Binding DisplayNameBottom}"  Style="{StaticResource SubtitleTextStyle}" TextWrapping="NoWrap" HorizontalAlignment="Center"/>
+                                        </StackPanel>
+                                    </Button>
+                                </Border>
+                            </DataTemplate>
 
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                <Grid Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" >
+                    <TextBlock Style="{StaticResource GroupHeaderTextStyle}">Player One</TextBlock>
+                </Grid>
 
                 <Grid Grid.Column="1" Grid.Row="0">
                     <Grid.ColumnDefinitions>
