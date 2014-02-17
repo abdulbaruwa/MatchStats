@@ -111,7 +111,7 @@
                                     <TextBlock Name="PlayerOneSetThreeScoreTxtbox" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="10,0,0,0" Text="{Binding PlayerOneSetThreeScore}" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource TitleTextStyle}"/>
                                     <TextBlock Name="PlayerOneSetThreeTiebreakScoreTxtbox" Grid.Column="1" FontSize="7" Margin="-5,10,0,0" Grid.Row="0"  Text="{Binding PlayerOneSetThreeTiebreakScore}" />
                                 </Grid>
-                 
+
                                 <Grid Grid.Column="0" Grid.Row="0">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition/>
@@ -201,7 +201,7 @@
                                         <TextBlock Name="PlayerOneTotalPointsWon" Text="{Binding TotalPointsWonByPlayerOne}" Margin="0,-6,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource TitleTextStyle}"/>
                                     </Border>
                                 </Grid>
-                                
+
                                 <TextBlock Grid.Column="1" Text="Total Points Won" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource TitleTextStyle}"/>
                                 <Grid Grid.Column="2" Width="40" Margin="-50,4,4,4">
                                     <Border CornerRadius="4" Background="WhiteSmoke" >
@@ -212,13 +212,17 @@
                         </Grid>
 
                         <Grid Grid.Column="0" Width="170">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="53*"/>
+                                <ColumnDefinition Width="117*"/>
+                            </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
-                            <Rectangle Grid.Row="0" Stroke="LightBlue" StrokeThickness="10" Width="160" ></Rectangle>
-                            <Image Source="ms-appx:///Assets/male_silhouette.png"></Image>
-                            <TextBlock Name="PlayerOneNameUnderImage" Grid.Row="1" Text="{Binding PlayerOneFullName}" Style="{StaticResource PlayerNameUnderImageTextStye}"/>
+                            <Rectangle Grid.Row="0" Stroke="LightBlue" StrokeThickness="10" Width="160" Grid.ColumnSpan="2" Margin="5,0" ></Rectangle>
+                            <Image Source="ms-appx:///Assets/male_silhouette.png" Grid.ColumnSpan="2"></Image>
+                            <TextBlock Name="PlayerOneNameUnderImage" Grid.Row="1" Text="{Binding PlayerOneFullName}" Style="{StaticResource PlayerNameUnderImageTextStye}" Grid.ColumnSpan="2" Margin="48,0,47,0"/>
                         </Grid>
                         <Grid Grid.Column="2" Width="170">
                             <Grid.RowDefinitions>
@@ -230,7 +234,7 @@
                             <TextBlock Name="PlayerTwoNameUnderImage" Grid.Row="1" Text="{Binding PlayerTwoFullName}" Style="{StaticResource PlayerNameUnderImageTextStye}"/>
                         </Grid>
 
-        
+
                     </Grid>
                     <Grid Name="TotalPointsWonGrid" Grid.Row="1">
                         <!--Tota Points earned by both players will be displayed in this grid-->
@@ -269,67 +273,67 @@
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
                                 <!--<Border RenderTransformOrigin="0.5,0.5"  BorderThickness="2" BorderBrush="WhiteSmoke" Margin="-4,-5,-21,0">-->
-                                    <Grid Margin="-4,0,-21,0">
-                                        <Grid.Background>
-                                            <SolidColorBrush Color="{Binding IndexWithinParentCollection, Mode=OneWay,Converter={StaticResource AltnateBackgroundConverter}}"/>
-                                        </Grid.Background>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="300"/>
-                                            <ColumnDefinition Width="200"/>
-                                            <ColumnDefinition Width="200"/>
-                                            <ColumnDefinition Width="200"/>
-                                            <ColumnDefinition Width="900" />
-                                        </Grid.ColumnDefinitions>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="50"/>
-                                        </Grid.RowDefinitions>
-                                        <Rectangle   StrokeThickness="2" Margin="0" Grid.Row="0" Grid.ColumnSpan="5" />
-                                        <Border Grid.Column="0" BorderThickness="1">
-                                            <TextBlock Grid.Column="0" Text="{Binding StatName }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Left" Margin="10,0,0,3"/>
-                                        </Border>
+                                <Grid Margin="-4,0,-21,0">
+                                    <Grid.Background>
+                                        <SolidColorBrush Color="{Binding IndexWithinParentCollection, Mode=OneWay,Converter={StaticResource AltnateBackgroundConverter}}"/>
+                                    </Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="300"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="900" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
+                                    </Grid.RowDefinitions>
+                                    <Rectangle   StrokeThickness="2" Margin="0" Grid.Row="0" Grid.ColumnSpan="5" />
+                                    <Border Grid.Column="0" BorderThickness="1">
+                                        <TextBlock Grid.Column="0" Text="{Binding StatName }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Left" Margin="10,0,0,3"/>
+                                    </Border>
 
-                                        <Border Grid.Column="1" BorderThickness="1" BorderBrush="DarkGray" Margin="5,2,5,2" >
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Text="{Binding ForMatchP1 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
-                                                <TextBlock Grid.Column="1" Text="{Binding ForMatchP2 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
-                                            </Grid>
-                                        </Border>
+                                    <Border Grid.Column="1" BorderThickness="1" BorderBrush="DarkGray" Margin="5,2,5,2" >
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding ForMatchP1 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding ForMatchP2 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
+                                        </Grid>
+                                    </Border>
 
-                                        <Border Grid.Column="2" BorderThickness="1"  BorderBrush="DarkGray" Margin="5,2,5,2">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Text="{Binding ForFirstSetP1 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
-                                                <TextBlock Grid.Column="1" Text="{Binding ForFirstSetP2 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
-                                            </Grid>
-                                        </Border>
-                                        <Border Grid.Column="3" BorderThickness="1"  BorderBrush="DarkGray" Margin="5,2,5,2">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Text="{Binding ForSecondSetP1 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
-                                                <TextBlock Grid.Column="1" Text="{Binding ForSecondSetP2 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
-                                            </Grid>
-                                        </Border>
-                                        <Border Width="200" HorizontalAlignment="Left" Grid.Column="4" BorderThickness="1"  BorderBrush="DarkGray" Margin="5,2,5,2">
-                                            <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition/>
-                                                    <ColumnDefinition/>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Text="{Binding ForThirdSetP1 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
-                                                <TextBlock Grid.Column="1" Text="{Binding ForThirdSetP2 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
-                                            </Grid>
-                                        </Border>
-                                    </Grid>
+                                    <Border Grid.Column="2" BorderThickness="1"  BorderBrush="DarkGray" Margin="5,2,5,2">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding ForFirstSetP1 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding ForFirstSetP2 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
+                                        </Grid>
+                                    </Border>
+                                    <Border Grid.Column="3" BorderThickness="1"  BorderBrush="DarkGray" Margin="5,2,5,2">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding ForSecondSetP1 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding ForSecondSetP2 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
+                                        </Grid>
+                                    </Border>
+                                    <Border Width="200" HorizontalAlignment="Left" Grid.Column="4" BorderThickness="1"  BorderBrush="DarkGray" Margin="5,2,5,2">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding ForThirdSetP1 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding ForThirdSetP2 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
                                 <!--</Border>-->
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
