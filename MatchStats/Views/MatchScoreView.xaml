@@ -18,6 +18,11 @@
         <Style x:Key="ServeTextBoxStyle" TargetType="Button">
             <Setter Property="Height" Value="55"/>
         </Style>
+        <Style x:Key ="PlayerNameUnderImageTextStye" TargetType="TextBlock" BasedOn="{StaticResource TitleTextStyle}">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+
     </Page.Resources>
 
     <Grid>
@@ -81,7 +86,7 @@
                     </Grid.RowDefinitions>
                     <Rectangle Grid.Row="0" Stroke="LightBlue" StrokeThickness="10" Width="160" Grid.ColumnSpan="2" Margin="5,0" ></Rectangle>
                     <Image Source="ms-appx:///Assets/male_silhouette.png" Grid.ColumnSpan="2"></Image>
-                    <TextBlock Name="PlayerOneNameUnderImage" Grid.Row="1" Text="{Binding PlayerOneFullName}" Style="{StaticResource PlayerNameUnderImageTextStye}" Grid.ColumnSpan="2" Margin="48,0,47,0"/>
+                    <TextBlock Name="PlayerOneNameUnderImage" Grid.Row="1" Text="{Binding PlayerOnesName}" Style="{StaticResource PlayerNameUnderImageTextStye}" Grid.ColumnSpan="2" Margin="48,0,47,0"/>
                 </Grid>
 
                 <!--<Grid Grid.Column="1" Grid.Row="0">
@@ -100,13 +105,14 @@
 
                 <Grid Grid.Column="1" Name="Center" Grid.Row="0" Grid.RowSpan="2">
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="100" />
+                        <RowDefinition Height="150" />
                         <RowDefinition Height="250" />
                         <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Grid Grid.Row="0">
                         <Grid.RowDefinitions>
+                            <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
                             <RowDefinition />
@@ -137,7 +143,11 @@
                             <Grid.Background>
                                 <SolidColorBrush Color="WhiteSmoke"/>
                             </Grid.Background>
-                            <TextBlock Name="PlayerTwosName" Style="{StaticResource SubtitleTextStyle}" Grid.Row="2" Margin="10,0,0,0" Text="{Binding PlayerTwosName}"/>
+                            <TextBlock Name="PlayerTwosName" Style="{StaticResource SubtitleTextStyle}" Margin="10,0,0,0" Text="{Binding PlayerTwosName}"/>
+                        </Grid>
+
+                        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" >
+                            <TextBlock Name="TournamentName" Style="{StaticResource TitleTextStyle}"  HorizontalAlignment="Center" Margin="0,10,0,0"  Text="{Binding CurrMatch.Tournament.TournamentName}"/>
                         </Grid>
                         <Grid Grid.Row="0" Grid.Column="1" >
                         <Grid.Background>
@@ -220,7 +230,7 @@
 
                     </Grid>
 
-                    <Border BorderThickness="2" Grid.Row="1" Margin="0,50,0,0">
+                    <Border BorderThickness="2" Grid.Row="1" Margin="0,0,0,0">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>
@@ -263,7 +273,6 @@
                             <Border Grid.Column="3" BorderThickness="2">
                                 <Canvas Name="RightCourt" Grid.Column="3" Background="DarkOliveGreen"></Canvas>
                             </Border>
-                            <TextBox Name="Position" Height="40" Grid.Column="3" Margin="209,381,-209,-175" ></TextBox>
                         </Grid>
                     </Border>
 
@@ -281,10 +290,10 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Button Name="PlayerOneFirstServe" Grid.Column="0" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">First Serve In</Button>
-                                <Button Name="PlayerOneSecondServe" Grid.Column="1" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">Second Serve In</Button>
-                                <Button Name="PlayerTwoFirstServe"  Grid.Column="2" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">First Serve In</Button>
-                                <Button Name="PlayerTwoSecondServe"  Grid.Column="3" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}">Second Serve In</Button>
+                                <Button Name="PlayerOneFirstServe" Grid.Column="0" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">First Serve In</Button>
+                                <Button Name="PlayerOneSecondServe" Grid.Column="1" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">Second Serve In</Button>
+                                <Button Name="PlayerTwoFirstServe"  Grid.Column="2" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">First Serve In</Button>
+                                <Button Name="PlayerTwoSecondServe"  Grid.Column="3" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">Second Serve In</Button>
                             </Grid>
 
                             <Grid Name="ServeStatsOut" Grid.Row="1">
@@ -295,7 +304,7 @@
                                     <ColumnDefinition Width="150*" />
                                     <ColumnDefinition Width="149" />
                                 </Grid.ColumnDefinitions>
-                                <Button Name="PlayerOneFirstServeOut" Grid.Column="0" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Grid.ColumnSpan="3" Margin="0,3,148.857,2">First Serve Out</Button>
+                                <Button Name="PlayerOneFirstServeOut" Grid.Column="0" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Grid.ColumnSpan="3" Margin="0,3,148.857,2" Template="{StaticResource ServeButtonControlTemplate}">First Serve Out</Button>
                                 <Button Name="PlayerTwoFirstServeOut"  Grid.Column="3" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Grid.ColumnSpan="2" Margin="0.143,3,149,2">First Serve Out</Button>
                             </Grid>
                             
@@ -311,7 +320,7 @@
                                 <ToggleButton Name="PlayerOneIsServing" Grid.Row="0" Height="60" HorizontalAlignment="Stretch" >Player One Serving</ToggleButton>
                                 <ToggleButton Name="PlayerTwoIsServing" Grid.Row="0" Grid.Column="1" Height="60" HorizontalAlignment="Stretch" >Player Two Serving</ToggleButton>
                                 <Grid Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch">
-                                    <Button Name="UndoLastActionCommand" HorizontalAlignment="Center" Height="60" >Revese Last</Button>
+                                    <Button Name="UndoLastActionCommand" HorizontalAlignment="Center" Height="60"  Template="{StaticResource ServeButtonControlTemplate}">Revese Last</Button>
                                 </Grid>
 
                             </Grid>
@@ -334,7 +343,7 @@
                     </Grid.RowDefinitions>
                     <Rectangle Grid.Row="0" Stroke="WhiteSmoke" StrokeThickness="10" Width="160" ></Rectangle>
                     <Image Source="ms-appx:///Assets/male_silhouette.png" ></Image>
-                    <TextBlock Name="PlayerTwoNameUnderImage" Grid.Row="1" Text="{Binding PlayerTwoFullName}" Style="{StaticResource PlayerNameUnderImageTextStye}"/>
+                    <TextBlock Name="PlayerTwoNameUnderImage" Grid.Row="1" Text="{Binding PlayerTwosName}" Style="{StaticResource PlayerNameUnderImageTextStye}"/>
                 </Grid>
 
                 <ItemsControl Name="PlayerTwoCommands" ItemsSource="{Binding ScorePoints}" Grid.Column="2" Grid.Row="1" >
