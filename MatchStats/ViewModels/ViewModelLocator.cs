@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Globalization;
 using Windows.ApplicationModel;
 using MatchStats.DesignTimeStuff;
 using MatchStats.Model;
@@ -19,8 +20,16 @@ namespace MatchStats.ViewModels
         {
             get
             {
+                var player = new Player {FirstName = "Ademola", SurName = "Adedayo"};
+                var player2 = new Player {FirstName = "Adeola", SurName = "Rasheedat"};
+
                 var pageVm = new MatchScoreViewModel();
-                var player = new Player {FirstName = "Ademola"};
+                pageVm.CurrMatch = new Match()
+                {
+                    Tournament = new Tournament() {TournamentName = "Surrey Open Championships"},
+                    PlayerOne = player, PlayerTwo = player2
+                };
+
                 var listOfActions = new List<IGameActionViewModel>
                 {
                     new AceServeCommandViewModel(player),
