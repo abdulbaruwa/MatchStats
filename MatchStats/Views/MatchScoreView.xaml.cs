@@ -27,7 +27,9 @@ namespace MatchStats.Views
             this.Bind(ViewModel, x => x.ShowHidePopup, x => x.AddMatchPoupup.IsOpen);
             this.Bind(ViewModel, x => x.PlayerOneIsServing, x => x.PlayerOneIsServing.IsChecked);
             this.Bind(ViewModel, x => x.PlayerTwoIsServing, x => x.PlayerTwoIsServing.IsChecked);
-            this.Bind(ViewModel, x => x.CurrMatch.Tournament.TournamentName , x => x.TournamentName.Text);
+            this.Bind(ViewModel, x => x.CurrMatch.Tournament.TournamentName, x => x.TournamentTitle.Text);
+            this.Bind(ViewModel, x => x.CurrMatch.PlayerOne.FullName, x => x.PlayerOneNameUnderImage.Text);
+            this.Bind(ViewModel, x => x.CurrMatch.PlayerTwo.FullName, x => x.PlayerTwoNameUnderImage.Text);
             this.BindCommand(ViewModel, x => x.SetPlayerOneAsCurrentServerCommand, x => x.PlayerOneIsServing);
             this.BindCommand(ViewModel, x => x.SetPlayerTwoAsCurrentServerCommand, x => x.PlayerTwoIsServing);
             this.BindCommand(ViewModel, x => x.PlayerOneFirstServeInCommand, x => x.PlayerOneFirstServe);
