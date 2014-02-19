@@ -59,29 +59,6 @@ namespace MatchStats.Model
             await _blobCache.InsertObject("MyMatchStats", newVals).Concat(_blobCache.InsertObject("CurrentMatch", match)); 
         }
 
-        //public IObservable<Unit> SaveMatch(Match match)
-        //{
-        //    //Get match and add to it.
-        //    var existingMatches = new List<Match>();
-        //    IObservable<List<Match>> observable =  _blobCache.GetObjectAsync<List<Match>>("MyMatchStats");
-
-        //    observable.Subscribe(existingMatches.AddRange,
-        //        ex =>
-        //        {
-        //            /**log exceptions, the exception could be due to missing key**/
-        //        });
-
-        //    Match existingMatch = existingMatches.FirstOrDefault(x => x.MatchGuid == match.MatchGuid);
-        //    if (existingMatch != null)
-        //    {
-        //        existingMatches.Remove(existingMatch);
-        //    }
-
-        //    existingMatches.Add(match);
-        //    var newVals = new List<Match>(existingMatches);
-        //    return _blobCache.InsertObject("MyMatchStats", newVals).Concat(_blobCache.InsertObject("CurrentMatch", match)); 
-        //}
-
         public IObservable<List<Match>> FetchMatchStats()
         {
             IObservable<List<Match>> observableRes = _blobCache.GetObjectAsync<List<Match>>("MyMatchStats");

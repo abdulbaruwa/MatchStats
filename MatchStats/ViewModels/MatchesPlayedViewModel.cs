@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
 using Akavache;
@@ -46,7 +47,7 @@ namespace MatchStats.ViewModels
             {
                 if (x != null)
                 {
-                    MyMatchStats.AddRange(x);
+                    MyMatchStats.AddRange(x.Where(y => y.IsMatchOver));
                 }
             },
                 ex =>
