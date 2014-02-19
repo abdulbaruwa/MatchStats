@@ -600,9 +600,17 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _newMatchControlViewModel, value); }
         }
 
+        [DataMember] 
+        private ObservableAsPropertyHelper<string>  _timing;
+        public string Timing
+        {
+            get { return _timing.Value; }
+        }
 
         public string UrlPathSegment { get; private set; }
         public IScreen HostScreen { get; private set; }
+
+        
     }
 
     
