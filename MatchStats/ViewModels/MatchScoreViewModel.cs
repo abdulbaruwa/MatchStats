@@ -7,6 +7,7 @@ using System.Runtime.Serialization;
 using Akavache;
 using MatchStats.Common;
 using MatchStats.Model;
+using MatchStats.Observables;
 using ReactiveUI;
 
 namespace MatchStats.ViewModels
@@ -38,10 +39,12 @@ namespace MatchStats.ViewModels
 
             PlayerOneActions = new ReactiveList<IGameActionViewModel>();
             PlayerTwoActions = new ReactiveList<IGameActionViewModel>();
-
+            SchedulerProvider = RxApp.DependencyResolver.GetService<ISchedulerProvider>();
+            if(SchedulerProvider == null)SchedulerProvider = new SchedulerProvider();
             RandomGuid = Guid.NewGuid();
             UrlPathSegment = "MatchScore";
             ScorePoints = new ReactiveList<IGameActionViewModel>();
+
             HostScreen = screen ?? RxApp.DependencyResolver.GetService<IScreen>();
             NavToHomePageCommand = new ReactiveCommand();
             NavToHomePageCommand.Subscribe(_ => NavigateBackToHomePage());
@@ -82,6 +85,8 @@ namespace MatchStats.ViewModels
                 CurrMatch = x;
             });
         }
+
+        public ISchedulerProvider SchedulerProvider { get; private set; }
 
         private void ToggleActionsOffForBothPlayers()
         {
@@ -225,6 +230,10 @@ namespace MatchStats.ViewModels
 
         private void WhenAnyPropertyBindings()
         {
+            _timing = this.WhenAny(x => x.GameCountDown, x => x.Value)
+                .Select(x => x)
+               .ToProperty(this, x => x.Timing);
+
             //Observe the NewMatchControlVM.ShowMe property, Hide pop up depending on value.
             _showHidePop = this.WhenAny(x => x.NewMatchControlViewModel.ShowMe, x => x.Value)
                 .Where(x => x == false)
@@ -318,6 +327,52 @@ namespace MatchStats.ViewModels
                     }
                 });
         }
+
+        private IDisposable _counter;
+
+        private int _seconds;
+        private int _minutes;
+        private int _hours;
+        private int _days;
+        //private ITimeCounter _timeCounter;
+
+        //public void BeginCount()
+        //{
+        //    var secondsObserver = Observable.Interval(TimeSpan.FromSeconds(1));
+
+        //    _counter = secondsObserver.ObserveOn(RxApp. _scheduler.Dispatcher).SubscribeOn(_scheduler.ThreadPool).Subscribe(
+        //        //_counter = secondsObserver.ObserveOnDispatcher().Subscribe(
+        //        x =>
+        //        {
+        //            if (_seconds == 59 && _minutes == 59 && _hours == 59)
+        //            {
+        //                _seconds = 0;
+        //                _minutes = 0;
+        //                _hours = 0;
+        //                _days = _days + 1;
+        //            }
+        //            else if (_seconds == 59 && _minutes == 59)
+        //            {
+        //                _seconds = 0;
+        //                _minutes = 0;
+        //                _hours = _hours + 1;
+        //            }
+        //            else if (_seconds == 59)
+        //            {
+        //                _seconds = 0;
+        //                _minutes = _minutes + 1;
+        //            }
+        //            else
+        //            {
+        //                _seconds = _seconds + 1;
+        //            }
+        //            SetGameCountDown();
+        //            //GameCountDown = ConvertIntTwoUnitStringNumber(_hours) + ":" +
+        //            //                ConvertIntTwoUnitStringNumber(_minutes) + ":" +
+        //            //                ConvertIntTwoUnitStringNumber(_seconds);
+        //        }
+        //       );
+        //}
 
         private void InitializeServeCommands()
         {
@@ -600,8 +655,8 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _newMatchControlViewModel, value); }
         }
 
-        [DataMember] 
-        private ObservableAsPropertyHelper<string>  _timing;
+        [DataMember]
+        private ObservableAsPropertyHelper<string> _timing;
         public string Timing
         {
             get { return _timing.Value; }
@@ -610,7 +665,57 @@ namespace MatchStats.ViewModels
         public string UrlPathSegment { get; private set; }
         public IScreen HostScreen { get; private set; }
 
-        
+
+        public void BeginCount()
+        {
+            var secondsObserver = Observable.Interval(TimeSpan.FromSeconds(1));
+            _counter = secondsObserver.ObserveOn(SchedulerProvider.Dispatcher).SubscribeOn(SchedulerProvider.ThreadPool).Subscribe(
+                x =>
+                {
+                    if (_seconds == 59 && _minutes == 59 && _hours == 59)
+                    {
+                        _seconds = 0;
+                        _minutes = 0;
+                        _hours = 0;
+                        _days = _days + 1;
+                    }
+                    else if (_seconds == 59 && _minutes == 59)
+                    {
+                        _seconds = 0;
+                        _minutes = 0;
+                        _hours = _hours + 1;
+                    }
+                    else if (_seconds == 59)
+                    {
+                        _seconds = 0;
+                        _minutes = _minutes + 1;
+                    }
+                    else
+                    {
+                        _seconds = _seconds + 1;
+                    }
+                    SetGameCountDown();
+                }
+               );
+        }
+
+        private void SetGameCountDown()
+        {
+            GameCountDown = ConvertIntTwoUnitStringNumber(_hours) + ":" +
+                   ConvertIntTwoUnitStringNumber(_minutes) + ":" +
+                   ConvertIntTwoUnitStringNumber(_seconds);
+        }
+
+        public string GameCountDown { get; set; }
+
+        private string ConvertIntTwoUnitStringNumber(int number)
+        {
+            if (number < 10)
+                return "0" + number.ToString();
+            return number.ToString();
+        }
+
+
     }
 
     

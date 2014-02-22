@@ -7,6 +7,7 @@ using Akavache;
 using MatchStats.DesignTimeStuff;
 using MatchStats.Logging;
 using MatchStats.Model;
+using MatchStats.Observables;
 using MatchStats.ViewModels;
 using ReactiveUI;
 using ReactiveUI.Mobile;
@@ -53,8 +54,11 @@ namespace MatchStats
             RxApp.MutableResolver.RegisterConstant(BlobCache.Secure, typeof(ISecureBlobCache));
             RxApp.MutableResolver.RegisterConstant(BlobCache.LocalMachine, typeof(IBlobCache));
             RxApp.MutableResolver.RegisterConstant(BlobCache.UserAccount, typeof(IBlobCache));
+            RxApp.MutableResolver.Register(() => new TestSchedulers(), typeof(ISchedulerProvider));
+
 
 #else
+            RxApp.MutableResolver.Register(() => new SchedulerProvider(), typeof(ISchedulerProvider));
             RxApp.MutableResolver.RegisterConstant(BlobCache.Secure, typeof(ISecureBlobCache));
             RxApp.MutableResolver.RegisterConstant(BlobCache.LocalMachine, typeof(IBlobCache));
             RxApp.MutableResolver.RegisterConstant(BlobCache.UserAccount, typeof(IBlobCache));

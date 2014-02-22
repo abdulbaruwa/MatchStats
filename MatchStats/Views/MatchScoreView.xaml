@@ -38,7 +38,6 @@
                 <controls1:NewMatchUserControl x:Name="AddNewMatchControl" Height="500" Width="700"/>
             </Border>
         </Popup>
-
         <Grid Style="{StaticResource LayoutRootStyle}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />

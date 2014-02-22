@@ -47,7 +47,8 @@ namespace MatchStats.ViewModels
             {
                 if (x != null)
                 {
-                    MyMatchStats.AddRange(x.Where(y => y.IsMatchOver));
+                    var matchsPlayed = x.Where(y => y.IsMatchOver).ToList();
+                    if(matchsPlayed.Count > 0) MyMatchStats.AddRange(matchsPlayed);
                 }
             },
                 ex =>

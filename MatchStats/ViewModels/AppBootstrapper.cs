@@ -4,6 +4,7 @@ using System.Runtime.Serialization;
 using Akavache;
 using MatchStats.Controls;
 using MatchStats.Model;
+using MatchStats.Observables;
 using MatchStats.Views;
 using ReactiveUI;
 using ReactiveUI.Mobile;
