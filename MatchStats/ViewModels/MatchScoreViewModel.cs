@@ -123,6 +123,12 @@ namespace MatchStats.ViewModels
             PlayerTwoActions.First(x => x.Name == "AceServe").IsEnabled = true;
         }
 
+        private string GameOnGoingOrPausedString(bool gameIsOnGoing)
+        {
+            return gameIsOnGoing ? "Pause Game" : "Continue Game";
+        }
+
+
         private void ActionCommandsEnableBindings()
         {
             this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.IsMatchOver,
@@ -202,7 +208,7 @@ namespace MatchStats.ViewModels
                     PlayerTwoActions.First(x => x.Name == "AceServe").IsEnabled = false;
                 });
         }
-
+     
         private void InitializeCurrentServerCommands()
         {
             SetPlayerOneAsCurrentServerCommand = new ReactiveCommand();
@@ -228,11 +234,16 @@ namespace MatchStats.ViewModels
             });
         }
 
+        
         private void WhenAnyPropertyBindings()
         {
             _timing = this.WhenAny(x => x.GameCountDown, x => x.Value)
                 .Select(x => x)
                .ToProperty(this, x => x.Timing);
+
+            _startPause = this.WhenAny(x => x.GameIsOnGoing, x => x.Value)
+                .Select(GameOnGoingOrPausedString)
+                .ToProperty(this, x => x.StartPause);
 
             //Observe the NewMatchControlVM.ShowMe property, Hide pop up depending on value.
             _showHidePop = this.WhenAny(x => x.NewMatchControlViewModel.ShowMe, x => x.Value)
@@ -327,6 +338,8 @@ namespace MatchStats.ViewModels
                     }
                 });
         }
+
+        public bool GameIsOnGoing { get; set; }
 
         private IDisposable _counter;
 
@@ -665,7 +678,6 @@ namespace MatchStats.ViewModels
         public string UrlPathSegment { get; private set; }
         public IScreen HostScreen { get; private set; }
 
-
         public void BeginCount()
         {
             var secondsObserver = Observable.Interval(TimeSpan.FromSeconds(1));
@@ -707,6 +719,12 @@ namespace MatchStats.ViewModels
         }
 
         public string GameCountDown { get; set; }
+
+        [DataMember] private ObservableAsPropertyHelper<string> _startPause;
+        public string StartPause
+        {
+            get { return _startPause.Value; }
+        }
 
         private string ConvertIntTwoUnitStringNumber(int number)
         {
