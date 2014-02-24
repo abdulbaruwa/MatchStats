@@ -30,6 +30,7 @@ namespace MatchStats.Views
             this.Bind(ViewModel, x => x.CurrMatch.Tournament.TournamentName, x => x.TournamentTitle.Text);
             this.Bind(ViewModel, x => x.CurrMatch.PlayerOne.FullName, x => x.PlayerOneNameUnderImage.Text);
             this.Bind(ViewModel, x => x.CurrMatch.PlayerTwo.FullName, x => x.PlayerTwoNameUnderImage.Text);
+            this.Bind(ViewModel, x => x.StartPause, x => x.StartPauseMatchActionCommand.Content);
             this.BindCommand(ViewModel, x => x.SetPlayerOneAsCurrentServerCommand, x => x.PlayerOneIsServing);
             this.BindCommand(ViewModel, x => x.SetPlayerTwoAsCurrentServerCommand, x => x.PlayerTwoIsServing);
             this.BindCommand(ViewModel, x => x.PlayerOneFirstServeInCommand, x => x.PlayerOneFirstServe);

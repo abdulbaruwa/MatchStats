@@ -9,6 +9,7 @@ using MatchStats.Common;
 using MatchStats.Model;
 using MatchStats.Observables;
 using ReactiveUI;
+using WinRTXamlToolkit.Tools;
 
 namespace MatchStats.ViewModels
 {
@@ -211,7 +212,7 @@ namespace MatchStats.ViewModels
      
         private void InitializeCurrentServerCommands()
         {
-            SetPlayerOneAsCurrentServerCommand = new ReactiveCommand();
+            SetPlayerOneAsCurrentServerCommand = new ReactiveCommand(this.WhenAny(x => x.GameIsOnGoing, x => x.Value));
             SetPlayerOneAsCurrentServerCommand.Subscribe(_ =>
             {
                 CurrMatch.CurrentServer = CurrMatch.PlayerOne;
@@ -222,7 +223,7 @@ namespace MatchStats.ViewModels
                 SaveMatch(CurrMatch);
             });
 
-            SetPlayerTwoAsCurrentServerCommand = new ReactiveCommand();
+            SetPlayerTwoAsCurrentServerCommand = new ReactiveCommand(this.WhenAny(x => x.GameIsOnGoing, x => x.Value));
             SetPlayerTwoAsCurrentServerCommand.Subscribe(_ =>
             {
                 CurrMatch.CurrentServer = CurrMatch.PlayerTwo;
@@ -241,9 +242,18 @@ namespace MatchStats.ViewModels
                 .Select(x => x)
                .ToProperty(this, x => x.Timing);
 
+
             _startPause = this.WhenAny(x => x.GameIsOnGoing, x => x.Value)
                 .Select(GameOnGoingOrPausedString)
                 .ToProperty(this, x => x.StartPause);
+
+            this.WhenAny(x => x.GameIsOnGoing, x => x.Value)
+                .Select(x => x)
+                .Subscribe(x =>
+                {
+                    PlayerOneActions.ForEach(y => y.IsEnabled = x);
+                    PlayerTwoActions.ForEach(y => y.IsEnabled = x);                    
+                });
 
             //Observe the NewMatchControlVM.ShowMe property, Hide pop up depending on value.
             _showHidePop = this.WhenAny(x => x.NewMatchControlViewModel.ShowMe, x => x.Value)
@@ -444,6 +454,8 @@ namespace MatchStats.ViewModels
                 
             GetGameCommandsForPlayer(match.PlayerOne).Subscribe(x => PlayerOneActions.Add(x));
             GetGameCommandsForPlayer(match.PlayerTwo).Subscribe(x => PlayerTwoActions.Add(x));
+
+            GameIsOnGoing = false;
         }
 
         private static void SaveMatch(Match match)
@@ -475,20 +487,21 @@ namespace MatchStats.ViewModels
         /// The last action is not a first serve in for player one with not further recorded point
         /// The Current Server is not player one
         /// </summary>
-        /// <param name="b"></param>
+        /// <param name="isPlayerOne"></param>
         /// <returns></returns>
         private IObservable<bool> FirstServePending(bool isPlayerOne)
         {
-            return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, (server, matchStats) => (
-                        //The last action is not a first serve in for player with not further recorded point
+            return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, x => x.GameIsOnGoing, (server, matchStats, gameison) => (
+                        //The last action is not a first serve in for player with not further recorded point and the game has started
                         ValidateForFirstServeInOrOut(matchStats.Value.LastOrDefault(), server.Value, isPlayerOne)
                     ));
         }
+
         private IObservable<bool> FirstServeInCanExecute(bool isPlayerOne)
         {
-            return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, (server, matchStats) => (
-                        //The last action is not a first serve in for player with not further recorded point
-                        ValidateForFirstServeInOrOut(matchStats.Value.LastOrDefault(), server.Value, isPlayerOne)
+            return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, x => x.GameIsOnGoing, (server, matchStats, gameison) => (
+                        //The last action is not a first serve in for player with not further recorded point and the game has started
+                        ValidateForFirstServeInOrOut(matchStats.Value.LastOrDefault(), server.Value, isPlayerOne)  && gameison.Value
                     ));
         }
 
@@ -512,8 +525,8 @@ namespace MatchStats.ViewModels
 
         private IObservable<bool> SecondServePending(bool isPlayerOne)
         {
-            return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, (server, matchStats) => (
-                ValidateForSecondServeCommand(matchStats.Value.LastOrDefault(), isPlayerOne))
+            return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, x => x.GameIsOnGoing, (server, matchStats, gameison) => (
+                ValidateForSecondServeCommand(matchStats.Value.LastOrDefault(), isPlayerOne) && gameison.Value)
                 );
         }
 
