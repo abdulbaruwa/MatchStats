@@ -252,21 +252,22 @@ namespace MatchStats.ViewModels
         private void WhenAnyPropertyBindings()
         {
             _timing = this.WhenAny(x => x.GameCountDown, x => x.Value)
+                .Where(x => ! string.IsNullOrEmpty(x))
                 .Select(x => x)
-               .ToProperty(this, x => x.Timing);
+               .ToProperty(this, x => x.Timing, "");
 
 
             _startPause = this.WhenAny(x => x.GameIsOnGoing, x => x.Value)
                 .Select(GameOnGoingOrPausedString)
-                .ToProperty(this, x => x.StartPause);
+                .ToProperty(this, x => x.StartPause, "");
 
             this.WhenAny(x => x.GameIsOnGoing, x => x.Value)
                 .Select(x => x == false)
                 .Subscribe(x =>
-                {
-                    PlayerOneActions.ForEach(y => y.IsEnabled = x);
-                    PlayerTwoActions.ForEach(y => y.IsEnabled = x);                    
-                });
+                    {
+                        PlayerOneActions.ForEach(y => y.IsEnabled = x);
+                        PlayerTwoActions.ForEach(y => y.IsEnabled = x);                    
+                    });
 
             //Observe the NewMatchControlVM.ShowMe property, Hide pop up depending on value.
             _showHidePop = this.WhenAny(x => x.NewMatchControlViewModel.ShowMe, x => x.Value)
@@ -370,44 +371,6 @@ namespace MatchStats.ViewModels
         private int _hours;
         private int _days;
         //private ITimeCounter _timeCounter;
-
-        //public void BeginCount()
-        //{
-        //    var secondsObserver = Observable.Interval(TimeSpan.FromSeconds(1));
-
-        //    _counter = secondsObserver.ObserveOn(RxApp. _scheduler.Dispatcher).SubscribeOn(_scheduler.ThreadPool).Subscribe(
-        //        //_counter = secondsObserver.ObserveOnDispatcher().Subscribe(
-        //        x =>
-        //        {
-        //            if (_seconds == 59 && _minutes == 59 && _hours == 59)
-        //            {
-        //                _seconds = 0;
-        //                _minutes = 0;
-        //                _hours = 0;
-        //                _days = _days + 1;
-        //            }
-        //            else if (_seconds == 59 && _minutes == 59)
-        //            {
-        //                _seconds = 0;
-        //                _minutes = 0;
-        //                _hours = _hours + 1;
-        //            }
-        //            else if (_seconds == 59)
-        //            {
-        //                _seconds = 0;
-        //                _minutes = _minutes + 1;
-        //            }
-        //            else
-        //            {
-        //                _seconds = _seconds + 1;
-        //            }
-        //            SetGameCountDown();
-        //            //GameCountDown = ConvertIntTwoUnitStringNumber(_hours) + ":" +
-        //            //                ConvertIntTwoUnitStringNumber(_minutes) + ":" +
-        //            //                ConvertIntTwoUnitStringNumber(_seconds);
-        //        }
-        //       );
-        //}
 
         private void InitializeServeCommands()
         {
@@ -760,7 +723,6 @@ namespace MatchStats.ViewModels
                    ConvertIntTwoUnitStringNumber(_seconds);
         }
 
-
         [DataMember] private ObservableAsPropertyHelper<string> _startPause;
         public string StartPause
         {
@@ -773,9 +735,5 @@ namespace MatchStats.ViewModels
                 return "0" + number.ToString();
             return number.ToString();
         }
-
-
     }
-
-    
 }
