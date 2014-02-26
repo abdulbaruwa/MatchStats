@@ -20,7 +20,8 @@ namespace MatchStats.ViewModels
         public ReactiveList<IGameActionViewModel> PlayerOneActions { get; protected set; }
         public ReactiveList<IGameActionViewModel> PlayerTwoActions { get; protected set; }
         public IReactiveCommand NavToHomePageCommand { get; protected set; }
-        public IReactiveCommand StartMatchCommand { get; protected set; }
+        public IReactiveCommand LoadMatchCommand { get; protected set; }
+        public IReactiveCommand StartPauseMatchActionCommand { get; protected set; }
         public IReactiveCommand PlayerOneActionCommand { get; protected set; }
         public IReactiveCommand SetPlayerOneAsCurrentServerCommand { get; protected set; }
         public IReactiveCommand SetPlayerTwoAsCurrentServerCommand { get; protected set; }
@@ -50,8 +51,11 @@ namespace MatchStats.ViewModels
             NavToHomePageCommand = new ReactiveCommand();
             NavToHomePageCommand.Subscribe(_ => NavigateBackToHomePage());
             
-            StartMatchCommand = new ReactiveCommand();
-            StartMatchCommand.Subscribe(StartMatch);
+            LoadMatchCommand = new ReactiveCommand();
+            LoadMatchCommand.Subscribe(LoadMatch);
+
+            StartPauseMatchActionCommand = new ReactiveCommand();
+            StartPauseMatchActionCommand.Subscribe(StartPauseMatch);
             
             NewMatchControlViewModel = RxApp.DependencyResolver.GetService<NewMatchControlViewModel>();
             
@@ -85,6 +89,17 @@ namespace MatchStats.ViewModels
             {
                 CurrMatch = x;
             });
+        }
+
+        public void StartPauseMatch()
+        {
+            if (GameIsOnGoing)
+            {
+                BeginCount();
+            }
+
+            GameIsOnGoing = !GameIsOnGoing;
+
         }
 
         public ISchedulerProvider SchedulerProvider { get; private set; }
@@ -264,7 +279,7 @@ namespace MatchStats.ViewModels
             //Observe the NewMatchControlVM.ShowMe property, if just set call start match and set the CurrentMatch Property
             this.WhenAny(x => x.NewMatchControlViewModel.ShowMe, x => x.Value)
                 .Where(x => x == false)
-                .Select(x => this.NewMatchControlViewModel.SavedMatch).Subscribe(x => StartMatch(x));
+                .Select(x => this.NewMatchControlViewModel.SavedMatch).Subscribe(x => LoadMatch(x));
 
             _playerOneFirstSet = this.WhenAny(x => x.CurrMatch, x => x.Value)
                 .Where(x => x != null && x.Sets.FirstOrDefault() != null)
@@ -443,7 +458,7 @@ namespace MatchStats.ViewModels
             return listOfActions.ToObservable();
         }
 
-        private void StartMatch(object param)
+        private void LoadMatch(object param)
         {
             var match = param as Match;
             if (match == null) return;
