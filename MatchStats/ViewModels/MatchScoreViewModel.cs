@@ -4,7 +4,6 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
-using Akavache;
 using MatchStats.Common;
 using MatchStats.Model;
 using MatchStats.Observables;
@@ -55,7 +54,7 @@ namespace MatchStats.ViewModels
             LoadMatchCommand.Subscribe(LoadMatch);
 
             StartPauseMatchActionCommand = new ReactiveCommand();
-            StartPauseMatchActionCommand.Subscribe(StartPauseMatch);
+            StartPauseMatchActionCommand.Subscribe(_ => StartPauseMatch());
             
             NewMatchControlViewModel = RxApp.DependencyResolver.GetService<NewMatchControlViewModel>();
             
@@ -93,13 +92,12 @@ namespace MatchStats.ViewModels
 
         public void StartPauseMatch()
         {
-            if (GameIsOnGoing)
+            if (! GameIsOnGoing)
             {
                 BeginCount();
             }
 
             GameIsOnGoing = !GameIsOnGoing;
-
         }
 
         public ISchedulerProvider SchedulerProvider { get; private set; }
@@ -263,7 +261,7 @@ namespace MatchStats.ViewModels
                 .ToProperty(this, x => x.StartPause);
 
             this.WhenAny(x => x.GameIsOnGoing, x => x.Value)
-                .Select(x => x)
+                .Select(x => x == false)
                 .Subscribe(x =>
                 {
                     PlayerOneActions.ForEach(y => y.IsEnabled = x);
@@ -364,7 +362,6 @@ namespace MatchStats.ViewModels
                 });
         }
 
-        public bool GameIsOnGoing { get; set; }
 
         private IDisposable _counter;
 
@@ -555,6 +552,7 @@ namespace MatchStats.ViewModels
             return false;
         }
 
+
         [DataMember]
         Guid _RandomGuid;
         public Guid RandomGuid
@@ -703,6 +701,22 @@ namespace MatchStats.ViewModels
             get { return _timing.Value; }
         }
 
+        [DataMember]
+        private string _gameCountDown;
+        public string GameCountDown
+        {
+            get { return _gameCountDown; }
+            set { this.RaiseAndSetIfChanged(ref _gameCountDown, value); }
+        }
+
+        [DataMember]
+        private bool _gameIsOnGoing;
+        public bool GameIsOnGoing
+        {
+            get { return _gameIsOnGoing; }
+            set { this.RaiseAndSetIfChanged(ref _gameIsOnGoing, value); }
+        }
+
         public string UrlPathSegment { get; private set; }
         public IScreen HostScreen { get; private set; }
 
@@ -746,7 +760,6 @@ namespace MatchStats.ViewModels
                    ConvertIntTwoUnitStringNumber(_seconds);
         }
 
-        public string GameCountDown { get; set; }
 
         [DataMember] private ObservableAsPropertyHelper<string> _startPause;
         public string StartPause

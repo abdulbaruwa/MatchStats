@@ -54,7 +54,7 @@ namespace MatchStats
             RxApp.MutableResolver.RegisterConstant(BlobCache.Secure, typeof(ISecureBlobCache));
             RxApp.MutableResolver.RegisterConstant(BlobCache.LocalMachine, typeof(IBlobCache));
             RxApp.MutableResolver.RegisterConstant(BlobCache.UserAccount, typeof(IBlobCache));
-            RxApp.MutableResolver.Register(() => new TestSchedulers(), typeof(ISchedulerProvider));
+            RxApp.MutableResolver.Register(() => new SchedulerProvider(), typeof(ISchedulerProvider));
 
 
 #else

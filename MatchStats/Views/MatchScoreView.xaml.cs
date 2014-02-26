@@ -31,6 +31,7 @@ namespace MatchStats.Views
             this.Bind(ViewModel, x => x.CurrMatch.PlayerOne.FullName, x => x.PlayerOneNameUnderImage.Text);
             this.Bind(ViewModel, x => x.CurrMatch.PlayerTwo.FullName, x => x.PlayerTwoNameUnderImage.Text);
             this.Bind(ViewModel, x => x.StartPause, x => x.StartPauseMatchActionCommand.Content);
+            this.Bind(ViewModel, x => x.Timing, x => x.MatchTiming.Text);
             this.BindCommand(ViewModel, x => x.SetPlayerOneAsCurrentServerCommand, x => x.PlayerOneIsServing);
             this.BindCommand(ViewModel, x => x.SetPlayerTwoAsCurrentServerCommand, x => x.PlayerTwoIsServing);
             this.BindCommand(ViewModel, x => x.PlayerOneFirstServeInCommand, x => x.PlayerOneFirstServe);
@@ -41,7 +42,7 @@ namespace MatchStats.Views
             this.BindCommand(ViewModel, x => x.PlayerTwoFirstServeOutCommand, x => x.PlayerTwoFirstServeOut);
             this.BindCommand(ViewModel, x => x.PlayerTwoSecondServeInCommand, x => x.PlayerTwoSecondServe);
             this.BindCommand(ViewModel, x => x.UndoLastActionCommand);
-            this.BindCommand(ViewModel, x => x.StartPause);
+            this.BindCommand(ViewModel, x => x.StartPauseMatchActionCommand);
         }
 
         object IViewFor.ViewModel
