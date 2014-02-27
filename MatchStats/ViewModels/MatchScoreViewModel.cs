@@ -95,7 +95,7 @@ namespace MatchStats.ViewModels
 
         public void StartPauseMatch()
         {
-            if (! GameIsOnGoing)
+            if ( GameIsOnGoing)
             {
                 BeginCount();
                 GameIsOnGoing = !GameIsOnGoing;
