@@ -72,5 +72,10 @@ namespace MatchStats.Model
                 return Winner.IsPlayerOne;
             }
         }
+
+        public string WhoVsWho
+        {
+            get { return PlayerOne.FullName + " Vs " + PlayerTwo.FullName; }
+        }
     }
 }

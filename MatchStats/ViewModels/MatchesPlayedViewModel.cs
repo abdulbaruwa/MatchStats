@@ -22,6 +22,12 @@ namespace MatchStats.ViewModels
     [DataContract]
     public class MatchesPlayedViewModel : ReactiveObject, IMatchesPlayedViewModel
     {
+        public MatchesPlayedViewModel(IScreen screen = null)
+        {
+            HostScreen = screen ?? RxApp.DependencyResolver.GetService<IScreen>();
+            UrlPathSegment = "MyMatchStats";
+        }
+
         public MatchesPlayedViewModel(ILoginMethods loginMethods, IScreen screen = null)
         {
             HostScreen = screen ?? RxApp.DependencyResolver.GetService<IScreen>();
