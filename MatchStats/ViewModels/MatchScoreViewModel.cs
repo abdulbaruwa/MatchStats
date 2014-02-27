@@ -64,11 +64,12 @@ namespace MatchStats.ViewModels
 
             ActionCommandsEnableBindings();
 
+            ActionCommandOnMatchEnd();
+
             MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch").Subscribe(x =>
             {
                 CurrMatch = x;
-                ToggleActionsOffForBothPlayers();
-
+                if(! x.IsMatchOver)ToggleActionsOffForBothPlayers();
             });
 
             MessageBus.Current.Listen<Match>("AceServeForCurrentMatch").Subscribe(x =>
@@ -96,8 +97,21 @@ namespace MatchStats.ViewModels
             {
                 BeginCount();
             }
-
+            else
+            {
+                PauseTimer();
+            }
             GameIsOnGoing = !GameIsOnGoing;
+        }
+
+        public void PauseTimer()
+        {
+            if (_counter != null)
+            {
+                using (_counter)
+                {
+                }
+            }
         }
 
         public ISchedulerProvider SchedulerProvider { get; private set; }
@@ -142,6 +156,15 @@ namespace MatchStats.ViewModels
             return gameIsOnGoing ? "Pause Game" : "Continue Game";
         }
 
+        private void ActionCommandOnMatchEnd()
+        {
+            this.WhenAny(x => x.CurrMatch.IsMatchOver, x => x.Value)
+                .Subscribe(x =>
+                {
+                    PlayerOneActions.ForEach(y => y.IsEnabled = false);   
+                    PlayerTwoActions.ForEach(y => y.IsEnabled = false);
+                });
+        }
 
         private void ActionCommandsEnableBindings()
         {
@@ -225,7 +248,7 @@ namespace MatchStats.ViewModels
      
         private void InitializeCurrentServerCommands()
         {
-            SetPlayerOneAsCurrentServerCommand = new ReactiveCommand(this.WhenAny(x => x.GameIsOnGoing, x => x.Value));
+            SetPlayerOneAsCurrentServerCommand = new ReactiveCommand(this.WhenAny(x => x.CurrMatch.IsMatchOver, x => x.GameIsOnGoing, (matchover, gameongoing) => ( (!matchover.Value) && gameongoing.Value)));
             SetPlayerOneAsCurrentServerCommand.Subscribe(_ =>
             {
                 CurrMatch.CurrentServer = CurrMatch.PlayerOne;
@@ -236,7 +259,7 @@ namespace MatchStats.ViewModels
                 SaveMatch(CurrMatch);
             });
 
-            SetPlayerTwoAsCurrentServerCommand = new ReactiveCommand(this.WhenAny(x => x.GameIsOnGoing, x => x.Value));
+            SetPlayerTwoAsCurrentServerCommand = new ReactiveCommand(this.WhenAny( x => x.CurrMatch.IsMatchOver, x => x.GameIsOnGoing, (matchover, gameongoing) => ((!matchover.Value) && gameongoing.Value)));
             SetPlayerTwoAsCurrentServerCommand.Subscribe(_ =>
             {
                 CurrMatch.CurrentServer = CurrMatch.PlayerTwo;
@@ -248,7 +271,6 @@ namespace MatchStats.ViewModels
             });
         }
 
-        
         private void WhenAnyPropertyBindings()
         {
             _timing = this.WhenAny(x => x.GameCountDown, x => x.Value)
@@ -363,7 +385,6 @@ namespace MatchStats.ViewModels
                 });
         }
 
-
         private IDisposable _counter;
 
         private int _seconds;
@@ -454,7 +475,7 @@ namespace MatchStats.ViewModels
         {
             if (currentMatch == null || currentMatch.CurrentServer == null) return false;
             if (currentMatch.MatchStats.Count == 0) return false;
-            return ! currentMatch.IsMatchOver;
+            return true;
         }
 
         /// <summary>
@@ -466,17 +487,17 @@ namespace MatchStats.ViewModels
         /// <returns></returns>
         private IObservable<bool> FirstServePending(bool isPlayerOne)
         {
-            return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, x => x.GameIsOnGoing, (server, matchStats, gameison) => (
+            return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, x => x.GameIsOnGoing, x => x.CurrMatch.IsMatchOver,  (server, matchStats, gameison, matchover) => (
                         //The last action is not a first serve in for player with not further recorded point and the game has started
-                        ValidateForFirstServeInOrOut(matchStats.Value.LastOrDefault(), server.Value, isPlayerOne)
+                        ValidateForFirstServeInOrOut(matchStats.Value.LastOrDefault(), server.Value, isPlayerOne) && gameison.Value && (! matchover.Value)
                     ));
         }
 
         private IObservable<bool> FirstServeInCanExecute(bool isPlayerOne)
         {
-            return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, x => x.GameIsOnGoing, (server, matchStats, gameison) => (
+            return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, x => x.GameIsOnGoing, x => x.CurrMatch.IsMatchOver,  (server, matchStats, gameison, matchover) => (
                         //The last action is not a first serve in for player with not further recorded point and the game has started
-                        ValidateForFirstServeInOrOut(matchStats.Value.LastOrDefault(), server.Value, isPlayerOne)  && gameison.Value
+                        ValidateForFirstServeInOrOut(matchStats.Value.LastOrDefault(), server.Value, isPlayerOne)  && gameison.Value && (!matchover.Value)
                     ));
         }
 
@@ -500,8 +521,8 @@ namespace MatchStats.ViewModels
 
         private IObservable<bool> SecondServePending(bool isPlayerOne)
         {
-            return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, x => x.GameIsOnGoing, (server, matchStats, gameison) => (
-                ValidateForSecondServeCommand(matchStats.Value.LastOrDefault(), isPlayerOne) && gameison.Value)
+            return this.WhenAny(x => x.CurrentServer, x => x.CurrMatch.MatchStats, x => x.GameIsOnGoing, x => x.CurrMatch.IsMatchOver, (server, matchStats, gameison, matchover) => (
+                ValidateForSecondServeCommand(matchStats.Value.LastOrDefault(), isPlayerOne) && gameison.Value && (! matchover.Value))
                 );
         }
 
@@ -680,7 +701,15 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _gameIsOnGoing, value); }
         }
 
+        [DataMember]
+        private ObservableAsPropertyHelper<string> _startPause;
+        public string StartPause
+        {
+            get { return _startPause.Value; }
+        }
+
         public string UrlPathSegment { get; private set; }
+
         public IScreen HostScreen { get; private set; }
 
         public void BeginCount()
@@ -722,13 +751,7 @@ namespace MatchStats.ViewModels
                    ConvertIntTwoUnitStringNumber(_minutes) + ":" +
                    ConvertIntTwoUnitStringNumber(_seconds);
         }
-
-        [DataMember] private ObservableAsPropertyHelper<string> _startPause;
-        public string StartPause
-        {
-            get { return _startPause.Value; }
-        }
-
+        
         private string ConvertIntTwoUnitStringNumber(int number)
         {
             if (number < 10)
