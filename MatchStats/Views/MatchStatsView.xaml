@@ -1,6 +1,6 @@
 <Page
-    x:Class="MatchStats.Views.MatchScoreView"
-    d:DataContext="{Binding MatchScoreViewModel, Source={d:DesignInstance Type=viewModels:ViewModelLocator, IsDesignTimeCreatable=True}}"
+    x:Class="MatchStats.Views.MatchStatsView"
+    d:DataContext="{Binding MatchStatsViewModel, Source={d:DesignInstance Type=viewModels:ViewModelLocator, IsDesignTimeCreatable=True}}"
     
     x:Name="pageRoot"
 
@@ -11,409 +11,361 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:viewModels="using:MatchStats.ViewModels"
     xmlns:controls="using:WinRTXamlToolkit.Controls"
-    xmlns:controls1="using:MatchStats.Controls"
+    xmlns:common="using:MatchStats.Common"
     mc:Ignorable="d">
     <Page.Resources>
-        <Style x:Key="MatchScoreGridHeaderTitleTextStyle" TargetType="TextBlock" BasedOn="{StaticResource BaselineTextStyle}">
-            <Setter Property="FontWeight" Value="SemiBold"/>
-            <Setter Property="Foreground" Value="WhiteSmoke"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="Margin" Value="0,0,0,10"></Setter>
-        </Style>
-
-
-        <Style x:Key="ServeTextBoxStyle" TargetType="Button">
-            <Setter Property="Height" Value="55"/>
-        </Style>
+        <common:AlternateBackgroundConverter x:Key="AltnateBackgroundConverter" />
         <Style x:Key ="PlayerNameUnderImageTextStye" TargetType="TextBlock" BasedOn="{StaticResource TitleTextStyle}">
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="FontSize" Value="13"/>
         </Style>
 
+        <Style x:Key ="PlainTextStye" TargetType="TextBlock" BasedOn="{StaticResource TitleTextStyle}">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
     </Page.Resources>
 
     <Grid>
-        <Popup Height="500" Width="700"  HorizontalOffset="1" VerticalOffset="10"  IsOpen="{Binding ShowHideMatchPopup}" x:Name="AddMatchPoupup" Margin="0,0,0,0">
-            <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <controls1:NewMatchUserControl x:Name="AddNewMatchControl" Height="500" Width="700"/>
-            </Border>
-        </Popup>
         <Grid Style="{StaticResource LayoutRootStyle}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="60" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
+
             <Grid Grid.Row="1">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="550" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="140" />
-                    <RowDefinition Height="*" />
+                    <RowDefinition Height="200"/>
+                    <RowDefinition />
                 </Grid.RowDefinitions>
 
-                <ItemsControl Name="PlayerOneCommands" ItemsSource="{Binding ScorePoints}" Grid.Row="1" Grid.Column="0">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <controls:UniformGrid Columns="3"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border RenderTransformOrigin="0.5,0.5" BorderThickness="2" BorderBrush="WhiteSmoke" Margin="3">
-                                <Button
-                                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                                    AutomationProperties.Name="Group Title"
-                                    IsEnabled="{Binding IsEnabled}"
-                                    Command="{Binding ActionCommand}"
-                                    Style="{StaticResource ActionButtonStyle}"      
-                                >
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="{Binding DisplayNameTop}"  Style="{StaticResource SubtitleTextStyle}" TextWrapping="NoWrap" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="{Binding DisplayNameBottom}"  Style="{StaticResource SubtitleTextStyle}" TextWrapping="NoWrap" HorizontalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
-                            </Border>
-                        </DataTemplate>
-
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-
-                <Grid Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="53*"/>
-                        <ColumnDefinition Width="117*"/>
-                    </Grid.ColumnDefinitions>
+                <Grid Grid.Row="0" Name="MatchResult">
                     <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="30"/>
+                        <RowDefinition Height="40"/>
+                        <RowDefinition />
                     </Grid.RowDefinitions>
-                    <Rectangle Grid.Row="0" Stroke="LightBlue" StrokeThickness="10" Width="160" Grid.ColumnSpan="2" Margin="5,0" ></Rectangle>
-                    <Image Source="ms-appx:///Assets/male_silhouette.png" Grid.ColumnSpan="2"></Image>
-                    <TextBlock Name="PlayerOneNameUnderImage" Grid.Row="1" Text="{Binding CurrMatch.PlayerOne.FullName}" Style="{StaticResource PlayerNameUnderImageTextStye}" Grid.ColumnSpan="2" Margin="48,0,47,0"/>
-                </Grid>
-
-                <!--<Grid Grid.Column="1" Grid.Row="0">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition />
-                        <ColumnDefinition />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition/>
-                    </Grid.RowDefinitions>
-                    <TextBlock Name="TournamentName" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" VerticalAlignment="Center"  HorizontalAlignment="Center" FontWeight="SemiBold" Style="{StaticResource GroupHeaderTextStyle}"/>
-                    <TextBlock Name="PlayerNames" Grid.Row="1" Grid.Column="0" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource GroupHeaderTextStyle}" Margin="163,5,137,-5"/>
-                    <TextBlock Name="MatchStatus" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource GroupHeaderTextStyle}"/>
-                </Grid>-->
-
-                <Grid Grid.Column="1" Name="Center" Grid.Row="0" Grid.RowSpan="2">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="150" />
-                        <RowDefinition Height="250" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
-
-                    <Grid Grid.Row="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
+                    <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition MaxWidth="50"/>
-                            <ColumnDefinition MaxWidth="50"/>
-                            <ColumnDefinition MaxWidth="50"/>
-                            <ColumnDefinition MaxWidth="60"/>
+                            <ColumnDefinition Width="300"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="300"/>
                         </Grid.ColumnDefinitions>
-
-                        <Grid>
-                            <Grid.Background>
-                                <SolidColorBrush Color="Teal"/>
-                            </Grid.Background>
-                            <TextBlock Style="{StaticResource MatchScoreGridHeaderTitleTextStyle}"  Margin="10,0,0,0">Players</TextBlock>
-                        </Grid>
-
-                        <Grid Grid.Row="1" >
-                            <Grid.Background>
-                                <SolidColorBrush Color="LightBlue"/>
-                            </Grid.Background>
-                            <TextBlock Name="PlayerOnesName" Style="{StaticResource SubtitleTextStyle}"  Margin="10,0,0,0" Text="{Binding PlayerOnesName}"/>
-                        </Grid>
-
-                        <Grid Grid.Row="2" >
-                            <Grid.Background>
-                                <SolidColorBrush Color="WhiteSmoke"/>
-                            </Grid.Background>
-                            <TextBlock Name="PlayerTwosName" Style="{StaticResource SubtitleTextStyle}" Margin="10,0,0,0" Text="{Binding PlayerTwosName}"/>
-                        </Grid>
-
-                        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="5" >
-                            <TextBlock Name="MatchTiming" Style="{StaticResource TitleTextStyle}" FontSize="20" HorizontalAlignment="Center" Margin="0,10,0,0"  Text="{Binding Timing}"/>
-                        </Grid>
-                        <Grid Grid.Row="0" Grid.Column="1" >
-                            <Grid.Background>
-                                <SolidColorBrush Color="Teal"/>
-                            </Grid.Background>
-                            <TextBlock Style="{StaticResource MatchScoreGridHeaderTitleTextStyle}" HorizontalAlignment="Center">1</TextBlock>
-                        </Grid>
-
-                        <Grid Grid.Row="1" Grid.Column="1">
-                            <Grid.Background>
-                                <SolidColorBrush Color="LightBlue"/>
-                            </Grid.Background>
-                            <TextBlock Name="PlayerOneFirstSet" Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Text="{Binding PlayerOneFirstSet}"/>
-                        </Grid>
-
-                        <Grid Grid.Row="2" Grid.Column="1">
-                            <Grid.Background>
-                                <SolidColorBrush Color="WhiteSmoke"/>
-                            </Grid.Background>
-                            <TextBlock Name="PlayerTwoFirstSet" Style="{StaticResource SubtitleTextStyle}"  HorizontalAlignment="Center" Text="{Binding PlayerTwoFirstSet}"/>
-                        </Grid>
-
-                        <Grid Grid.Row="0" Grid.Column="2" >
-                            <Grid.Background>
-                                <SolidColorBrush Color="Teal"/>
-                            </Grid.Background>
-                            <TextBlock Style="{StaticResource MatchScoreGridHeaderTitleTextStyle}" HorizontalAlignment="Center">2</TextBlock>
-                        </Grid>
-
-                        <Grid Grid.Row="0" Grid.Column="3" >
-                            <Grid.Background>
-                                <SolidColorBrush Color="Teal"/>
-                            </Grid.Background>
-                            <TextBlock Style="{StaticResource MatchScoreGridHeaderTitleTextStyle}" HorizontalAlignment="Center">3</TextBlock>
-                        </Grid>
-                        <Grid Grid.Row="2" Grid.Column="3">
-                            <Grid.Background>
-                                <SolidColorBrush Color="WhiteSmoke"/>
-                            </Grid.Background>
-                            <TextBlock Name="PlayerTwoThirdSet" Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Text="{Binding PlayerTwoThirdSet}"/>
-                        </Grid>
-                        <Grid Grid.Row="2" Grid.Column="2">
-                            <Grid.Background>
-                                <SolidColorBrush Color="WhiteSmoke"/>
-                            </Grid.Background>
-                            <TextBlock Name="PlayerTwoSecondSet" Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Text="{Binding PlayerTwoSecondSet}"/>
-                        </Grid>
-                        <Grid Grid.Row="1" Grid.Column="2">
-                            <Grid.Background>
-                                <SolidColorBrush Color="LightBlue"/>
-                            </Grid.Background>
-                            <TextBlock Name="PlayerOneSecondSet" Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Text="{Binding PlayerOneSecondSet}"/>
-                        </Grid>
-                        <Grid Grid.Row="1" Grid.Column="3">
-                            <Grid.Background>
-                                <SolidColorBrush Color="LightBlue"/>
-                            </Grid.Background>
-                            <TextBlock Name="PlayerOneThirdSet" Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Text="{Binding PlayerOneThirdSet}"/>
-                        </Grid>
-
-                        <Grid Grid.Row="0" Grid.Column="4" >
-                            <Grid.Background>
-                                <SolidColorBrush Color="Teal"/>
-                            </Grid.Background>
-                            <TextBlock Style="{StaticResource MatchScoreGridHeaderTitleTextStyle}" HorizontalAlignment="Center">Current</TextBlock>
-                        </Grid>
-
-                        <Grid Grid.Row="1" Grid.Column="4">
-                            <Grid.Background>
-                                <SolidColorBrush Color="LightBlue"/>
-                            </Grid.Background>
-                            <TextBlock Name="PlayerOneCurrentGame" Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Text="{Binding PlayerOneCurrentGame}"/>
-                        </Grid>
-                        <Grid Grid.Row="2" Grid.Column="4">
-                            <Grid.Background>
-                                <SolidColorBrush Color="WhiteSmoke"/>
-                            </Grid.Background>
-                            <TextBlock Name="PlayerTwoCurrentGame" Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Text="{Binding PlayerTwoCurrentGame}"/>
-                        </Grid>
-
-                    </Grid>
-
-                    <Border BorderThickness="2" Grid.Row="1" Margin="0,0,0,0">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="100"/>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                                <ColumnDefinition Width="100"/>
-                            </Grid.ColumnDefinitions>
-
-                            <Grid Grid.Column="1">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <Border Grid.Row="0" BorderThickness="2">
-                                    <Canvas Name="LeftLeftServeBox" Background="DarkKhaki"></Canvas>
-                                </Border>
-
-                                <Border Grid.Row="1" BorderThickness="2">
-                                    <Canvas Name="LeftRightServeBox" Background="DarkKhaki"></Canvas>
-                                </Border>
-                            </Grid>
-
-                            <Grid Grid.Column="2">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition />
-                                    <RowDefinition />
-                                </Grid.RowDefinitions>
-                                <Border Grid.Row="0" BorderThickness="2">
-                                    <Canvas Name="RightRigthServeBox" Background="DarkKhaki"></Canvas>
-                                </Border>
-                                <Border Grid.Row="1" BorderThickness="2">
-                                    <Canvas Name="RightLeftServeBox" Background="DarkKhaki"></Canvas>
-                                </Border>
-
-                            </Grid>
-
-                            <Border Grid.Column="0" BorderThickness="2">
-                                <Canvas Name="LeftCourt" Grid.Column="0" Background="DarkOliveGreen"/>
-                            </Border>
-                            <Border Grid.Column="3" BorderThickness="2">
-                                <Canvas Name="RightCourt" Grid.Column="3" Background="DarkOliveGreen"></Canvas>
-                            </Border>
-                        </Grid>
-                    </Border>
-
-                    <Border Name="boarderForGameNotes" BorderThickness="1" Grid.Row="2">
-                        <Grid>
+                        <Grid Name="MatchResultGrid" Grid.Column="1">
+                            <!--Match Result will be displayed in this grid-->
                             <Grid.RowDefinitions>
-                                <RowDefinition MaxHeight="60"/>
-                                <RowDefinition MaxHeight="60"/>
-                                <RowDefinition />
+                                <RowDefinition/>
+                                <RowDefinition Height="40"/>
                             </Grid.RowDefinitions>
-                            <Grid Name="ServeStats">
+                            <Grid Grid.Row="0">
                                 <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
-                                </Grid.ColumnDefinitions>
-                                <Button Name="PlayerOneFirstServe" Grid.Column="0" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">First Serve In</Button>
-                                <Button Name="PlayerOneFirstServeOut" Grid.Column="1" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">First Serve Out</Button>
-
-                                <Button Name="PlayerTwoFirstServe"  Grid.Column="2" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">First Serve In</Button>
-                                <Button Name="PlayerTwoFirstServeOut"  Grid.Column="3" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}"  Template="{StaticResource ServeButtonControlTemplate}" >First Serve Out</Button>
-
-                            </Grid>
-
-                            <Grid Name="ServeStatsOut" Grid.Row="1" >
-                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="300"/>
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
-                                </Grid.ColumnDefinitions>
-
-                                <Button Name="PlayerOneSecondServe" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">Second Serve In</Button>
-                                <Button Name="PlayerTwoSecondServe"  Grid.Column="1" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">Second Serve In</Button>
-                            </Grid>
-
-                            <Grid Grid.Row="2">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition />
-                                    <ColumnDefinition />
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
-                                    <RowDefinition></RowDefinition>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
+                                    <RowDefinition/>
                                 </Grid.RowDefinitions>
-                                <ToggleButton Name="PlayerOneIsServing" Grid.Row="0" Height="60" HorizontalAlignment="Stretch" Style="{StaticResource PlayerServingToggleButtonStyle}">Player One Serving</ToggleButton>
-                                <ToggleButton Name="PlayerTwoIsServing" Grid.Row="0" Grid.Column="1" Height="60" HorizontalAlignment="Stretch" Style="{StaticResource PlayerServingToggleButtonStyle}">Player Two Serving</ToggleButton>
-                                <Grid Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch">
-
-                                    <Button Name="UndoLastActionCommand" Grid.Column="0" HorizontalAlignment="Center" Height="60" Width="150"  Template="{StaticResource ServeButtonControlTemplate}">Revese Last</Button>
+                                <Grid Grid.Column="1" Grid.Row="0" Margin="0,0,0,5">
+                                    <Grid.Background>LightBlue</Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="20"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Name="PlayerOneSetOneScoreTxtbox" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="10,0,0,0" Text="{Binding PlayerOneSetOneScore}" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource TitleTextStyle}"/>
+                                    <TextBlock Name="PlayerOneSetOneTiebreakScoreTxtbox" Grid.Column="1" FontSize="7" Margin="-30,10,0,0" Grid.Row="0" HorizontalAlignment="Left"  Text="{Binding PlayerOneSetOneTiebreakScore}"/>
                                 </Grid>
 
-                                <Button Name="StartPauseMatchActionCommand" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="60" Width="150"  Template="{StaticResource ServeButtonControlTemplate}" Content="{Binding StartPause}"/>
+                                <Grid Grid.Column="2" Grid.Row="0" Margin="0,0,0,5">
+                                    <Grid.Background>LightBlue</Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="20"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Name="PlayerOneSetTwoScoreTxtbox" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="10,0,0,0" Text="{Binding PlayerOneSetTwoScore}" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource TitleTextStyle}"/>
+                                    <TextBlock Name="PlayerOneSetTwoTiebreakScoreTxtbox" Grid.Column="1" FontSize="7" Margin="-5,10,0,0" Grid.Row="0"  Text="{Binding PlayerOneSetTwoTiebreakScore}" />
+                                </Grid>
+
+                                <Grid Grid.Column="3" Grid.Row="0" Margin="0,0,0,5">
+                                    <Grid.Background>LightBlue</Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="20"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Name="PlayerOneSetThreeScoreTxtbox" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="10,0,0,0" Text="{Binding PlayerOneSetThreeScore}" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource TitleTextStyle}"/>
+                                    <TextBlock Name="PlayerOneSetThreeTiebreakScoreTxtbox" Grid.Column="1" FontSize="7" Margin="-5,10,0,0" Grid.Row="0"  Text="{Binding PlayerOneSetThreeTiebreakScore}" />
+                                </Grid>
+
+                                <Grid Grid.Column="0" Grid.Row="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="180"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Background="LightBlue" Margin="0,0,0,5"></Border>
+                                    <Border Grid.Column="1" Background="LightBlue" Margin="0,0,0,5">
+                                        <TextBlock Name="PlayerOneFullNameTxtbox" Text="{Binding PlayerOneFullName}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="5,0,0,0"
+                                           Style="{StaticResource TitleTextStyle}"/>
+                                    </Border>
+                                </Grid>
+                                <Grid Grid.Column="0" Grid.Row="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="180"/>
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Grid.Column="1" Text="Match Duration" Style="{StaticResource PlainTextStye}" HorizontalAlignment="Left" Margin="5,0,0,0"/>
+                                </Grid>
+                                <TextBlock Name="FirstSetDurationTxtbox" Grid.Column="1" Grid.Row="2" Text="{Binding FirstSetDuration}" Style="{StaticResource PlainTextStye}"/>
+                                <TextBlock Name="SecondSetDurationTxtbox" Grid.Column="2" Grid.Row="2" Text="{Binding SecondSetDuration}"  Style="{StaticResource PlainTextStye}"/>
+                                <TextBlock Name="ThirdSetDurationTxtbox" Grid.Column="3" Grid.Row="2" Text="{Binding ThirdSetDuration}"  Style="{StaticResource PlainTextStye}"/>
+
+                                <Grid Grid.Column="1" Grid.Row="1" Margin="0,0,0,5">
+                                    <Grid.Background>WhiteSmoke</Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="20"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Name="PlayerTwoSetOneScoreTxtbox" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="10,0,0,0" Text="{Binding PlayerTwoSetOneScore}" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource TitleTextStyle}"/>
+                                    <TextBlock Name="PlayerTwoSetOneTiebreakScoreTxtbox" Grid.Column="1" Margin="-30,10,0,0" HorizontalAlignment="Left" Grid.Row="0"  Text="{Binding PlayerTwoSetOneTiebreakScore}"  />
+                                </Grid>
+
+                                <Grid Grid.Column="2" Grid.Row="1" Margin="0,0,0,5">
+                                    <Grid.Background>WhiteSmoke</Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="20"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Name="PlayerTwoSetTwoScoreTxtbox" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="10,0,0,0" Text="{Binding PlayerTwoSetTwoScore}" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource TitleTextStyle}"/>
+                                    <TextBlock Name="PlayerTwoSetTwoTiebreakScoreTxtbox" Grid.Column="1" FontSize="7" Margin="-5,10,0,0" Grid.Row="0"  Text="{Binding PlayerTwoSetTwoTiebreakScore}" />
+                                </Grid>
+
+                                <Grid Grid.Column="3" Grid.Row="1" Margin="0,0,0,5">
+                                    <Grid.Background>WhiteSmoke</Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="20"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition/>
+                                        <RowDefinition/>
+                                    </Grid.RowDefinitions>
+                                    <TextBlock Name="PlayerTwoSetThreeScoreTxtbox" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Margin="10,0,0,0" Text="{Binding PlayerTwoSetThreeScore}" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource TitleTextStyle}"/>
+                                    <TextBlock Name="PlayerTwoSetThreeTiebreakScoreTxtbox" Grid.Column="1" FontSize="7" Margin="-5,10,0,0" Grid.Row="0"  Text="{Binding PlayerTwoSetThreeTiebreakScore}" />
+                                </Grid>
+                                <Grid Grid.Column="4" Grid.Row="1" Margin="0,0,0,5">
+                                    <Grid.Background>WhiteSmoke</Grid.Background>
+                                </Grid>
+                                <Grid Grid.Column="0" Grid.Row="1" Margin="0,0,0,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="180"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Border Grid.Column="1" Background="WhiteSmoke">
+                                        <TextBlock Name="PlayerTwoFullNameTxtbox" Text="{Binding PlayerTwoFullName}" Style="{StaticResource TitleTextStyle}"  VerticalAlignment="Center" Margin="5,0,0,0" />
+                                    </Border>
+                                </Grid>
 
                             </Grid>
-                            <!--<Grid Grid.Row="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition />
-                                <ColumnDefinition />
-                            </Grid.ColumnDefinitions>
-                                <Button Name="PlayerOneIsServing" Grid.Column="0"  Height="60" HorizontalAlignment="Stretch" >Player One Serving</Button>
-                                <ToggleButton Name="PlayerTwoIsServing" Grid.Column="1" Height="60" HorizontalAlignment="Stretch" >Player Two Serving</ToggleButton>
-                            </Grid>-->
+                            <Grid Grid.Row="1">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid Grid.Column="0" Width="40" Margin="50,4,4,4">
+                                    <!--<Grid.Background>LightBlue</Grid.Background>-->
+                                    <Border Background="LightBlue" CornerRadius="4">
+                                        <TextBlock Name="PlayerOneTotalPointsWon" Text="{Binding TotalPointsWonByPlayerOne}" Margin="0,-6,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource TitleTextStyle}"/>
+                                    </Border>
+                                </Grid>
+
+                                <TextBlock Grid.Column="1" Text="Total Points Won" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource TitleTextStyle}"/>
+                                <Grid Grid.Column="2" Width="40" Margin="-50,4,4,4">
+                                    <Border CornerRadius="4" Background="WhiteSmoke" >
+                                        <TextBlock Name="PlayerTwoTotalPointsWon" Text="{Binding TotalPointsWonByPlayerTwo}" Margin="0,-6,0,0" VerticalAlignment="Center" HorizontalAlignment="Center" Style="{StaticResource TitleTextStyle}"/>
+                                    </Border>
+                                </Grid>
+                            </Grid>
                         </Grid>
-                    </Border>
+
+                        <Grid Grid.Column="0" Width="170">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="53*"/>
+                                <ColumnDefinition Width="117*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+                            <Rectangle Grid.Row="0" Stroke="LightBlue" StrokeThickness="10" Width="160" Grid.ColumnSpan="2" Margin="5,0" ></Rectangle>
+                            <Image Source="ms-appx:///Assets/male_silhouette.png" Grid.ColumnSpan="2"></Image>
+                            <TextBlock Name="PlayerOneNameUnderImage" Grid.Row="1" Text="{Binding PlayerOneFullName}" Style="{StaticResource PlayerNameUnderImageTextStye}" Grid.ColumnSpan="2" Margin="48,0,47,0"/>
+                        </Grid>
+                        <Grid Grid.Column="2" Width="170">
+                            <Grid.RowDefinitions>
+                                <RowDefinition/>
+                                <RowDefinition Height="30"/>
+                            </Grid.RowDefinitions>
+                            <Rectangle Grid.Row="0" Stroke="WhiteSmoke" StrokeThickness="10" Width="160" ></Rectangle>
+                            <Image Source="ms-appx:///Assets/male_silhouette.png" ></Image>
+                            <TextBlock Name="PlayerTwoNameUnderImage" Grid.Row="1" Text="{Binding PlayerTwoFullName}" Style="{StaticResource PlayerNameUnderImageTextStye}"/>
+                        </Grid>
+
+
+                    </Grid>
+                    <Grid Name="TotalPointsWonGrid" Grid.Row="1">
+                        <!--Tota Points earned by both players will be displayed in this grid-->
+                    </Grid>
                 </Grid>
 
-                <Grid Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" >
-                    <Grid.RowDefinitions>
-                        <RowDefinition/>
-                        <RowDefinition Height="30"/>
-                    </Grid.RowDefinitions>
-                    <Rectangle Grid.Row="0" Stroke="WhiteSmoke" StrokeThickness="10" Width="160" ></Rectangle>
-                    <Image Source="ms-appx:///Assets/male_silhouette.png" ></Image>
-                    <TextBlock Name="PlayerTwoNameUnderImage" Grid.Row="1" Text="{Binding CurrMatch.PlayerTwo.FullName}" Style="{StaticResource PlayerNameUnderImageTextStye}"/>
+                <Grid Grid.Row="1" Name="Stats">
+                    <ListView Margin="0,0,-1,0" Name="StatsListView" IsItemClickEnabled="false" HorizontalContentAlignment="Stretch" SelectionMode="None" ItemsSource="{Binding Stats}" >
+                        <ListView.Header>
+                            <Grid>
+                                <Grid.Background>
+                                    <SolidColorBrush Color="Teal"/>
+                                </Grid.Background>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="300"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition Width="200"/>
+                                    <ColumnDefinition MinWidth="200"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="40"/>
+                                </Grid.RowDefinitions>
+                                <TextBlock Grid.Column="1" Text="Match"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Padding="0,10,0,0" Margin="63,-1,45,1" Height="40" Width="61"/>
+                                <TextBlock Grid.Column="2" Text="Set 1"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Padding="0,10,0,0" Margin="80,-1,70,1" Height="40" Width="50"/>
+                                <TextBlock Grid.Column="3" Text="Set 2"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Padding="0,10,0,0" Margin="79,-1,69,1" Height="40" Width="52"/>
+                                <TextBlock Grid.Column="4" Text="Set 3"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Left" Padding="0,10,0,0" Margin="79,-1,69,1" Height="40" Width="52"/>
+                            </Grid>
+                        </ListView.Header>
+
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <!--<Border RenderTransformOrigin="0.5,0.5"  BorderThickness="2" BorderBrush="WhiteSmoke" Margin="-4,-5,-21,0">-->
+                                <Grid Margin="-4,0,-21,0">
+                                    <Grid.Background>
+                                        <SolidColorBrush Color="{Binding IndexWithinParentCollection, Mode=OneWay,Converter={StaticResource AltnateBackgroundConverter}}"/>
+                                    </Grid.Background>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="300"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="200"/>
+                                        <ColumnDefinition Width="900" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="50"/>
+                                    </Grid.RowDefinitions>
+                                    <Rectangle   StrokeThickness="2" Margin="0" Grid.Row="0" Grid.ColumnSpan="5" />
+                                    <Border Grid.Column="0" BorderThickness="1">
+                                        <TextBlock Grid.Column="0" Text="{Binding StatName }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Left" Margin="10,0,0,3"/>
+                                    </Border>
+
+                                    <Border Grid.Column="1" BorderThickness="1" BorderBrush="DarkGray" Margin="5,2,5,2" >
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding ForMatchP1 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding ForMatchP2 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
+                                        </Grid>
+                                    </Border>
+
+                                    <Border Grid.Column="2" BorderThickness="1"  BorderBrush="DarkGray" Margin="5,2,5,2">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding ForFirstSetP1 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding ForFirstSetP2 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
+                                        </Grid>
+                                    </Border>
+                                    <Border Grid.Column="3" BorderThickness="1"  BorderBrush="DarkGray" Margin="5,2,5,2">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding ForSecondSetP1 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding ForSecondSetP2 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
+                                        </Grid>
+                                    </Border>
+                                    <Border Width="200" HorizontalAlignment="Left" Grid.Column="4" BorderThickness="1"  BorderBrush="DarkGray" Margin="5,2,5,2">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition/>
+                                                <ColumnDefinition/>
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Grid.Column="0" Text="{Binding ForThirdSetP1 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
+                                            <TextBlock Grid.Column="1" Text="{Binding ForThirdSetP2 }"  Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Margin="10,0,0,3"/>
+                                        </Grid>
+                                    </Border>
+                                </Grid>
+                                <!--</Border>-->
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ListView>
                 </Grid>
-
-                <ItemsControl Name="PlayerTwoCommands" ItemsSource="{Binding ScorePoints}" Grid.Column="2" Grid.Row="1" >
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <controls:UniformGrid Columns="3"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <Border RenderTransformOrigin="0.5,0.5" BorderThickness="2" BorderBrush="WhiteSmoke" Margin="3">
-                                <Button 
-                                    VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
-                                    AutomationProperties.Name="Group Title"
-                                    IsEnabled ="{Binding IsEnabled}"
-                                    Command="{Binding ActionCommand}"
-                                    Style="{StaticResource ActionButtonStyle}">
-                                    <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="{Binding DisplayNameTop}"  Style="{StaticResource SubtitleTextStyle}" TextWrapping="NoWrap" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="{Binding DisplayNameBottom}"  Style="{StaticResource SubtitleTextStyle}" TextWrapping="NoWrap" HorizontalAlignment="Center"/>
-                                    </StackPanel>
-                                </Button>
-                            </Border>
-                        </DataTemplate>
-
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-
             </Grid>
 
 
-            <!-- Vertical scrolling list only used when snapped -->
-            <ListView
-            x:Name="itemListView"
-            AutomationProperties.AutomationId="ItemListView"
-            AutomationProperties.Name="Grouped Items"
-            Grid.Row="1"
-            Visibility="Collapsed"
-            Margin="0,-10,0,0"
-            Padding="10,0,0,60"
-            
-            ItemTemplate="{StaticResource Standard80ItemTemplate}"
-            SelectionMode="None"
-            IsSwipeEnabled="false"
-            IsItemClickEnabled="True">
+            <!--<Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="600" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="46*" />
+                    <RowDefinition Height="41*"/>
+                </Grid.RowDefinitions>
 
-            </ListView>
+            </Grid>-->
 
             <!-- Back button and page title -->
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
-                    <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <Button x:Name="backButton" 
+                <Button x:Name="BackButton" 
                     Style="{StaticResource BackButtonStyle}" Margin="36,0,0,8" />
-                <TextBlock x:Name="pageTitle" Text="Play Match" Grid.Column="1" IsHitTestVisible="false"
+                <TextBlock x:Name="pageTitle" Text="Stats Analyses" Grid.Column="1" IsHitTestVisible="false"
                        Style="{StaticResource PageHeaderTextStyle}" Margin="0,0,30,18"/>
-                <TextBlock x:Name="TournamentTitle" Grid.Column="2" HorizontalAlignment="Center" Style="{StaticResource TitleTextStyle}" FontSize="20" VerticalAlignment="Center" Margin="39,20,408,20" Text="{Binding CurrMatch.Tournament.TournamentName}"/>
             </Grid>
 
             <VisualStateManager.VisualStateGroups>
@@ -426,7 +378,7 @@
                     <!-- The entire page respects the narrower 100-pixel margin convention for portrait -->
                     <VisualState x:Name="FullScreenPortrait">
                         <Storyboard>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton"
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BackButton"
                                                        Storyboard.TargetProperty="Style">
                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource PortraitBackButtonStyle}" />
                             </ObjectAnimationUsingKeyFrames>
@@ -444,7 +396,7 @@
                 -->
                     <VisualState x:Name="Snapped">
                         <Storyboard>
-                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="backButton"
+                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="BackButton"
                                                        Storyboard.TargetProperty="Style">
                                 <DiscreteObjectKeyFrame KeyTime="0" Value="{StaticResource SnappedBackButtonStyle}" />
                             </ObjectAnimationUsingKeyFrames>
