@@ -65,7 +65,7 @@ namespace MatchStats.ViewModels
             ActionCommandsEnableBindings();
 
             ActionCommandOnMatchEnd();
-
+            
             MessageBus.Current.Listen<Match>("PointUpdateForCurrentMatch").Subscribe(x =>
             {
                 CurrMatch = x;
@@ -89,6 +89,8 @@ namespace MatchStats.ViewModels
             {
                 CurrMatch = x;
             });
+
+            ShowHideGameOngoing = true;
         }
 
         public void StartPauseMatch()
@@ -96,12 +98,9 @@ namespace MatchStats.ViewModels
             if (! GameIsOnGoing)
             {
                 BeginCount();
+                GameIsOnGoing = !GameIsOnGoing;
+                ShowHideGameOngoing = false;
             }
-            else
-            {
-                PauseTimer();
-            }
-            GameIsOnGoing = !GameIsOnGoing;
         }
 
         public void PauseTimer()
@@ -153,7 +152,7 @@ namespace MatchStats.ViewModels
 
         private string GameOnGoingOrPausedString(bool gameIsOnGoing)
         {
-            return gameIsOnGoing ? "Pause Game" : "Continue Game";
+            return gameIsOnGoing ? "Pause Match" : "Start Match";
         }
 
         private void ActionCommandOnMatchEnd()
@@ -163,6 +162,7 @@ namespace MatchStats.ViewModels
                 {
                     PlayerOneActions.ForEach(y => y.IsEnabled = false);   
                     PlayerTwoActions.ForEach(y => y.IsEnabled = false);
+                    PauseTimer();
                 });
         }
 
@@ -452,6 +452,7 @@ namespace MatchStats.ViewModels
             GetGameCommandsForPlayer(match.PlayerTwo).Subscribe(x => PlayerTwoActions.Add(x));
 
             GameIsOnGoing = false;
+            ShowHideGameOngoing = true;
         }
 
         private static void SaveMatch(Match match)
@@ -698,7 +699,19 @@ namespace MatchStats.ViewModels
         public bool GameIsOnGoing
         {
             get { return _gameIsOnGoing; }
-            set { this.RaiseAndSetIfChanged(ref _gameIsOnGoing, value); }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _gameIsOnGoing, value);
+                if(value)ShowHideGameOngoing = false;
+            }
+        }
+
+        [DataMember]
+        private bool _showHideGameOngoing;
+        public bool ShowHideGameOngoing
+        {
+            get { return _showHideGameOngoing; }
+            set { this.RaiseAndSetIfChanged(ref _showHideGameOngoing, value); }
         }
 
         [DataMember]
