@@ -54,32 +54,32 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                    <ItemsControl Name="PlayerOneCommands" ItemsSource="{Binding ScorePoints}" Grid.Row="1" Grid.Column="0">
-                        <ItemsControl.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <controls:UniformGrid Columns="3"/>
-                            </ItemsPanelTemplate>
-                        </ItemsControl.ItemsPanel>
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate>
-                                <Border RenderTransformOrigin="0.5,0.5" BorderThickness="2" BorderBrush="WhiteSmoke" Margin="3">
-                                    <Button
+                <ItemsControl Name="PlayerOneCommands" ItemsSource="{Binding ScorePoints}" Grid.Row="1" Grid.Column="0">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <controls:UniformGrid Columns="3"/>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border RenderTransformOrigin="0.5,0.5" BorderThickness="2" BorderBrush="WhiteSmoke" Margin="3">
+                                <Button
                                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                                     AutomationProperties.Name="Group Title"
                                     IsEnabled="{Binding IsEnabled}"
                                     Command="{Binding ActionCommand}"
                                     Style="{StaticResource ActionButtonStyle}"      
                                 >
-                                        <StackPanel Orientation="Vertical">
-                                            <TextBlock Text="{Binding DisplayNameTop}"  Style="{StaticResource SubtitleTextStyle}" TextWrapping="NoWrap" HorizontalAlignment="Center"/>
-                                            <TextBlock Text="{Binding DisplayNameBottom}"  Style="{StaticResource SubtitleTextStyle}" TextWrapping="NoWrap" HorizontalAlignment="Center"/>
-                                        </StackPanel>
-                                    </Button>
-                                </Border>
-                            </DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding DisplayNameTop}"  Style="{StaticResource SubtitleTextStyle}" TextWrapping="NoWrap" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="{Binding DisplayNameBottom}"  Style="{StaticResource SubtitleTextStyle}" TextWrapping="NoWrap" HorizontalAlignment="Center"/>
+                                    </StackPanel>
+                                </Button>
+                            </Border>
+                        </DataTemplate>
 
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
 
                 <Grid Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" >
                     <Grid.ColumnDefinitions>
@@ -156,9 +156,9 @@
                             <TextBlock Name="MatchTiming" Style="{StaticResource TitleTextStyle}" FontSize="20" HorizontalAlignment="Center" Margin="0,10,0,0"  Text="{Binding Timing}"/>
                         </Grid>
                         <Grid Grid.Row="0" Grid.Column="1" >
-                        <Grid.Background>
-                            <SolidColorBrush Color="Teal"/>
-                        </Grid.Background>
+                            <Grid.Background>
+                                <SolidColorBrush Color="Teal"/>
+                            </Grid.Background>
                             <TextBlock Style="{StaticResource MatchScoreGridHeaderTitleTextStyle}" HorizontalAlignment="Center">1</TextBlock>
                         </Grid>
 
@@ -175,7 +175,7 @@
                             </Grid.Background>
                             <TextBlock Name="PlayerTwoFirstSet" Style="{StaticResource SubtitleTextStyle}"  HorizontalAlignment="Center" Text="{Binding PlayerTwoFirstSet}"/>
                         </Grid>
-                        
+
                         <Grid Grid.Row="0" Grid.Column="2" >
                             <Grid.Background>
                                 <SolidColorBrush Color="Teal"/>
@@ -194,7 +194,7 @@
                                 <SolidColorBrush Color="WhiteSmoke"/>
                             </Grid.Background>
                             <TextBlock Name="PlayerTwoThirdSet" Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Text="{Binding PlayerTwoThirdSet}"/>
-                        </Grid>              
+                        </Grid>
                         <Grid Grid.Row="2" Grid.Column="2">
                             <Grid.Background>
                                 <SolidColorBrush Color="WhiteSmoke"/>
@@ -236,8 +236,8 @@
 
                     </Grid>
 
-                    <Border BorderThickness="2" Grid.Row="1" Margin="0,0,0,0">
-                        <Grid>
+                    <Border BorderThickness="2" Grid.Row="1">
+                        <Grid Margin="0,0,0,0">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="100"/>
                                 <ColumnDefinition />
@@ -309,11 +309,11 @@
                                     <ColumnDefinition/>
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
-                                
+
                                 <Button Name="PlayerOneSecondServe" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">Second Serve In</Button>
                                 <Button Name="PlayerTwoSecondServe"  Grid.Column="1" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">Second Serve In</Button>
                             </Grid>
-                            
+
                             <Grid Grid.Row="2">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition />
@@ -324,14 +324,14 @@
                                     <RowDefinition></RowDefinition>
                                     <RowDefinition></RowDefinition>
                                 </Grid.RowDefinitions>
-                                <ToggleButton Name="PlayerOneIsServing" Grid.Row="0" Height="60" HorizontalAlignment="Stretch" Style="{StaticResource PlayerServingToggleButtonStyle}">Player One Serving</ToggleButton>
-                                <ToggleButton Name="PlayerTwoIsServing" Grid.Row="0" Grid.Column="1" Height="60" HorizontalAlignment="Stretch" Style="{StaticResource PlayerServingToggleButtonStyle}">Player Two Serving</ToggleButton>
+                                <ToggleButton Name="PlayerOneIsServing" Grid.Row="0" Height="55" HorizontalAlignment="Stretch" Style="{StaticResource PlayerServingToggleButtonStyle}">Player One Serving</ToggleButton>
+                                <ToggleButton Name="PlayerTwoIsServing" Grid.Row="0" Grid.Column="1" Height="55" HorizontalAlignment="Stretch" Style="{StaticResource PlayerServingToggleButtonStyle}">Player Two Serving</ToggleButton>
                                 <Grid Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch">
-                        
-                                    <Button Name="UndoLastActionCommand" Grid.Column="0" HorizontalAlignment="Center" Height="60" Width="150"  Template="{StaticResource ServeButtonControlTemplate}">Revese Last</Button>
+
+                                    <Button Name="UndoLastActionCommand" Grid.Column="0" HorizontalAlignment="Center" Height="55" Width="150"  Template="{StaticResource ServeButtonControlTemplate}">Revese Last</Button>
                                 </Grid>
 
-                                <Button Name="StartPauseMatchActionCommand" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="60" Width="150"  Template="{StaticResource ServeButtonControlTemplate}" Content="{Binding StartPause}"/>
+                                <Button Name="StartPauseMatchActionCommand" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="55" Width="150"  Template="{StaticResource ServeButtonControlTemplate}" Content="{Binding StartPause}"/>
 
                             </Grid>
                             <!--<Grid Grid.Row="2">
@@ -413,7 +413,7 @@
                     Style="{StaticResource BackButtonStyle}" Margin="36,0,0,8" />
                 <TextBlock x:Name="pageTitle" Text="Play Match" Grid.Column="1" IsHitTestVisible="false"
                        Style="{StaticResource PageHeaderTextStyle}" Margin="0,0,30,18"/>
-                <TextBlock x:Name="TournamentTitle" Grid.Column="2" Style="{StaticResource TitleTextStyle}" FontSize="20" VerticalAlignment="Center" Margin="180,0,0,0" Text="{Binding CurrMatch.Tournament.TournamentName}"/>
+                <TextBlock x:Name="TournamentTitle" Grid.Column="2" Style="{StaticResource TitleTextStyle}" HorizontalAlignment="Center" FontSize="20" VerticalAlignment="Center" Margin="40,20,409,20" Text="{Binding CurrMatch.Tournament.TournamentName}"/>
             </Grid>
 
             <VisualStateManager.VisualStateGroups>
