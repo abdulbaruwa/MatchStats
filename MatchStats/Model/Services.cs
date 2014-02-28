@@ -29,12 +29,11 @@ namespace MatchStats.Model
     public class MatchStatsApi : IMatchStatsApi
     {
         private readonly IBlobCache _blobCache;
-        private Stack<ICommand> undoCommands;
-
+        private readonly IFullLogger _logger;
         public MatchStatsApi(IBlobCache blocCache = null)
         {
             _blobCache = blocCache ?? RxApp.DependencyResolver.GetService<IBlobCache>("UserAccount");
-            undoCommands = new Stack<ICommand>();
+            _logger = RxApp.DependencyResolver.GetService<IFullLogger>();
         }
 
         public void SaveMatchStats(List<Match> matchStats)
@@ -56,7 +55,16 @@ namespace MatchStats.Model
 
             existingMatches.Add(match);
             var newVals = new List<Match>(existingMatches);
-            await _blobCache.InsertObject("MyMatchStats", newVals).Concat(_blobCache.InsertObject("CurrentMatch", match)); 
+
+            try
+            {
+                await _blobCache.InsertObject("MyMatchStats", newVals).Concat(_blobCache.InsertObject("CurrentMatch", match));
+            }
+            catch (Exception e)
+            {
+                //Log and continue - likely exception may be a sqllite lock.
+                _logger.ErrorException("Error saving Match info", e);
+            }
         }
 
         public IObservable<List<Match>> FetchMatchStats()
