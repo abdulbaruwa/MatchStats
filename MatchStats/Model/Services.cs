@@ -335,9 +335,9 @@ namespace MatchStats.Model
                     if (playerOneGamesCount.DiffValueWith(playerTwoGamesCount) >= 2)
                     {
                         var playerOneIsWinner = playerOneGamesCount > playerTwoGamesCount;
-                        currentMatch.CurrentSet().Winner = playerOneIsWinner
+                        currentMatch.CurrentSet().SetWonBy(playerOneIsWinner
                             ? currentMatch.PlayerOne
-                            : currentMatch.PlayerTwo;
+                            : currentMatch.PlayerTwo);
                         currentMatch.CurrentSet().IsCurrentSet = false;
 
                         if (CheckMatchIsOverRule(currentMatch)) return true;
@@ -362,9 +362,9 @@ namespace MatchStats.Model
                         && playerTwoGamesCount >= gamesCount)
                     {
                         var playerOneIsWinner = playerOneGamesCount > playerTwoGamesCount;
-                        currentMatch.CurrentSet().Winner = playerOneIsWinner
+                        currentMatch.CurrentSet().SetWonBy(playerOneIsWinner
                             ? currentMatch.PlayerOne
-                            : currentMatch.PlayerTwo;
+                            : currentMatch.PlayerTwo);
                         currentMatch.CurrentSet().IsCurrentSet = false;
 
                         if (CheckMatchIsOverRule(currentMatch)) return true;
@@ -615,7 +615,7 @@ namespace MatchStats.Model
         {
             if (currentMatch.Sets.Count == 3)
             {
-                currentMatch.CurrentSet().Winner = setWinner;
+                currentMatch.CurrentSet().SetWonBy(setWinner);
             }
         }
 

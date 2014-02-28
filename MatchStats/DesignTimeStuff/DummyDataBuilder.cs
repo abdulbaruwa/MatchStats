@@ -79,7 +79,7 @@ namespace MatchStats.DesignTimeStuff
             set.Games.Add(GameForPlayerTwo());
             set.Games.Add(GameForPlayerOne());
             set.Games.Add(GameForPlayerOne());
-            set.Winner = _match.PlayerOne;
+            set.SetWonBy(_match.PlayerOne);
             _match.Sets.Add(set);
             return this;
         }
@@ -99,7 +99,7 @@ namespace MatchStats.DesignTimeStuff
             set.Games.Add(GameForPlayerTwo());
             set.Games.Add(GameForPlayerTwo());
             set.Games.Add(GameForPlayerTwo());
-            set.Winner = _match.PlayerTwo;
+            set.SetWonBy(_match.PlayerTwo);
             _match.Sets.Add(set);
             return this;
         }

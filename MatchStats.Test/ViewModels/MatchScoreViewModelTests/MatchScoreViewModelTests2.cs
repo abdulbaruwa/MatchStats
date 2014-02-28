@@ -98,7 +98,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
             MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
             MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
-            fixture.CurrMatch.Sets.First().Winner = fixture.CurrMatch.PlayerOne;
+            fixture.CurrMatch.Sets.First().SetWonBy(fixture.CurrMatch.PlayerOne);
 
             fixture.SetPlayerTwoAsCurrentServerCommand.Execute(null);
 
@@ -129,7 +129,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
             MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
             MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
-            fixture.CurrMatch.Sets.First().Winner = fixture.CurrMatch.PlayerOne;
+            fixture.CurrMatch.Sets.First().SetWonBy(fixture.CurrMatch.PlayerOne);
 
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
@@ -159,7 +159,7 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
             MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
             MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
-            fixture.CurrMatch.Sets.First().Winner = fixture.CurrMatch.PlayerOne;
+            fixture.CurrMatch.Sets.First().SetWonBy(fixture.CurrMatch.PlayerOne);
 
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
@@ -201,10 +201,10 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
-            fixture.CurrMatch.Sets.First().Winner = fixture.CurrMatch.PlayerOne;
+            fixture.CurrMatch.Sets.First().SetWonBy(fixture.CurrMatch.PlayerOne);
 
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, false);
-            fixture.CurrMatch.Sets.SecondOrDefault().Winner = fixture.CurrMatch.PlayerTwo;
+            fixture.CurrMatch.Sets.SecondOrDefault().SetWonBy(fixture.CurrMatch.PlayerTwo);
 
             fixture.CurrMatch.CurrentGame().GameType = GameType.TenPointer;
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
@@ -249,10 +249,10 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
 
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, true);
-            fixture.CurrMatch.Sets.First().Winner = fixture.CurrMatch.PlayerOne;
+            fixture.CurrMatch.Sets.First().SetWonBy(fixture.CurrMatch.PlayerOne);
 
             MatchScoreViewModelTestHelper.AddASetForPlayer(fixture, false);
-            fixture.CurrMatch.Sets.SecondOrDefault().Winner = fixture.CurrMatch.PlayerTwo;
+            fixture.CurrMatch.Sets.SecondOrDefault().SetWonBy(fixture.CurrMatch.PlayerTwo);
 
             fixture.CurrMatch.CurrentGame().GameType = GameType.TenPointer;
             fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
