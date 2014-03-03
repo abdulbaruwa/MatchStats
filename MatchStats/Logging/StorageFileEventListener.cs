@@ -12,7 +12,7 @@ namespace MatchStats.Logging
     /// Borrowed with thanks from work done by Can Bilgin
     /// http://code.msdn.microsoft.com/Logging-Sample-for-Windows-0b9dffd7
     /// </summary>
-    sealed class StorageFileEventListener : EventListener
+    public class StorageFileEventListener : EventListener
     {
         /// <summary>
         /// Storage file to be used to write logs

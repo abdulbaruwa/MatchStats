@@ -29,11 +29,11 @@ namespace MatchStats.Model
     public class MatchStatsApi : IMatchStatsApi
     {
         private readonly IBlobCache _blobCache;
-        private readonly IFullLogger _logger;
+        private readonly ILogger _logger;
         public MatchStatsApi(IBlobCache blocCache = null)
         {
             _blobCache = blocCache ?? RxApp.DependencyResolver.GetService<IBlobCache>("UserAccount");
-            _logger = RxApp.DependencyResolver.GetService<IFullLogger>();
+            _logger = RxApp.DependencyResolver.GetService<ILogger>();
         }
 
         public void SaveMatchStats(List<Match> matchStats)
@@ -45,9 +45,19 @@ namespace MatchStats.Model
         public async void SaveMatch(Match match)
         {
             var existingMatches = new List<Match>();
-            var matchesFromStorage = await _blobCache.GetObjectAsync<List<Match>>("MyMatchStats");
-            existingMatches.AddRange(matchesFromStorage); 
-            Match existingMatch = existingMatches.FirstOrDefault(x => x.MatchGuid == match.MatchGuid);
+            IEnumerable<Match> matchesFromStorage = null;
+            try
+            {
+               matchesFromStorage = await _blobCache.GetObjectAsync<List<Match>>("MyMatchStats");
+            }
+            catch (KeyNotFoundException e)
+            {
+                _logger.Write("Object not found in Cache", LogLevel.Error);
+                _logger.Write(e.ToString(), LogLevel.Error);
+            }
+
+            if (matchesFromStorage != null)existingMatches.AddRange(matchesFromStorage); 
+            var existingMatch = existingMatches.FirstOrDefault(x => x.MatchGuid == match.MatchGuid);
             if (existingMatch != null)
             {
                 existingMatches.Remove(existingMatch);
@@ -63,7 +73,8 @@ namespace MatchStats.Model
             catch (Exception e)
             {
                 //Log and continue - likely exception may be a sqllite lock.
-                _logger.ErrorException("Error saving Match info", e);
+                _logger.Write("Error saving Match info", LogLevel.Error);
+                _logger.Write(e.ToString(), LogLevel.Error);
             }
         }
 

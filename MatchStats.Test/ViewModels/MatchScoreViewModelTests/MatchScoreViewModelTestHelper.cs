@@ -1,6 +1,8 @@
+using System.Diagnostics.Tracing;
 using System.Linq;
 using Akavache;
 using MatchStats.Enums;
+using MatchStats.Logging;
 using MatchStats.Model;
 using MatchStats.ViewModels;
 using ReactiveUI;
@@ -20,12 +22,14 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
         {
             var fixture = CreateUnSavedMatchScoreViewModelFixture();
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
+            fixture.GameIsOnGoing = true;
             return fixture;
         }
 
         public static MatchScoreViewModel CreateNewMatchFixture(FinalSetFormats finalSetFormat)
         {
             var fixture = CreateUnSavedMatchScoreViewModelFixture();
+            fixture.GameIsOnGoing = true;
             fixture.NewMatchControlViewModel.SelectedFinalSet = finalSetFormat;
             fixture.NewMatchControlViewModel.SaveCommand.Execute(null);
             return fixture;
@@ -174,9 +178,17 @@ namespace MatchStats.Test.ViewModels.MatchScoreViewModelTests
 
         public static TestBlobCache RegisterComponents()
         {
+            EventListener verboseListener = new StorageFileEventListener("MyListenerVerbose1");
+            EventListener informationListener = new StorageFileEventListener("MyListenerInformation1");
+
+            verboseListener.EnableEvents(MatchStatsEventSource.Log, EventLevel.Error);
+            RxApp.MutableResolver.RegisterConstant(MatchStatsEventSource.Log, typeof(MatchStatsEventSource));
+
             var blobCache = new TestBlobCache();
             RxApp.MutableResolver.Register(() => new MatchStatsApi(), typeof(IMatchStatsApi));
             RxApp.MutableResolver.RegisterConstant(blobCache, typeof(IBlobCache), "UserAccount");
+            RxApp.MutableResolver.Register(() => new MatchStatsLogger(), typeof(ILogger));
+
             return blobCache;
         }
 
