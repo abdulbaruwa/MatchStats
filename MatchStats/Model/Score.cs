@@ -17,7 +17,7 @@ namespace MatchStats.Model
 
         public List<Game> Games { get; set; }
         public bool IsCurrentSet { get; set; }
-        public Player Winner { get; private set; }
+        public Player Winner { get; set; }
         public DateTime? StartTime { get; set; }
         public DateTime? EndTime { get; set; }
         public string SetId { get; set; }
