@@ -464,6 +464,7 @@ namespace MatchStats.ViewModels
 
         private void NavigateBackToHomePage()
         {
+            ((MatchesPlayedViewModel) HostScreen.Router.NavigationStack[0]).FetchLatestMatchesPlayed.Execute(null);
             HostScreen.Router.NavigateBack.Execute(null);
         }
 
@@ -508,9 +509,9 @@ namespace MatchStats.ViewModels
             if (server.IsPlayerOne == isPlayerOne)
             {
                 if (matchStat == null) return true;
-                if (matchStat.Reason == StatDescription.FirstServeIn || matchStat.Reason == StatDescription.FirstServeOut) return false;
+                if (matchStat.Reason == StatDescription.FirstServeIn || matchStat.Reason == StatDescription.FirstServeOut || matchStat.Reason == StatDescription.SecondServeIn) return false;
                 if (matchStat.Reason == StatDescription.BreakPoint || matchStat.Reason == StatDescription.GamePoint ||
-                    matchStat.Reason == StatDescription.GameOver || matchStat.Reason != StatDescription.FirstServeIn ||
+                    matchStat.Reason == StatDescription.GameOver || matchStat.Reason != StatDescription.FirstServeIn || 
                     matchStat.Reason != StatDescription.FirstServeOut)
                 {
                     return true;

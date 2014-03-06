@@ -17,6 +17,7 @@ namespace MatchStats.ViewModels
         bool CredentialAuthenticated { get; set; }
         Player DefaultPlayer { get; set; }
         bool ShowNewMatchPopup { get; set; }
+        IReactiveCommand FetchLatestMatchesPlayed { get; set; }
     }
 
     [DataContract]
@@ -36,6 +37,8 @@ namespace MatchStats.ViewModels
             // AddMatch Command is only fired when Popup is not being displayed
             AddMatch = new ReactiveCommand(this.WhenAny(vm => vm.ShowNewMatchPopup, s => ! s.Value));
             AddMatch.Subscribe(_ => ShowOrAddMatchPopUp());
+            FetchLatestMatchesPlayed = new ReactiveCommand();
+            FetchLatestMatchesPlayed.Subscribe(_ => FetchLatestMatchStats());
 
             loginMethods.SaveCredentials(Token);
             RxApp.MutableResolver.GetService<ISecureBlobCache>().GetObjectAsync<string>("Token")
@@ -46,6 +49,12 @@ namespace MatchStats.ViewModels
                 .Select(x => (Match)x).Subscribe(ShowMatchStatForMatch);
 
             MyMatchStats = new ReactiveList<Match>();
+            FetchLatestMatchStats();
+        }
+
+        private void FetchLatestMatchStats()
+        {
+            MyMatchStats.Clear();
             var matchStatsApi = RxApp.MutableResolver.GetService<IMatchStatsApi>();
 
             var obser = matchStatsApi.FetchMatchStats();
@@ -54,7 +63,7 @@ namespace MatchStats.ViewModels
                 if (x != null)
                 {
                     var matchsPlayed = x.Where(y => y.IsMatchOver).ToList();
-                    if(matchsPlayed.Count > 0) MyMatchStats.AddRange(matchsPlayed);
+                    if (matchsPlayed.Count > 0) MyMatchStats.AddRange(matchsPlayed);
                 }
             },
                 ex =>
@@ -112,6 +121,8 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _showNewMatchPopup, value); }
         }
 
+        public IReactiveCommand FetchLatestMatchesPlayed { get; set; }
+
         [DataMember]
         private object _selectedMatchStat;
         public object SelectedMatchStat
@@ -134,7 +145,7 @@ namespace MatchStats.ViewModels
 
         private void ShowOrAddMatchPopUp()
         {
-            var matchScoreVm =RxApp.DependencyResolver.GetService<MatchScoreViewModel>();
+            var matchScoreVm = RxApp.DependencyResolver.GetService<MatchScoreViewModel>();
             matchScoreVm.ShowHideMatchPopup = true;
 
             HostScreen.Router.Navigate.Execute(matchScoreVm);
