@@ -11,7 +11,7 @@ namespace MatchStats.ViewModels
         {
             Player = player ?? new Player();
             Name = "ForeHandWinner";
-            DisplayNameTop = "Fore Hand";
+            DisplayNameTop = "Forehand";
             DisplayNameBottom = "Winner";
             ActionCommand = new ReactiveCommand();
             ActionCommand.Subscribe(x => Execute());

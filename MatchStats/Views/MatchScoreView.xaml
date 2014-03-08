@@ -24,6 +24,8 @@
 
         <Style x:Key="ServeTextBoxStyle" TargetType="Button">
             <Setter Property="Height" Value="55"/>
+            <Setter Property="FontSize" Value="19"/>
+            <Setter Property="Padding" Value="1,1,1,1"/>
         </Style>
         <Style x:Key ="PlayerNameUnderImageTextStye" TargetType="TextBlock" BasedOn="{StaticResource TitleTextStyle}">
             <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -62,17 +64,17 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border RenderTransformOrigin="0.5,0.5" BorderThickness="2" BorderBrush="WhiteSmoke" Margin="3">
+                            <Border RenderTransformOrigin="0.5,0.5" BorderThickness="1" BorderBrush="WhiteSmoke" Margin="1">
                                 <Button
                                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                                     AutomationProperties.Name="Group Title"
                                     IsEnabled="{Binding IsEnabled}"
                                     Command="{Binding ActionCommand}"
-                                    Style="{StaticResource ActionButtonStyle}"      
+                                             Style="{StaticResource ActionButtonStyle}"   
                                 >
                                     <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="{Binding DisplayNameTop}"  Style="{StaticResource SubtitleTextStyle}" TextWrapping="NoWrap" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="{Binding DisplayNameBottom}"  Style="{StaticResource SubtitleTextStyle}" TextWrapping="NoWrap" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="{Binding DisplayNameTop}"  Style="{StaticResource ActionTitleTextStyle}"  />
+                                        <TextBlock Text="{Binding DisplayNameBottom}"  Style="{StaticResource ActionTitleTextStyle}" />
                                     </StackPanel>
                                 </Button>
                             </Border>
@@ -296,11 +298,11 @@
                                     <ColumnDefinition />
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
-                                <Button Name="PlayerOneFirstServe" Grid.Column="0" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">First Serve In</Button>
-                                <Button Name="PlayerOneFirstServeOut" Grid.Column="1" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">First Serve Out</Button>
+                                <Button Name="PlayerOneFirstServe" Grid.Column="0" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">1st Serve In</Button>
+                                <Button Name="PlayerOneFirstServeOut" Grid.Column="1" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">1st Serve Out</Button>
 
-                                <Button Name="PlayerTwoFirstServe"  Grid.Column="2" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">First Serve In</Button>
-                                <Button Name="PlayerTwoFirstServeOut"  Grid.Column="3" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}"  Template="{StaticResource ServeButtonControlTemplate}" >First Serve Out</Button>
+                                <Button Name="PlayerTwoFirstServe"  Grid.Column="2" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">1st Serve In</Button>
+                                <Button Name="PlayerTwoFirstServeOut"  Grid.Column="3" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}"  Template="{StaticResource ServeButtonControlTemplate}" >1st Serve Out</Button>
 
                             </Grid>
 
@@ -310,8 +312,8 @@
                                     <ColumnDefinition/>
                                 </Grid.ColumnDefinitions>
 
-                                <Button Name="PlayerOneSecondServe" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">Second Serve In</Button>
-                                <Button Name="PlayerTwoSecondServe"  Grid.Column="1" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">Second Serve In</Button>
+                                <Button Name="PlayerOneSecondServe" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">2nd Serve In</Button>
+                                <Button Name="PlayerTwoSecondServe"  Grid.Column="1" HorizontalAlignment="Stretch" Style="{StaticResource ServeTextBoxStyle}" Template="{StaticResource ServeButtonControlTemplate}">2nd Serve In</Button>
                             </Grid>
 
                             <Grid Grid.Row="2">
@@ -327,11 +329,10 @@
                                 <ToggleButton Name="PlayerOneIsServing" Grid.Row="0" Height="55" HorizontalAlignment="Stretch" Style="{StaticResource PlayerServingToggleButtonStyle}">Player One Serving</ToggleButton>
                                 <ToggleButton Name="PlayerTwoIsServing" Grid.Row="0" Grid.Column="1" Height="55" HorizontalAlignment="Stretch" Style="{StaticResource PlayerServingToggleButtonStyle}">Player Two Serving</ToggleButton>
                                 <Grid Grid.ColumnSpan="2" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch">
-
-                                    <Button Name="UndoLastActionCommand" Grid.Column="0" HorizontalAlignment="Center" Height="55" Width="150"  Template="{StaticResource ServeButtonControlTemplate}">Revese Last</Button>
+                                    <Button Name="UndoLastActionCommand" Grid.Column="0"  Style="{StaticResource ServeTextBoxStyle}" HorizontalAlignment="Center" Width="150"  Template="{StaticResource ServeButtonControlTemplate}">Reverse Last</Button>
                                 </Grid>
 
-                                <Button Name="StartPauseMatchActionCommand" Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Height="55" Width="150"  Template="{StaticResource ServeButtonControlTemplate}" Content="{Binding StartPause}"/>
+                                <Button Name="StartPauseMatchActionCommand" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" HorizontalAlignment="Center"  Style="{StaticResource ServeTextBoxStyle}" Width="150"  Template="{StaticResource ServeButtonControlTemplate}" Content="{Binding StartPause}"/>
 
                             </Grid>
                             <!--<Grid Grid.Row="2">
@@ -364,7 +365,7 @@
                     </ItemsControl.ItemsPanel>
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <Border RenderTransformOrigin="0.5,0.5" BorderThickness="2" BorderBrush="WhiteSmoke" Margin="3">
+                            <Border RenderTransformOrigin="0.5,0.5" BorderThickness="2" BorderBrush="WhiteSmoke" Margin="1">
                                 <Button 
                                     VerticalAlignment="Stretch" HorizontalAlignment="Stretch" 
                                     AutomationProperties.Name="Group Title"
@@ -372,8 +373,8 @@
                                     Command="{Binding ActionCommand}"
                                     Style="{StaticResource ActionButtonStyle}">
                                     <StackPanel Orientation="Vertical">
-                                        <TextBlock Text="{Binding DisplayNameTop}"  Style="{StaticResource SubtitleTextStyle}" TextWrapping="NoWrap" HorizontalAlignment="Center"/>
-                                        <TextBlock Text="{Binding DisplayNameBottom}"  Style="{StaticResource SubtitleTextStyle}" TextWrapping="NoWrap" HorizontalAlignment="Center"/>
+                                        <TextBlock Text="{Binding DisplayNameTop}"  Style="{StaticResource ActionTitleTextStyle}"/> 
+                                        <TextBlock Text="{Binding DisplayNameBottom}"  Style="{StaticResource ActionTitleTextStyle}" />
                                     </StackPanel>
                                 </Button>
                             </Border>

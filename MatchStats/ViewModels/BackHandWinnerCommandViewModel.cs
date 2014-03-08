@@ -18,7 +18,7 @@ namespace MatchStats.ViewModels
         public DropShotWinnerCommandViewModel(Player player = null) : base(player)
         {
             Name = "DropShotWinner";
-            DisplayNameTop = "Drop Shot";
+            DisplayNameTop = "Dropshot";
             DisplayNameBottom = "Winner";
         }
     }
@@ -28,7 +28,7 @@ namespace MatchStats.ViewModels
         public OverHeadWinnerCommandViewModel(Player player = null) : base(player)
         {
             Name = "OverheadWinner";
-            DisplayNameTop = "Over Head";
+            DisplayNameTop = "OverHead";
             DisplayNameBottom = "Winner";
         }
     }

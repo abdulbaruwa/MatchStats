@@ -213,6 +213,16 @@
         <Setter Property="VerticalAlignment" Value="Center"></Setter>
     </Style>
 
+    <Style x:Key="ActionTitleTextStyle" TargetType="TextBlock" BasedOn="{StaticResource BaselineTextStyle}">
+        <Setter Property="FontWeight" Value="Normal"/>
+        <Setter Property="VerticalAlignment" Value="Center"/>
+        <Setter Property="FontSize" Value="21"/>
+        <Setter Property="HorizontalAlignment" Value="Center"/>
+        <Setter Property="TextWrapping" Value="WrapWholeWords"/>
+        <Setter Property="TextAlignment" Value="Center"/>
+    </Style>
+
+
     <Style x:Key="ItemTextStyle" TargetType="TextBlock" BasedOn="{StaticResource BaselineTextStyle}"/>
 
     <Style x:Key="BodyTextStyle" TargetType="TextBlock" BasedOn="{StaticResource BaselineTextStyle}">
@@ -2850,7 +2860,7 @@
                                 <VisualState x:Name="PointerFocused"/>
                             </VisualStateGroup>
                         </VisualStateManager.VisualStateGroups>
-                        <Border x:Name="Border" CornerRadius="0,10,0,10" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Margin="3">
+                        <Border x:Name="Border"   CornerRadius="5,5,5,5" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" Margin=".5">
                             <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" ContentTemplate="{TemplateBinding ContentTemplate}" ContentTransitions="{TemplateBinding ContentTransitions}" Content="{TemplateBinding Content}" HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" Margin="{TemplateBinding Padding}" VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
                         </Border>
                         <Rectangle x:Name="FocusVisualWhite" IsHitTestVisible="False" Opacity="0" StrokeDashOffset="1.5" StrokeEndLineCap="Square" Stroke="{ThemeResource FocusVisualWhiteStrokeThemeBrush}" StrokeDashArray="1,1"/>

@@ -33,7 +33,7 @@ namespace MatchStats.ViewModels
         {
             Name = "UnforcedVolleyError";
             DisplayNameTop = "Unforced";
-            DisplayNameBottom = "Volley";
+            DisplayNameBottom = "Volley Error";
             PointReason = PointReason.UnforcedVolleyError;
         }
     }

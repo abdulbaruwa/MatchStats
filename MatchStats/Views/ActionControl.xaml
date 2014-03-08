@@ -1,0 +1,20 @@
+﻿<UserControl
+    x:Class="MatchStats.Views.ActionControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:MatchStats.Views"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="300"
+    d:DesignWidth="400">
+    
+    <Grid>
+        <Button>
+            <StackPanel Orientation="Vertical">
+                <TextBlock Text="Unforced"  Style="{StaticResource SubtitleTextStyle}" TextWrapping="NoWrap" HorizontalAlignment="Center"/>
+                <TextBlock Text="Backhand Error"  Style="{StaticResource SubtitleTextStyle}" TextWrapping="NoWrap" HorizontalAlignment="Center"/>
+            </StackPanel>
+        </Button>
+    </Grid>
+</UserControl>

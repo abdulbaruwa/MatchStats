@@ -154,6 +154,9 @@
     <Compile Include="Logging\StorageFileEventListener.cs" />
     <Compile Include="ViewModels\UndoLastActionCommandViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="Views\ActionControl.xaml.cs">
+      <DependentUpon>ActionControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\BlankPage1.xaml.cs">
       <DependentUpon>BlankPage1.xaml</DependentUpon>
     </Compile>
@@ -201,6 +204,10 @@
     <Page Include="MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Views\ActionControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\BlankPage1.xaml">
       <SubType>Designer</SubType>
