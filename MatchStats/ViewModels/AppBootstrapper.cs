@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Reactive.Threading.Tasks;
 using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using Akavache;
 using MatchStats.Controls;
 using MatchStats.Model;
@@ -48,21 +49,13 @@ namespace MatchStats.ViewModels
 
             RegiserResolver(testResolver, router);
             this.Log().Debug("MatchStat Bootstrapping");
-            GetCredentials().Subscribe(
-                x =>
-                {
-                    Token = x;
-                    Router.Navigate.Execute(new MatchesPlayedViewModel(this));
-                }, ex =>
-                {
-                    this.Log().WarnException("Failed to get the logged in user", ex);
-                    Router.Navigate.Execute(Resolver.GetService<IMatchesPlayedViewModel>());
-                });
+            Token = GetCredentials().Result;
+            Router.Navigate.Execute(new MatchesPlayedViewModel(this));
         }
 
-        public IObservable<string> GetCredentials()
+        public async Task<string> GetCredentials()
         {
-            return RxApp.DependencyResolver.GetService<IUserService>().GetCurrentUserAsync().ToObservable();
+            return  await RxApp.DependencyResolver.GetService<IUserService>().GetCurrentUserAsync();
         }
 
         private string _token;

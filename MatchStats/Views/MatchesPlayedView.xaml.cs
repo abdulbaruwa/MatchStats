@@ -20,6 +20,7 @@ namespace MatchStats.Views
                 ViewModel.SelectedMatchStat = null;
                 ViewModel.SelectedMatchStat = x.ClickedItem;
             });
+            
         }
 
         object IViewFor.ViewModel
