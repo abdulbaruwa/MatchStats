@@ -39,6 +39,8 @@ namespace MatchStats.ViewModels
                     AddWinners();
                     AddUnforcedErrors();
                     AddforcedErrors();
+                    AddForcedServeReturnStats();
+                    AddUnForcedServeReturnStats();
                 });
         }
 
@@ -106,7 +108,6 @@ namespace MatchStats.ViewModels
 
             TotalPointsWonByPlayerOne = CurrentMatch.Sets.Sum(x => x.Games.Sum(y => y.PlayerOneScore)).ToString();
             TotalPointsWonByPlayerTwo = CurrentMatch.Sets.Sum(x => x.Games.Sum(y => y.PlayerTwoScore)).ToString();
-
 
         }
 
@@ -253,6 +254,53 @@ namespace MatchStats.ViewModels
             });
         }
 
+        private void AddForcedServeReturnStats()
+        {
+            var forceServeReturnErrors = new List<PointReason>()
+            {
+                PointReason.ForcedServeReturnError
+            };
+            var forcedServeReturnErrorsP1 = GetStatsFor(true, forceServeReturnErrors);
+            var forcedServeReturnErrorsP2 = GetStatsFor(false, forceServeReturnErrors);
+            Stats.Add(new Stat()
+            {
+                ForMatchP1 = forcedServeReturnErrorsP1,
+                ForMatchP2 = forcedServeReturnErrorsP2,
+                StatNameType = StatName.ForcedReturnErrors,
+                ForFirstSetP1 = string.IsNullOrEmpty(Set1) ? "" : GetStatsFor(true, forceServeReturnErrors, Set1),
+                ForFirstSetP2 = string.IsNullOrEmpty(Set1) ? "" : GetStatsFor(false, forceServeReturnErrors, Set1),
+                ForSecondSetP1 = string.IsNullOrEmpty(Set2) ? "" : GetStatsFor(true, forceServeReturnErrors, Set2),
+                ForSecondSetP2 = string.IsNullOrEmpty(Set2) ? "" : GetStatsFor(false, forceServeReturnErrors, Set2),
+                ForThirdSetP1 = string.IsNullOrEmpty(Set3) ? "" : GetStatsFor(true, forceServeReturnErrors, Set3),
+                ForThirdSetP2 = string.IsNullOrEmpty(Set3) ? "" : GetStatsFor(false, forceServeReturnErrors, Set3),
+            });
+
+        }
+
+        private void AddUnForcedServeReturnStats()
+        {
+            var forceServeReturnErrors = new List<PointReason>()
+            {
+                PointReason.UnforcedServeReturnError
+            };
+
+            var forcedServeReturnErrorsP1 = GetStatsFor(true, forceServeReturnErrors);
+            var forcedServeReturnErrorsP2 = GetStatsFor(false, forceServeReturnErrors);
+            Stats.Add(new Stat()
+            {
+                ForMatchP1 = forcedServeReturnErrorsP1,
+                ForMatchP2 = forcedServeReturnErrorsP2,
+                StatNameType = StatName.UnforcedReturnErrors,
+                ForFirstSetP1 = string.IsNullOrEmpty(Set1) ? "" : GetStatsFor(true, forceServeReturnErrors, Set1),
+                ForFirstSetP2 = string.IsNullOrEmpty(Set1) ? "" : GetStatsFor(false, forceServeReturnErrors, Set1),
+                ForSecondSetP1 = string.IsNullOrEmpty(Set2) ? "" : GetStatsFor(true, forceServeReturnErrors, Set2),
+                ForSecondSetP2 = string.IsNullOrEmpty(Set2) ? "" : GetStatsFor(false, forceServeReturnErrors, Set2),
+                ForThirdSetP1 = string.IsNullOrEmpty(Set3) ? "" : GetStatsFor(true, forceServeReturnErrors, Set3),
+                ForThirdSetP2 = string.IsNullOrEmpty(Set3) ? "" : GetStatsFor(false, forceServeReturnErrors, Set3),
+            });
+
+        }
+
         private string GetFirstServeWinPercentageFor(bool isPlayerOne, string set = null)
         {
             List<Point> firstServes;
@@ -376,6 +424,31 @@ namespace MatchStats.ViewModels
             {
                 PointReason.ForcedError 
             };
+
+            if (string.IsNullOrEmpty(set))
+            {
+                winners = (from s in CurrentMatch.Sets
+                           from g in s.Games
+                           from p in g.Points
+                           where pointReasons.Any(x => x == p.PointReason)
+                           select p).ToList();
+
+            }
+            else
+            {
+                winners = (from s in CurrentMatch.Sets
+                           from g in s.Games
+                           from p in g.Points
+                           where pointReasons.Any(x => x == p.PointReason) && s.SetId == set
+                           select p).ToList();
+            }
+
+            return winners.Count(x => x.Player.IsPlayerOne != isPlayerOne).ToString();
+        }
+
+        private string GetStatsFor(bool isPlayerOne, IEnumerable<PointReason> pointReasons, string set = null)
+        {
+            List<Point> winners;
 
             if (string.IsNullOrEmpty(set))
             {

@@ -37,6 +37,32 @@ namespace MatchStats.ViewModels
             PointReason = PointReason.UnforcedVolleyError;
         }
     }
+
+    public class ForcedServeReturnErrorCommandViewModel : DoubleFaultCommandViewModel
+    {
+        public ForcedServeReturnErrorCommandViewModel(Player player = null)
+            : base(player)
+        {
+            Name = "ForcedServeReturnError";
+            DisplayNameTop = "Forced";
+            DisplayNameBottom = "Return Error";
+            PointReason = PointReason.ForcedServeReturnError;
+        }
+    }    
+    
+    public class UnForcedServeReturnErrorCommandViewModel : DoubleFaultCommandViewModel
+    {
+        public UnForcedServeReturnErrorCommandViewModel(Player player = null)
+            : base(player)
+        {
+            Name = "UnforcedServeReturnError";
+            DisplayNameTop = "Unforced";
+            DisplayNameBottom = "Return Error";
+            PointReason = PointReason.UnforcedServeReturnError;
+        }
+    }
+
+
     public class ForcedErrorCommandViewModel : DoubleFaultCommandViewModel
     {
         public ForcedErrorCommandViewModel(Player player = null) : base(player)

@@ -290,6 +290,153 @@ namespace MatchStats.Test
         }
 
         [TestMethod]
+        public void ShouldCalculateForcedServeReturnErrors()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture(FinalSetFormats.TenPointChampionShipTieBreak);
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "UnforcedBackhandError").ActionCommand.Execute(null);
+
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "UnforcedBackhandError").ActionCommand.Execute(null);
+
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "ForcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "UnforcedBackhandError").ActionCommand.Execute(null);
+
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "ForcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "UnforcedBackhandError").ActionCommand.Execute(null);
+
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+
+            var fixtureStats = new MatchStatsViewModel();
+            fixtureStats.CurrentMatch = fixture.CurrMatch;
+            Assert.AreEqual("6", fixtureStats.Stats.First(x => x.StatNameType == StatName.ForcedReturnErrors).ForMatchP1);
+
+            Assert.AreEqual("3", fixtureStats.Stats.First(x => x.StatNameType == StatName.ForcedReturnErrors).ForFirstSetP1);
+            
+            Assert.AreEqual("3", fixtureStats.Stats.First(x => x.StatNameType == StatName.ForcedReturnErrors).ForSecondSetP1);
+        }        
+        
+        [TestMethod]
+        public void ShouldCalculateUnforcedServeReturnErrors()
+        {
+            var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture(FinalSetFormats.TenPointChampionShipTieBreak);
+            fixture.SetPlayerOneAsCurrentServerCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "UnforcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "UnforcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "UnforcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "UnforcedBackhandError").ActionCommand.Execute(null);
+
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "UnforcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "UnforcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "UnforcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "UnforcedBackhandError").ActionCommand.Execute(null);
+
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "UnforcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "UnforcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "UnforcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerOneFirstServeInCommand.Execute(null);
+            fixture.PlayerTwoActions.First(x => x.Name == "UnforcedBackhandError").ActionCommand.Execute(null);
+
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "UnforcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "UnforcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "UnforcedServeReturnError").ActionCommand.Execute(null);
+
+            fixture.PlayerTwoFirstServeInCommand.Execute(null);
+            fixture.PlayerOneActions.First(x => x.Name == "UnforcedBackhandError").ActionCommand.Execute(null);
+
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+            MatchScoreViewModelTestHelper.AddAGameForPlayerOne(fixture);
+
+            var fixtureStats = new MatchStatsViewModel();
+            fixtureStats.CurrentMatch = fixture.CurrMatch;
+            Assert.AreEqual("6", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedReturnErrors).ForMatchP1);
+            Assert.AreEqual("0", fixtureStats.Stats.First(x => x.StatNameType == StatName.ForcedReturnErrors).ForMatchP1);
+
+            Assert.AreEqual("3", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedReturnErrors).ForFirstSetP1);
+
+            Assert.AreEqual("3", fixtureStats.Stats.First(x => x.StatNameType == StatName.UnforcedReturnErrors).ForSecondSetP1);
+        }
+
+        [TestMethod]
         public void ShouldCalculateUnforcedErrorsForOtherSets()
         {
             var fixture = MatchScoreViewModelTestHelper.CreateNewMatchFixture(FinalSetFormats.TenPointChampionShipTieBreak);

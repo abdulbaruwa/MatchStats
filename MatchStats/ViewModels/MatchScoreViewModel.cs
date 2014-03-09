@@ -425,6 +425,8 @@ namespace MatchStats.ViewModels
             {
                 new AceServeCommandViewModel(player),
                 new DoubleFaultCommandViewModel(player),
+                new UnForcedServeReturnErrorCommandViewModel(player),
+                new ForcedServeReturnErrorCommandViewModel(player),
                 new ForeHandWinnerCommandViewModel(player),
                 new VolleyWinnerCommandViewModel(player),
                 new BackHandWinnerCommandViewModel(player),

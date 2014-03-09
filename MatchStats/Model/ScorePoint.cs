@@ -83,7 +83,9 @@ namespace MatchStats.Model
         ForcedError,
         DoubleFault,
         SecondServeAce,
-        FirstServeAce
+        FirstServeAce,
+        UnforcedServeReturnError,
+        ForcedServeReturnError
     }
 
     public enum PointLossReason
@@ -140,7 +142,13 @@ namespace MatchStats.Model
         UnforcedErrors,
 
         [Display(Name = "Forced Errors")]
-        ForcedErrors
+        ForcedErrors,
+
+        [Display(Name = "Forced Return Errors")]
+        ForcedReturnErrors,
+
+        [Display(Name = "UnForced Return Errors")]
+        UnforcedReturnErrors
     }
 
 
