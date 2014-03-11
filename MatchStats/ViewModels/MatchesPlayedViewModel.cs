@@ -155,6 +155,7 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _showHideProfilePopup, value); }
         }
 
+
         private void ShowOrAddMatchPopUp()
         {
             var matchScoreVm = RxApp.DependencyResolver.GetService<MatchScoreViewModel>();

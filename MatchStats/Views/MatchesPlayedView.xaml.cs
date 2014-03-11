@@ -34,8 +34,7 @@ namespace MatchStats.Views
             EditProfilePoupup.SetValue(Canvas.LeftProperty, SettingsPane.Edge == SettingsEdgeLocation.Right ? (_windowBounds.Width - 646) : 0);
             EditProfilePoupup.SetValue(Canvas.TopProperty, 0);
             Window.Current.SizeChanged += OnWindowSizeChanged;
-
-           // EditProfilePoupup.Height = _windowBounds.Height;
+            EditProfileControl.Height = _windowBounds.Height;
         }
 
         private void OnWindowSizeChanged(object sender, WindowSizeChangedEventArgs e)

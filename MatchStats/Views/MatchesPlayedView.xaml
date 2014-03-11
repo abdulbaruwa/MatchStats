@@ -15,6 +15,7 @@
         <common:BooleanToVisibilityConverter x:Key="BoolToVisibilityConverter" />
         <common:DateDisplayConverter x:Key="DateToStringConverver" />
         <common:BooleanToVisibilityInverseConverter x:Key="BoolToVisibilityInverseConverter" />
+        <common:HeightFromWindowsBoundConverter x:Key="WindowsBoundHeightConverter" />
 
         <Style x:Key="TitleTextBlockStyleRight" TargetType="TextBlock" >
             <Setter Property="FontWeight" Value="SemiBold"/>
@@ -70,14 +71,14 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Popup HorizontalOffset="50" IsOpen="{Binding ShowHideProfilePopup}" x:Name="EditProfilePoupup" Margin="0,0,0,0" HorizontalAlignment="Right" >
+        <Popup HorizontalOffset="75"  VerticalOffset="-22" IsOpen="{Binding ShowHideProfilePopup}"  x:Name="EditProfilePoupup" Margin="0,0,0,0" HorizontalAlignment="Right" >
             <Popup.ChildTransitions>
                 <TransitionCollection>
                     <PaneThemeTransition Edge="Right"/>
                 </TransitionCollection>
             </Popup.ChildTransitions>
             <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                <controls:ProfileUserControl x:Name="EditProfileControl" Width="646" />
+                <controls:ProfileUserControl x:Name="EditProfileControl" Width="646"/>
             </Border>
         </Popup>
         

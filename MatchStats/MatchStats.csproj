@@ -111,6 +111,7 @@
     <Compile Include="Common\BooleanToWinLoseImageConverter.cs" />
     <Compile Include="Common\DateDisplayConverter.cs" />
     <Compile Include="Common\EnumHelper.cs" />
+    <Compile Include="Common\HeightFromWindowsBoundConverter.cs" />
     <Compile Include="Common\RichTextColumns.cs" />
     <Compile Include="Common\EnumDescriptionConverter.cs" />
     <Compile Include="Controls\GameActionControl.xaml.cs">
@@ -156,6 +157,7 @@
     <Compile Include="ViewModels\SecondServeInCommandViewModel.cs" />
     <Compile Include="Logging\StorageFileEventListener.cs" />
     <Compile Include="ViewModels\UndoLastActionCommandViewModel.cs" />
+    <Compile Include="ViewModels\UserProfileViewModel.cs" />
     <Compile Include="ViewModels\ViewModelLocator.cs" />
     <Compile Include="Views\ActionControl.xaml.cs">
       <DependentUpon>ActionControl.xaml</DependentUpon>
