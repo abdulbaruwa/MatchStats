@@ -1,4 +1,4 @@
-﻿using Windows.UI.Xaml;
+using Windows.UI.Xaml;
 
 // The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
 using MatchStats.ViewModels;
@@ -11,6 +11,7 @@ namespace MatchStats.Controls
         public ProfileUserControl()
         {
             this.InitializeComponent();
+            this.BindCommand(ViewModel, x => x.NavAwayCommand);
         }
 
         object IViewFor.ViewModel
