@@ -11,9 +11,9 @@ namespace MatchStats.ViewModels
     public interface IMatchesPlayedViewModel : IRoutableViewModel
     {
         IReactiveCommand AddMatch { get; set; }
-
         ReactiveList<Match> MyMatchStats { get; set; }
         NewMatchControlViewModel NewMatchControlViewModel { get; set; }
+        UserProfileViewModel UserProfileViewModel { get; set; }
         bool CredentialAuthenticated { get; set; }
         Player DefaultPlayer { get; set; }
         bool ShowNewMatchPopup { get; set; }
@@ -39,7 +39,7 @@ namespace MatchStats.ViewModels
             AddMatch.Subscribe(_ => ShowOrAddMatchPopUp());
 
             EditProfile = new ReactiveCommand();
-            EditProfile.Subscribe(_ => ShowHideProfilePopup = ! ShowHideProfilePopup);
+            EditProfile.Subscribe(_ => ShowProfilePopUp());
 
             FetchLatestMatchesPlayed = new ReactiveCommand();
             FetchLatestMatchesPlayed.Subscribe(_ => FetchLatestMatchStats());
@@ -48,9 +48,16 @@ namespace MatchStats.ViewModels
             RxApp.MutableResolver.GetService<ISecureBlobCache>().GetObjectAsync<string>("Token")
                 .Subscribe(x => CredentialAuthenticated = true);
 
+            UserProfileViewModel = RxApp.DependencyResolver.GetService<UserProfileViewModel>();
+
             this.WhenAny(vm => vm.SelectedMatchStat, x => x.Value)
                 .Where(x => x != null && x is Match)
                 .Select(x => (Match)x).Subscribe(ShowMatchStatForMatch);
+
+            this.WhenAny(x => x.UserProfileViewModel.ShowMe, x => x.Value)
+                .Where(x => x == false)
+                .Select(x => x)
+                .Subscribe(x => this.ShowHideProfilePopup = x);
 
             MyMatchStats = new ReactiveList<Match>();
             FetchLatestMatchStats();
@@ -135,19 +142,6 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _selectedMatchStat, value); }
         }
 
-        private NewMatchControlViewModel _newMatchControlViewModel;
-
-        public NewMatchControlViewModel NewMatchControlViewModel
-        {
-            get { return _newMatchControlViewModel; }
-            set { this.RaiseAndSetIfChanged(ref _newMatchControlViewModel, value); }
-        }
-
-        public IReactiveCommand AddMatch { get; set; }
-        public IReactiveCommand EditProfile { get; set; }
-        public string UrlPathSegment { get; private set; }
-        public IScreen HostScreen { get; private set; }
-
         private bool _showHideProfilePopup;
         public bool ShowHideProfilePopup
         {
@@ -155,6 +149,32 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _showHideProfilePopup, value); }
         }
 
+        private NewMatchControlViewModel _newMatchControlViewModel;
+        public NewMatchControlViewModel NewMatchControlViewModel
+        {
+            get { return _newMatchControlViewModel; }
+            set { this.RaiseAndSetIfChanged(ref _newMatchControlViewModel, value); }
+        }
+
+        [DataMember]
+        private UserProfileViewModel _userProfileViewModel;
+        public UserProfileViewModel  UserProfileViewModel
+        {
+            get { return _userProfileViewModel; }
+            set { this.RaiseAndSetIfChanged(ref _userProfileViewModel, value); }
+        }
+
+        public IReactiveCommand AddMatch { get; set; }
+        public IReactiveCommand EditProfile { get; set; }
+        public string UrlPathSegment { get; private set; }
+        public IScreen HostScreen { get; private set; }
+        
+        private void ShowProfilePopUp()
+        {
+            var userProfileV  = RxApp.DependencyResolver.GetService<UserProfileViewModel>();
+            UserProfileViewModel = userProfileV;
+            userProfileV.ShowMe = true;
+        }
 
         private void ShowOrAddMatchPopUp()
         {
