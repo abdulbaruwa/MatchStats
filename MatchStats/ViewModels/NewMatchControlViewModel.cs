@@ -1,8 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
-using Windows.Media.PlayTo;
 using MatchStats.Enums;
 using MatchStats.Model;
 using ReactiveUI;
@@ -20,6 +19,7 @@ namespace MatchStats.ViewModels
         private static List<Rating> _ratings;
         private static List<string> _finalSetStrings;
         private FinalSetFormats _finalSetFormats;
+
         public NewMatchControlViewModel()
         {
             SaveCommand = new ReactiveCommand(IsValidForSave());
@@ -163,12 +163,6 @@ namespace MatchStats.ViewModels
         {
             get { return _ratings ?? (_ratings = GetEnumAsList<Rating>()); }
         }
-
-        //ObservableAsPropertyHelper<Song> _CurrentSong;
-        //public Song CurrentSong
-        //{
-        //    get { return _CurrentSong.Value; }
-        //}
 
         public FinalSetFormats FinalSetFormat
         {
