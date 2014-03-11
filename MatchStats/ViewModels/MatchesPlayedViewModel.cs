@@ -37,6 +37,10 @@ namespace MatchStats.ViewModels
             // AddMatch Command is only fired when Popup is not being displayed
             AddMatch = new ReactiveCommand(this.WhenAny(vm => vm.ShowNewMatchPopup, s => ! s.Value));
             AddMatch.Subscribe(_ => ShowOrAddMatchPopUp());
+
+            EditProfile = new ReactiveCommand();
+            EditProfile.Subscribe(_ => ShowHideProfilePopup = ! ShowHideProfilePopup);
+
             FetchLatestMatchesPlayed = new ReactiveCommand();
             FetchLatestMatchesPlayed.Subscribe(_ => FetchLatestMatchStats());
 
@@ -140,8 +144,16 @@ namespace MatchStats.ViewModels
         }
 
         public IReactiveCommand AddMatch { get; set; }
+        public IReactiveCommand EditProfile { get; set; }
         public string UrlPathSegment { get; private set; }
         public IScreen HostScreen { get; private set; }
+
+        private bool _showHideProfilePopup;
+        public bool ShowHideProfilePopup
+        {
+            get { return _showHideProfilePopup; }
+            set { this.RaiseAndSetIfChanged(ref _showHideProfilePopup, value); }
+        }
 
         private void ShowOrAddMatchPopUp()
         {

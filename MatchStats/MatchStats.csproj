@@ -116,6 +116,9 @@
     <Compile Include="Controls\GameActionControl.xaml.cs">
       <DependentUpon>GameActionControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ProfileUserControl.xaml.cs">
+      <DependentUpon>ProfileUserControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Logging\MatchStatsEventSource.cs" />
     <Compile Include="Model\IEnumerableMixins.cs" />
     <Compile Include="Model\IntMixins.cs" />
@@ -198,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\NewMatchUserControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\ProfileUserControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

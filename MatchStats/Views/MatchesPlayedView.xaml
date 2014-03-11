@@ -8,6 +8,7 @@
     xmlns:common="using:MatchStats.Common"
     xmlns:viewModels="using:MatchStats.ViewModels"
     xmlns:controls1="using:Callisto.Controls"
+    xmlns:controls="using:MatchStats.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -52,7 +53,10 @@
 
     <Page.BottomAppBar>
         <AppBar HorizontalContentAlignment="Right">
-            <Button Name="AddMatch" Style="{StaticResource AddAppBarButtonStyle}" AutomationProperties.Name="Add Match" />
+            <StackPanel Orientation="Horizontal">
+                <Button Name="AddMatch" Style="{StaticResource AddAppBarButtonStyle}" AutomationProperties.Name="Add Match" />
+                <Button Name="EditProfile" Style="{StaticResource AddAppBarButtonStyle}" AutomationProperties.Name="My Profile" />
+            </StackPanel>
         </AppBar>
     </Page.BottomAppBar>
 
@@ -66,6 +70,17 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
+        <Popup HorizontalOffset="50" IsOpen="{Binding ShowHideProfilePopup}" x:Name="EditProfilePoupup" Margin="0,0,0,0" HorizontalAlignment="Right" >
+            <Popup.ChildTransitions>
+                <TransitionCollection>
+                    <PaneThemeTransition Edge="Right"/>
+                </TransitionCollection>
+            </Popup.ChildTransitions>
+            <Border BorderBrush="Black" BorderThickness="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                <controls:ProfileUserControl x:Name="EditProfileControl" Width="646" />
+            </Border>
+        </Popup>
+        
         <controls1:CustomDialog x:FieldModifier="public" x:Name="AddMatchDialog" BackButtonVisibility="Visible" Title="Add Match" Grid.ColumnSpan="2">
             <StackPanel>
                 <TextBlock Margin="0,0,0,8" FontSize="14.6667" FontWeight="SemiLight" TextWrapping="Wrap">
