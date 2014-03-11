@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Windows.Foundation;
 using Windows.UI.ApplicationSettings;
 using Windows.UI.Core;
@@ -20,7 +20,7 @@ namespace MatchStats.Views
             this.BindCommand(ViewModel, x => x.EditProfile);
             this.Bind(ViewModel, x => x.MyMatchStats, x => x.itemGridView.ItemsSource);
             this.Bind(ViewModel, x => x.ShowNewMatchPopup, x => x.AddMatchDialog.IsOpen);
-            this.Bind(ViewModel, x => x.ShowHideProfilePopup, x => x.EditProfilePoupup.IsOpen);
+            this.Bind(ViewModel, x => x.UserProfileViewModel.ShowMe, x => x.EditProfilePoupup.IsOpen);
 
             itemGridView.Events().ItemClick.Subscribe(x =>
             {
