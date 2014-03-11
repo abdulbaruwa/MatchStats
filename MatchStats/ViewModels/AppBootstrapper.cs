@@ -1,11 +1,8 @@
-﻿using System;
-using System.Reactive.Threading.Tasks;
 using System.Runtime.Serialization;
 using System.Threading.Tasks;
 using Akavache;
 using MatchStats.Controls;
 using MatchStats.Model;
-using MatchStats.Observables;
 using MatchStats.Views;
 using ReactiveUI;
 using ReactiveUI.Mobile;
@@ -85,6 +82,10 @@ namespace MatchStats.ViewModels
 
                 Resolver.Register(() => new MatchScoreViewModel(), typeof(MatchScoreViewModel));
                 Resolver.Register(() => new MatchScoreView(), typeof (IViewFor<MatchScoreViewModel>), "FullScreenLandscape");
+
+                Resolver.Register(() => new UserProfileViewModel(), typeof(UserProfileViewModel));
+                Resolver.Register(() => new ProfileUserControl(), typeof(IViewFor<UserProfileViewModel>));
+
                 Resolver.Register(() => new UserService(), typeof (IUserService));
 
                 Resolver.Register(() => new MatchStatsViewModel(), typeof(MatchStatsViewModel));
