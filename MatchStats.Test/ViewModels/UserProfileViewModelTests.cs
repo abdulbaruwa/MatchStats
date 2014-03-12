@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics.Tracing;
-using System.Linq;
-using System.Text;
+using System;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Akavache;
-using MatchStats.Logging;
 using MatchStats.Model;
+using MatchStats.Logging;
 using MatchStats.ViewModels;
+using System.Diagnostics.Tracing;
 using Microsoft.VisualStudio.TestPlatform.UnitTestFramework;
 using ReactiveUI;
 
@@ -17,14 +15,16 @@ namespace MatchStats.Test.ViewModels
     public class UserProfileViewModelTests
     {
         [TestMethod]
-        public void ShouldFetchDefaultUserOnInitialization()
+        public async Task ShouldFetchDefaultUserOnInitialization()
         {
             RegisterComponents();
             var defaultPlayer = new Player()
             {FirstName = "FirstName", SurName = "Surname"};
 
             var blobCache = RxApp.MutableResolver.GetService<IBlobCache>("UserAccount");
-            blobCache.InsertObject("DefaultPlayer", defaultPlayer);
+            await blobCache.InsertObject("DefaultPlayer", defaultPlayer);
+
+            //var xx = await RxApp.MutableResolver.GetService<IBlobCache>("UserAccount").GetObjectAsync<Player>("DefaultPlayer");
             var fixture = new UserProfileViewModel();
             Assert.IsNotNull(fixture.DefaultPlayer);
         }
@@ -43,6 +43,38 @@ namespace MatchStats.Test.ViewModels
             RxApp.MutableResolver.Register(() => new MatchStatsLogger(), typeof(ILogger));
 
             return blobCache;
+        }
+
+        [TestMethod]
+        public void ShouldSaveUserAsDefaultPlayerWhenAllPlayerDetailsIsProvided()
+        {
+            RegisterComponents();
+            var fixture = new UserProfileViewModel();
+            var defaultPlayer = new Player() { FirstName = "FirstName", SurName = "Surname", Rating = "7.2"};
+
+            fixture.DefaultPlayer = defaultPlayer;
+
+            fixture.SaveDefaultPlayerCommand.Execute(null);
+            RxApp.MutableResolver.GetService<IBlobCache>("UserAccount").GetObjectAsync<Player>("DefaultPlayer").Subscribe(
+                Assert.IsNotNull, ex => Assert.Fail("Default Player assert fails"));
+        }
+
+        [TestMethod]
+        public void ShouldNotSaveUserAsDefaultIfAllPlayerDetailsIsNotProvided()
+        {
+            RegisterComponents();
+            var fixture = new UserProfileViewModel();
+            var defaultPlayer = new Player() { FirstName = "FirstName", Rating = "7.2" };
+
+            fixture.DefaultPlayer = defaultPlayer;
+
+            Assert.IsFalse(fixture.SaveDefaultPlayerCommand.CanExecute(null));
+
+            //fixture.SaveDefaultPlayerCommand.Execute(null);
+
+            //RxApp.MutableResolver.GetService<IBlobCache>("UserAccount").GetObjectAsync<Player>("DefaultPlayer").Subscribe(
+            //    Assert.IsNull, ex => Assert.Fail("Default Player assert fails"));
+ 
         }
 
     }
