@@ -48,6 +48,7 @@ namespace MatchStats.ViewModels
             RxApp.MutableResolver.GetService<ISecureBlobCache>().GetObjectAsync<string>("Token")
                 .Subscribe(x => CredentialAuthenticated = true);
 
+
             UserProfileViewModel = RxApp.DependencyResolver.GetService<UserProfileViewModel>();
 
             this.WhenAny(vm => vm.SelectedMatchStat, x => x.Value)

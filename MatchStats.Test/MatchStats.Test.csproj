@@ -132,6 +132,7 @@
     <Compile Include="ViewModels\MatchScoreViewModelTests\MatchScoreViewModelTests2.cs" />
     <Compile Include="ViewModels\MatchScoreViewModelTests\UndoActionsViewModel.cs" />
     <Compile Include="ViewModels\NewMatchUserControlViewModelTests.cs" />
+    <Compile Include="ViewModels\UserProfileViewModelTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">

@@ -1,5 +1,7 @@
 using System;
 using System.Runtime.Serialization;
+using Akavache;
+using MatchStats.Model;
 using ReactiveUI;
 
 namespace MatchStats.ViewModels
@@ -13,6 +15,18 @@ namespace MatchStats.ViewModels
         {
             NavAwayCommand = new ReactiveCommand();
             NavAwayCommand.Subscribe(_ => CloseSelf());
+
+            RxApp.MutableResolver.GetService<IBlobCache>("UserAccount").GetObjectAsync<Player>("DefaultUser")
+                .Subscribe(x => DefaultPlayer = x, ex => this.Log().ErrorException("Error getting DefaultPlayer", ex));
+
+        }
+
+        [DataMember]
+        private Player _defaultPlayer;
+        public Player DefaultPlayer
+        {
+            get { return _defaultPlayer; }
+            set { this.RaiseAndSetIfChanged(ref _defaultPlayer, value); }
         }
 
         private void CloseSelf()
