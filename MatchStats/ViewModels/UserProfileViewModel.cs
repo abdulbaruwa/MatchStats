@@ -1,24 +1,38 @@
 using System;
-using System.Runtime.Serialization;
+using System.Threading.Tasks;
 using Akavache;
-using MatchStats.Model;
 using ReactiveUI;
+using MatchStats.Model;
+using System.Runtime.Serialization;
 
 namespace MatchStats.ViewModels
 {
     [DataContract]
     public class UserProfileViewModel : ReactiveObject
     {
+        public IReactiveCommand SaveDefaultPlayerCommand { get; protected set; }
         public IReactiveCommand NavAwayCommand { get; protected set; }
-
+        private IBlobCache _blobCache;
         public UserProfileViewModel()
         {
+            SaveDefaultPlayerCommand = new ReactiveCommand(this.WhenAny(x => x.DefaultPlayer, p => PlayerIsValidForSave(p.Value)));
+            SaveDefaultPlayerCommand.Subscribe(_ => SaveDefaultPlayer());
             NavAwayCommand = new ReactiveCommand();
             NavAwayCommand.Subscribe(_ => CloseSelf());
-
-            RxApp.MutableResolver.GetService<IBlobCache>("UserAccount").GetObjectAsync<Player>("DefaultUser")
+            _blobCache = RxApp.MutableResolver.GetService<IBlobCache>("UserAccount");
+            _blobCache.GetObjectAsync<Player>("DefaultPlayer")
                 .Subscribe(x => DefaultPlayer = x, ex => this.Log().ErrorException("Error getting DefaultPlayer", ex));
+        }
 
+        private bool PlayerIsValidForSave(Player player)
+        {
+            if (player == null) return false;
+            return  !  (string.IsNullOrEmpty(player.FirstName) || string.IsNullOrEmpty(player.SurName) || string.IsNullOrEmpty(player.Rating));
+        }
+
+        private void SaveDefaultPlayer()
+        {
+            _blobCache.InsertObject("DefaultPlayer", DefaultPlayer);
         }
 
         [DataMember]
@@ -41,6 +55,5 @@ namespace MatchStats.ViewModels
             get { return _showMe; }
             set { this.RaiseAndSetIfChanged(ref _showMe, value); }
         }
-
     }
 }
