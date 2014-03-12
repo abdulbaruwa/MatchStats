@@ -21,6 +21,7 @@ namespace MatchStats.Views
             this.Bind(ViewModel, x => x.MyMatchStats, x => x.itemGridView.ItemsSource);
             this.Bind(ViewModel, x => x.ShowNewMatchPopup, x => x.AddMatchDialog.IsOpen);
             this.Bind(ViewModel, x => x.UserProfileViewModel.ShowMe, x => x.EditProfilePoupup.IsOpen);
+            this.Bind(ViewModel, x => x.UserProfileViewModel, x => x.EditProfileControl.ViewModel);
 
             itemGridView.Events().ItemClick.Subscribe(x =>
             {

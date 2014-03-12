@@ -71,7 +71,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Popup HorizontalOffset="75"  VerticalOffset="-22" IsOpen="{Binding ShowHideProfilePopup}"  x:Name="EditProfilePoupup" Margin="0,0,0,0" HorizontalAlignment="Right" >
+        <Popup HorizontalOffset="75"  VerticalOffset="-22" IsOpen="{Binding ShowHideProfilePopup}"  x:Name="EditProfilePoupup" Margin="0,0,0,0" HorizontalAlignment="Right" IsLightDismissEnabled="True" >
             <Popup.ChildTransitions>
                 <TransitionCollection>
                     <PaneThemeTransition Edge="Right"/>
