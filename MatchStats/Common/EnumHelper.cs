@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace MatchStats.Common
@@ -20,6 +21,17 @@ namespace MatchStats.Common
                 .GetTypeInfo()
                 .GetDeclaredField(enumValue.ToString())
                 .GetCustomAttribute<T>();
+        }
+
+        public static List<T> GetEnumAsList<T>()
+        {
+            Array enumArray = Enum.GetValues(typeof(T));
+            var result = new List<T>();
+            foreach (object item in enumArray)
+            {
+                result.Add((T)item);
+            }
+            return result;
         }
     }
 }
