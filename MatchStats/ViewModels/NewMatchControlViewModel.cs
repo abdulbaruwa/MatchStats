@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.Serialization;
+using MatchStats.Common;
 using MatchStats.Enums;
 using MatchStats.Model;
 using ReactiveUI;
@@ -134,34 +135,34 @@ namespace MatchStats.ViewModels
         {
             get
             {
-               var result = _finalSet ?? (_finalSet = GetEnumAsList<FinalSetFormats>());
+               var result = _finalSet ?? (_finalSet = EnumHelper.GetEnumAsList<FinalSetFormats>());
                 return result;
             }
         }
 
         public List<DeuceFormat> DeuceFormats
         {
-            get { return _DeuceFormat ?? (_DeuceFormat = GetEnumAsList<DeuceFormat>()); }
+            get { return _DeuceFormat ?? (_DeuceFormat = EnumHelper.GetEnumAsList<DeuceFormat>()); }
         }
 
         public List<SetsFormat> SetsFormats
         {
-            get { return _setsFormat ?? (_setsFormat = GetEnumAsList<SetsFormat>()); }
+            get { return _setsFormat ?? (_setsFormat = EnumHelper.GetEnumAsList<SetsFormat>()); }
         }
 
         public List<Grade> Grades
         {
-            get { return _matchGrades ?? (_matchGrades = GetEnumAsList<Grade>()); }
+            get { return _matchGrades ?? (_matchGrades = EnumHelper.GetEnumAsList<Grade>()); }
         }
 
         public List<AgeGroup> AgeGroups
         {
-            get { return _matchAgeGroups ?? (_matchAgeGroups = GetEnumAsList<AgeGroup>()); }
+            get { return _matchAgeGroups ?? (_matchAgeGroups = EnumHelper.GetEnumAsList<AgeGroup>()); }
         }
 
         public List<Rating> Ratings
         {
-            get { return _ratings ?? (_ratings = GetEnumAsList<Rating>()); }
+            get { return _ratings ?? (_ratings = EnumHelper.GetEnumAsList<Rating>()); }
         }
 
         public FinalSetFormats FinalSetFormat
@@ -266,17 +267,6 @@ namespace MatchStats.ViewModels
         {
             get { return _selecedGrade; }
             set { this.RaiseAndSetIfChanged(ref _selecedGrade, value); }
-        }
-
-        private List<T> GetEnumAsList<T>()
-        {
-            Array enumArray = Enum.GetValues(typeof (T));
-            var result = new List<T>();
-            foreach (object item in enumArray)
-            {
-                result.Add((T) item);
-            }
-            return result;
         }
     }
 }
