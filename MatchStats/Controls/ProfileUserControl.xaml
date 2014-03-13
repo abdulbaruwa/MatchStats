@@ -11,6 +11,12 @@
     d:DesignHeight="768"
     d:DesignWidth="646">
     <UserControl.Resources>
+        <Style x:Key="UpdateBoxStyle" TargetType="Button">
+            <Setter Property="Height" Value="55"/>
+            <Setter Property="FontSize" Value="19"/>
+            <Setter Property="Padding" Value="1,1,1,1"/>
+        </Style>
+
         <Style x:Key="StackpanelAddMatchControl" TargetType="StackPanel">
             <Setter Property="Margin" Value="20,0,20,0" />
             <Setter Property="Orientation" Value="Vertical"/>
@@ -149,19 +155,20 @@
 
                         <TextBlock Grid.Row="3" Grid.Column="0" Text="First Name" Margin="0,3,5,3" Style="{StaticResource SubtitleTextStyle}"/>
                         <!--<controls:WatermarkTextBox Name="PlayerOneFirstName" WatermarkText="First Name" Margin="0,0,5,5"/>-->
-                        <TextBox Name="PlayerOneFirstName" Margin="0,0,5,5"/>
+                        <TextBox x:Name="PlayerFirstName" Margin="0,0,5,5"/>
 
                         <!--<controls:WatermarkTextBox Name="PlayerOneLastName" WatermarkText="Last Name" Margin="0,0,5,5"/>-->
                         <TextBlock Grid.Row="3" Grid.Column="0" Text="Last Name" Margin="0,3,5,3" Style="{StaticResource SubtitleTextStyle}"/>
-                        <TextBox Name="PlayerOneLastName" Margin="0,0,5,5"/>
+                        <TextBox x:Name="PlayerLastName" Margin="0,0,5,5"/>
                         <TextBlock Grid.Row="3" Grid.Column="0" Text="Rating" Margin="0,3,5,3" Style="{StaticResource SubtitleTextStyle}"/>
-                        <ComboBox Name="PlayerOneRating"   Grid.Row="3" Grid.Column="1"  Margin="0,5,5,5" ItemsSource="{Binding Ratings}">
+                        <ComboBox Name="PlayerRating"   Grid.Row="3" Grid.Column="1"  Margin="0,5,5,5" ItemsSource="{Binding Ratings}">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate >
                                     <TextBlock Text="{Binding Converter={StaticResource EnumDescConverter}}"></TextBlock>
                                 </DataTemplate>
                             </ComboBox.ItemTemplate>
                         </ComboBox>
+                        <Button x:Name="UpdateProfileCommand">Update</Button>
                     </StackPanel>
                 </Grid>
             </ScrollViewer>
