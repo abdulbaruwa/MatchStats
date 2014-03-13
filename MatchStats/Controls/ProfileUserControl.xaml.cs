@@ -1,8 +1,6 @@
-using Windows.UI.Xaml;
-
-// The User Control item template is documented at http://go.microsoft.com/fwlink/?LinkId=234236
-using MatchStats.ViewModels;
 using ReactiveUI;
+using Windows.UI.Xaml;
+using MatchStats.ViewModels;
 
 namespace MatchStats.Controls
 {
@@ -11,7 +9,11 @@ namespace MatchStats.Controls
         public ProfileUserControl()
         {
             this.InitializeComponent();
+            this.Bind(ViewModel, x => x.Ratings, x => x.PlayerRating.ItemsSource);
+            this.Bind(ViewModel, x => x.PlayerFirstName, x => x.PlayerFirstName);
+            this.Bind(ViewModel, x => x.PlayerSurname, x => x.PlayerLastName);
             this.BindCommand(ViewModel, x => x.NavAwayCommand);
+            this.BindCommand(ViewModel, x => x.UpdateProfileCommand);
         }
 
         object IViewFor.ViewModel
@@ -28,6 +30,4 @@ namespace MatchStats.Controls
             set { SetValue(ViewModelProperty, value); }
         }
     }
-
-
 }
