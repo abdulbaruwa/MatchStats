@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Reactive.Linq;
 using System.Threading.Tasks;
 using Akavache;
 using MatchStats.Common;
@@ -25,6 +26,14 @@ namespace MatchStats.ViewModels
             _blobCache = RxApp.MutableResolver.GetService<IBlobCache>("UserAccount");
             _blobCache.GetObjectAsync<Player>("DefaultPlayer")
                 .Subscribe(x => DefaultPlayer = x, ex => this.Log().ErrorException("Error getting DefaultPlayer", ex));
+            this.WhenAny(x => x.DefaultPlayer, x => x.Value).Where(x => x != null).Select(x => x).Subscribe(UpdateProfileDisplay);
+        }
+
+        private void UpdateProfileDisplay(Player player)
+        {
+            PlayerFirstName = player.FirstName;
+            PlayerSurname = player.SurName;
+            SelectedPlayerRating = player.Rating;
         }
 
         private bool PlayerIsValidForSave(string firstname, string surname, object rating)
@@ -65,7 +74,6 @@ namespace MatchStats.ViewModels
             get { return _ratings ?? (_ratings = EnumHelper.GetEnumAsList<Rating>()); }
         }
 
-
         [DataMember]
         private object _selectedPlayerRating;
         public object SelectedPlayerRating
@@ -75,7 +83,7 @@ namespace MatchStats.ViewModels
         }
 
         [DataMember]
-        private string _playerFirstName;
+        private string _playerFirstName = string.Empty;
         public string PlayerFirstName
         {
             get { return _playerFirstName; }
@@ -83,14 +91,12 @@ namespace MatchStats.ViewModels
         }
 
         [DataMember]
-        private string _playerSurname;
+        private string _playerSurname = string.Empty;
         public string PlayerSurname
         {
             get { return _playerSurname; }
             set { this.RaiseAndSetIfChanged(ref _playerSurname, value); }
         }
-
-
 
         private void CloseSelf()
         {
