@@ -50,11 +50,11 @@ namespace MatchStats.Test.ViewModels
         {
             RegisterComponents();
             var fixture = new UserProfileViewModel();
-            var defaultPlayer = new Player() { FirstName = "FirstName", SurName = "Surname", Rating = "7.2"};
+            fixture.PlayerFirstName = "FirstName";
+            fixture.PlayerSurname  = "Surname";
+            fixture.SelectedPlayerRating = "7.2";
 
-            fixture.DefaultPlayer = defaultPlayer;
-
-            fixture.SaveDefaultPlayerCommand.Execute(null);
+            fixture.UpdateProfileCommand.Execute(null);
             RxApp.MutableResolver.GetService<IBlobCache>("UserAccount").GetObjectAsync<Player>("DefaultPlayer").Subscribe(
                 Assert.IsNotNull, ex => Assert.Fail("Default Player assert fails"));
         }
@@ -64,18 +64,25 @@ namespace MatchStats.Test.ViewModels
         {
             RegisterComponents();
             var fixture = new UserProfileViewModel();
-            var defaultPlayer = new Player() { FirstName = "FirstName", Rating = "7.2" };
+            fixture.PlayerFirstName = "firstName";
+            fixture.SelectedPlayerRating  = "7.2";
 
-            fixture.DefaultPlayer = defaultPlayer;
-
-            Assert.IsFalse(fixture.SaveDefaultPlayerCommand.CanExecute(null));
-
-            //fixture.SaveDefaultPlayerCommand.Execute(null);
-
-            //RxApp.MutableResolver.GetService<IBlobCache>("UserAccount").GetObjectAsync<Player>("DefaultPlayer").Subscribe(
-            //    Assert.IsNull, ex => Assert.Fail("Default Player assert fails"));
- 
+            Assert.IsFalse(fixture.UpdateProfileCommand.CanExecute(null));
         }
 
+        [TestMethod]
+        public void ShouldSaveUserProfileWhenUpdateProfileCommandIsFired()
+        {
+            RegisterComponents();
+            var fixture = new UserProfileViewModel();
+            fixture.PlayerFirstName = "firstName";
+            fixture.PlayerFirstName = "surname";
+            fixture.SelectedPlayerRating = "7.2";
+
+            fixture.UpdateProfileCommand.Execute(null);
+
+            RxApp.MutableResolver.GetService<IBlobCache>("UserAccount").GetObjectAsync<Player>("DefaultPlayer").Subscribe(
+                Assert.IsNotNull, ex => Assert.Fail("Default Player assert fails"));
+        }
     }
 }
