@@ -13,6 +13,9 @@ namespace MatchStats.Controls
             this.BindCommand(ViewModel, x => x.SaveCommand);
 
             this.Bind(ViewModel, x => x.UseDefaultPlayer, x => x.UseDefaultPlayer.IsOn);
+            this.Bind(ViewModel, x => x.UseDefaultPlayerInverse, x => x.PlayerOneFirstName.IsEnabled);
+            this.Bind(ViewModel, x => x.UseDefaultPlayerInverse, x => x.PlayerOneLastName.IsEnabled);
+            this.Bind(ViewModel, x => x.UseDefaultPlayerInverse, x => x.PlayerOneRating.IsEnabled);
 
             this.Bind(ViewModel, x => x.Grades, x => x.Grade.ItemsSource);
             this.Bind(ViewModel, x => x.SelectedGrade, x => x.Grade.SelectedValue);

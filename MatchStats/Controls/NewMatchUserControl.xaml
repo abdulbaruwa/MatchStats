@@ -17,61 +17,85 @@
         <common:EnumDescriptionConverter x:Key="EnumDescConverter" />
 
         <Style x:Key="HeaderTextStyleAddMatchControl" TargetType="TextBlock" BasedOn="{StaticResource HeaderTextStyle}">
-            <Setter Property="TextWrapping" Value="NoWrap"/>
+            <Setter Property="TextWrapping" Value="NoWrap" />
             <Setter Property="FontSize" Value="30" />
             <Setter Property="FontWeight" Value="Normal" />
             <Setter Property="Foreground" Value="DarkGray" />
-            <Setter Property="Margin" Value="20,0,0,10"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="20,0,0,10" />
+            <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
 
-        <Style x:Key="SubHeaderTextStyleAddMatchControl" TargetType="TextBlock" BasedOn="{StaticResource HeaderTextStyle}">
-            <Setter Property="TextWrapping" Value="NoWrap"/>
+        <Style x:Key="SubHeaderTextStyleAddMatchControl" TargetType="TextBlock"
+               BasedOn="{StaticResource HeaderTextStyle}">
+            <Setter Property="TextWrapping" Value="NoWrap" />
             <Setter Property="FontSize" Value="22" />
             <Setter Property="FontWeight" Value="Normal" />
             <Setter Property="Foreground" Value="Gray" />
-            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="VerticalAlignment" Value="Bottom" />
         </Style>
 
         <Style x:Key="StackpanelAddMatchControl" TargetType="StackPanel">
             <Setter Property="Margin" Value="20,0,20,0" />
-            <Setter Property="Orientation" Value="Vertical"/>
-            <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+            <Setter Property="Orientation" Value="Vertical" />
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
         </Style>
 
         <Style x:Key="StartButtonStyle" TargetType="Button" BasedOn="{StaticResource TextButtonStyle}">
-            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontSize" Value="20" />
         </Style>
-        
+
         <Style x:Key="DatePickerStyle1" TargetType="DatePicker">
-            <Setter Property="Orientation" Value="Horizontal"/>
-            <Setter Property="IsTabStop" Value="False"/>
-            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
-            <Setter Property="Foreground" Value="{ThemeResource DatePickerForegroundThemeBrush}"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Orientation" Value="Horizontal" />
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="Foreground" Value="{ThemeResource DatePickerForegroundThemeBrush}" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="DatePicker">
-                        <Border x:Name="LayoutRoot" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                        <Border x:Name="LayoutRoot" BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                Background="{TemplateBinding Background}">
                             <Grid Margin="{TemplateBinding Padding}">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
-                                <ContentPresenter  x:Name="HeaderContentPresenter"  ContentTemplate="{TemplateBinding HeaderTemplate}" Content="{TemplateBinding Header}" Foreground="{ThemeResource DatePickerHeaderForegroundThemeBrush}" FontWeight="{ThemeResource DatePickerHeaderThemeFontWeight}" FlowDirection="{TemplateBinding FlowDirection}" Margin="0" />
+                                <ContentPresenter x:Name="HeaderContentPresenter"
+                                                  ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                  Content="{TemplateBinding Header}"
+                                                  Foreground="{ThemeResource DatePickerHeaderForegroundThemeBrush}"
+                                                  FontWeight="{ThemeResource DatePickerHeaderThemeFontWeight}"
+                                                  FlowDirection="{TemplateBinding FlowDirection}" Margin="0" />
                                 <StackPanel Orientation="{TemplateBinding Orientation}" Grid.Row="1">
                                     <Border x:Name="FirstPickerHost" Margin="0,0,-15,0">
-                                        <ComboBox x:Name="DayPicker" Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" MinWidth="{ThemeResource DatePickerSelectorThemeMinWidth}"/>
+                                        <ComboBox x:Name="DayPicker" Foreground="{TemplateBinding Foreground}"
+                                                  FontWeight="{TemplateBinding FontWeight}"
+                                                  FontSize="{TemplateBinding FontSize}"
+                                                  FontFamily="{TemplateBinding FontFamily}"
+                                                  MinWidth="{ThemeResource DatePickerSelectorThemeMinWidth}" />
                                     </Border>
-                                    <Rectangle x:Name="FirstPickerSpacing" Height="{ThemeResource DatePickerSpacingThemeHeight}" Width="{ThemeResource DatePickerSpacingThemeWidth}"/>
+                                    <Rectangle x:Name="FirstPickerSpacing"
+                                               Height="{ThemeResource DatePickerSpacingThemeHeight}"
+                                               Width="{ThemeResource DatePickerSpacingThemeWidth}" />
                                     <Border x:Name="SecondPickerHost" Margin="0,0,-15,0">
-                                        <ComboBox x:Name="MonthPicker" Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" MinWidth="{ThemeResource DatePickerSelectorThemeMinWidth}"/>
+                                        <ComboBox x:Name="MonthPicker" Foreground="{TemplateBinding Foreground}"
+                                                  FontWeight="{TemplateBinding FontWeight}"
+                                                  FontSize="{TemplateBinding FontSize}"
+                                                  FontFamily="{TemplateBinding FontFamily}"
+                                                  MinWidth="{ThemeResource DatePickerSelectorThemeMinWidth}" />
                                     </Border>
-                                    <Rectangle x:Name="SecondPickerSpacing" Height="{ThemeResource DatePickerSpacingThemeHeight}" Width="{ThemeResource DatePickerSpacingThemeWidth}"/>
+                                    <Rectangle x:Name="SecondPickerSpacing"
+                                               Height="{ThemeResource DatePickerSpacingThemeHeight}"
+                                               Width="{ThemeResource DatePickerSpacingThemeWidth}" />
                                     <Border x:Name="ThirdPickerHost">
-                                        <ComboBox x:Name="YearPicker" Foreground="{TemplateBinding Foreground}" FontWeight="{TemplateBinding FontWeight}" FontSize="{TemplateBinding FontSize}" FontFamily="{TemplateBinding FontFamily}" MinWidth="{ThemeResource DatePickerSelectorThemeMinWidth}"/>
+                                        <ComboBox x:Name="YearPicker" Foreground="{TemplateBinding Foreground}"
+                                                  FontWeight="{TemplateBinding FontWeight}"
+                                                  FontSize="{TemplateBinding FontSize}"
+                                                  FontFamily="{TemplateBinding FontFamily}"
+                                                  MinWidth="{ThemeResource DatePickerSelectorThemeMinWidth}" />
                                     </Border>
                                 </StackPanel>
                             </Grid>
@@ -87,119 +111,116 @@
         </Style>-->
     </UserControl.Resources>
 
-        <Grid Background="White" Width="1000" MinHeight="500" HorizontalAlignment="Left">
+    <Grid Background="White" Width="1000" HorizontalAlignment="Left">
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="50" />
             <RowDefinition Height="auto" />
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="60"/>
+            <RowDefinition Height="auto" />
+            <RowDefinition Height="60" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="350"/>
-            <ColumnDefinition Width="350"/>
+            <ColumnDefinition Width="350" />
+            <ColumnDefinition Width="350" />
         </Grid.ColumnDefinitions>
 
         <Border Grid.Row="0" Grid.ColumnSpan="2">
-            <TextBlock Text="Add A Match" Style="{StaticResource HeaderTextStyleAddMatchControl}"/>
+            <TextBlock Text="Add A Match" Style="{StaticResource HeaderTextStyleAddMatchControl}" />
         </Border>
 
-        <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Background="#FFE7F3FC">
-
-        </Border>
+        <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Background="#FFE7F3FC" />
 
         <StackPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource StackpanelAddMatchControl}" Margin="10,0,10,0">
-            <TextBlock Text="Player One" Margin="0,-10,5,10" Style="{StaticResource SubHeaderTextStyleAddMatchControl}"/>
-            <ToggleSwitch x:Name="UseDefaultPlayer" IsOn="{Binding UseDefaultPlayer}" Header="Use Default Player" OffContent="No" OnContent="Yes"/>
-            <controls:WatermarkTextBox Name="PlayerOneFirstName" WatermarkText="First Name" Margin="0,0,5,5"/>
-            <controls:WatermarkTextBox Name="PlayerOneLastName" WatermarkText="Last Name" Margin="0,0,5,5"/>
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="Rating" Margin="0,3,5,3" Style="{StaticResource SubtitleTextStyle}"/>
-            <ComboBox Name="PlayerOneRating"   Grid.Row="3" Grid.Column="1"  Margin="0,5,5,5" ItemsSource="{Binding Ratings}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate >
-                        <TextBlock Text="{Binding Converter={StaticResource EnumDescConverter}}"></TextBlock>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </StackPanel>
-
-        <StackPanel Grid.Column="1" Grid.Row="1" Style="{StaticResource StackpanelAddMatchControl}" Margin="10,0,10,0">
-            <TextBlock Text="Player Two" Margin="0,-10,5,10" Style="{StaticResource SubHeaderTextStyleAddMatchControl}"/>
-            <controls:WatermarkTextBox Name="PlayerTwoFirstName" WatermarkText="First Name" Margin="0,27,5,5"/>
-            <controls:WatermarkTextBox Name="PlayerTwoLastName" WatermarkText="Last Name" Margin="0,0,5,5"/>
-            <TextBlock Grid.Row="3" Grid.Column="0" Text="Rating" Margin="0,3,5,3" Style="{StaticResource SubtitleTextStyle}"/>
-            <ComboBox Name="PlayerTwoRating"   Grid.Row="3" Grid.Column="1"  Margin="0,5,5,5" ItemsSource="{Binding Ratings}">
-                <ComboBox.ItemTemplate>
-                    <DataTemplate >
-                        <TextBlock Text="{Binding Converter={StaticResource EnumDescConverter}}"></TextBlock>
-                    </DataTemplate>
-                </ComboBox.ItemTemplate>
-            </ComboBox>
-        </StackPanel>
-
-            
-        <Grid  Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,20" >
-            <Grid.RowDefinitions >
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-                <RowDefinition />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="80" />
-                <ColumnDefinition />
-                <ColumnDefinition Width="80"/>
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>    
-                
-            <TextBlock Text="Tournament Details" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="10,0,5,5" Style="{StaticResource SubHeaderTextStyleAddMatchControl}"/>
-            <controls:WatermarkTextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Name="Tournament" WatermarkText="Tournament" Margin="10,0,5,5"/>
-                <TextBlock Text="Grade" Grid.Row="2" Grid.Column="0" Margin="10,0,5,5" Style="{StaticResource SubtitleTextStyle}"/>
-                <ComboBox Name="Grade"  Grid.Row="2" Grid.Column="1"  Margin="5,5,5,5" ItemsSource="{Binding Grades}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate >
-                            <TextBlock Text="{Binding Converter={StaticResource EnumDescConverter}}"></TextBlock>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-                <TextBlock Grid.Row="3" Grid.Column="0" Text="Age" Margin="10,0,5,5" Style="{StaticResource SubtitleTextStyle}"/>
-                <ComboBox Name="AgeGroup"   Grid.Row="3" Grid.Column="1"  Margin="5,5,5,5" ItemsSource="{Binding AgeGroups}">
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate >
-                            <TextBlock Text="{Binding Converter={StaticResource EnumDescConverter}}"></TextBlock>
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-
-            <!--<TextBlock Grid.Column="2" Text="Match Format" Margin="0,0,5,10" Style="{StaticResource SubHeaderTextStyleAddMatchControl}"/>-->
-                <TextBlock Text="Sets" Grid.Column="2" Grid.Row="3" Margin="10,0,5,5" Style="{StaticResource SubtitleTextStyle}"/>
-                <ComboBox Name="Sets" Grid.Column="3" Grid.Row="3"  Margin="5,0,5,5" ItemsSource="{Binding SetsFormats}" >
-                    <ComboBox.ItemTemplate>
-                        <DataTemplate>
-                            <TextBlock Text="{Binding Converter={StaticResource EnumDescConverter}}" />
-                        </DataTemplate>
-                    </ComboBox.ItemTemplate>
-                </ComboBox>
-            <TextBlock Text="Deuce" Grid.Row="1" Grid.Column="2" Margin="10,0,5,5" Style="{StaticResource SubtitleTextStyle}"/>
-            <ComboBox Name="DeuceFormat" Grid.Row="1" Grid.Column="3" Margin="5,5,5,5" ItemsSource="{Binding FinalSet}">
+            <TextBlock Text="Player One" Margin="10,-10,5,10" Style="{StaticResource SubHeaderTextStyleAddMatchControl}" />
+            <ToggleSwitch x:Name="UseDefaultPlayer" IsOn="{Binding UseDefaultPlayer}" Margin="0,0,0,5"
+                          OffContent="Not using Default Player" OnContent="Use Default Player" Height="40" Width="258" />
+            <TextBox Name="PlayerOneFirstName" PlaceholderText="First Name" Margin="0,0,5,5" />
+            <TextBox Name="PlayerOneLastName" PlaceholderText="Last Name" Margin="0,0,5,5" />
+            <ComboBox Name="PlayerOneRating" Grid.Row="3" Grid.Column="1" Margin="0,0,5,5"
+                      ItemsSource="{Binding Ratings}" PlaceholderText="Rating">
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
                         <TextBlock Text="{Binding Converter={StaticResource EnumDescConverter}}" />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>
-            
-            <TextBlock Text="Final Set" Grid.Row="2" Grid.Column="2" Margin="10,0,5,5" Style="{StaticResource SubtitleTextStyle}"/>
-                <ComboBox Name="FinalSetFormat" Grid.Row="2" Grid.Column="3" Margin="5,5,5,5" ItemsSource="{Binding FinalSet}">
+        </StackPanel>
+
+        <StackPanel Grid.Column="1" Grid.Row="1" Style="{StaticResource StackpanelAddMatchControl}" Margin="10,0,10,0">
+            <TextBlock Text="Player Two" Margin="10,-10,5,10" Style="{StaticResource SubHeaderTextStyleAddMatchControl}" />
+            <TextBox Name="PlayerTwoFirstName" PlaceholderText="First Name" Margin="0,44,5,5" />
+            <TextBox Name="PlayerTwoLastName" PlaceholderText="Last Name" Margin="0,0,5,5" />
+            <ComboBox Name="PlayerTwoRating" PlaceholderText="Rating" Grid.Row="3" Grid.Column="1" Margin="0,0,5,5"
+                      ItemsSource="{Binding Ratings}">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding Converter={StaticResource EnumDescConverter}}" />
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+        </StackPanel>
+
+        <Grid Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="2" Margin="0,0,0,20">
+            <Grid.RowDefinitions>
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Grid.Column="0" Grid.Row="0" Margin="10,0,10,0">
+                <TextBlock Text="Tournament Details" Margin="10,0,5,5"
+                           Style="{StaticResource SubHeaderTextStyleAddMatchControl}" />
+                <TextBox Name="Tournament" PlaceholderText="Tournament" Margin="0,0,5,5" />
+                <ComboBox Name="Grade" Margin="0,0,5,5" PlaceholderText="Grade" ItemsSource="{Binding Grades}">
                     <ComboBox.ItemTemplate>
                         <DataTemplate>
                             <TextBlock Text="{Binding Converter={StaticResource EnumDescConverter}}" />
                         </DataTemplate>
                     </ComboBox.ItemTemplate>
                 </ComboBox>
+                <ComboBox Name="AgeGroup" Margin="0,0,5,5" PlaceholderText="Age Group"
+                          ItemsSource="{Binding AgeGroups}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1" Grid.Row="0" Margin="10,45,10,0">
+                <ComboBox Name="Sets" Margin="0,0,5,5" PlaceholderText="Sets" ItemsSource="{Binding SetsFormats}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <ComboBox Name="DeuceFormat" Margin="0,0,5,5" PlaceholderText="Deuce" ItemsSource="{Binding FinalSet}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+                <ComboBox Name="FinalSetFormat" Margin="0,0,5,5" PlaceholderText="Final Set Format"
+                          ItemsSource="{Binding FinalSet}">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding Converter={StaticResource EnumDescConverter}}" />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+            </StackPanel>
+
         </Grid>
 
-        <Button x:Name="SaveCommand" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center"  Margin="0,0,20,20" Style="{StaticResource StartButtonStyle}">Done</Button>
-        
+        <Button x:Name="SaveCommand" Grid.Row="3" Grid.Column="1" HorizontalAlignment="Right"
+                VerticalAlignment="Center" Margin="0,0,20,20" Style="{StaticResource StartButtonStyle}">Done</Button>
     </Grid>
 </UserControl>

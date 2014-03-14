@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive.Linq;
 using System.Runtime.Serialization;
 using MatchStats.Common;
 using MatchStats.Enums;
@@ -25,6 +26,10 @@ namespace MatchStats.ViewModels
         {
             SaveCommand = new ReactiveCommand(IsValidForSave());
             SaveCommand.Subscribe(_ => SaveCommandImplementation());
+            this.WhenAny(x => x.UseDefaultPlayer, x => x.Value)
+                .Select(x => x)
+                .Subscribe(x => UseDefaultPlayerInverse = !x);
+
             _showMe = true;
         }
 
@@ -179,6 +184,13 @@ namespace MatchStats.ViewModels
         {
             get { return _useDefaultPlayer; }
             set { this.RaiseAndSetIfChanged(ref _useDefaultPlayer, value);}
+        }
+
+        private bool _useDefaultPlayerInverse;
+        public bool UseDefaultPlayerInverse
+        {
+            get { return _useDefaultPlayerInverse; }
+            set { this.RaiseAndSetIfChanged(ref _useDefaultPlayerInverse, value); }
         }
 
         [DataMember]
