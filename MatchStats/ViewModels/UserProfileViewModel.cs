@@ -33,7 +33,7 @@ namespace MatchStats.ViewModels
         {
             PlayerFirstName = player.FirstName;
             PlayerSurname = player.SurName;
-            SelectedPlayerRating = player.Rating;
+            SelectedPlayerRating = (object)player.Rating;
         }
 
         private bool PlayerIsValidForSave(string firstname, string surname, object rating)
