@@ -16,7 +16,6 @@ namespace MatchStats.Common
         /// <param name="enumVal">The enum value</param>
         /// <returns>The attribute of type T that exists on the enum value</returns>
         public static T GetAttribute<T>(this Enum enumValue) where T : Attribute
-
         {
             return enumValue
                 .GetType()
