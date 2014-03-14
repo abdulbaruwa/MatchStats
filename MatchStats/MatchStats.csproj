@@ -110,6 +110,7 @@
     <Compile Include="Common\BooleanToVisibilityConverter.cs" />
     <Compile Include="Common\BooleanToWinLoseImageConverter.cs" />
     <Compile Include="Common\DateDisplayConverter.cs" />
+    <Compile Include="Common\EnumBindingConverter.cs" />
     <Compile Include="Common\EnumHelper.cs" />
     <Compile Include="Common\HeightFromWindowsBoundConverter.cs" />
     <Compile Include="Common\RichTextColumns.cs" />
@@ -124,6 +125,7 @@
     <Compile Include="Model\IEnumerableMixins.cs" />
     <Compile Include="Model\IntMixins.cs" />
     <Compile Include="Model\MatchMixins.cs" />
+    <Compile Include="Model\PlayerRating.cs" />
     <Compile Include="Observables\SchedulerProvider.cs" />
     <Compile Include="ViewModels\BackHandWinnerCommandViewModel.cs" />
     <Compile Include="ViewModels\DoubleFaultCommandViewModel.cs" />

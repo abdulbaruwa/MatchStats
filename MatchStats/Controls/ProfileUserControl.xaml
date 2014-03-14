@@ -161,13 +161,15 @@
                         <TextBlock Grid.Row="3" Grid.Column="0" Text="Last Name" Margin="0,3,5,3" Style="{StaticResource SubtitleTextStyle}"/>
                         <TextBox x:Name="PlayerLastName" Margin="0,0,5,5"/>
                         <TextBlock Grid.Row="3" Grid.Column="0" Text="Rating" Margin="0,3,5,3" Style="{StaticResource SubtitleTextStyle}"/>
-                        <ComboBox Name="PlayerRating"   Grid.Row="3" Grid.Column="1"  Margin="0,5,5,5" ItemsSource="{Binding Ratings}" >
-                            <ComboBox.ItemTemplate>
+                        <Grid Grid.Row="3" Grid.Column="1" x:Name="PlayerRatingGrid">
+                        <ComboBox Name="PlayerRating"    Margin="0,5,5,5" ItemsSource="{Binding}" DisplayMemberPath="Description" SelectedValuePath="Name" />
+                            <!--<ComboBox.ItemTemplate>
                                 <DataTemplate >
-                                    <TextBlock Text="{Binding Converter={StaticResource EnumDescConverter}}"></TextBlock>
+                                    <TextBlock Text="{Binding}"></TextBlock>
                                 </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
+                            </ComboBox.ItemTemplate>-->
+                        
+                        </Grid>
                         <Button x:Name="UpdateProfileCommand">Update</Button>
                     </StackPanel>
                 </Grid>

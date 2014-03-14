@@ -33,7 +33,7 @@ namespace MatchStats.ViewModels
         {
             PlayerFirstName = player.FirstName;
             PlayerSurname = player.SurName;
-            SelectedPlayerRating = (object)player.Rating;
+            SelectedPlayerRating = player.Rating;
         }
 
         private bool PlayerIsValidForSave(string firstname, string surname, object rating)
@@ -68,6 +68,12 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _showMe, value); }
         }
 
+        private static IEnumerable<NameAndDescription> _ratingsDictionary;
+        public IEnumerable<NameAndDescription> RatingsDictionary
+        {
+            get { return _ratingsDictionary ?? (_ratingsDictionary = EnumHelper.GetEnumKeyValuePairs<Rating>()); }
+        }
+
         private static List<Rating> _ratings;
         public List<Rating> Ratings
         {
@@ -75,11 +81,14 @@ namespace MatchStats.ViewModels
         }
 
         [DataMember]
-        private object _selectedPlayerRating;
+        private object _selectedPlayerRating = string.Empty;
         public object SelectedPlayerRating
         {
             get { return _selectedPlayerRating; }
-            set { this.RaiseAndSetIfChanged(ref _selectedPlayerRating, value); }
+            set
+            {
+                if(value != null)this.RaiseAndSetIfChanged(ref _selectedPlayerRating, value);
+            }
         }
 
         [DataMember]
@@ -98,6 +107,16 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _playerSurname, value); }
         }
 
+        [DataMember]
+        private object _selectedPlayerRatingValue;
+        public object SelectedPlayerRatingValue
+        {
+            get { return _selectedPlayerRatingValue; }
+            set
+            {
+                if (value != null) this.RaiseAndSetIfChanged(ref _selectedPlayerRatingValue, value);
+            }
+        }
         private void CloseSelf()
         {
             ShowMe = false;

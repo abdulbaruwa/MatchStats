@@ -49,7 +49,7 @@ namespace MatchStats.ViewModels
                 .Subscribe(x => CredentialAuthenticated = true);
 
 
-            UserProfileViewModel = RxApp.DependencyResolver.GetService<UserProfileViewModel>();
+            //UserProfileViewModel = RxApp.DependencyResolver.GetService<UserProfileViewModel>();
 
             this.WhenAny(vm => vm.SelectedMatchStat, x => x.Value)
                 .Where(x => x != null && x is Match)
