@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
+using Akavache;
 using MatchStats.Common;
 using MatchStats.Enums;
 using MatchStats.Model;
@@ -29,11 +30,10 @@ namespace MatchStats.ViewModels
             this.WhenAny(x => x.UseDefaultPlayer, x => x.Value)
                 .Select(x => x)
                 .Subscribe(x => UseDefaultPlayerInverse = !x);
-
             _showMe = true;
         }
 
-        private void SaveCommandImplementation()
+        private async void SaveCommandImplementation()
         {
             var match = new Match(){MatchGuid = Guid.NewGuid(), MatchTime = DateTime.Now};
 
@@ -47,10 +47,19 @@ namespace MatchStats.ViewModels
                 SetsFormat = (SetsFormat) this.SelectedSetsFormat
             };
 
-            if (! UseDefaultPlayer)
+            if (UseDefaultPlayer)
+            {
+                var _blobCache = RxApp.MutableResolver.GetService<IBlobCache>("UserAccount");
+                var defaultPlayer = await _blobCache.GetObjectAsync<Player>("DefaultPlayer");
+                if (defaultPlayer != null)
+                {
+                    match.PlayerOne = defaultPlayer;
+                    match.PlayerOne.IsPlayerOne = true;
+                }
+            }
+            else
             {
                 match.PlayerOne = BuildPlayerOne();
-
             }
 
             var tournament = new Tournament();
@@ -91,7 +100,6 @@ namespace MatchStats.ViewModels
             return player;
         }
 
-
         public IObservable<bool> IsValidForSave()
         {
             //Combine change notification for required fields and push to SaveCommand when valid.
@@ -105,10 +113,10 @@ namespace MatchStats.ViewModels
                 x => x.TournamentName,
                 (defaultplayer, playerOneFname, playertwoFname, Deuce, finalset, sets, tournament) =>
                 (
+                    
                     Deuce.Value != null && finalset.Value != null && sets.Value != null && ! string.IsNullOrWhiteSpace(tournament.Value) &&
                     (defaultplayer.Value == true || (! string.IsNullOrEmpty(playerOneFname.Value))) &&
                     ! string.IsNullOrEmpty(playertwoFname.Value)
-
                 ));
         }
         

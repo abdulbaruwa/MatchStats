@@ -227,7 +227,10 @@ namespace MatchStats.ViewModels
                     {
                         action.IsEnabled = false;
                     }
-                });
+
+                    EnableServeReturnActionsForPlayerOne(! CurrentServer.IsPlayerOne);
+                    EnableServeReturnActionsForPlayerTwo(CurrentServer.IsPlayerOne);
+                   });
 
             // If a serve is in Disable the ability to add An Ace Serve for player one
             this.WhenAny(x => x.CurrMatch.MatchStats, x => x.Value.LastOrDefault())
@@ -245,7 +248,27 @@ namespace MatchStats.ViewModels
                     PlayerTwoActions.First(x => x.Name == "AceServe").IsEnabled = false;
                 });
         }
-     
+
+        private void EnableServeReturnActionsForPlayerTwo(bool enabled)
+        {
+            var p2ServeReturnActions =
+                PlayerTwoActions.Where(y => y.Name == "ForcedServeReturnError" || y.Name == "UnforcedServeReturnError");
+            foreach (var serveReturnAction in p2ServeReturnActions)
+            {
+                serveReturnAction.IsEnabled = enabled;
+            }
+        }
+
+        private void EnableServeReturnActionsForPlayerOne(bool enabled)
+        {
+            var serveReturnActions =
+                PlayerOneActions.Where(y => y.Name == "ForcedServeReturnError" || y.Name == "UnforcedServeReturnError");
+            foreach (var serveReturnAction in serveReturnActions)
+            {
+                serveReturnAction.IsEnabled = enabled;
+            }
+        }
+
         private void InitializeCurrentServerCommands()
         {
             SetPlayerOneAsCurrentServerCommand = new ReactiveCommand(this.WhenAny(x => x.CurrMatch.IsMatchOver, x => x.GameIsOnGoing, (matchover, gameongoing) => ( (!matchover.Value) && gameongoing.Value)));
