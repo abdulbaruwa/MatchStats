@@ -138,7 +138,7 @@ namespace MatchStats.Model
             //Is Set Over
             CheckSetIsOverAndInitializeNewSetIfNeedBe(currentMatch);
 
-            //Update MatchSituation with latest valid MatchSituation we can find.
+            //Update MatchSituation with latest valid MatchSituation we can find one.
             var latestMatchSituation = currentMatch.MatchStats.LastOrDefault(x => x.MatchSituations.Count > 0);
             if (latestMatchSituation != null && latestMatchSituation.MatchSituations.Count > 0)
             {

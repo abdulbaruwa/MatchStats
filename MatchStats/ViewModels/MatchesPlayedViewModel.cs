@@ -60,6 +60,8 @@ namespace MatchStats.ViewModels
                 .Select(x => x)
                 .Subscribe(x => this.ShowHideProfilePopup = x);
 
+            //AMatchIsOver
+            MessageBus.Current.Listen<string>("MatchOver").Subscribe(_ => FetchLatestMatchStats());
             MyMatchStats = new ReactiveList<Match>();
             FetchLatestMatchStats();
         }

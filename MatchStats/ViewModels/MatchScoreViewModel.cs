@@ -247,6 +247,12 @@ namespace MatchStats.ViewModels
                 {
                     PlayerTwoActions.First(x => x.Name == "AceServe").IsEnabled = false;
                 });
+
+            //If match is over send message for refresh of played matches
+            this.WhenAny(x => x.CurrMatch.IsMatchOver, x => x.Value)
+                .Where(x => x)
+                .Subscribe(x => MessageBus.Current.SendMessage(CurrMatch.MatchGuid.ToString(), "MatchOver"));
+
         }
 
         private void EnableServeReturnActionsForPlayerTwo(bool enabled)
