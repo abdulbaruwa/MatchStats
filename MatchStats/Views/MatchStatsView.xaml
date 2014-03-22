@@ -222,7 +222,7 @@
                             </Grid.RowDefinitions>
                             <Rectangle Grid.Row="0" Stroke="LightBlue" StrokeThickness="10" Width="160" Grid.ColumnSpan="2" Margin="5,0" ></Rectangle>
                             <Image Source="ms-appx:///Assets/male_silhouette.png" Grid.ColumnSpan="2"></Image>
-                            <TextBlock Name="PlayerOneNameUnderImage" Grid.Row="1" Text="{Binding PlayerOneFullName}" Style="{StaticResource PlayerNameUnderImageTextStye}" Grid.ColumnSpan="2" Margin="48,0,47,0"/>
+                            <TextBlock Name="PlayerOneNameUnderImage" HorizontalAlignment="Stretch" Grid.Row="1"  TextAlignment="Center" Text="{Binding PlayerOneFullName}" Style="{StaticResource PlayerNameUnderImageTextStye}" Grid.ColumnSpan="2"/>
                         </Grid>
                         <Grid Grid.Column="2" Width="170">
                             <Grid.RowDefinitions>
@@ -231,7 +231,7 @@
                             </Grid.RowDefinitions>
                             <Rectangle Grid.Row="0" Stroke="WhiteSmoke" StrokeThickness="10" Width="160" ></Rectangle>
                             <Image Source="ms-appx:///Assets/male_silhouette.png" ></Image>
-                            <TextBlock Name="PlayerTwoNameUnderImage" Grid.Row="1" Text="{Binding PlayerTwoFullName}" Style="{StaticResource PlayerNameUnderImageTextStye}"/>
+                            <TextBlock Name="PlayerTwoNameUnderImage" Grid.Row="1" Grid.Column="0"  Text="{Binding PlayerTwoFullName}" Style="{StaticResource PlayerNameUnderImageTextStye}"/>
                         </Grid>
 
 
@@ -272,8 +272,7 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate>
-                                <!--<Border RenderTransformOrigin="0.5,0.5"  BorderThickness="2" BorderBrush="WhiteSmoke" Margin="-4,-5,-21,0">-->
-                                <Grid Margin="-4,0,-21,0">
+                                <Grid Margin="-4,0,-21,-12">
                                     <Grid.Background>
                                         <SolidColorBrush Color="{Binding IndexWithinParentCollection, Mode=OneWay,Converter={StaticResource AltnateBackgroundConverter}}"/>
                                     </Grid.Background>
