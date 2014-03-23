@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reactive;
 using System.Reactive.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Xml.Linq;
 using Windows.Storage;
+using Windows.Storage.FileProperties;
+using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.System.UserProfile;
 using Windows.UI.Xaml.Media.Imaging;
@@ -16,6 +19,85 @@ using ReactiveUI;
 
 namespace MatchStats.Model
 {
+    public interface IImagesApi
+    {
+        Task<string> BrowseImage();
+        Task<StorageItemThumbnail> BrowseImageThumbnail();
+        void SaveDefaultPlayerImage(StorageItemThumbnail imageThumbnail);
+    }
+
+
+    public class ImagesApi : IImagesApi
+    {
+        public async Task<string> BrowseImage()
+        {
+            var picker = new FileOpenPicker();
+            picker.ViewMode = PickerViewMode.Thumbnail;
+            picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            picker.FileTypeFilter.Add(".jpg");
+            picker.FileTypeFilter.Add(".jpeg");
+            picker.FileTypeFilter.Add(".png");
+            var file = await picker.PickSingleFileAsync();
+            if (file != null)
+            {
+                var thumbnail = await file.GetThumbnailAsync(ThumbnailMode.PicturesView);
+                return file.Path;
+            }
+            return string.Empty;
+        }
+        public async Task<StorageItemThumbnail> BrowseImageThumbnail()
+        {
+            var picker = new FileOpenPicker();
+            picker.ViewMode = PickerViewMode.Thumbnail;
+            picker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            picker.FileTypeFilter.Add(".jpg");
+            picker.FileTypeFilter.Add(".jpeg");
+            picker.FileTypeFilter.Add(".png");
+            var file = await picker.PickSingleFileAsync();
+            if (file != null)
+            {
+                //var filestream = await Windows.Storage.FileIO.ReadBufferAsync(file);
+                //var newfile = await ApplicationData.Current.LocalFolder.CreateFileAsync("DefaultPlayerImage.bmp", CreationCollisionOption.ReplaceExisting);
+                //DataReader dataReader = Windows.Storage.Streams.DataReader.FromBuffer(filestream);
+
+                //var bytes = new byte[]{};
+                //await Windows.Storage.FileIO.WriteBytesAsync(newfile, dataReader.ReadBytes())
+                //await file. CopyAsync(ApplicationData.Current.LocalFolder, "DefaultPlayerImage.bmp", NameCollisionOption.ReplaceExisting);
+                var thumbnail = await file.GetThumbnailAsync(ThumbnailMode.PicturesView);
+                return thumbnail;
+            }
+
+            return null;
+        }
+
+        public void SaveDefaultPlayerImage(StorageItemThumbnail imageThumbnail)
+        {
+            //var _torageFile = await ApplicationData.Current.LocalFolder. CreateFileAsync(imageThumbnail.Replace(" ", "_") + ".log", CreationCollisionOption.OpenIfExists);
+            var blobCache = RxApp.MutableResolver.GetService<IBlobCache>("UserAccount");
+            blobCache.InsertObject("DefaultPlayerImage", imageThumbnail);
+        }
+    }
+
+    public class FakeImagesApi : IImagesApi
+    {
+        public async Task<string> BrowseImage()
+        {
+            //return "ms-appx:///Assets/male_silhouette.png";
+            return "C:\\Users\\abdul_000\\Pictures\\AdemolasSweden 080.jpg";
+            //return "Assets/AdemolasSweden 080.jpg";
+        }
+
+        public Task<StorageItemThumbnail> BrowseImageThumbnail()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void SaveDefaultPlayerImage(StorageItemThumbnail imageThumbnail)
+        {
+            throw new NotImplementedException();
+        }
+    }
+
     public interface IMatchStatsApi
     {
         void SaveMatch(Match match);
@@ -39,7 +121,6 @@ namespace MatchStats.Model
         public void SaveMatchStats(List<Match> matchStats)
         {
             _blobCache.InsertObject("MyMatchStats", matchStats);
-            IEnumerable<string> test = _blobCache.GetAllKeys();
         }
 
         public async void SaveMatch(Match match)

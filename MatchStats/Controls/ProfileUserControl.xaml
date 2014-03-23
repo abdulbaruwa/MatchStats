@@ -165,6 +165,14 @@
                             <ComboBox Name="PlayerRating"    Margin="0,5,5,5" ItemsSource="{Binding}" DisplayMemberPath="Description" SelectedValuePath="Name" />
                         </Grid>
                         <Button x:Name="UpdateProfileCommand">Update</Button>
+                        <Grid>
+                           <Grid.RowDefinitions>
+                               <RowDefinition Height="120"/>
+                               <RowDefinition/>
+                           </Grid.RowDefinitions>
+                            <Image x:Name="DefaultPlayerImage" Grid.Row="0"></Image>
+                            <Button x:Name="BrowseImageCommand" Grid.Row="1">Browse Image</Button>
+                        </Grid>
                     </StackPanel>
                 </Grid>
             </ScrollViewer>

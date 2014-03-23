@@ -73,6 +73,7 @@ namespace MatchStats.ViewModels
                 Resolver.RegisterConstant(this, typeof(ILoginMethods));
 
                 Resolver.Register(() => new MatchStatsApi(), typeof(IMatchStatsApi));
+                Resolver.Register(() => new ImagesApi(), typeof(IImagesApi));
 
                 Resolver.Register(() => new MatchesPlayedViewModel(this), typeof(MatchesPlayedViewModel));
                 Resolver.Register(() => new MatchesPlayedView(), typeof (IViewFor<MatchesPlayedViewModel>),"FullScreenLandscape");

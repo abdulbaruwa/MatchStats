@@ -2,6 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
+using Windows.Storage.Search;
+using Windows.UI.Xaml.Media;
+using Windows.UI.Xaml.Media.Imaging;
 using Akavache;
 using MatchStats.Common;
 using MatchStats.Enums;
@@ -16,6 +19,7 @@ namespace MatchStats.ViewModels
     {
         public IReactiveCommand UpdateProfileCommand { get; protected set; }
         public IReactiveCommand NavAwayCommand { get; protected set; }
+        public IReactiveCommand BrowseImageCommand { get; protected set; }
         private IBlobCache _blobCache;
         public UserProfileViewModel()
         {
@@ -23,12 +27,33 @@ namespace MatchStats.ViewModels
             UpdateProfileCommand.Subscribe(_ => SaveDefaultPlayer());
             NavAwayCommand = new ReactiveCommand();
             NavAwayCommand.Subscribe(_ => CloseSelf());
+            BrowseImageCommand = new ReactiveCommand();
+            BrowseImageCommand.Subscribe((_ => BrowseImage()));
             _blobCache = RxApp.MutableResolver.GetService<IBlobCache>("UserAccount");
             _blobCache.GetObjectAsync<Player>("DefaultPlayer")
                 .Subscribe(x => DefaultPlayer = x, ex => this.Log().ErrorException("Error getting DefaultPlayer", ex));
             this.WhenAny(x => x.DefaultPlayer, x => x.Value).Where(x => x != null).Select(x => x).Subscribe(UpdateProfileDisplay);
+            this.WhenAny(x => x.DefaultPlayerImagePath, x => x.Value).Where(x => x != null).Select(x => x)
+                .Subscribe(x =>
+                {
+                    //RxApp.MutableResolver.GetService<ImagesApi>().BrowseImage()
+                    var baseUri = new Uri("ms-appx:///");
+                    //DefaultPlayerImage = new BitmapImage(new Uri(baseUri, DefaultPlayerImagePath));
+                });
         }
 
+        private async void BrowseImage()
+        {
+            var imageApi = RxApp.MutableResolver.GetService<IImagesApi>();
+            var imagePath = await imageApi.BrowseImageThumbnail();
+            if (imagePath != null)
+            {
+                var image = new BitmapImage();
+                image.SetSource(imagePath);
+                DefaultPlayerImage = image;
+            }
+        }
+        
         private void UpdateProfileDisplay(Player player)
         {
             PlayerFirstName = player.FirstName;
@@ -117,10 +142,27 @@ namespace MatchStats.ViewModels
                 if (value != null) this.RaiseAndSetIfChanged(ref _selectedPlayerRatingValue, value);
             }
         }
+
+        [DataMember]
+        private string _defaultPlayerImagePath;
+
+        public string DefaultPlayerImagePath
+        {
+            get { return _defaultPlayerImagePath; }
+            set { this.RaiseAndSetIfChanged(ref _defaultPlayerImagePath, value); }
+        }
+
+        [DataMember]
+        private ImageSource _defaultPlayerImage;
+        public ImageSource DefaultPlayerImage
+        {
+            get { return _defaultPlayerImage; }
+            set { this.RaiseAndSetIfChanged(ref _defaultPlayerImage, value);}
+        }
+
         private void CloseSelf()
         {
             ShowMe = false;
         }
-
     }
 }

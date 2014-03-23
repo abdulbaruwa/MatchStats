@@ -10,15 +10,14 @@ namespace MatchStats.Controls
         {
             this.InitializeComponent();
             this.Bind(ViewModel, x => x.RatingsDictionary, x => x.PlayerRatingGrid.DataContext);
-            //this.Bind(ViewModel, x => x.RatingsDictionary, x => x.PlayerRating.ItemsSource);
             this.Bind(ViewModel, x => x.PlayerFirstName, x => x.PlayerFirstName.Text);
             this.Bind(ViewModel, x => x.PlayerSurname, x => x.PlayerLastName.Text);
             this.Bind(ViewModel, x => x.SelectedPlayerRating, x => x.PlayerRating.SelectedValue);
+            this.Bind(ViewModel, x => x.DefaultPlayerImage, x => x.DefaultPlayerImage.Source);
 
             this.BindCommand(ViewModel, x => x.NavAwayCommand);
             this.BindCommand(ViewModel, x => x.UpdateProfileCommand);
-            //this.PlayerRating.DisplayMemberPath = "Name";
-
+            this.BindCommand(ViewModel, x => x.BrowseImageCommand);
         }
 
         object IViewFor.ViewModel
