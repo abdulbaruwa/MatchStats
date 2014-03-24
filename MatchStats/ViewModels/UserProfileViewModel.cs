@@ -1,8 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
-using System.Threading.Tasks;
-using Windows.Storage.Search;
+using Windows.Storage;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Akavache;
@@ -40,6 +39,15 @@ namespace MatchStats.ViewModels
                     var baseUri = new Uri("ms-appx:///");
                     //DefaultPlayerImage = new BitmapImage(new Uri(baseUri, DefaultPlayerImagePath));
                 });
+            GetDefaultProfileImage();
+        }
+
+        private async void GetDefaultProfileImage()
+        {
+
+            var defaultPlayerImage = ApplicationData.Current.LocalFolder.Path + @"\DefaultPlayerImage.bmp" ;
+
+            var file = await  Windows.Storage.StorageFile.GetFileFromPathAsync(DefaultPlayerImagePath);
         }
 
         private async void BrowseImage()

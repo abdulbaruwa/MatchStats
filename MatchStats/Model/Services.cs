@@ -1,12 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reactive;
 using System.Reactive.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using System.Xml.Linq;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Pickers;
@@ -45,6 +42,7 @@ namespace MatchStats.Model
             }
             return string.Empty;
         }
+
         public async Task<StorageItemThumbnail> BrowseImageThumbnail()
         {
             var picker = new FileOpenPicker();
@@ -56,13 +54,13 @@ namespace MatchStats.Model
             var file = await picker.PickSingleFileAsync();
             if (file != null)
             {
-                var filestream = await Windows.Storage.FileIO.ReadBufferAsync(file);
+                var filestream = await FileIO.ReadBufferAsync(file);
                 var newfile = await ApplicationData.Current.LocalFolder.CreateFileAsync("DefaultPlayerImage.bmp", CreationCollisionOption.ReplaceExisting);
-                using (DataReader dataReader = Windows.Storage.Streams.DataReader.FromBuffer(filestream))
+                using (DataReader dataReader = DataReader.FromBuffer(filestream))
                 {
                     var buffer = new byte[dataReader.UnconsumedBufferLength];
                     dataReader.ReadBytes(buffer);
-                    await Windows.Storage.FileIO.WriteBytesAsync(newfile, buffer);    
+                    await FileIO.WriteBytesAsync(newfile, buffer);    
                 }
                 var thumbnail = await file.GetThumbnailAsync(ThumbnailMode.PicturesView);
                 return thumbnail;
