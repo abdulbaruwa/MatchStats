@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Reactive.Linq;
 using Windows.Storage;
+using Windows.Storage.FileProperties;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Akavache;
@@ -44,10 +45,12 @@ namespace MatchStats.ViewModels
 
         private async void GetDefaultProfileImage()
         {
-
-            var defaultPlayerImage = ApplicationData.Current.LocalFolder.Path + @"\DefaultPlayerImage.bmp" ;
-
-            var file = await  Windows.Storage.StorageFile.GetFileFromPathAsync(DefaultPlayerImagePath);
+            if (await ApplicationData.Current.LocalFolder.TryGetItemAsync("DefaultPlayerImage.bmp") != null)
+            {
+                var defaultPlayerImage = await ApplicationData.Current.LocalFolder.GetFileAsync("DefaultPlayerImage.bmp") ;
+                var imageThumbnail = defaultPlayerImage.GetThumbnailAsync(ThumbnailMode.PicturesView);
+                SetDefaultImage(await imageThumbnail);
+            }
         }
 
         private async void BrowseImage()
@@ -56,12 +59,17 @@ namespace MatchStats.ViewModels
             var imagePath = await imageApi.BrowseImageThumbnail();
             if (imagePath != null)
             {
-                var image = new BitmapImage();
-                image.SetSource(imagePath);
-                DefaultPlayerImage = image;
+                SetDefaultImage(imagePath);
             }
         }
-        
+
+        private void SetDefaultImage(StorageItemThumbnail imagePath)
+        {
+            var image = new BitmapImage();
+            image.SetSource(imagePath);
+            DefaultPlayerImage = image;
+        }
+
         private void UpdateProfileDisplay(Player player)
         {
             PlayerFirstName = player.FirstName;

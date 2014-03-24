@@ -71,7 +71,6 @@ namespace MatchStats.Model
 
         public void SaveDefaultPlayerImage(StorageItemThumbnail imageThumbnail)
         {
-            //var _torageFile = await ApplicationData.Current.LocalFolder. CreateFileAsync(imageThumbnail.Replace(" ", "_") + ".log", CreationCollisionOption.OpenIfExists);
             var blobCache = RxApp.MutableResolver.GetService<IBlobCache>("UserAccount");
             blobCache.InsertObject("DefaultPlayerImage", imageThumbnail);
         }
