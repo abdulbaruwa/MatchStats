@@ -12,6 +12,8 @@ namespace MatchStats.Views
             this.InitializeComponent();
             this.Bind(ViewModel, x => x.PlayerOneFullName, x => x.PlayerOneFullNameTxtbox.Text);
             this.Bind(ViewModel, x => x.PlayerOneFullName, x => x.PlayerOneNameUnderImage.Text);
+            this.Bind(ViewModel, x => x.PlayerOneImage, x => x.PlayerOneImage.Source);
+            this.Bind(ViewModel, x => x.PlayerTwoImage, x => x.PlayerTwoImage.Source);
             this.Bind(ViewModel, x => x.PlayerTwoFullName, x => x.PlayerTwoFullNameTxtbox.Text);
             this.Bind(ViewModel, x => x.PlayerTwoFullName, x => x.PlayerTwoNameUnderImage.Text);
             this.Bind(ViewModel, x => x.FirstSetDuration, x => x.FirstSetDurationTxtbox.Text);

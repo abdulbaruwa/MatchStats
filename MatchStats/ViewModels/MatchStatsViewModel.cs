@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
 using Windows.Devices.Sensors;
+using Windows.UI.Xaml.Media;
 using MatchStats.Common;
 using MatchStats.Enums;
 using MatchStats.Model;
@@ -25,6 +26,12 @@ namespace MatchStats.ViewModels
             InitializeFields();
         }
 
+        private async void LoadPlayerOneImage()
+        {
+            var imageApi = RxApp.MutableResolver.GetService<IImagesApi>();
+            PlayerOneImage = await imageApi.GetDefaultPlayerImage();
+        }
+
         private void InitializeFields()
         {
             this.WhenAny(x => x.CurrentMatch, x => x.Value)
@@ -41,6 +48,7 @@ namespace MatchStats.ViewModels
                     AddforcedErrors();
                     AddForcedServeReturnStats();
                     AddUnForcedServeReturnStats();
+                    LoadPlayerOneImage();
                 });
         }
 
@@ -161,6 +169,16 @@ namespace MatchStats.ViewModels
         public string FirstSetDuration { get; set; }
         public string SecondSetDuration { get; set; }
         public string ThirdSetDuration { get; set; }
+
+        [DataMember]
+        private ImageSource _playerOneImage;  
+        public ImageSource PlayerOneImage
+        {
+            get { return _playerOneImage; }
+            set { this.RaiseAndSetIfChanged(ref _playerOneImage, value); }
+        }
+
+        public ImageSource PlayerTwoImage { get; set; }
 
         public delegate void ActionDelegate(bool isPlayerOne, string set = null);
 

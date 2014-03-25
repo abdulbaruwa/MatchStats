@@ -9,6 +9,7 @@ using Windows.Storage.FileProperties;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.System.UserProfile;
+using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Imaging;
 using Akavache;
 using MatchStats.Enums;
@@ -21,8 +22,8 @@ namespace MatchStats.Model
         Task<string> BrowseImage();
         Task<StorageItemThumbnail> BrowseImageThumbnail();
         void SaveDefaultPlayerImage(StorageItemThumbnail imageThumbnail);
+        Task<ImageSource> GetDefaultPlayerImage();
     }
-
 
     public class ImagesApi : IImagesApi
     {
@@ -74,6 +75,29 @@ namespace MatchStats.Model
             var blobCache = RxApp.MutableResolver.GetService<IBlobCache>("UserAccount");
             blobCache.InsertObject("DefaultPlayerImage", imageThumbnail);
         }
+
+        public async Task<ImageSource> GetDefaultPlayerImage()
+        {
+            if (await ApplicationData.Current.LocalFolder.TryGetItemAsync("DefaultPlayerImage.bmp") == null)
+            {
+                var baseUri = new Uri("ms-appx:///");
+                const string imagePath = "Assets/male_silhouette.png";
+                var defaultImage = await StorageFile.GetFileFromApplicationUriAsync(new Uri(baseUri, imagePath));
+                var bitmapimage = await GetBitbitmapFromStorageFile(defaultImage);
+                return bitmapimage;
+            }
+
+            var defaultPlayerImage = await ApplicationData.Current.LocalFolder.GetFileAsync("DefaultPlayerImage.bmp");
+            return  await GetBitbitmapFromStorageFile(defaultPlayerImage);
+        }
+
+        private static async Task<BitmapImage> GetBitbitmapFromStorageFile(StorageFile defaultImage)
+        {
+            var bitmapimage = new BitmapImage();
+            var image = await defaultImage.GetThumbnailAsync(ThumbnailMode.PicturesView);
+            bitmapimage.SetSource(image);
+            return bitmapimage;
+        }
     }
 
     public class FakeImagesApi : IImagesApi
@@ -91,6 +115,11 @@ namespace MatchStats.Model
         }
 
         public void SaveDefaultPlayerImage(StorageItemThumbnail imageThumbnail)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<ImageSource> GetDefaultPlayerImage()
         {
             throw new NotImplementedException();
         }
