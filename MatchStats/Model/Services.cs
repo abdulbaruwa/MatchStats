@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
@@ -94,8 +95,8 @@ namespace MatchStats.Model
         private static async Task<BitmapImage> GetBitbitmapFromStorageFile(StorageFile defaultImage)
         {
             var bitmapimage = new BitmapImage();
-            var image = await defaultImage.GetThumbnailAsync(ThumbnailMode.PicturesView);
-            bitmapimage.SetSource(image);
+            IRandomAccessStreamWithContentType stream = await defaultImage.OpenReadAsync();
+            bitmapimage.SetSource(stream);
             return bitmapimage;
         }
     }

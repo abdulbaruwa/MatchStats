@@ -211,7 +211,7 @@
                             </Grid>
                         </Grid>
 
-                        <Grid Grid.Column="0" Width="170">
+                        <Grid Grid.Column="0" Width="220">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="53*"/>
                                 <ColumnDefinition Width="117*"/>
@@ -220,16 +220,16 @@
                                 <RowDefinition/>
                                 <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
-                            <Rectangle Grid.Row="0" Stroke="LightBlue" StrokeThickness="10" Width="160" Grid.ColumnSpan="2" Margin="5,0" ></Rectangle>
+                            <Rectangle Grid.Row="0" Stroke="LightBlue" StrokeThickness="10" Width="210" Grid.ColumnSpan="2" Margin="5,0" ></Rectangle>
                             <Image x:Name="PlayerOneImage" Source="ms-appx:///Assets/male_silhouette.png" Grid.ColumnSpan="2"></Image>
                             <TextBlock Name="PlayerOneNameUnderImage" HorizontalAlignment="Stretch" Grid.Row="1"  TextAlignment="Center" Text="{Binding PlayerOneFullName}" Style="{StaticResource PlayerNameUnderImageTextStye}" Grid.ColumnSpan="2"/>
                         </Grid>
-                        <Grid Grid.Column="2" Width="170">
+                        <Grid Grid.Column="2" Width="220">
                             <Grid.RowDefinitions>
                                 <RowDefinition/>
                                 <RowDefinition Height="30"/>
                             </Grid.RowDefinitions>
-                            <Rectangle Grid.Row="0" Stroke="WhiteSmoke" StrokeThickness="10" Width="160" ></Rectangle>
+                            <Rectangle Grid.Row="0" Stroke="WhiteSmoke" StrokeThickness="10" Width="210" ></Rectangle>
                             <Image x:Name="PlayerTwoImage" Source="ms-appx:///Assets/male_silhouette.png" ></Image>
                             <TextBlock Name="PlayerTwoNameUnderImage" Grid.Row="1" Grid.Column="0"  Text="{Binding PlayerTwoFullName}" Style="{StaticResource PlayerNameUnderImageTextStye}"/>
                         </Grid>
