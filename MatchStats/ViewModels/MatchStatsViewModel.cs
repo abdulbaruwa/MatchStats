@@ -5,7 +5,9 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Runtime.Serialization;
 using Windows.Devices.Sensors;
+using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
+using Akavache;
 using MatchStats.Common;
 using MatchStats.Enums;
 using MatchStats.Model;
@@ -28,8 +30,34 @@ namespace MatchStats.ViewModels
 
         private async void LoadPlayerOneImage()
         {
+            var defaultPlayer = await RxApp.MutableResolver.GetService<IMatchStatsApi>().GetDefaultPlayer();
             var imageApi = RxApp.MutableResolver.GetService<IImagesApi>();
-            PlayerOneImage = await imageApi.GetDefaultPlayerImage();
+            var defaultPlayerImage = await imageApi.GetDefaultPlayerImage();
+            var silhueteImage = await imageApi.GetSilhuetteImage(); 
+
+            if (defaultPlayer != null)
+            {
+                if (defaultPlayer.FullName == PlayerOneFullName)
+                {
+                    PlayerOneImage = defaultPlayerImage;
+                    PlayerTwoImage = silhueteImage;
+                }
+                else if (defaultPlayer.FullName == PlayerTwoFullName)
+                {
+                    PlayerTwoImage = defaultPlayerImage;
+                    PlayerOneImage = silhueteImage;
+                }
+                else
+                {
+                    PlayerOneImage = silhueteImage;
+                    PlayerTwoImage = silhueteImage;
+                }
+            }
+            else
+            {
+                PlayerOneImage = silhueteImage;
+                PlayerTwoImage = silhueteImage;
+            }
         }
 
         private void InitializeFields()
@@ -178,9 +206,16 @@ namespace MatchStats.ViewModels
             set { this.RaiseAndSetIfChanged(ref _playerOneImage, value); }
         }
 
-        public ImageSource PlayerTwoImage { get; set; }
-
-        public delegate void ActionDelegate(bool isPlayerOne, string set = null);
+        [DataMember]
+        private ImageSource _playerTwoImage;
+        public ImageSource PlayerTwoImage
+        {
+            get { return _playerTwoImage; }
+            set
+            {
+                this.RaiseAndSetIfChanged(ref _playerTwoImage, value);
+            }
+        }
 
         private void AddWinPercentateOnFirstServe()
         {

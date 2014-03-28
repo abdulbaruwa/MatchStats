@@ -51,6 +51,11 @@ namespace MatchStats.Test.ViewModels
             throw new NotImplementedException();
         }
 
+        public IObservable<Player> GetDefaultPlayer()
+        {
+            throw new NotImplementedException();
+        }
+
         public IObservable<Match> FetchMatchStats()
         {
             var outputList = new ReactiveList<Match>();

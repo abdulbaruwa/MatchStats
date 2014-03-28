@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Windows.Devices.PointOfService;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Pickers;
@@ -24,6 +25,7 @@ namespace MatchStats.Model
         Task<StorageItemThumbnail> BrowseImageThumbnail();
         void SaveDefaultPlayerImage(StorageItemThumbnail imageThumbnail);
         Task<ImageSource> GetDefaultPlayerImage();
+        Task<ImageSource> GetSilhuetteImage();
     }
 
     public class ImagesApi : IImagesApi
@@ -92,6 +94,16 @@ namespace MatchStats.Model
             return  await GetBitbitmapFromStorageFile(defaultPlayerImage);
         }
 
+        public async Task<ImageSource> GetSilhuetteImage()
+        {
+            var baseUri = new Uri("ms-appx:///");
+            const string imagePath = "Assets/male_silhouette.bmp";
+            var bitmapimage = new BitmapImage(new Uri(baseUri, imagePath));
+            var defaultImage = await StorageFile.GetFileFromApplicationUriAsync(new Uri(baseUri, imagePath));
+            //var bitmapimage = await GetBitbitmapFromStorageFile(defaultImage);
+            return bitmapimage;
+        }
+
         private static async Task<BitmapImage> GetBitbitmapFromStorageFile(StorageFile defaultImage)
         {
             var bitmapimage = new BitmapImage();
@@ -124,6 +136,11 @@ namespace MatchStats.Model
         {
             throw new NotImplementedException();
         }
+
+        public Task<ImageSource> GetSilhuetteImage()
+        {
+            throw new NotImplementedException();
+        }
     }
 
     public interface IMatchStatsApi
@@ -134,6 +151,7 @@ namespace MatchStats.Model
         IObservable<Match> GetCurrentMatch();
         Match ApplyGameRules(Match currentMatch);
         void SaveMatchStats(List<Match> matchStats);
+        IObservable<Player> GetDefaultPlayer();
     }
 
     public class MatchStatsApi : IMatchStatsApi
@@ -149,6 +167,13 @@ namespace MatchStats.Model
         public void SaveMatchStats(List<Match> matchStats)
         {
             _blobCache.InsertObject("MyMatchStats", matchStats);
+        }
+
+        public IObservable<Player> GetDefaultPlayer()
+        {
+            var _blobCache = RxApp.MutableResolver.GetService<IBlobCache>("UserAccount");
+            return _blobCache.GetObjectAsync<Player>("DefaultPlayer");
+
         }
 
         public async void SaveMatch(Match match)
