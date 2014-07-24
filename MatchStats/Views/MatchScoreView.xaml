@@ -92,7 +92,7 @@
                         <RowDefinition/>
                         <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
-                    <Rectangle Grid.Row="0" Stroke="LightBlue" StrokeThickness="10" Width="160" Grid.ColumnSpan="2" Margin="5,0" ></Rectangle>
+                    <Rectangle Grid.Row="0" Stroke="LightSkyBlue" StrokeThickness="10" Width="160" Grid.ColumnSpan="2" Margin="5,0" ></Rectangle>
                     <Image Source="ms-appx:///Assets/male_silhouette.png" Grid.ColumnSpan="2"></Image>
                     <TextBlock Name="PlayerOneNameUnderImage" Grid.Row="1" Text="{Binding CurrMatch.PlayerOne.FullName}" Style="{StaticResource PlayerNameUnderImageTextStye}" Grid.ColumnSpan="2" Margin="48,0,47,0"/>
                 </Grid>
@@ -135,14 +135,14 @@
 
                         <Grid>
                             <Grid.Background>
-                                <SolidColorBrush Color="Teal"/>
+                                <SolidColorBrush Color="#FF98CC4E"/>
                             </Grid.Background>
                             <TextBlock Style="{StaticResource MatchScoreGridHeaderTitleTextStyle}"  Margin="10,0,0,0">Players</TextBlock>
                         </Grid>
 
                         <Grid Grid.Row="1" >
                             <Grid.Background>
-                                <SolidColorBrush Color="LightBlue"/>
+                                <SolidColorBrush Color="LightSkyBlue"/>
                             </Grid.Background>
                             <TextBlock Name="PlayerOnesName" Style="{StaticResource SubtitleTextStyle}"  Margin="10,0,0,0" Text="{Binding PlayerOnesName}"/>
                         </Grid>
@@ -159,14 +159,14 @@
                         </Grid>
                         <Grid Grid.Row="0" Grid.Column="1" >
                             <Grid.Background>
-                                <SolidColorBrush Color="Teal"/>
+                                <SolidColorBrush Color="#FF98CC4E"/>
                             </Grid.Background>
                             <TextBlock Style="{StaticResource MatchScoreGridHeaderTitleTextStyle}" HorizontalAlignment="Center">1</TextBlock>
                         </Grid>
 
                         <Grid Grid.Row="1" Grid.Column="1">
                             <Grid.Background>
-                                <SolidColorBrush Color="LightBlue"/>
+                                <SolidColorBrush Color="LightSkyBlue"/>
                             </Grid.Background>
                             <TextBlock Name="PlayerOneFirstSet" Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Text="{Binding PlayerOneFirstSet}"/>
                         </Grid>
@@ -180,14 +180,14 @@
 
                         <Grid Grid.Row="0" Grid.Column="2" >
                             <Grid.Background>
-                                <SolidColorBrush Color="Teal"/>
+                                <SolidColorBrush Color="#FF98CC4E"/>
                             </Grid.Background>
                             <TextBlock Style="{StaticResource MatchScoreGridHeaderTitleTextStyle}" HorizontalAlignment="Center">2</TextBlock>
                         </Grid>
 
                         <Grid Grid.Row="0" Grid.Column="3" >
                             <Grid.Background>
-                                <SolidColorBrush Color="Teal"/>
+                                <SolidColorBrush Color="#FF98CC4E"/>
                             </Grid.Background>
                             <TextBlock Style="{StaticResource MatchScoreGridHeaderTitleTextStyle}" HorizontalAlignment="Center">3</TextBlock>
                         </Grid>
@@ -205,27 +205,27 @@
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="2">
                             <Grid.Background>
-                                <SolidColorBrush Color="LightBlue"/>
+                                <SolidColorBrush Color="LightSkyBlue"/>
                             </Grid.Background>
                             <TextBlock Name="PlayerOneSecondSet" Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Text="{Binding PlayerOneSecondSet}"/>
                         </Grid>
                         <Grid Grid.Row="1" Grid.Column="3">
                             <Grid.Background>
-                                <SolidColorBrush Color="LightBlue"/>
+                                <SolidColorBrush Color="LightSkyBlue"/>
                             </Grid.Background>
                             <TextBlock Name="PlayerOneThirdSet" Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Text="{Binding PlayerOneThirdSet}"/>
                         </Grid>
 
                         <Grid Grid.Row="0" Grid.Column="4" >
                             <Grid.Background>
-                                <SolidColorBrush Color="Teal"/>
+                                <SolidColorBrush Color="#FF98CC4E"/>
                             </Grid.Background>
                             <TextBlock Style="{StaticResource MatchScoreGridHeaderTitleTextStyle}" HorizontalAlignment="Center">Current</TextBlock>
                         </Grid>
 
                         <Grid Grid.Row="1" Grid.Column="4">
                             <Grid.Background>
-                                <SolidColorBrush Color="LightBlue"/>
+                                <SolidColorBrush Color="LightSkyBlue"/>
                             </Grid.Background>
                             <TextBlock Name="PlayerOneCurrentGame" Style="{StaticResource SubtitleTextStyle}" HorizontalAlignment="Center" Text="{Binding PlayerOneCurrentGame}"/>
                         </Grid>

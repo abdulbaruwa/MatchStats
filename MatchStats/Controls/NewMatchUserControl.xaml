@@ -128,7 +128,7 @@
             <TextBlock Text="Add A Match" Style="{StaticResource HeaderTextStyleAddMatchControl}" />
         </Border>
 
-        <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Background="#FFE7F3FC" />
+        <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="0" Grid.ColumnSpan="2" Background="LightSkyBlue" />
 
         <StackPanel Grid.Row="1" Grid.Column="0" Style="{StaticResource StackpanelAddMatchControl}" Margin="10,0,10,0">
             <TextBlock Text="Player One" Margin="10,-10,5,10" Style="{StaticResource SubHeaderTextStyleAddMatchControl}" />

@@ -10,7 +10,7 @@ namespace MatchStats.Common
         {
             if (!(value is int)) return null;
             var index = (int)value;
-            return index % 2 == 0 ? Colors.WhiteSmoke : Colors.LightBlue;
+            return index % 2 == 0 ? Colors.WhiteSmoke : Colors.LightSkyBlue;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, string language)
