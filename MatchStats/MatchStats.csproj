@@ -179,8 +179,6 @@
     <Content Include="Assets\AdemolasSweden 080.jpg" />
     <Content Include="Assets\Logo.scale-100.png" />
     <Content Include="Assets\male_silhouette.bmp" />
-    <Content Include="Assets\male_silhouette.scale-100.png" />
-    <Content Include="Assets\male_silhouette.scale-140.png" />
     <Content Include="Assets\SmallLogo.scale-100.png" />
     <Content Include="Assets\SplashScreen.scale-100-.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
